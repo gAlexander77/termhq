@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE, PRE_RELEASE } from "../config";
+
+const platforms = [
+  { name: "Windows", note: "Windows 10 and 11 · installer" },
+  { name: "macOS", note: "Apple silicon and Intel · .dmg" },
+  { name: "Linux", note: ".AppImage and .deb" },
+];
+---
+
+<Base
+  title="Download"
+  metaTitle="Download TermHQ — Windows, macOS, Linux"
+  description="Download TermHQ for Windows, macOS, or Linux. A keyboard-first GUI terminal for running AI coding agents."
+>
+  <article class="page prose" data-pagefind-body>
+    <h1 data-pagefind-meta="title">Download</h1>
+    <p>
+      TermHQ builds are published on GitHub Releases. Every release is built from
+      an exact tagged source commit, and each download is published with a
+      checksum.
+    </p>
+
+    {
+      PRE_RELEASE && (
+        <blockquote>
+          <p>
+            <strong>TermHQ has not been released yet.</strong> The links below
+            will start working with the first public release. Nothing is
+            downloadable today.
+          </p>
+        </blockquote>
+      )
+    }
+
+    <div class="dl-grid">
+      {
+        platforms.map((p) => (
+          <div class="dl-cell">
+            <h3>{p.name}</h3>
+            <p>{p.note}</p>
+            <a class="btn btn-primary" href={SITE.latestRelease}>
+              Latest release
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <p>
+      Those links resolve through GitHub's <code>releases/latest</code> redirect
+      rather than naming a version, so they never point at a stale build and this
+      page never needs editing when a release ships.
+    </p>
+
+    <h2 id="installing">Installing</h2>
+    <p>
+      See <a href="/docs/installation/">Installation</a> for per-platform notes,
+      including what to expect from SmartScreen on Windows and Gatekeeper on
+      macOS for a build that is not yet code-signed.
+    </p>
+
+    <h2 id="updating">Updating</h2>
+    <p>
+      TermHQ checks for updates and tells you when one is available. It never
+      installs on its own and never restarts itself — there are live shells and
+      running agents in those panes, and an update that restarts the app on its
+      own initiative destroys work no dialog can apologise for.
+    </p>
+  </article>
+</Base>

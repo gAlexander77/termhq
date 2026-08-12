@@ -1,0 +1,6 @@
+* text=auto eol=lf
+
+# Hugo templates and stylesheets are site scaffolding, not the project's
+# language — keep them out of GitHub's language bar.
+*.html linguist-detectable=false linguist-generated=true
+*.css linguist-detectable=false linguist-generated=true

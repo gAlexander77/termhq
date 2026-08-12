@@ -1,0 +1,273 @@
+---
+/**
+ * Ctrl+K documentation search.
+ *
+ * The index is built at deploy time by Pagefind, which reads the *rendered*
+ * HTML and indexes it heading by heading — that is what lets "close undo"
+ * return "Panes and layout → Undoing a close" rather than just naming a page.
+ * It is a static asset like any other, so search keeps working offline and
+ * there is no SaaS provider in the path.
+ */
+---
+
+<div class="search-backdrop" data-search-backdrop hidden>
+  <div
+    class="search-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search documentation"
+  >
+    <div class="search-head">
+      <svg
+        viewBox="0 0 24 24"
+        width="17"
+        height="17"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="M20 20l-3.5-3.5"></path>
+      </svg>
+      <input
+        class="search-input"
+        data-search-input
+        type="search"
+        placeholder="Search the documentation…"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        aria-controls="search-results"
+        aria-autocomplete="list"
+      />
+      <span class="search-esc">Esc</span>
+    </div>
+
+    <ul
+      class="search-results"
+      id="search-results"
+      data-search-results
+      role="listbox"
+      aria-label="Search results"
+    >
+    </ul>
+    <div class="search-empty" data-search-empty>
+      Type to search the documentation.
+    </div>
+
+    <div class="search-foot">
+      <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> navigate</span>
+      <span><kbd>&crarr;</kbd> open</span>
+      <span><kbd>Esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+
+{/* is:inline keeps Vite's hands off the dynamic import — /pagefind/ does not
+    exist until after the build, so bundling it would fail at compile time. */}
+<script is:inline>
+  (function () {
+    var backdrop = document.querySelector("[data-search-backdrop]");
+    if (!backdrop) return;
+
+    var input = document.querySelector("[data-search-input]");
+    var list = document.querySelector("[data-search-results]");
+    var empty = document.querySelector("[data-search-empty]");
+    var openers = document.querySelectorAll("[data-search-open]");
+    var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+
+    var pagefind = null;
+    var loadErr = false;
+    var results = [];
+    var active = -1;
+    var seq = 0;
+    var lastFocus = null;
+
+    document.querySelectorAll("[data-search-kbd]").forEach(function (el) {
+      el.textContent = isMac ? "⌘ K" : "Ctrl K";
+    });
+
+    function loadPagefind() {
+      if (pagefind || loadErr) return Promise.resolve(pagefind);
+      return import("/pagefind/pagefind.js")
+        .then(function (m) {
+          pagefind = m;
+          return m.init ? m.init().then(function () { return m; }) : m;
+        })
+        .catch(function () {
+          loadErr = true;
+          return null;
+        });
+    }
+
+    function open() {
+      lastFocus = document.activeElement;
+      backdrop.hidden = false;
+      document.body.style.overflow = "hidden";
+      input.value = "";
+      render([]);
+      input.focus();
+      loadPagefind();
+    }
+
+    function close() {
+      backdrop.hidden = true;
+      document.body.style.overflow = "";
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    function setActive(i) {
+      if (!results.length) return;
+      active = (i + results.length) % results.length;
+      var nodes = list.querySelectorAll(".search-result");
+      nodes.forEach(function (n, idx) {
+        n.dataset.active = String(idx === active);
+      });
+      var el = nodes[active];
+      if (el) el.scrollIntoView({ block: "nearest" });
+    }
+
+    function render(items) {
+      results = items;
+      active = -1;
+      list.innerHTML = "";
+
+      if (!items.length) {
+        empty.hidden = false;
+        empty.textContent = loadErr
+          ? "Search index not built. Run `npm run build`, then preview dist."
+          : input.value.trim()
+            ? "No matches."
+            : "Type to search the documentation.";
+        return;
+      }
+      empty.hidden = true;
+
+      items.forEach(function (r, i) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.className = "search-result";
+        a.href = r.url;
+        a.setAttribute("role", "option");
+        a.dataset.active = String(i === 0);
+
+        var crumb = document.createElement("div");
+        crumb.className = "search-result-crumb";
+        crumb.textContent = r.crumb;
+
+        var title = document.createElement("div");
+        title.className = "search-result-title";
+        title.textContent = r.title;
+
+        var snip = document.createElement("div");
+        snip.className = "search-result-snippet";
+        snip.innerHTML = r.excerpt; /* Pagefind returns its own <mark> markup */
+
+        a.appendChild(crumb);
+        a.appendChild(title);
+        a.appendChild(snip);
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      active = 0;
+    }
+
+    /* Sub-results are Pagefind's per-heading anchors. Promoting them above the
+       page-level hit is the whole point: a match inside "Undo close" should
+       send you to that heading, not the top of a long page you then scan. */
+    function flatten(raw) {
+      var out = [];
+      raw.forEach(function (d) {
+        var page = d.meta && d.meta.title ? d.meta.title : d.url;
+        (d.sub_results || []).forEach(function (s) {
+          out.push({
+            url: s.url,
+            title: s.title || page,
+            crumb:
+              s.title && s.title !== page ? page + " → " + s.title : page,
+            excerpt: s.excerpt || d.excerpt,
+          });
+        });
+        if (!d.sub_results || !d.sub_results.length) {
+          out.push({ url: d.url, title: page, crumb: page, excerpt: d.excerpt });
+        }
+      });
+      return out.slice(0, 24);
+    }
+
+    var timer = null;
+    input &&
+      input.addEventListener("input", function () {
+        var q = input.value.trim();
+        clearTimeout(timer);
+        if (!q) {
+          render([]);
+          return;
+        }
+        timer = setTimeout(function () {
+          var mine = ++seq;
+          loadPagefind().then(function (pf) {
+            if (!pf) {
+              render([]);
+              return;
+            }
+            return pf.search(q).then(function (res) {
+              if (mine !== seq) return; /* a newer keystroke already won */
+              return Promise.all(
+                res.results.slice(0, 12).map(function (r) {
+                  return r.data();
+                }),
+              ).then(function (data) {
+                if (mine === seq) render(flatten(data));
+              });
+            });
+          });
+        }, 110);
+      });
+
+    document.addEventListener("keydown", function (e) {
+      var mod = isMac ? e.metaKey : e.ctrlKey;
+      if (mod && (e.key === "k" || e.key === "K")) {
+        e.preventDefault();
+        backdrop.hidden ? open() : close();
+        return;
+      }
+      if (backdrop.hidden) {
+        /* "/" is the other convention people try; ignore it while typing. */
+        var t = e.target.tagName;
+        if (
+          e.key === "/" &&
+          t !== "INPUT" &&
+          t !== "TEXTAREA" &&
+          !e.target.isContentEditable
+        ) {
+          e.preventDefault();
+          open();
+        }
+        return;
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActive(active + 1);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActive(active - 1);
+      } else if (e.key === "Enter" && active >= 0 && results[active]) {
+        e.preventDefault();
+        window.location.href = results[active].url;
+      }
+    });
+
+    openers.forEach(function (b) {
+      b.addEventListener("click", open);
+    });
+    backdrop.addEventListener("click", function (e) {
+      if (e.target === backdrop) close();
+    });
+  })();
+</script>

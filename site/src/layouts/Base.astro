@@ -1,0 +1,173 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Search from "../components/Search.astro";
+import { SITE, PRE_RELEASE } from "../config";
+import "../styles/style.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Overrides the computed "<title> — TermHQ". */
+  metaTitle?: string;
+  /** Point search engines at a different URL as authoritative for this topic. */
+  canonical?: string;
+  /** Keep this page out of results but still let its links be followed. */
+  noindex?: boolean;
+  /** Emit TechArticle structured data (documentation pages). */
+  article?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  metaTitle,
+  canonical,
+  noindex = false,
+  article = false,
+} = Astro.props;
+
+const pageTitle = metaTitle ?? (title ? `${title} — ${SITE.name}` : SITE.title);
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(SITE.ogImage, SITE.url).href;
+
+/**
+ * Three cases, and the difference between them matters.
+ *  - PRE_RELEASE: nothing indexed, nothing crawled onward, because no page on
+ *    the site is ready to be found.
+ *  - noindex: out of results but links still followed. /docs/all is this case —
+ *    it must not compete with the individual topic pages for their own
+ *    queries, but it links to every one of them and that is worth crawling.
+ */
+const robots = PRE_RELEASE
+  ? "noindex,nofollow"
+  : noindex
+    ? "noindex,follow"
+    : "index,follow,max-image-preview:large";
+
+const orgId = `${SITE.url}/#organization`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* ICO alongside the SVG: several crawlers and older browsers do not render
+        SVG favicons, and many request /favicon.ico directly. */}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      property="og:image:alt"
+      content="TermHQ — a tiling terminal workbench for running AI coding agents"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Structured data deliberately omits aggregateRating, reviewCount, price
+        and softwareVersion. TermHQ has no ratings and no announced pricing, and
+        inventing them is both a lie and a manual-action risk; a hard-coded
+        version would go stale on every release, which is the exact failure this
+        site is built to avoid. */}
+    {
+      Astro.url.pathname === "/" && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": orgId,
+                name: SITE.name,
+                url: SITE.url,
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${SITE.url}/favicon.svg`,
+                },
+              },
+              {
+                "@type": "SoftwareApplication",
+                name: SITE.name,
+                description: SITE.description,
+                url: SITE.url,
+                applicationCategory: "DeveloperApplication",
+                operatingSystem: "Windows, macOS, Linux",
+                downloadUrl: SITE.latestRelease,
+                sameAs: [SITE.repo],
+                publisher: { "@id": orgId },
+              },
+              {
+                "@type": "WebSite",
+                name: SITE.name,
+                url: SITE.url,
+                publisher: { "@id": orgId },
+              },
+            ],
+          })}
+        />
+      )
+    }
+
+    {
+      article && !noindex && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            headline: title,
+            description,
+            url: canonicalURL,
+            isPartOf: {
+              "@type": "WebSite",
+              name: SITE.name,
+              url: SITE.url,
+            },
+            publisher: {
+              "@type": "Organization",
+              name: SITE.name,
+              url: SITE.url,
+            },
+          })}
+        />
+      )
+    }
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <Search />
+  </body>
+</html>

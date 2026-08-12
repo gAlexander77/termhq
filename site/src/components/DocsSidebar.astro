@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+
+const docs = (await getCollection("docs")).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+const path = Astro.url.pathname;
+---
+
+<aside class="docs-side" aria-label="Documentation">
+  <h4>Documentation</h4>
+  <ul>
+    <li>
+      <a href="/docs/" aria-current={path === "/docs/" ? "page" : undefined}>
+        Overview
+      </a>
+    </li>
+    {
+      docs.map((doc) => {
+        const href = `/docs/${doc.id}/`;
+        return (
+          <li>
+            <a href={href} aria-current={path === href ? "page" : undefined}>
+              {doc.data.title}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <h4>Reference</h4>
+  <ul>
+    <li>
+      <a
+        href="/docs/all/"
+        aria-current={path === "/docs/all/" ? "page" : undefined}
+      >
+        All documentation
+      </a>
+    </li>
+    <li><a href="/changelog/">Changelog</a></li>
+  </ul>
+</aside>

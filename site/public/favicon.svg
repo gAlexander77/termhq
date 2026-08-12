@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="TermHQ">
+  <title>TermHQ</title>
+  <!--
+    The app icon: white mark on a black tile. Unlike termhq-mark.svg this one
+    hard-codes its colours on purpose — a favicon is rendered outside any page
+    that could give currentColor a value, so an inheriting mark would come out
+    black on a dark browser tab and vanish.
+  -->
+  <rect width="1024" height="1024" rx="180" fill="#000000" />
+  <g fill="none" stroke="#ffffff" stroke-width="52">
+    <rect x="123" y="187" width="783" height="651" rx="100" />
+    <path d="M395 651 C 421 733 610 733 636 651" stroke-width="42" />
+  </g>
+  <path fill="#ffffff" d="M291 326 L475 452 L475 488 L291 618 L291 554 L402 470 L291 396 Z" />
+  <rect x="661" y="354" width="68" height="226" fill="#ffffff" />
+</svg>

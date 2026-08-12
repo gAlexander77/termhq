@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+// The repo-root CHANGELOG.md, rendered in place. Its own "# Changelog" heading
+// becomes this page's h1 — the page deliberately does not add a second one.
+const entry = await getEntry("changelog", "changelog");
+if (!entry) throw new Error("CHANGELOG.md not found at the repository root");
+const { Content } = await render(entry);
+---
+
+<Base
+  title="Changelog"
+  metaTitle="TermHQ Changelog"
+  description="Every user-facing change in TermHQ, release by release."
+>
+  <article class="page prose" data-pagefind-body>
+    <div data-pagefind-meta="title:Changelog"></div>
+    <Content />
+  </article>
+</Base>

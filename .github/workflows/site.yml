@@ -1,0 +1,93 @@
+name: Deploy site to GitHub Pages
+
+# Website and documentation deploy. Completely independent of application
+# releases: a typo fix or a new docs page must never rebuild TermHQ, and
+# shipping TermHQ must never require editing this repository.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "CHANGELOG.md"          # the changelog page renders this file
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # ---------------------------------------------------------------------
+    # THE LAUNCH GATE.
+    #
+    # This job does nothing until the repository variable SITE_DEPLOY_ENABLED
+    # is set to "true". TermHQ is unreleased, and GitHub Pages serves over the
+    # public internet regardless of whether the repository itself is private
+    # — so an un-gated deploy would put the site online before launch.
+    #
+    # Enabling it is a deliberate launch step, performed together with setting
+    # PRE_RELEASE to false in src/config.ts. Turning this on while PRE_RELEASE
+    # is still true is safe: the site deploys, but every page says noindex and
+    # robots.txt disallows everything.
+    # ---------------------------------------------------------------------
+    if: vars.SITE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+        working-directory: site
+
+      # astro build, then scripts/postbuild.mjs (unique anchors on /docs/all),
+      # then pagefind over the finished HTML. Order matters: Pagefind indexes
+      # rendered output, so it has to run last.
+      - name: Build site and search index
+        run: npm run build
+        working-directory: site
+
+      - name: Fail if the site would be indexed before launch
+        # A belt-and-braces check on the one thing that cannot be undone. If
+        # PRE_RELEASE is still set, every page must carry noindex — if that is
+        # not true, something regressed in the layout, and the deploy stops
+        # here rather than leaking an unfinished site into search results.
+        run: |
+          if grep -qE '^export const PRE_RELEASE = true' site/src/config.ts; then
+            echo "Pre-release build — verifying noindex on every page."
+            missing=0
+            while IFS= read -r f; do
+              grep -q 'name="robots" content="noindex' "$f" || { echo "MISSING noindex: $f"; missing=1; }
+            done < <(find site/dist -name '*.html')
+            [ "$missing" -eq 0 ] || { echo "::error::pre-release build has indexable pages"; exit 1; }
+            echo "All pages carry noindex."
+          fi
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

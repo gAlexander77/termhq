@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../../components/DocsSidebar.astro";
+
+const docs = (await getCollection("docs")).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+---
+
+<Base
+  title="Documentation"
+  metaTitle="TermHQ Documentation"
+  description="How TermHQ works: workspaces, persistent sessions, tiling panes, configuration, theming, and keyboard shortcuts."
+>
+  <div class="docs">
+    <DocsSidebar />
+
+    <article class="prose" data-pagefind-body>
+      <h1 data-pagefind-meta="title">Documentation</h1>
+      <p>
+        TermHQ is a terminal workbench for running coding agents. These pages
+        describe how it behaves and how to change that behaviour.
+      </p>
+      <p>
+        Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>⌘</kbd>+<kbd>K</kbd> on macOS)
+        anywhere on this site to search every page. To read or search everything
+        at once — or paste the whole corpus into an agent — use <a
+          href="/docs/all/">all documentation on one page</a
+        >.
+      </p>
+
+      <div class="grid grid-2" style="margin-top:36px" data-pagefind-ignore>
+        {
+          docs.map((doc) => (
+            <a class="cell" href={`/docs/${doc.id}/`}>
+              <h3>{doc.data.title}</h3>
+              <p>{doc.data.description}</p>
+            </a>
+          ))
+        }
+      </div>
+    </article>
+  </div>
+</Base>

@@ -1,0 +1,21 @@
+{
+  "name": "termhq-site",
+  "type": "module",
+  "private": true,
+  "description": "TermHQ website and documentation",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild.mjs && pagefind --site dist",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^7.2.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.3",
+    "pagefind": "^1.4.0",
+    "typescript": "^5.9.2"
+  }
+}

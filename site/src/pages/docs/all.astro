@@ -1,0 +1,113 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../../components/DocsSidebar.astro";
+import { SITE, PRE_RELEASE } from "../../config";
+
+const docs = (await getCollection("docs")).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+const entries = await Promise.all(
+  docs.map(async (doc) => {
+    const { Content, headings } = await render(doc);
+    return { doc, Content, headings: headings.filter((h) => h.depth === 2) };
+  }),
+);
+---
+
+{/*
+  noindex, follow. This page duplicates every word on the site, so indexed it
+  would compete with the individual topic pages for their own queries — but it
+  links to all of them, and that is worth crawling.
+
+  Heading ids here are rewritten to `<page-slug>--<heading-slug>` by
+  scripts/postbuild.mjs, because two pages that both have a "Configuration"
+  heading would otherwise emit the same id twice and every deep link would
+  land on whichever came first.
+*/}
+<Base
+  title="All documentation"
+  description="The complete TermHQ documentation on a single page, for searching, linking, and pasting into a coding agent."
+  noindex
+>
+  <div class="docs">
+    <DocsSidebar />
+
+    {/* Excluded from the search index: every word here also lives on a real
+        docs page, so indexing both returns each hit twice and pushes the
+        canonical page down its own results. */}
+    <article class="prose" data-pagefind-ignore>
+      <h1>All documentation</h1>
+
+      <div class="allbanner">
+        Every documentation page on one scrolling page — built for <strong
+          >Ctrl+F</strong
+        >, for linking straight to a section, and for pasting into a coding
+        agent's context. Each section links back to its own page, which is the
+        canonical one to share.
+        {PRE_RELEASE && <><br /><br />This is a pre-release preview.</>}
+      </div>
+
+      <nav class="toc" aria-label="Outline of all documentation">
+        <div class="toc-title">Contents</div>
+        <ul>
+          {
+            entries.map(({ doc, headings }) => (
+              <li>
+                <a href={`#${doc.id}`}>
+                  <strong>{doc.data.title}</strong>
+                </a>
+                {headings.length > 0 && (
+                  <ul>
+                    {headings.map((h) => (
+                      <li>
+                        <a href={`#${doc.id}--${h.slug}`}>{h.text}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      {
+        entries.map(({ doc, Content }) => (
+          <section class="alldoc" id={doc.id}>
+            <h2 id={`${doc.id}--top`}>{doc.data.title}</h2>
+            <p class="alldoc-src">
+              <a href={`/docs/${doc.id}/`}>
+                {SITE.url}/docs/{doc.id}/
+              </a>
+            </p>
+            <p>{doc.data.description}</p>
+            <Content />
+          </section>
+        ))
+      }
+    </article>
+  </div>
+</Base>
+
+<script is:inline>
+  /* Copy buttons on every code block. Progressive enhancement: the page is
+     complete without this, so it is inline and unconditional. */
+  document.querySelectorAll(".prose pre").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      navigator.clipboard.writeText(pre.innerText).then(function () {
+        btn.textContent = "Copied";
+        setTimeout(function () {
+          btn.textContent = "Copy";
+        }, 1400);
+      });
+    });
+    pre.style.position = "relative";
+    pre.appendChild(btn);
+  });
+</script>

@@ -1,0 +1,31 @@
+---
+/**
+ * The TermHQ mark, inline so it inherits currentColor and costs no request.
+ * viewBox is the artwork's bounding box, so the mark carries no margin of its
+ * own — whatever places it decides its spacing. Geometry must stay in step with
+ * public/termhq-mark.svg and the app's own icon.
+ */
+interface Props {
+  class?: string;
+  title?: string;
+}
+const { class: className = "mark", title = "TermHQ" } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="97 161 835 703"
+  role="img"
+  aria-label={title}
+  focusable="false"
+>
+  <g fill="none" stroke="currentColor" stroke-width="52">
+    <rect x="123" y="187" width="783" height="651" rx="100" />
+    <path d="M395 651 C 421 733 610 733 636 651" stroke-width="42" />
+  </g>
+  <path
+    fill="currentColor"
+    d="M291 326 L475 452 L475 488 L291 618 L291 554 L402 470 L291 396 Z"
+  />
+  <rect x="661" y="354" width="68" height="226" fill="currentColor" />
+</svg>

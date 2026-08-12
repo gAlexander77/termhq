@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Page not found"
+  description="That page does not exist."
+  noindex
+>
+  <div class="notfound">
+    <h1>404</h1>
+    <p class="lede" style="margin-inline:auto">That page does not exist.</p>
+    <div class="hero-actions" style="margin-top:28px">
+      <a class="btn btn-primary" href="/">Home</a>
+      <a class="btn" href="/docs/">Documentation</a>
+      <button class="btn" type="button" data-search-open>Search</button>
+    </div>
+  </div>
+</Base>

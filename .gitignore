@@ -1,0 +1,20 @@
+# Astro build output. Pagefind writes its search index into site/dist/pagefind,
+# so that is covered too — the index is a build artifact, never committed.
+site/dist/
+site/.astro/
+
+# Node (deps are restored from package-lock.json)
+node_modules/
+
+# Release artifacts — this repo hosts releases, it does not build them
+artifacts/
+
+# Temp
+*.tmp
+*.bak
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

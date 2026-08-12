@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import DocsSidebar from "../../components/DocsSidebar.astro";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+  return docs.map((doc) => ({ params: { slug: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const { Content, headings } = await render(doc);
+
+// Only h2/h3 — an outline that lists every h4 stops being an outline.
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+const docs = (await getCollection("docs")).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+const i = docs.findIndex((d) => d.id === doc.id);
+const prev = i > 0 ? docs[i - 1] : undefined;
+const next = i < docs.length - 1 ? docs[i + 1] : undefined;
+---
+
+<Base
+  title={doc.data.title}
+  description={doc.data.description}
+  metaTitle={doc.data.metaTitle}
+  article
+>
+  <div class="docs">
+    <DocsSidebar />
+
+    {/* data-pagefind-body marks what gets indexed; the nav chrome around it
+        must not be, or every query matches every page. */}
+    <article class="prose" data-pagefind-body>
+      <div class="docs-meta">
+        <span data-pagefind-filter="section">Documentation</span>
+      </div>
+
+      <h1 data-pagefind-meta="title">{doc.data.title}</h1>
+      <p>{doc.data.description}</p>
+
+      {
+        toc.length > 2 && (
+          <nav class="toc" aria-label="On this page" data-pagefind-ignore>
+            <div class="toc-title">On this page</div>
+            <ul>
+              {toc.map((h) => (
+                <li class={h.depth === 3 ? "toc-sub" : undefined}>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+
+      <Content />
+
+      <nav class="docs-nextprev" data-pagefind-ignore>
+        <span>
+          {prev && <a href={`/docs/${prev.id}/`}>&larr; {prev.data.title}</a>}
+        </span>
+        <span>
+          {next && <a href={`/docs/${next.id}/`}>{next.data.title} &rarr;</a>}
+        </span>
+      </nav>
+    </article>
+  </div>
+</Base>

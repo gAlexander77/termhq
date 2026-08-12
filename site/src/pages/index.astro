@@ -1,0 +1,213 @@
+---
+import Base from "../layouts/Base.astro";
+import Mark from "../components/Mark.astro";
+import { PRE_RELEASE } from "../config";
+
+const panes = [
+  {
+    label: "agent · refactor",
+    lines: [
+      { prompt: true, text: 'claude "split the host module"' },
+      { text: "Reading host.rs… 1,204 lines" },
+      { text: "Proposing 3 files", cursor: true },
+    ],
+  },
+  {
+    label: "tests",
+    lines: [
+      { prompt: true, text: "cargo test" },
+      { text: "running 38 tests" },
+      { text: "test result: ok. 38 passed", cursor: true },
+    ],
+  },
+  {
+    label: "dev server",
+    lines: [
+      { prompt: true, text: "npm run dev" },
+      { text: "VITE ready in 402 ms" },
+      { text: "➜ localhost:1420", cursor: true },
+    ],
+  },
+  {
+    label: "scratch",
+    lines: [
+      { prompt: true, text: "git log --oneline -2" },
+      { text: "fad1b17 titlebar mark" },
+      { text: "a1d4b09 finish the rename", cursor: true },
+    ],
+  },
+];
+
+const features = [
+  {
+    title: "Panes, not tabs",
+    body: "Every terminal visible at once, tiled in a grid or in columns. Grow, move and swap panes from the keyboard, or drag to resize.",
+  },
+  {
+    title: "Shells outlive the app",
+    body: "Terminals run in a detached host process, tmux-style. Quit TermHQ entirely, reopen it, and your agents are still running — scrollback intact.",
+  },
+  {
+    title: "Workspaces",
+    body: "Group terminals by project, each with its own layout and directories. Resume the last one automatically, or pick from a list on launch.",
+  },
+  {
+    title: "Agents render properly",
+    body: "Colour capability is forced on and launcher-leaked variables are scrubbed, so agents come up in colour. Panes are born at the width they will be read at.",
+  },
+  {
+    title: "Voice, fully local",
+    body: "Dictate into the focused terminal with a bundled whisper.cpp build. Nothing is uploaded — there is no cloud path, by design.",
+  },
+  {
+    title: "Closing is reversible",
+    body: "A closed pane leaves a countdown you can click to bring it back. The shell keeps running underneath, so nothing is lost.",
+  },
+];
+
+const keys = [
+  { action: "New terminal", chord: ["Ctrl", "T"] },
+  { action: "Command palette", chord: ["Ctrl", "P"] },
+  { action: "Switch workspace", chord: ["Ctrl", "Shift", "W"] },
+  { action: "Arrange panes", chord: ["Ctrl", "Shift", "G"] },
+  { action: "Copy — or interrupt when nothing is selected", chord: ["Ctrl", "C"] },
+  { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
+];
+---
+
+<Base>
+  <section class="hero wrap">
+    <Mark />
+    {PRE_RELEASE && <span class="badge">Pre-release</span>}
+    <h1>The terminal built for coding agents</h1>
+    <p class="lede">
+      Terminal emulators were designed for one person typing one command at a
+      time. TermHQ runs four agents side by side — tiled so you can watch all of
+      them, in shells that keep running after you quit.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="/download/">Download</a>
+      <a class="btn btn-lg" href="/docs/">Read the docs</a>
+    </div>
+    {
+      PRE_RELEASE && (
+        <p class="hero-note">
+          Not publicly available yet. This site is a preview.
+        </p>
+      )
+    }
+
+    <div
+      class="termshot"
+      aria-label="Four terminal panes tiled in a TermHQ window"
+    >
+      <div class="termshot-bar">
+        <Mark />
+        <span>workspace: termhq-source</span>
+      </div>
+      <div class="termshot-grid">
+        {
+          panes.map((pane) => (
+            <div class="termshot-pane">
+              <h4>{pane.label}</h4>
+              <code>
+                {pane.lines.map((line) => (
+                  <>
+                    {line.prompt && <span class="prompt">$</span>}
+                    {line.prompt ? ` ${line.text}` : line.text}
+                    {line.cursor && <span class="cursor"> ▍</span>}
+                    <br />
+                  </>
+                ))}
+              </code>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Built for agents</span>
+        <h2>Made for how agents actually run</h2>
+        <p>Long jobs, several at once, output you watch rather than read once.</p>
+      </div>
+
+      <div class="grid grid-3">
+        {
+          features.map((f) => (
+            <div class="cell">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Keyboard-first</span>
+        <h2>Your hands stay on the keys</h2>
+        <p>Everything reachable without the mouse — and every chord rebindable.</p>
+      </div>
+      <div class="keys">
+        {
+          keys.map((k) => (
+            <div class="keys-row">
+              <span>{k.action}</span>
+              <span>
+                {k.chord.map((c) => (
+                  <kbd>{c}</kbd>
+                ))}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Make it yours</span>
+        <h2>Configuration, not preferences</h2>
+        <p>Themes, keybinds and layout live in plain JSON — not three menus down.</p>
+      </div>
+      <div class="grid grid-2">
+        <div class="cell">
+          <h3>Bring your theme</h3>
+          <p>
+            JSON themes applied as CSS variables, with one-click import for VS
+            Code colour themes from Open VSX. The terminal and the interface
+            share one palette.
+          </p>
+        </div>
+        <div class="cell">
+          <h3>Every key rebindable</h3>
+          <p>
+            The whole keymap is yours, including an ultra-focus mode that hands
+            every keystroke to the terminal so a TUI with its own chords gets
+            them unmodified.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap" style="text-align:center">
+      <span class="eyebrow">Windows · macOS · Linux</span>
+      <h2>One download per platform</h2>
+      <p class="lede" style="margin:0 auto 32px">
+        No runtime to install first. No account. No telemetry to opt out of.
+      </p>
+      <a class="btn btn-primary btn-lg" href="/download/">Get TermHQ</a>
+    </div>
+  </section>
+</Base>

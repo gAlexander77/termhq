@@ -1,0 +1,53 @@
+---
+import Mark from "./Mark.astro";
+import { NAV } from "../config";
+
+const path = Astro.url.pathname;
+---
+
+<header class="nav">
+  <a class="nav-brand" href="/" aria-label="TermHQ home">
+    <Mark />
+    <span class="nav-wordmark">TermHQ</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Main">
+    {
+      NAV.map((item) => (
+        <a
+          href={item.href}
+          aria-current={path.startsWith(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="nav-actions">
+    {/* The button is the discoverable half of the Ctrl+K shortcut: a chord
+        nobody is told about is a chord nobody uses. */}
+    <button
+      type="button"
+      class="search-open"
+      data-search-open
+      aria-label="Search documentation"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="15"
+        height="15"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="M20 20l-3.5-3.5"></path>
+      </svg>
+      <span class="search-open-label">Search</span>
+      <kbd class="search-open-kbd" data-search-kbd>Ctrl K</kbd>
+    </button>
+    <a class="btn btn-primary" href="/download/">Download</a>
+  </div>
+</header>
