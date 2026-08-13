@@ -4,44 +4,99 @@ weight: 80
 description: "Every default shortcut in TermHQ, how to rebind them, and how conflicts with terminal programs are resolved."
 ---
 
-On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> in every shortcut below.
+On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> in every shortcut below — with one
+deliberate exception, dictation, which is <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd>
+on both. On macOS <kbd>Ctrl</kbd> belongs to the shell: <kbd>Ctrl</kbd>+<kbd>F</kbd>
+and <kbd>Ctrl</kbd>+<kbd>B</kbd> are readline's forward-char and backward-char, so
+binding them app-side would swallow keys the terminal is supposed to receive.
+
+Most of the app-level chords are three keys rather than two. That is not padding:
+the single-<kbd>Ctrl</kbd> versions nearly all belong to the shell —
+<kbd>Ctrl</kbd>+<kbd>C</kbd> is the interrupt, <kbd>Ctrl</kbd>+<kbd>D</kbd> is EOF,
+<kbd>Ctrl</kbd>+<kbd>S</kbd> freezes output, <kbd>Ctrl</kbd>+<kbd>L</kbd> clears the
+screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control code.
 
 ## Terminals
 
 | Action | Shortcut |
 |---|---|
-| New terminal | <kbd>Ctrl</kbd>+<kbd>T</kbd> |
-| Close focused pane | <kbd>Ctrl</kbd>+<kbd>W</kbd> |
-| Focus pane 1–9 | <kbd>Ctrl</kbd>+<kbd>1</kbd>…<kbd>9</kbd> |
-| Restore closed terminal | *unassigned by default* |
+| New terminal (default shell) | <kbd>Ctrl</kbd>+<kbd>J</kbd> |
+| Duplicate focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> |
+| Delete focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
+| Restore last closed terminal | *unassigned by default* |
+| Find in scrollback (or file names) | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
+
+<kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
+on purpose: <kbd>J</kbd> opens a terminal, <kbd>Shift</kbd>+<kbd>J</kbd> opens one
+like this one.
 
 ## Layout
 
 | Action | Shortcut |
 |---|---|
-| Arrange mode | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> |
-| Zoom pane in / out | <kbd>Ctrl</kbd>+wheel |
+| Focus pane left / right | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> / <kbd>→</kbd> |
+| Focus pane up / down | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> / <kbd>↓</kbd> |
+| Arrange pane (mode) | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> |
+| Fullscreen focused pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> |
+| Stash focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> |
+| Show / hide the stash shelf | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> |
 | Ultra focus | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> |
+
+Focus movement is geometric — it steps to the nearest pane in that direction,
+preferring one that shares an edge, so focus follows what your eye sees rather
+than the order panes were opened. In Columns layout only left and right apply.
 
 ## Navigation
 
 | Action | Shortcut |
 |---|---|
-| Command palette | <kbd>Ctrl</kbd>+<kbd>P</kbd> |
+| Command palette | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> |
+| Settings, with search focused | <kbd>Ctrl</kbd>+<kbd>P</kbd> |
 | Workspace picker | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> |
-| Settings | <kbd>Ctrl</kbd>+<kbd>,</kbd> |
-| Favourite 1–10 | prefix chord, then <kbd>1</kbd>…<kbd>0</kbd> |
+| Toggle sidebar | <kbd>Ctrl</kbd>+<kbd>B</kbd> |
+| Run an agent by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
+| Open a favourite by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
 
-<kbd>Ctrl</kbd>+<kbd>P</kbd> and <kbd>Ctrl</kbd>+<kbd>,</kbd> toggle: pressing
-the same chord again closes what it opened.
+The split between the two <kbd>P</kbd> chords follows VS Code's:
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> is the palette of every action by
+name, <kbd>Ctrl</kbd>+<kbd>P</kbd> is quick-open — here, Settings with the search
+box already focused, so you type the setting you want instead of hunting
+categories. Both toggle: the same chord again closes what it opened.
+
+The two numbered pickers are deliberately two strokes rather than ten chords,
+which keeps the digits free the rest of the time. While one is armed, a card
+lists the numbered entries so the mapping is never guesswork.
+
+## Zoom
+
+| Action | Shortcut |
+|---|---|
+| Zoom pane in / out | <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>Ctrl</kbd>+<kbd>-</kbd> |
+| Reset pane zoom | <kbd>Ctrl</kbd>+<kbd>0</kbd> |
+| Zoom the pane under the pointer | <kbd>Ctrl</kbd>+wheel, or a trackpad pinch |
+
+This is text size in one pane, not that pane's share of the grid — for the
+latter, see Fullscreen above.
 
 ## Editing
 
 | Action | Shortcut |
 |---|---|
+| Copy selection | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> |
 | Copy | <kbd>Ctrl</kbd>+<kbd>C</kbd> *(with a selection)* |
 | Interrupt | <kbd>Ctrl</kbd>+<kbd>C</kbd> *(with no selection)* |
-| Paste | <kbd>Ctrl</kbd>+<kbd>V</kbd> |
+| Paste | <kbd>Ctrl</kbd>+<kbd>V</kbd>, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>, or <kbd>Shift</kbd>+<kbd>Insert</kbd> |
+
+## Voice
+
+| Action | Shortcut |
+|---|---|
+| Dictation (start / stop) | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> |
+
+The one chord that does not move to <kbd>⌘</kbd> on macOS:
+<kbd>⌘</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> is Finder's search window, while
+<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> collides with nothing a shell
+wants.
 
 ## Why Ctrl+C does two things
 
@@ -50,20 +105,64 @@ cannot be given away — it is how you stop a runaway process. But when text is
 selected, "interrupt" is almost never what you meant.
 
 So TermHQ copies when there is a selection and interrupts when there is not.
-This is what Windows Terminal does, and in practice the ambiguity never comes
-up: you do not select text in order to kill a process.
+This is what Windows Terminal does, and it is safe because copying clears the
+selection: a <kbd>Ctrl</kbd>+<kbd>C</kbd> that copies when you meant to interrupt
+costs one extra keypress and never more, because the next one finds nothing
+selected.
 
-The rule is off on macOS, where <kbd>⌘</kbd>+<kbd>C</kbd> already copies and
-<kbd>Ctrl</kbd>+<kbd>C</kbd> is unambiguously the interrupt. It is also off in
-ultra focus, where the whole point is that TermHQ touches nothing.
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> is the unconditional copy, and the
+one you can rebind. The plain-<kbd>Ctrl</kbd> rule is off on macOS, where
+<kbd>⌘</kbd>+<kbd>C</kbd> already copies, and off in ultra focus.
 
 ## Rebinding
 
-**Settings → Keybinds** lists every action with its current chord. Click one and
-press the combination you want.
+**Settings → Shortcuts** lists every action with its current chord. Click one and
+press the combination you want; <kbd>Backspace</kbd> unassigns it. Only your
+overrides are stored — anything you have not touched follows the default, so
+defaults can improve between versions without overwriting your choices.
 
-Conflicts are shown rather than silently resolved: if two actions claim the same
-chord, both are flagged so you can decide which keeps it.
+A chord can belong to exactly one action, so taking an occupied one asks first: a
+confirm card names the action that currently holds it and says it will be left
+**unassigned**. Per-row reset works the same way in reverse — if that action's
+default has since been given to something else, resetting tells you whose chord
+it is taking back. Once anything differs from the defaults, the section ends with
+a count and a **Reset all shortcuts** button.
+
+An action you have unassigned is still listed in the command palette and still
+runnable from it, so dropping a chord never costs you the command.
+
+## What is not rebindable
+
+A few behaviours answer to terminal state rather than to a chord, so they are
+fixed rather than keymap entries: paste
+(<kbd>Ctrl</kbd>+<kbd>V</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> /
+<kbd>Shift</kbd>+<kbd>Insert</kbd>), right-click copying the selection or pasting
+when there is none, and <kbd>Ctrl</kbd>+scroll zoom.
+
+Bare arrow keys cannot be keymap entries either — they would break every TUI — so
+the two places TermHQ uses them, arrange mode and the stash shelf, are modes you
+enter and leave rather than standing bindings.
+
+## Four defaults that take a key from your shell
+
+Most of TermHQ's shortcuts are chosen so the shell loses nothing. Four are not,
+and it is better that you hear it here than discover it:
+
+| Chord | What it takes on Windows and Linux |
+|---|---|
+| <kbd>Ctrl</kbd>+<kbd>B</kbd> (sidebar) | **`tmux`'s prefix key.** If you use tmux inside TermHQ, rebind one of them. |
+| <kbd>Ctrl</kbd>+<kbd>P</kbd> (settings) | Previous-command history, for anyone who walks history with it instead of ↑. |
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> (find) | Cursor-forward in shell line editing; page-forward in `less` and `vim`. |
+| <kbd>Ctrl</kbd>+<kbd>J</kbd> (new terminal) | Newline — to a shell, <kbd>Ctrl</kbd>+<kbd>J</kbd> *is* <kbd>Enter</kbd>. |
+
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> also costs PowerShell
+its word-selection. That one was a deliberate trade: pane navigation that works
+in every shell, against one editing convenience in one shell.
+
+None of this applies on macOS. There every shortcut hangs off <kbd>⌘</kbd>, which
+never reaches the terminal at all, so there is nothing to collide.
+
+Any of them can be rebound or cleared in **Settings → Shortcuts**, per machine.
 
 ## When a terminal program wants the same key
 
@@ -73,6 +172,18 @@ chords, and some collide with TermHQ's.
 Two ways out:
 
 1. **Rebind** the TermHQ action.
-2. **Ultra focus** — hands every keystroke to the terminal and turns TermHQ's
-   shortcuts off entirely. The chord that enables it also disables it, and the
-   title bar shows a badge you can click to leave, so the mode cannot trap you.
+2. **Ultra focus** (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) — hands every
+   keystroke to the terminal and turns TermHQ's shortcuts off. That includes
+   <kbd>Ctrl</kbd>+<kbd>V</kbd>, which normally pastes, because that is vim's
+   visual block and exactly the key someone turns the mode on to get.
+
+Two things stay TermHQ's by design even in ultra focus:
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> still pastes — it is not a control
+code, so no TUI can want it — and mouse behaviours are unaffected, so right-click
+paste and <kbd>Ctrl</kbd>+scroll zoom keep working. Its own chord stays live too,
+because a mode with no keyboard exit is a trap; a badge appears in the title bar
+and can be clicked to leave, and the focused pane's edge breathes in the
+attention colour while the mode is on.
+
+Ultra focus is deliberately not remembered across restarts. A mode that outlives
+a launch is a mode you can be stuck in without knowing why.

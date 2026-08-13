@@ -41,35 +41,49 @@ const panes = [
 const features = [
   {
     title: "Panes, not tabs",
-    body: "Every terminal visible at once, tiled in a grid or in columns. Grow, move and swap panes from the keyboard, or drag to resize.",
+    body: "Open as many terminals as you need — the grid keeps growing to fit them. Tile them square or as full-height columns, and grow, move and swap them from the keyboard.",
   },
   {
     title: "Shells outlive the app",
-    body: "Terminals run in a detached host process, tmux-style. Quit TermHQ entirely, reopen it, and your agents are still running — scrollback intact.",
+    body: "Quit TermHQ entirely, reopen it, and your agents are still running where you left them — recent output intact. The tmux promise, without needing tmux.",
   },
   {
     title: "Workspaces",
     body: "Group terminals by project, each with its own layout and directories. Resume the last one automatically, or pick from a list on launch.",
   },
   {
+    title: "Launch agents in one key",
+    body: "Claude Code, Codex, OpenCode and Antigravity from a pane-header menu or a number key — with the flags you always use, and never listing one you have not installed.",
+  },
+  {
+    title: "It taps your shoulder",
+    body: "A pane that went quiet while you were looking elsewhere pulses, and says so — even parked out of sight. The hard part of running several agents is noticing when one stops.",
+  },
+  {
     title: "Agents render properly",
-    body: "Colour capability is forced on and launcher-leaked variables are scrubbed, so agents come up in colour. Panes are born at the width they will be read at.",
+    body: "Agents that come up monochrome or misaligned elsewhere come up right here — full colour, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
   },
   {
     title: "Voice, fully local",
-    body: "Dictate into the focused terminal with a bundled whisper.cpp build. Nothing is uploaded — there is no cloud path, by design.",
+    body: "Dictate into the focused terminal, transcribed on your own machine. Nothing is uploaded — there is no cloud path, by design. English, on Windows and macOS.",
   },
   {
     title: "Closing is reversible",
     body: "A closed pane leaves a countdown you can click to bring it back. The shell keeps running underneath, so nothing is lost.",
   },
+  {
+    title: "Files and git, alongside",
+    body: "A file tree that follows the focused pane's directory, and a source-control panel with staging, diffs and commit — so reviewing what an agent did does not mean leaving.",
+  },
 ];
 
 const keys = [
-  { action: "New terminal", chord: ["Ctrl", "T"] },
-  { action: "Command palette", chord: ["Ctrl", "P"] },
+  { action: "New terminal", chord: ["Ctrl", "J"] },
+  { action: "Command palette", chord: ["Ctrl", "Shift", "P"] },
+  { action: "Run an agent by number", chord: ["Ctrl", "Shift", "A"] },
   { action: "Switch workspace", chord: ["Ctrl", "Shift", "W"] },
   { action: "Arrange panes", chord: ["Ctrl", "Shift", "G"] },
+  { action: "Dictate into the focused pane", chord: ["Ctrl", "Alt", "Space"] },
   { action: "Copy — or interrupt when nothing is selected", chord: ["Ctrl", "C"] },
   { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
 ];
@@ -82,8 +96,8 @@ const keys = [
     <h1>The terminal built for coding agents</h1>
     <p class="lede">
       Terminal emulators were designed for one person typing one command at a
-      time. TermHQ runs four agents side by side — tiled so you can watch all of
-      them, in shells that keep running after you quit.
+      time. TermHQ runs as many agents as you want side by side — tiled so you
+      can watch all of them, in shells that keep running after you quit.
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="/download/">Download</a>
@@ -99,7 +113,7 @@ const keys = [
 
     <div
       class="termshot"
-      aria-label="Four terminal panes tiled in a TermHQ window"
+      aria-label="Terminal panes tiled side by side in a TermHQ window"
     >
       <div class="termshot-bar">
         <Mark />
@@ -176,16 +190,20 @@ const keys = [
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Make it yours</span>
-        <h2>Configuration, not preferences</h2>
-        <p>Themes, keybinds and layout live in plain JSON — not three menus down.</p>
+        <h2>Settings you can search, files you can edit</h2>
+        <p>
+          A searchable settings panel for every option — and plain JSON
+          underneath, for when you would rather just edit the file.
+        </p>
       </div>
       <div class="grid grid-2">
         <div class="cell">
           <h3>Bring your theme</h3>
           <p>
-            JSON themes applied as CSS variables, with one-click import for VS
-            Code colour themes from Open VSX. The terminal and the interface
-            share one palette.
+            Ten built-ins from true black to true white, your own in one small
+            JSON file, and one-click import for VS Code colour themes from Open
+            VSX. The terminal palette can follow the interface or come from a
+            different theme entirely.
           </p>
         </div>
         <div class="cell">

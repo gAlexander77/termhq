@@ -5,7 +5,7 @@ description: "Group terminals by what you are working on, name them, resume them
 ---
 
 A workspace is a window's worth of terminals: their layout, their working
-directories, and a name you gave it. Open a second window and you get a second
+directories, and optionally a name. Open a second window and you get a second
 workspace, not a copy of the first.
 
 ## The picker
@@ -24,11 +24,14 @@ rather than leaving the last thing you hovered lit up.
 
 ## Naming a workspace
 
-A workspace starts unnamed and is identified by its directories. Give it a
-title from the picker and it keeps that name.
+Naming one is optional. An untitled workspace is not "Untitled" — it is
+identified by the directories its panes are in, which is usually the name you
+would have typed anyway. Give it a title from the picker and it keeps that
+instead.
 
-Renaming is offered only where it is safe — a workspace that is currently open
-in a live window would have its own saves overwrite the change.
+You can rename the workspace you are in, and any that is closed. One that is
+open in *another* window cannot be renamed from here — that window is still
+saving over it, and would undo the change.
 
 ## Opening one
 
@@ -38,7 +41,7 @@ duplicate — two windows adopting the same shells would be a bad time for both.
 
 ## On startup
 
-**Settings → General → Startup** decides what happens when TermHQ opens:
+**Settings → Workspaces → On startup** decides what happens when TermHQ opens:
 
 - **Resume the most recent workspace** — the default.
 - **Show the picker** — choose every time.

@@ -1,82 +1,152 @@
 ---
 title: "Theming"
 weight: 90
-description: "Built-in themes, writing your own, and importing VS Code colour themes from Open VSX."
+description: "Built-in themes, writing your own, splitting the terminal palette from the interface, and importing VS Code colour themes from Open VSX."
 ---
 
-TermHQ ships with several themes and will use any valid theme file you add.
+TermHQ ships with ten built-in themes and will use any valid theme file you add.
+
+Dark: **Default**, **Void**, **Pitch** (pure black, for OLED), **Graphite**,
+**Abyss**, **Aurora**, **Ember**, **Moss**. Light: **Paper** (true white) and
+**Dawn** (warm cream).
 
 ## Choosing one
 
-**Settings → Appearance → Theme**. Changes apply immediately, across every pane
-and the interface itself — the terminal and the surrounding UI are driven by the
-same palette, so they never disagree.
+**Settings → Appearance → Theme**. The list previews as you browse it: arrow or
+hover through it and the app repaints behind the dropdown — chrome, terminal
+palette and all — with the option you started on badged `current`.
+<kbd>Enter</kbd> or a click keeps that one; <kbd>Esc</kbd> or a click elsewhere
+puts back where you were. Nothing is written to disk until you keep something, so
+looking at thirty themes costs zero saves.
+
+## The terminal palette can differ from the interface
+
+A theme has two halves, and they can be driven by different themes.
+
+**Settings → Appearance → Terminal theme** picks any theme as the source of the
+terminal palette while the chrome stays on another — Graphite chrome hosting a
+Dracula terminal is a preference, not a fork. Leave it empty and the terminal
+follows the app theme.
+
+Worth knowing if you author a theme whose two halves only look right together:
+your `terminal` block may end up in use under somebody else's `ui` block.
 
 ## Writing your own
 
-Themes are JSON. Drop a file in the `themes/` directory inside your
-configuration folder ([Configuration](/docs/configuration/)) and it appears in
-the list. **Settings → Appearance → Open themes folder** takes you there.
+Themes are JSON files in the `themes/` directory inside your configuration
+folder ([Configuration](/docs/configuration/)). Drop one in, reopen Settings, and
+pick it. **Settings → Appearance → Folders → Themes folder** opens that directory.
 
-A theme names the sixteen ANSI colours plus the interface's own values:
+A theme has a name and those two sections:
 
 ```json
 {
   "name": "My Theme",
-  "background": "#000000",
-  "foreground": "#ffffff",
-  "cursor": "#ffffff",
-  "selection": "#333333",
-  "black": "#000000",
-  "red": "#ff5555",
-  "green": "#50fa7b",
-  "yellow": "#f1fa8c",
-  "blue": "#6272a4",
-  "magenta": "#ff79c6",
-  "cyan": "#8be9fd",
-  "white": "#bfbfbf",
-  "brightBlack": "#4d4d4d",
-  "brightRed": "#ff6e67",
-  "brightGreen": "#5af78e",
-  "brightYellow": "#f4f99d",
-  "brightBlue": "#caa9fa",
-  "brightMagenta": "#ff92d0",
-  "brightCyan": "#9aedfe",
-  "brightWhite": "#e6e6e6"
+  "ui": {
+    "bg": "#09090b",
+    "panel": "#0b0b0e",
+    "hairline": "rgba(255,255,255,0.08)",
+    "hairlineStrong": "rgba(255,255,255,0.14)",
+    "ink": "#fafafa",
+    "muted": "#8a8a93",
+    "faint": "#5a5a63",
+    "accent": "#7c8cf8",
+    "rec": "#ff5c5c",
+    "attn": "#e8b34c",
+    "selection": "#7c8cf84d"
+  },
+  "terminal": {
+    "background": "#0b0b0e",
+    "foreground": "#d6d6dc",
+    "cursor": "#7c8cf8",
+    "selectionBackground": "#3a3f6e80",
+    "black": "#1a1a1f", "red": "#ff6b6b",
+    "green": "#6bd68a", "yellow": "#e8c56b",
+    "blue": "#7c8cf8", "magenta": "#c98bf0",
+    "cyan": "#6bd6d6", "white": "#d6d6dc",
+    "brightBlack": "#5a5a63", "brightRed": "#ff8a8a",
+    "brightGreen": "#8ae5a5", "brightYellow": "#f2d98a",
+    "brightBlue": "#9aa6fa", "brightMagenta": "#dba6f5",
+    "brightCyan": "#8ae5e5", "brightWhite": "#fafafa"
+  }
 }
 ```
 
-Values you leave out are derived from the ones you set, so a minimal theme with
-a background, a foreground and an accent produces a coherent interface rather
-than a half-styled one.
+- **`ui`** colours the application around the terminals. Keys it does not
+  recognise are ignored, and **a key you leave out keeps whatever was there
+  before** rather than being invented for you — so the way to write a theme is to
+  copy a built-in and change what you want, not to start from three colours and
+  hope.
+- **`terminal`** colours the terminals themselves: the sixteen ANSI colours plus
+  background, foreground, cursor and selection.
+
+A few things you do not have to theme:
+
+- **Hovers and scrollbars** are mixed from `ink`, so they follow your text colour
+  and stay visible on light themes as well as dark ones. This is why light themes
+  work as well as dark ones without opting into anything.
+- **`ui.selection`** colours selected text in the chrome — inputs, file names,
+  settings copy. Omit it and it falls back to `accent` at 30%. The terminal's own
+  selection is the separate `terminal.selectionBackground`, because the terminal
+  draws that one itself.
+- **`ui.attn`** is the attention colour for agent-idle badges and toasts. Omit it
+  and attention surfaces follow `accent`. A colour chosen in **Settings → Agents →
+  Notification colour** overrides it, so a theme cannot count on winning that one.
+- **`terminal.background`** also paints the padding ring between the rows and the
+  pane frame, so a theme whose terminal differs from `panel` still reads as one
+  surface rather than a black frame.
+
+`accent` does the most work in the interface — focus rings, buttons, folder tint.
+`panel` should sit slightly above `bg` in lightness; the hairlines are the borders
+everywhere.
+
+### The template is the contract
+
+TermHQ writes `_template.jsonc` into your themes folder and keeps it current on
+every launch. It is a fully commented copy of every themeable key, so "Themes
+folder" always lands you next to working documentation.
+
+It never loads as a theme itself: the loader skips `.jsonc` files and anything
+whose name starts with `_`. That prefix is also how you park a theme you do not
+want listed.
 
 Themes you add yourself can be deleted from Settings. Built-in themes are
 compiled into the app and have no file to remove.
 
 ## Importing VS Code themes
 
-TermHQ can convert a VS Code colour theme into its own format.
+**Settings → Appearance → Manage themes** opens a browser for
+[Open VSX](https://open-vsx.org/), a vendor-neutral extension registry:
+a most-downloaded shelf by default, live search, infinite scroll, and an
+**Installed** view of everything you already have. Anything installed offers
+**Apply** rather than a second install, and reads "Applied ✓" when it is the
+active one.
 
-**Settings → Appearance → Import theme** browses
-[Open VSX](https://open-vsx.org/), a vendor-neutral extension registry. Pick a
-theme and TermHQ downloads it, converts every theme the extension contributes,
-and adds them to your list.
+TermHQ *converts* a VS Code colour theme into its own format — ANSI palette
+directly, workbench colours mapped with fallbacks, syntax scopes discarded — and
+writes the result into your themes folder as an ordinary editable file. Imported
+themes are marked with where they came from.
 
-Imported themes are marked with where they came from, so the browser can show
-what you already have.
+Conversion also fills in what real-world themes leave out, because a literal
+mapping renders badly: text tiers are faded from the foreground when a theme
+declares none, otherwise secondary text comes out identical to primary; flat
+themes get a darkened window colour so panes still separate; and a declared
+`panel.border` carries its own colour into TermHQ's strong hairline. Comments in
+the JSON and themes that inherit from another file inside the same extension are
+both handled.
 
 > **Open VSX only.** TermHQ does not use the Visual Studio Marketplace, whose
 > terms of use restrict it to Microsoft products. Open VSX exists precisely so
-> non-Microsoft tools have a legitimate source. All downloads are things you
-> chose; TermHQ redistributes nothing.
-
-Conversion handles the awkward parts of real-world themes — comments in the JSON,
-and themes that inherit from another file inside the same extension. Where a
-theme does not define something TermHQ needs, the value is derived from what it
-does define rather than dropped.
+> non-Microsoft tools have a legitimate source. Every download is one you chose;
+> TermHQ redistributes nothing.
 
 ## File icons
 
-File icon themes use the VS Code icon-theme format and install from `.vsix`
-packages the same way, under **Settings → Appearance → Icon theme**. They affect
-the file panel, not the terminals.
+File icon themes use the VS Code icon-theme format and install the same way, from
+**Settings → Appearance → Manage icon packs** — Material, Catppuccin and
+vscode-icons among them. **Settings → Appearance → File icons** picks the active
+one, and it previews as you browse just like the theme list does.
+
+Manual installs work too: drop a VS Code-format icon theme folder into the
+`icons/` directory and reopen Settings. SVG only. Icon themes affect the file
+panel, not the terminals.

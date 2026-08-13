@@ -7,6 +7,49 @@ description: "The parts of TermHQ built specifically for running Claude Code, Co
 TermHQ is a terminal, so any agent that runs in a terminal runs in it. These are
 the parts that exist because of agents specifically.
 
+## Launching one
+
+Every pane header has an **✳** button listing your agent commands — Claude Code,
+Codex, OpenCode and Antigravity out of the box. Picking one types its command
+into that pane's shell and hands keyboard focus back to the terminal.
+
+The list is yours to edit in **Settings → Agents**, flags included, so
+`claude --dangerously-skip-permissions` is one click rather than something you
+retype all day. Entries whose program is not on your `PATH` are hidden
+automatically — you never see an agent you do not have, and never press a dead
+button.
+
+### By number, without the mouse
+
+Several agents across several panes should not mean a trip to a dropdown for each.
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> then a digit runs an agent in the
+focused terminal: <kbd>1</kbd>–<kbd>9</kbd> and <kbd>0</kbd> for the tenth, in the
+order the list is arranged in Settings. While it is armed, a card lists the
+numbered agents so the mapping is never guesswork; <kbd>Esc</kbd> cancels.
+
+Only installed agents are numbered — the same `PATH` filtering as the dropdown,
+so the numbers always match what you can see.
+
+## Knowing when one has finished
+
+The problem with running several agents is not starting them, it is noticing when
+one stops.
+
+A pane that was busy while you were looking elsewhere and has since gone quiet
+gets a pulsing header: the dot, an inset wash and the bottom hairline all breathe
+in the theme's attention colour. Stashed panes badge their shelf card, so a
+parked job can still get your attention. The same trigger raises a toast naming
+the pane and its directory — in-app while the window is focused, a native OS
+notification while it is not — and clicking it jumps to that pane wherever it is,
+including zoomed away or on the shelf.
+
+It deliberately stays quiet about three things, each measured rather than
+assumed: the echo of your own typing, work you watched happen (launching an agent
+and reading its banner is not news), and anything over in under three seconds.
+The quiet threshold is configurable, which matters for agents that pause to
+think — it decides how long a pane may wait mid-job before the wait reads as the
+job ending.
+
 ## Agents come up in colour
 
 Coding agents often render monochrome inside other terminals, and the usual
@@ -27,8 +70,9 @@ it at rather than reflowed afterwards.
 
 ## Watching several at once
 
-Tiling is the point. Four agents working means four panes visible, not four tabs
-where three are hidden.
+Tiling is the point. Agents working means panes visible, not tabs where all but
+one are hidden. There is no cap on how many — the grid keeps growing, and when
+it gets busy you can park the ones you are not watching without stopping them.
 
 Each pane's font size is independent, so an agent producing a wall of output can
 be small while the shell you type in stays comfortable.
@@ -41,10 +85,17 @@ an agent is mid-task and pick it up later with its output intact.
 
 ## Directory awareness
 
-TermHQ tracks each pane's working directory, using the shell's own prompt hook
-where one is available and falling back to inspecting the process tree where it
-is not. The file panel follows the focused pane, so opening a file browser lands
-where the agent is working rather than at your home directory.
+TermHQ knows which directory each pane is in, and keeps up as the shell moves
+around. The file panel follows the focused pane, so it is already showing the
+folder the agent is working in rather than your home directory. So does the Git
+panel — repo, branch, staged and changed files for whichever pane you are looking
+at, which is how you review what an agent just did without leaving the app.
+
+That works with WSL panes too, so a shell inside a distribution still steers the
+panels correctly.
+
+The `</>` button in the pane header opens that directory in your editor, for the
+moments when the right move is to take over by hand.
 
 ## Dictating to an agent
 
@@ -52,9 +103,10 @@ Prompts are long, and typing them is the slow part. TermHQ's dictation writes
 into the focused pane, so you can talk a prompt at an agent and edit it before
 sending.
 
-Transcription is local — a whisper.cpp build shipped with the app. Nothing is
-uploaded, which for a tool that sits in front of proprietary source is the only
-defensible design.
+Transcription happens on your machine, using a speech model shipped inside the
+app. Nothing is uploaded and nothing needs an account — which, for a tool sitting
+in front of proprietary source, is the only defensible design. English only for
+now, and not yet available on Linux.
 
 ## Keeping their keystrokes theirs
 

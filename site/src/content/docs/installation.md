@@ -15,13 +15,16 @@ Because builds are not yet code-signed with an Authenticode certificate,
 SmartScreen shows a warning on the **first** install: *"Windows protected your
 PC."* Choose **More info → Run anyway**. Later updates are unaffected.
 
-TermHQ uses ConPTY for its terminals. The required libraries ship beside the
-executable, so there is nothing to install separately, and TermHQ does not
-depend on the version of ConPTY that happens to be in your Windows build.
+There is nothing to install alongside it — no runtime, no separate terminal
+components. TermHQ carries its own copy of the Windows console machinery, which
+is why terminals render identically on an old Windows 10 build and a current
+Windows 11 one. Some terminal apps do not, and the difference shows up as
+duplicated prompt lines in exactly the full-screen tools coding agents use.
 
 ## macOS
 
-Open the `.dmg` and drag TermHQ to Applications.
+Open the `.dmg` and drag TermHQ to Applications. Builds are for **Apple
+silicon**; there is no Intel build.
 
 Unsigned builds are quarantined by Gatekeeper. The first launch needs
 **right-click → Open** rather than a double-click, which offers an "Open"
@@ -29,7 +32,7 @@ button the normal launch path does not.
 
 ## Linux
 
-Both an `.AppImage` and a `.deb` are published. The AppImage needs no
+An `.AppImage`, a `.deb` and an `.rpm` are published. The AppImage needs no
 installation — mark it executable and run it. For the `.deb`:
 
 ```bash
@@ -38,17 +41,24 @@ sudo dpkg -i termhq_*.deb
 
 ## Voice dictation
 
-Dictation runs entirely on your machine using whisper.cpp. On Windows the
-speech model is downloaded on first use; on macOS it is built from source as
-part of setup. Either way, audio never leaves the machine — there is no cloud
-transcription path in TermHQ at all.
+Dictation runs entirely on your machine. Audio never leaves it
+— there is no cloud transcription path in TermHQ at all.
 
-If you never use dictation, the model is never fetched.
+The Windows and macOS installers **include the speech model**, so dictation works
+on a fresh machine with nothing to download, build or sign into. On macOS the
+first use asks for microphone permission, as any app does.
+
+Dictation currently recognises **English**. Other languages are not supported
+yet.
+
+Linux is the exception: the Linux packages do not include the speech model, so
+dictation is unavailable there for now. Everything else on this page applies to
+Linux as normal.
 
 ## Where TermHQ keeps its files
 
-Settings, themes, workspaces and logs live in a per-user configuration
-directory:
+Settings, themes, saved workspaces and a log file live in a per-user
+configuration directory:
 
 | Platform | Path |
 |---|---|
@@ -58,9 +68,13 @@ directory:
 
 ## Updating
 
-TermHQ checks for updates on launch and shows an unobtrusive indicator when one
-is available. Installing is always a click — TermHQ will not update or restart
-itself while you have shells running.
+Update by downloading the current release and installing over the top; your
+configuration directory is untouched.
+
+Built-in update checking is not switched on yet. When it is, installing will
+always be a click you make: TermHQ will not update or restart itself on its own
+initiative, because there are live shells and running agents in those panes and
+an unprompted relaunch destroys work no dialog can apologise for.
 
 ## Uninstalling
 

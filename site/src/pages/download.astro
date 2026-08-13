@@ -4,8 +4,8 @@ import { SITE, PRE_RELEASE } from "../config";
 
 const platforms = [
   { name: "Windows", note: "Windows 10 and 11 · installer" },
-  { name: "macOS", note: "Apple silicon and Intel · .dmg" },
-  { name: "Linux", note: ".AppImage and .deb" },
+  { name: "macOS", note: "Apple silicon · .dmg" },
+  { name: "Linux", note: ".AppImage, .deb and .rpm · no voice yet" },
 ];
 ---
 
@@ -17,9 +17,9 @@ const platforms = [
   <article class="page prose" data-pagefind-body>
     <h1 data-pagefind-meta="title">Download</h1>
     <p>
-      TermHQ builds are published on GitHub Releases. Every release is built from
-      an exact tagged source commit, and each download is published with a
-      checksum.
+      TermHQ builds are published on GitHub Releases, each one built from an
+      exact tagged source commit rather than from a moving branch — so a given
+      version always means the same code.
     </p>
 
     {
@@ -63,10 +63,14 @@ const platforms = [
 
     <h2 id="updating">Updating</h2>
     <p>
-      TermHQ checks for updates and tells you when one is available. It never
-      installs on its own and never restarts itself — there are live shells and
-      running agents in those panes, and an update that restarts the app on its
-      own initiative destroys work no dialog can apologise for.
+      Download the current release and install over the top; your settings,
+      themes and saved workspaces are left alone.
+    </p>
+    <p>
+      Built-in update checking is not switched on yet. When it is, it will never
+      install on its own and never restart the app on its own initiative — there
+      are live shells and running agents in those panes, and an unprompted
+      relaunch destroys work no dialog can apologise for.
     </p>
   </article>
 </Base>
