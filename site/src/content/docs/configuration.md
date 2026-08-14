@@ -23,7 +23,7 @@ Alongside it, in the same directory:
 
 | Item | Contents |
 |---|---|
-| `themes/` | Your own and imported colour themes, plus the commented `_template.jsonc` |
+| `themes/` | Your own and imported color themes, plus the commented `_template.jsonc` |
 | `icons/` | Installed file-icon themes |
 | `logos/` | Cached artwork for installed marketplace extensions, so the Installed list has pictures offline |
 | `sessions/` | One JSON per window slot: the saved state of each workspace |
@@ -36,7 +36,7 @@ TermHQ keeps working after an update — new settings appear with their defaults
 rather than the file needing a migration, and hand-editing cannot break startup
 by leaving something out.
 
-The same applies in reverse: a key TermHQ no longer recognises is ignored, and
+The same applies in reverse: a key TermHQ no longer recognizes is ignored, and
 dropped the next time the file is written. And if the file cannot be parsed at
 all, TermHQ starts with defaults rather than refusing to open.
 
@@ -52,7 +52,7 @@ Keys are camelCase.
 ### General
 
 - **Default shell** — used by the **+** button, <kbd>Ctrl</kbd>+<kbd>J</kbd> and
-  favourites. Unset means the first shell detected.
+  favorites. Unset means the first shell detected.
 - **Undo close** — which close paths get an undo window: none, the keyboard
   shortcut only, or the shortcut and the pane's **×** button. Default: both.
 - **Undo window length** — seconds before the parked shell is actually killed.
@@ -60,7 +60,7 @@ Keys are camelCase.
 - **Clone keeps directory** — whether duplicating a pane opens in the source
   pane's directory or at home. Default on.
 - **Layout preset** — Grid or Columns. Also the title bar switch.
-- **Favourites** — starred directories, reorderable with ↑/↓. One order drives
+- **Favorites** — starred directories, reorderable with ↑/↓. One order drives
   the title bar dropdown, the welcome list *and* the number keys, so there is
   never a second ordering to keep in sync. They are stored shell-agnostically:
   opening one spawns whatever your default shell is at the time you click, not
@@ -71,9 +71,15 @@ Keys are camelCase.
 - **On startup** — resume the most recent workspace, show the picker, or start a
   new one. Default: most recent. A taskbar jump-list click overrides it for that
   launch.
+- **Open a terminal in new workspaces** — whether a workspace with nothing to
+  restore starts with one default terminal or on the welcome list. Default on.
+  Turning it off is also what makes a workspace you opened, looked at and closed
+  clean up after itself, since a workspace closed with no terminals in it is
+  deleted rather than kept.
 - **Restore session on startup** — reopen your last panes with their shells,
-  directories, layout, zoom and titles. Default on. Off means always starting
-  with one default terminal, and anything still alive from last time is ended.
+  directories, layout, zoom and titles. Default on. Off means every launch starts
+  fresh — with one default terminal, or empty if you turned the setting above
+  off — and anything still alive from last time is ended.
 - **Keep shells running after close** — closing the window leaves its shells
   running in the background, and the next launch picks them up. Default on. Needs
   session restore to do anything.
@@ -120,7 +126,7 @@ Keys are camelCase.
 - **IDE command** — what the `</>` button runs against a directory. Default
   `code`; flags allowed.
 - **Agent idle badge** and **idle notification** — see below.
-- **Notification colour** — the colour every attention surface draws from.
+- **Notification color** — the color every attention surface draws from.
   Defaults to the active theme's accent; setting it here pins it across all
   themes.
 
@@ -133,7 +139,10 @@ Keys are camelCase.
   read as the job ending, so raise it for agents that stop to think.
 - **Agent idle notification** — the same trigger raises a toast: in-app while
   the window is focused, a native OS notification while it is not. Default on.
-- **Toast auto-dismiss** — seconds, or 0 to stay until dismissed. Default 0.
+- **Toast auto-dismiss** — seconds, or 0 to stay until dismissed. Default 0. Set
+  above zero and the toast drains a countdown bar so you can see the deadline
+  running; at 0 there is no bar, because a timer that never expires would read as
+  a stuck toast.
 
 ### Files
 
@@ -141,6 +150,13 @@ Keys are camelCase.
   is the terminal user's default worldview, so hiding is the opt-in.
 - **Sidebar side** — left or right. <kbd>Ctrl</kbd>+<kbd>B</kbd> toggles the
   sidebar itself.
+- **Sidebar** — showing or not. It also follows the grid on its own: the file
+  tree reads the focused terminal's directory, so it leaves when your last
+  terminal does and comes back with the next one. Shutting it yourself outranks
+  that — it then stays shut, including while you move between terminals, until
+  you open it yourself again. Opening it with no terminals open leaves it open
+  and empty, which is the honest answer rather than a toggle that appears to do
+  nothing.
 - **File openers** — the right-click "open with" list. Each is a name plus a
   command, run either detached (Notepad) or in a new terminal pane opened in the
   file's directory (vim, nano).
@@ -149,7 +165,7 @@ Keys are camelCase.
 
 ### Voice
 
-- **Voice dictation** — show the mic button and honour the dictation chord.
+- **Voice dictation** — show the mic button and honor the dictation chord.
   Default on.
 - **Input device** — which microphone to use; falls back to the system default if
   the chosen one is unplugged.

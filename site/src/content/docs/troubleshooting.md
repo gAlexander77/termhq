@@ -4,10 +4,10 @@ weight: 100
 description: "Fixes for the problems people actually hit: monochrome agents, missing shells, stale sessions, and where the logs are."
 ---
 
-## An agent or CLI renders without colour
+## An agent or CLI renders without color
 
 Almost always an inherited `NO_COLOR` from whatever launched TermHQ. TermHQ
-scrubs the variables it knows about on every shell it starts, so if colour is
+scrubs the variables it knows about on every shell it starts, so if color is
 still missing, check your shell profile — a `NO_COLOR`, `TERM=dumb` or
 `CLICOLOR=0` set there is applied after TermHQ hands the shell over, and TermHQ
 cannot override your own configuration.
@@ -24,7 +24,7 @@ TermHQ detects shells at startup. Something installed afterwards appears after a
 restart.
 
 On Windows, WSL distributions are listed individually; a distribution that is
-installed but not yet initialised will not appear until it has been run once.
+installed but not yet initialized will not appear until it has been run once.
 
 ## My tmux prefix stopped working
 
@@ -80,7 +80,7 @@ nothing to download on first use. **Linux packages do not currently include it**
 and dictation is unavailable there.
 
 If it hears you but the words come out wrong, note that dictation currently
-recognises **English only**.
+recognizes **English only**.
 
 ## Windows warns about the installer
 

@@ -2,7 +2,7 @@
   <title>TermHQ</title>
   <!--
     The app icon: white mark on a black tile. Unlike termhq-mark.svg this one
-    hard-codes its colours on purpose — a favicon is rendered outside any page
+    hard-codes its colors on purpose — a favicon is rendered outside any page
     that could give currentColor a value, so an inheriting mark would come out
     black on a dark browser tab and vanish.
   -->

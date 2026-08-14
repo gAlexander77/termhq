@@ -2,7 +2,7 @@
   <title>TermHQ</title>
   <!--
     The viewBox is the artwork's bounding box, not the 1024 icon canvas: the
-    window rect spans 123..906 with a 52 stroke centred on it, so the ink runs
+    window rect spans 123..906 with a 52 stroke centerd on it, so the ink runs
     97..932 by 161..864. Cropping to it means the mark has no built-in margin —
     whatever places it decides its own spacing, instead of inheriting 16% of
     empty space that only made sense inside an app-icon tile. Coordinates are
@@ -16,11 +16,11 @@
     two measured endpoints and its lowest point.
 
     fill/stroke are currentColor on purpose: the mark is monochrome, so it
-    inherits whatever colour it is placed in (a themed titlebar, a dark or
+    inherits whatever color it is placed in (a themed titlebar, a dark or
     light page) instead of hard-coding white.
   -->
   <g fill="none" stroke="currentColor" stroke-width="52">
-    <!-- terminal window; rx is the centreline radius, 100 = 126 outer - 26 half-stroke -->
+    <!-- terminal window; rx is the centerline radius, 100 = 126 outer - 26 half-stroke -->
     <rect x="123" y="187" width="783" height="651" rx="100" />
     <!-- The smile is a Bézier, not an arc: measured widths across it fit no
          single radius (a circle through its ends is far too round at the

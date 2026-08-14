@@ -103,6 +103,17 @@ is the point: you can browse what is parked without a single keystroke reaching 
 shell. Letters still reach the focused terminal, so press <kbd>Esc</kbd> first if
 you mean to type.
 
+Only *bare* presses belong to the shelf. Hold a modifier and the key does what it
+always does, so <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+arrow still steps between panes
+and <kbd>Ctrl</kbd>+<kbd>Backspace</kbd> still deletes a word in your shell while
+the shelf is up. <kbd>Shift</kbd>+<kbd>Tab</kbd> is the one exception — it walks
+the cards backwards.
+
+<kbd>Esc</kbd> dismisses a shelf that is *pinned* — by the chord, or by an arrow
+press that took it over from hover. A shelf you only hovered goes when you move
+the pointer away, and <kbd>Esc</kbd> stays with your terminal, where vim and
+every agent TUI need it.
+
 Cards fill a row left to right, most recently stashed first, then wrap. Two rows
 show at a time and anything past that scrolls **down**, never sideways.
 
@@ -116,7 +127,7 @@ it was gone. Only when the timer runs out is the shell actually killed.
 
 A shell that ends by itself is never parked; there is nothing to restore.
 
-The behaviour is configurable in **Settings → General**:
+The behavior is configurable in **Settings → General**:
 
 - how long the undo window lasts, in seconds (default 5)
 - whether closing with the pane's **×** button also offers undo, or only the

@@ -37,7 +37,7 @@ one stops.
 
 A pane that was busy while you were looking elsewhere and has since gone quiet
 gets a pulsing header: the dot, an inset wash and the bottom hairline all breathe
-in the theme's attention colour. Stashed panes badge their shelf card, so a
+in the theme's attention color. Stashed panes badge their shelf card, so a
 parked job can still get your attention. The same trigger raises a toast naming
 the pane and its directory — in-app while the window is focused, a native OS
 notification while it is not — and clicking it jumps to that pane wherever it is,
@@ -50,7 +50,7 @@ The quiet threshold is configurable, which matters for agents that pause to
 think — it decides how long a pane may wait mid-job before the wait reads as the
 job ending.
 
-## Agents come up in colour
+## Agents come up in color
 
 Coding agents often render monochrome inside other terminals, and the usual
 culprit is not the agent. When one tool launches another, environment variables
@@ -58,7 +58,7 @@ leak: a `NO_COLOR=1` set by whatever started your terminal is inherited by every
 shell it spawns, and well-behaved programs obey it.
 
 TermHQ scrubs those leaked variables on every shell it starts and sets the
-capability variables that say colour is supported. Agents come up in colour
+capability variables that say color is supported. Agents come up in color
 because the environment they are handed is correct, not because TermHQ
 special-cases any particular tool.
 

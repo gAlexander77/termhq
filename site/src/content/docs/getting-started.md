@@ -47,7 +47,7 @@ entirely from the keyboard. See [Panes and layout](/docs/panes-and-layout/).
 | Workspace picker | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> |
 
 If you only learn one, learn the command palette: it lists every action by name
-with its shortcut beside it, so the other twenty do not have to be memorised
+with its shortcut beside it, so the other twenty do not have to be memorized
 first.
 
 On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> throughout — except dictation.
@@ -59,7 +59,7 @@ app-level chords are three keys rather than two.
 
 Selecting text and pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> copies it. With nothing
 selected, the same key sends the interrupt to the running program, as it should.
-This is the behaviour Windows Terminal uses.
+This is the behavior Windows Terminal uses.
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> copies unconditionally.
 
 Paste is <kbd>Ctrl</kbd>+<kbd>V</kbd>,

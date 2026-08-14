@@ -46,8 +46,8 @@ It is a terminal, not an IDE. It does not want to be your editor.
   directories. Resume the one you were in, or pick from a list on launch.
 - **Built for agents** — launch Claude Code, Codex, OpenCode or Antigravity from
   a pane-header menu or a number key, with your own flags; panes are sized so an
-  agent's output is composed at the width it will be read at; colour capability
-  is forced on so agents render in colour; and a pane that goes quiet after being
+  agent's output is composed at the width it will be read at; color capability
+  is forced on so agents render in color; and a pane that goes quiet after being
   busy tells you so.
 - **Local voice dictation** — powered by whisper.cpp, running entirely on your
   machine. There is no cloud path, by design. Bundled on Windows and macOS;
@@ -90,7 +90,7 @@ changelog, and the releases. The application source is maintained privately and
 is not published here. Releases are built from that private source at an exact
 tagged commit and published to this repository.
 
-## Licence
+## License
 
-Licensing is not final. A licence file will be added before this repository is
+Licensing is not final. A license file will be added before this repository is
 made public.

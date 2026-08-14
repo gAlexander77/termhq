@@ -54,6 +54,16 @@ jump list. Clicking one opens it directly, or raises it if it is already open. A
 jump-list click outranks the startup setting — you asked for a specific
 workspace, so that is what you get.
 
+## What a new workspace opens with
+
+One terminal, in your default shell. **Settings → Workspaces → Open a terminal in
+new workspaces** turns that off, and a new workspace then opens on the welcome
+list instead — your favorites, or a pointer at the **+** button — so you can
+choose the directory before anything starts.
+
+The same setting covers any workspace with nothing to restore, not just brand new
+ones.
+
 ## Deleting one
 
 The picker offers deletion. It removes the workspace's saved state and ends any
@@ -62,3 +72,17 @@ close the window first.
 
 Deleting a workspace does not touch anything on disk in those directories. It
 only forgets the arrangement.
+
+## Empty ones delete themselves
+
+Close a window with no terminals left in it and that workspace is removed rather
+than kept in the picker for good — its saved state goes, and so do any shells
+still parked under it from the undo window.
+
+This is why the setting above is worth knowing about: with a terminal opening
+automatically, a workspace you opened and closed without doing anything still has
+that terminal in it, so it stays. Turn the setting off and a workspace you merely
+looked at cleans up after itself.
+
+A workspace with terminals in it is never removed this way, including one whose
+terminals are all stashed.

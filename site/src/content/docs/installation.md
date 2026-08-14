@@ -48,7 +48,7 @@ The Windows and macOS installers **include the speech model**, so dictation work
 on a fresh machine with nothing to download, build or sign into. On macOS the
 first use asks for microphone permission, as any app does.
 
-Dictation currently recognises **English**. Other languages are not supported
+Dictation currently recognizes **English**. Other languages are not supported
 yet.
 
 Linux is the exception: the Linux packages do not include the speech model, so
@@ -74,7 +74,7 @@ configuration directory is untouched.
 Built-in update checking is not switched on yet. When it is, installing will
 always be a click you make: TermHQ will not update or restart itself on its own
 initiative, because there are live shells and running agents in those panes and
-an unprompted relaunch destroys work no dialog can apologise for.
+an unprompted relaunch destroys work no dialog can apologize for.
 
 ## Uninstalling
 

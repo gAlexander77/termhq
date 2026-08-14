@@ -55,7 +55,7 @@ than the order panes were opened. In Columns layout only left and right apply.
 | Workspace picker | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> |
 | Toggle sidebar | <kbd>Ctrl</kbd>+<kbd>B</kbd> |
 | Run an agent by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
-| Open a favourite by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
+| Open a favorite by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
 
 The split between the two <kbd>P</kbd> chords follows VS Code's:
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> is the palette of every action by
@@ -117,9 +117,16 @@ one you can rebind. The plain-<kbd>Ctrl</kbd> rule is off on macOS, where
 ## Rebinding
 
 **Settings → Shortcuts** lists every action with its current chord. Click one and
-press the combination you want; <kbd>Backspace</kbd> unassigns it. Only your
-overrides are stored — anything you have not touched follows the default, so
-defaults can improve between versions without overwriting your choices.
+press the combination you want. To leave an action with no shortcut at all, use
+the slashed-key button that appears beside the chord while you are recording —
+<kbd>Backspace</kbd> does the same thing, but only if you already knew that, and
+while recording every other key means "use this one". Only your overrides are
+stored — anything you have not touched follows the default, so defaults can
+improve between versions without overwriting your choices.
+
+Recording stops if you leave the list — switching category, typing in the search
+box, or closing Settings — so a recording you walked away from can never land on
+a row you are no longer looking at.
 
 A chord can belong to exactly one action, so taking an occupied one asks first: a
 confirm card names the action that currently holds it and says it will be left
@@ -133,7 +140,7 @@ runnable from it, so dropping a chord never costs you the command.
 
 ## What is not rebindable
 
-A few behaviours answer to terminal state rather than to a chord, so they are
+A few behaviors answer to terminal state rather than to a chord, so they are
 fixed rather than keymap entries: paste
 (<kbd>Ctrl</kbd>+<kbd>V</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> /
 <kbd>Shift</kbd>+<kbd>Insert</kbd>), right-click copying the selection or pasting
@@ -179,11 +186,11 @@ Two ways out:
 
 Two things stay TermHQ's by design even in ultra focus:
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> still pastes — it is not a control
-code, so no TUI can want it — and mouse behaviours are unaffected, so right-click
+code, so no TUI can want it — and mouse behaviors are unaffected, so right-click
 paste and <kbd>Ctrl</kbd>+scroll zoom keep working. Its own chord stays live too,
 because a mode with no keyboard exit is a trap; a badge appears in the title bar
 and can be clicked to leave, and the focused pane's edge breathes in the
-attention colour while the mode is on.
+attention color while the mode is on.
 
 Ultra focus is deliberately not remembered across restarts. A mode that outlives
 a launch is a mode you can be stuck in without knowing why.

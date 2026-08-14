@@ -1,7 +1,7 @@
 ---
 title: "Theming"
 weight: 90
-description: "Built-in themes, writing your own, splitting the terminal palette from the interface, and importing VS Code colour themes from Open VSX."
+description: "Built-in themes, writing your own, splitting the terminal palette from the interface, and importing VS Code color themes from Open VSX."
 ---
 
 TermHQ ships with ten built-in themes and will use any valid theme file you add.
@@ -72,26 +72,26 @@ A theme has a name and those two sections:
 }
 ```
 
-- **`ui`** colours the application around the terminals. Keys it does not
-  recognise are ignored, and **a key you leave out keeps whatever was there
+- **`ui`** colors the application around the terminals. Keys it does not
+  recognize are ignored, and **a key you leave out keeps whatever was there
   before** rather than being invented for you — so the way to write a theme is to
-  copy a built-in and change what you want, not to start from three colours and
+  copy a built-in and change what you want, not to start from three colors and
   hope.
-- **`terminal`** colours the terminals themselves: the sixteen ANSI colours plus
+- **`terminal`** colors the terminals themselves: the sixteen ANSI colors plus
   background, foreground, cursor and selection.
 
 A few things you do not have to theme:
 
-- **Hovers and scrollbars** are mixed from `ink`, so they follow your text colour
+- **Hovers and scrollbars** are mixed from `ink`, so they follow your text color
   and stay visible on light themes as well as dark ones. This is why light themes
   work as well as dark ones without opting into anything.
-- **`ui.selection`** colours selected text in the chrome — inputs, file names,
+- **`ui.selection`** colors selected text in the chrome — inputs, file names,
   settings copy. Omit it and it falls back to `accent` at 30%. The terminal's own
   selection is the separate `terminal.selectionBackground`, because the terminal
   draws that one itself.
-- **`ui.attn`** is the attention colour for agent-idle badges and toasts. Omit it
-  and attention surfaces follow `accent`. A colour chosen in **Settings → Agents →
-  Notification colour** overrides it, so a theme cannot count on winning that one.
+- **`ui.attn`** is the attention color for agent-idle badges and toasts. Omit it
+  and attention surfaces follow `accent`. A color chosen in **Settings → Agents →
+  Notification color** overrides it, so a theme cannot count on winning that one.
 - **`terminal.background`** also paints the padding ring between the rows and the
   pane frame, so a theme whose terminal differs from `panel` still reads as one
   surface rather than a black frame.
@@ -122,16 +122,16 @@ a most-downloaded shelf by default, live search, infinite scroll, and an
 **Apply** rather than a second install, and reads "Applied ✓" when it is the
 active one.
 
-TermHQ *converts* a VS Code colour theme into its own format — ANSI palette
-directly, workbench colours mapped with fallbacks, syntax scopes discarded — and
+TermHQ *converts* a VS Code color theme into its own format — ANSI palette
+directly, workbench colors mapped with fallbacks, syntax scopes discarded — and
 writes the result into your themes folder as an ordinary editable file. Imported
 themes are marked with where they came from.
 
 Conversion also fills in what real-world themes leave out, because a literal
 mapping renders badly: text tiers are faded from the foreground when a theme
 declares none, otherwise secondary text comes out identical to primary; flat
-themes get a darkened window colour so panes still separate; and a declared
-`panel.border` carries its own colour into TermHQ's strong hairline. Comments in
+themes get a darkened window color so panes still separate; and a declared
+`panel.border` carries its own color into TermHQ's strong hairline. Comments in
 the JSON and themes that inherit from another file inside the same extension are
 both handled.
 

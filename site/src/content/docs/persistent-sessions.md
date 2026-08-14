@@ -68,8 +68,9 @@ Two settings, under **Settings → Workspaces**:
 - **Keep shells running after close** *(default on)* — turn it off and closing a
   window ends its terminals there and then.
 - **Restore session on startup** *(default on)* — turn it off and every launch
-  starts with a single fresh terminal, and anything still running from last time
-  is ended.
+  starts fresh: a single new terminal, or an empty workspace if you have turned
+  **Open a terminal in new workspaces** off. Anything still running from last
+  time is ended.
 
 ## If you want everything gone
 
