@@ -1,0 +1,401 @@
+---
+/**
+ * A still of the app: sidebar open, one full-height pane on the left and two
+ * stacked on the right. Decorative only — nothing here is a link or a button,
+ * the whole thing is pointer-events: none, and it is exposed to assistive
+ * tech as a single labeled image rather than as a wall of fake terminal text.
+ *
+ * The fake project is consistent on purpose: the files the agent says it edited
+ * are the ones marked modified in the tree and listed by git status in the
+ * bottom pane. A mock that contradicts itself is the kind of thing people
+ * notice without being able to say why.
+ *
+ * Each output line is one element carrying its whole text, including the
+ * prompt and any leading indent, and `white-space: pre` sits on that element
+ * rather than on a <pre> wrapper. Astro emits template whitespace verbatim, so
+ * a <pre> around a mapped expression inherits the source file's indentation
+ * and blank lines — which is exactly what the first version of this did.
+ *
+ * Monochrome like the rest of the site rather than the app's real accent —
+ * this is an illustration on a black-and-white page, not a screenshot.
+ */
+import Mark from "./Mark.astro";
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const tree = [
+  { depth: 0, name: "atlas-checkout", kind: "root", open: true },
+  { depth: 1, name: "src", kind: "dir", open: true },
+  { depth: 2, name: "db", kind: "dir", open: true },
+  { depth: 3, name: "schema.sql", kind: "file", status: "M" },
+  { depth: 2, name: "lib", kind: "dir", open: true },
+  { depth: 3, name: "idempotency.ts", kind: "file", status: "U" },
+  { depth: 3, name: "stripe.ts", kind: "file" },
+  { depth: 2, name: "routes", kind: "dir", open: true },
+  { depth: 3, name: "cart.ts", kind: "file" },
+  { depth: 3, name: "payments.ts", kind: "file", status: "M", active: true },
+  { depth: 2, name: "index.ts", kind: "file" },
+  { depth: 1, name: "tests", kind: "dir" },
+  { depth: 1, name: "package.json", kind: "file" },
+  { depth: 1, name: "README.md", kind: "file" },
+];
+
+const mainPane = {
+  label: "claude",
+  cwd: "~/dev/atlas-checkout",
+  lines: [
+    { t: '$ claude "add idempotency keys to payments"', tone: "prompt" },
+    { t: "" },
+    { t: "  Reading src/routes/payments.ts — 214 lines" },
+    { t: "  Reading src/lib/stripe.ts — 96 lines" },
+    { t: "" },
+    { t: "  Plan", tone: "bright" },
+    { t: "   1  key + response hash on payment_attempts" },
+    { t: "   2  short-circuit repeats in the 24h window" },
+    { t: "   3  cover the retry-after-timeout case" },
+    { t: "" },
+    { t: "  edit    src/routes/payments.ts" },
+    { t: "  edit    src/db/schema.sql" },
+    { t: "  create  src/lib/idempotency.ts" },
+    { t: "" },
+    { t: "  41 tests passed in 1.9s" },
+    { t: "  Done. 3 files changed, 128 insertions(+)", tone: "bright" },
+    { t: "" },
+    { t: "$ ", tone: "prompt", cursor: true },
+  ],
+};
+
+const sidePanes = [
+  {
+    label: "vitest",
+    cwd: "atlas-checkout",
+    lines: [
+      { t: "$ npm run test:watch", tone: "prompt" },
+      { t: " ✓ payments/idempotency   12 passed" },
+      { t: " ✓ payments/refunds        9 passed" },
+      { t: " ✓ cart/totals            14 passed" },
+      { t: " ✓ auth/session            6 passed" },
+      { t: " 41 passed · 1.9s", tone: "bright" },
+      { t: " waiting for changes ", cursor: true },
+    ],
+  },
+  {
+    label: "git",
+    cwd: "atlas-checkout",
+    lines: [
+      { t: "$ git status -sb", tone: "prompt" },
+      { t: "## feat/idempotency-keys", tone: "bright" },
+      { t: " M src/routes/payments.ts" },
+      { t: " M src/db/schema.sql" },
+      { t: "?? src/lib/idempotency.ts" },
+      { t: "" },
+      { t: "$ ", tone: "prompt", cursor: true },
+    ],
+  },
+];
+
+const label =
+  "The TermHQ window: a file tree on the left, one tall terminal running a " +
+  "coding agent, and two shorter terminals stacked beside it running tests " +
+  "and git.";
+---
+
+<div class:list={["appmock", className]} role="img" aria-label={label}>
+  <div class="am-bar">
+    <Mark class="am-mark" title="" />
+    <span class="am-ws">atlas-checkout</span>
+    <span class="am-bar-space"></span>
+    <span class="am-chip">grid</span>
+    <span class="am-wc"><i></i><i></i><i></i></span>
+  </div>
+
+  <div class="am-body">
+    <aside class="am-side">
+      <div class="am-side-tabs">
+        <span class="on">Files</span>
+        <span>Git</span>
+      </div>
+      <ul class="am-tree">
+        {
+          tree.map((row) => (
+            <li
+              class:list={["am-row", { "is-active": row.active }]}
+              style={`padding-left:${10 + row.depth * 13}px`}
+            >
+              <span class="am-glyph">
+                {row.kind === "file" ? "" : row.open ? "▾" : "▸"}
+              </span>
+              <span class="am-name">{row.name}</span>
+              {row.status && <span class="am-status">{row.status}</span>}
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+
+    <div class="am-grid">
+      <section class="am-pane am-pane-main is-focused">
+        <header class="am-head">
+          <span class="am-dot"></span>
+          <span class="am-title">{mainPane.label}</span>
+          <span class="am-cwd">{mainPane.cwd}</span>
+        </header>
+        <div class="am-out">
+          {mainPane.lines.map((l) => <div class:list={["am-line", l.tone && `is-${l.tone}`]}>{l.t}{l.cursor && <span class="am-cursor">▍</span>}</div>)}
+        </div>
+      </section>
+
+      {
+        sidePanes.map((pane) => (
+          <section class="am-pane">
+            <header class="am-head">
+              <span class="am-dot" />
+              <span class="am-title">{pane.label}</span>
+              <span class="am-cwd">{pane.cwd}</span>
+            </header>
+            <div class="am-out">
+              {pane.lines.map((l) => <div class:list={["am-line", l.tone && `is-${l.tone}`]}>{l.t}{l.cursor && <span class="am-cursor">▍</span>}</div>)}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .appmock {
+    /* Decorative: nothing in here should ever take a click, a caret or a tab
+       stop. One declaration at the root beats guarding every child. */
+    pointer-events: none;
+    user-select: none;
+    margin-top: 64px;
+    border: 1px solid var(--line-strong);
+    border-radius: 14px;
+    background: var(--panel);
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ---- title bar ---- */
+  .am-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+    height: 39px; /* the app's own strip height */
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+  /* 20px, the height the mark actually sits at on the app's strip. */
+  .am-bar :global(.am-mark) {
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  /* minimize / maximize / close, as marks rather than working buttons */
+  .am-wc {
+    display: flex;
+    gap: 14px;
+    margin-left: 4px;
+    color: var(--line-strong);
+  }
+  .am-wc i {
+    width: 9px;
+    height: 9px;
+    border-top: 1px solid currentColor;
+  }
+  .am-wc i:nth-child(2) {
+    border: 1px solid currentColor;
+  }
+  .am-wc i:last-child {
+    border: 0;
+    background:
+      linear-gradient(currentColor, currentColor) center / 11px 1px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1px 11px no-repeat;
+    transform: rotate(45deg);
+  }
+  .am-ws {
+    color: var(--muted);
+  }
+  .am-bar-space {
+    flex: 1;
+  }
+  .am-chip {
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  /* ---- body: sidebar + panes ---- */
+  .am-body {
+    display: grid;
+    grid-template-columns: 208px minmax(0, 1fr);
+    background: var(--line);
+    gap: 1px;
+  }
+
+  .am-side {
+    background: var(--bg);
+    padding: 12px 0 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .am-side-tabs {
+    display: flex;
+    gap: 16px;
+    padding: 0 14px 10px;
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .am-side-tabs .on {
+    color: var(--fg);
+  }
+  .am-tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .am-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 12px;
+    height: 22px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .am-row.is-active {
+    background: var(--panel-2);
+    color: var(--fg);
+  }
+  .am-glyph {
+    width: 9px;
+    color: var(--faint);
+    font-size: 10px;
+  }
+  .am-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .am-status {
+    margin-left: auto;
+    color: var(--faint);
+    font-size: 11px;
+  }
+
+  /* One tall pane on the left, two stacked on the right. The tall one spans
+     both rows rather than the column being its own grid — one grid keeps the
+     1px seams continuous across all three. */
+  .am-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+  }
+  .am-pane {
+    background: var(--bg);
+    overflow: hidden;
+    min-width: 0;
+  }
+  .am-pane-main {
+    grid-row: span 2;
+  }
+
+  .am-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .am-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    flex-shrink: 0;
+  }
+  .is-focused .am-dot {
+    background: var(--fg);
+  }
+  .am-title {
+    color: var(--dim);
+  }
+  .am-cwd {
+    color: var(--faint);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .am-out {
+    padding: 12px 14px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  /* pre on the line, not on a wrapper — see the note at the top of the file.
+     min-height rather than height so a blank line still occupies a row. */
+  .am-line {
+    white-space: pre;
+    line-height: 1.65;
+    min-height: 1.65em;
+    overflow: hidden;
+  }
+  .am-line.is-prompt {
+    color: var(--fg);
+  }
+  .am-line.is-bright {
+    color: var(--dim);
+  }
+  /* Its own keyframe rather than the global cursor-blink: Astro rewrites
+     keyframe names it finds inside a scoped block, so a component that owns
+     both halves can't be broken by anything the global sheet does later. The
+     global prefers-reduced-motion rule still stops it — that one is on *. */
+  .am-cursor {
+    color: var(--fg);
+    animation: am-blink 1.1s steps(1) infinite;
+  }
+  @keyframes am-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Narrow: the sidebar and the second stacked pane are the first things a
+     phone has no room for, and the mock still reads without them. */
+  @media (max-width: 860px) {
+    .am-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .am-side {
+      display: none;
+    }
+  }
+  @media (max-width: 620px) {
+    .am-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto;
+    }
+    .am-pane-main {
+      grid-row: auto;
+    }
+    .am-pane:last-child {
+      display: none;
+    }
+  }
+</style>

@@ -1,42 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import Mark from "../components/Mark.astro";
+import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
-
-const panes = [
-  {
-    label: "agent · refactor",
-    lines: [
-      { prompt: true, text: 'claude "split the host module"' },
-      { text: "Reading host.rs… 1,204 lines" },
-      { text: "Proposing 3 files", cursor: true },
-    ],
-  },
-  {
-    label: "tests",
-    lines: [
-      { prompt: true, text: "cargo test" },
-      { text: "running 38 tests" },
-      { text: "test result: ok. 38 passed", cursor: true },
-    ],
-  },
-  {
-    label: "dev server",
-    lines: [
-      { prompt: true, text: "npm run dev" },
-      { text: "VITE ready in 402 ms" },
-      { text: "➜ localhost:1420", cursor: true },
-    ],
-  },
-  {
-    label: "scratch",
-    lines: [
-      { prompt: true, text: "git log --oneline -2" },
-      { text: "fad1b17 titlebar mark" },
-      { text: "a1d4b09 finish the rename", cursor: true },
-    ],
-  },
-];
 
 const features = [
   {
@@ -61,7 +27,7 @@ const features = [
   },
   {
     title: "Agents render properly",
-    body: "Agents that come up monochrome or misaligned elsewhere come up right here — full colour, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
+    body: "Agents that come up monochrome or misaligned elsewhere come up right here — full color, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
   },
   {
     title: "Voice, fully local",
@@ -111,34 +77,7 @@ const keys = [
       )
     }
 
-    <div
-      class="termshot"
-      aria-label="Terminal panes tiled side by side in a TermHQ window"
-    >
-      <div class="termshot-bar">
-        <Mark />
-        <span>workspace: termhq-source</span>
-      </div>
-      <div class="termshot-grid">
-        {
-          panes.map((pane) => (
-            <div class="termshot-pane">
-              <h4>{pane.label}</h4>
-              <code>
-                {pane.lines.map((line) => (
-                  <>
-                    {line.prompt && <span class="prompt">$</span>}
-                    {line.prompt ? ` ${line.text}` : line.text}
-                    {line.cursor && <span class="cursor"> ▍</span>}
-                    <br />
-                  </>
-                ))}
-              </code>
-            </div>
-          ))
-        }
-      </div>
-    </div>
+    <AppMock />
   </section>
 
   <section class="section">
@@ -201,7 +140,7 @@ const keys = [
           <h3>Bring your theme</h3>
           <p>
             Ten built-ins from true black to true white, your own in one small
-            JSON file, and one-click import for VS Code colour themes from Open
+            JSON file, and one-click import for VS Code color themes from Open
             VSX. The terminal palette can follow the interface or come from a
             different theme entirely.
           </p>

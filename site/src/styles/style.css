@@ -1,7 +1,7 @@
 /* TermHQ — black ground, white accent.
    Monochrome on purpose: the product is a terminal, the mark is white ink on
-   black, and a developer tool that shouts in colour reads as a toy. Emphasis
-   here is carried by contrast and weight rather than hue, so the one "colour"
+   black, and a developer tool that shouts in color reads as a toy. Emphasis
+   here is carried by contrast and weight rather than hue, so the one "color"
    in the system is white and it is spent sparingly — primary buttons, the
    focused search row, the active nav item. */
 
@@ -64,7 +64,7 @@ img, svg { max-width: 100%; }
 :focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 4px; }
 
 /* Keyboard keys — the docs are full of <kbd>, and unstyled kbd reads as a
-   typo. Chips, monospace, no colour: the same treatment a terminal gives
+   typo. Chips, monospace, no color: the same treatment a terminal gives
    them. */
 kbd {
   font-family: var(--mono);
@@ -165,7 +165,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .lede { font-size: clamp(1.05rem, 2vw, 1.22rem); line-height: 1.6; color: var(--muted); max-width: 60ch; }
 
 /* Mono eyebrow above a section heading — the typographic tic that says
-   "developer tool" without a single extra colour. */
+   "developer tool" without a single extra color. */
 .eyebrow {
   display: block;
   font-family: var(--mono);
@@ -213,33 +213,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   background: color-mix(in srgb, var(--panel) 70%, transparent);
 }
 
-/* a terminal-looking figure, drawn in CSS — no screenshot to ship yet */
-.termshot {
-  max-width: 880px; margin: 64px auto 0;
-  border: 1px solid var(--line-strong); border-radius: 14px;
-  background: var(--panel); overflow: hidden; text-align: left;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 24px 80px rgba(0, 0, 0, 0.7),
-    0 0 120px rgba(255, 255, 255, 0.045);
-}
-.termshot-bar {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 14px; border-bottom: 1px solid var(--line);
-  font-family: var(--mono); font-size: 12px; color: var(--faint);
-}
-.termshot-bar .mark { width: 15px; height: 15px; color: var(--muted); }
-.termshot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
-.termshot-pane { background: var(--bg); padding: 16px 18px; min-height: 136px; }
-.termshot-pane h4 {
-  margin: 0 0 10px; font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); font-weight: 500;
-}
-.termshot code { display: block; font-family: var(--mono); font-size: 12.5px; color: var(--muted); line-height: 1.8; }
-.termshot .prompt { color: var(--fg); }
-.termshot .cursor { color: var(--fg); animation: cursor-blink 1.1s steps(1) infinite; }
-@keyframes cursor-blink { 50% { opacity: 0; } }
-@media (max-width: 720px) { .termshot-grid { grid-template-columns: 1fr; } }
+/* The hero figure moved into components/AppMock.astro, which owns its own
+   styles. Nothing else used .termshot or the cursor-blink keyframe. */
 
 /* ---------- feature grid ---------- */
 
