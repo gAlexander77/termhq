@@ -97,7 +97,10 @@ Keys are camelCase.
 - **Cursor style** — block, bar or underline — and **cursor blink**.
 - **File icons**, plus marketplace browsers for themes and icon packs, and
   buttons that open the `themes/` and `icons/` folders.
-- **Git diff view** — split or stacked.
+- **Pane style** — how terminals sit in the grid: **Spaced** (small gaps and
+  rounded corners, the default) or **Boxy** (no gaps, square corners — the
+  tiling-window-manager look). Borders stay in both, so two terminals never
+  read as one.
 
 ### Terminal
 
@@ -163,12 +166,58 @@ Keys are camelCase.
 - **Terminal openers run in** — which shell those terminal openers get. Until you
   pick one they stay hidden entirely, because vim in PowerShell helps nobody.
 
+### Git
+
+- **Commit message agent** — which installed agent CLI the spark button asks
+  for a commit message; it reads your staged changes and the suggestion lands
+  in the box for you to edit. Automatic (first one installed) by default; set
+  it to off to hide the button.
+- **Commit message prompt** — your house rules for those messages: a ticket
+  prefix, a required tense, a language. Empty means the shipped prompt.
+- **Subject length hint** — a note appears when a commit's first line runs
+  longer than this. Nothing is ever blocked or truncated; 0 turns it off.
+- **Add Signed-off-by** — the trailer some projects require on every commit.
+- **Branch order** — how the branch picker sorts: most recently committed
+  first, or alphabetical.
+- **Pull style** — what pull does when your branch and its upstream have both
+  moved: fast-forward only (the default — it stops and says so rather than
+  surprising you), rebase, or merge.
+- **Auto-fetch** — a quiet background fetch every few minutes so ahead/behind
+  counts stay honest. Failures are silent on purpose; a fetch that fails on a
+  plane should not raise a banner.
+- **Prune on fetch** — drop remote-tracking branches whose upstream is gone.
+- **Stash carries untracked files** — whether the stash-and-switch offer
+  brings brand-new files along to the other branch.
+- **Refresh every** — how often the panel re-reads status; a very large
+  repository may prefer a longer interval.
+- **Conflict count on the Git tab** — a badge on the tab itself, so a merge an
+  agent started in a background pane is visible while you are looking at
+  Files.
+- **Confirm before discarding** — ask before a file's changes are thrown
+  away. Deleting an untracked file always asks, because that is the one thing
+  git cannot bring back.
+- **Diff layout** — unified (stacked) or side by side; the same toggle lives
+  in the diff window's header.
+
 ### Voice
 
 - **Voice dictation** — show the mic button and honor the dictation chord.
-  Default on.
+  Default on — but the button only exists once a speech model is installed,
+  so a fresh install shows no voice controls at all until you download one.
 - **Input device** — which microphone to use; falls back to the system default if
   the chosen one is unplugged.
+- **Dictation language** — English by default, sixteen more, or auto-detect,
+  which lets a multilingual model identify the language per recording.
+  English-only models transcribe English regardless, and the panel warns
+  about that combination when you pick it.
+- **Test microphone** — record a few seconds and play them back through the
+  exact capture path dictation uses, with a verdict on the level — so "is my
+  mic working?" gets answered before any words are spent on it.
+- **Speech model** — the model manager: download with live progress and
+  cancel, switch between downloaded models, delete them, or import your own
+  file. Every row shows its size and language coverage, every downloaded
+  model records where it came from and when, and the panel links its sources
+  so you can verify them yourself.
 
 ### Shortcuts
 

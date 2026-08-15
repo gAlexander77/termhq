@@ -31,6 +31,15 @@ resizing the window always divides the space over real rows.
 A single terminal fills the whole grid area rather than sitting in one
 half-width cell. Spawning or cloning splits it back into the grid.
 
+## Pane style
+
+The grid has two looks, chosen in **Settings → Appearance → Pane style**.
+**Spaced**, the default, keeps a small gutter between terminals and rounds
+their corners. **Boxy** removes both — terminals meet edge to edge with
+square corners, the tiling-window-manager look. Borders stay on in either
+style, so two terminals never blur into one, and switching is instant: no
+pane reflows or resizes, only the chrome around it changes.
+
 ## Rearranging with the mouse
 
 Drag a pane's **header**. It is one gesture family, borrowed from Windows snap,

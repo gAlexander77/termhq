@@ -66,21 +66,28 @@ it thoroughly.
 
 ## Dictation does nothing
 
-Check **Settings → Voice** is enabled, and watch the mini-waveform beside the mic
-button in the title bar while you speak. It scrolls with real input, so a flat
-line means the operating system is not giving TermHQ any audio — check the
-microphone permission for TermHQ in your system settings, and check the input
-device in **Settings → Voice** if you have more than one.
+If there is **no mic button at all**, no speech model is installed yet — that
+is the intended off state, not a bug. Open **Settings → Voice**, download a
+model (or import your own), close Settings, and the button appears.
+
+If the button is there but nothing comes out, use **Settings → Voice → Test
+microphone**: it records a few seconds and plays them back through the same
+capture path dictation uses. A silent clip means the operating system is not
+giving TermHQ any audio — check the microphone permission for TermHQ in your
+system settings, and the input device in **Settings → Voice** if you have
+more than one. The mini-waveform beside the mic button tells the same story
+live: it scrolls with real input, so a flat line means no audio is arriving.
 
 On macOS the permission matters twice over: without it, microphones do not
 enumerate at all, so the device list comes up empty rather than wrong.
 
-The speech model ships inside the Windows and macOS installers, so there is
-nothing to download on first use. **Linux packages do not currently include it**,
-and dictation is unavailable there.
+**Linux packages do not currently include the speech engine**, and dictation
+is unavailable there.
 
-If it hears you but the words come out wrong, note that dictation currently
-recognizes **English only**.
+If it hears you but the words come out wrong, check the **dictation
+language** in Settings → Voice — and note that models labeled *English only*
+stay English whatever the language is set to; only multilingual models follow
+it.
 
 ## Windows warns about the installer
 

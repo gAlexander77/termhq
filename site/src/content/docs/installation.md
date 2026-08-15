@@ -44,16 +44,27 @@ sudo dpkg -i termhq_*.deb
 Dictation runs entirely on your machine. Audio never leaves it
 — there is no cloud transcription path in TermHQ at all.
 
-The Windows and macOS installers **include the speech model**, so dictation works
-on a fresh machine with nothing to download, build or sign into. On macOS the
-first use asks for microphone permission, as any app does.
+The installers ship **without a speech model**, which is most of why they are
+small. The first time you want voice, open **Settings → Voice** and download a
+model — one click, a progress bar, done. Until then there is no mic button and
+nothing voice-related runs: nobody gets handed a hundred-megabyte AI download
+they did not ask for. On macOS the first recording asks for microphone
+permission, as any app does.
 
-Dictation currently recognizes **English**. Other languages are not supported
-yet.
+Four models are offered, from a quick 78 MB English-only one to a 1.6 GB
+multilingual one — each labeled with its size and language coverage, and the
+panel says in plain text exactly where every download comes from. Models can
+be switched, deleted, or re-downloaded at any time, they survive app updates,
+and if you already have a compatible model file of your own, **Import** brings
+it in instead.
 
-Linux is the exception: the Linux packages do not include the speech model, so
-dictation is unavailable there for now. Everything else on this page applies to
-Linux as normal.
+Dictation listens in **English** by default. **Settings → Voice** has a
+language dropdown with sixteen more, plus an auto-detect option that lets a
+multilingual model identify the language per recording.
+
+Linux is the exception: the Linux packages do not include the speech engine
+yet, so dictation is unavailable there for now. Everything else on this page
+applies to Linux as normal.
 
 ## Where TermHQ keeps its files
 
