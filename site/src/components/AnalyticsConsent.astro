@@ -1,0 +1,177 @@
+---
+// GDPR: IP-based geo-detection for GA4 consent
+// EU visitors: consent required | Non-EU: GA4 loads by default
+---
+
+<div id="consent-banner" class="consent-banner" hidden>
+  <div class="consent-content">
+    <p>We use analytics to understand how you use TermHQ. Accept to enable GA4?</p>
+    <div class="consent-actions">
+      <button id="consent-reject" class="consent-btn consent-reject">Reject</button>
+      <button id="consent-accept" class="consent-btn consent-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const CONSENT_KEY = "termhq-ga4-consent";
+  const EU_COUNTRIES = [
+    "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
+    "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK",
+    "SI", "ES", "SE"
+  ];
+
+  function getCountryFromTimezone() {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const tzToCountry = {
+      "Europe/": "EU",
+      "Europe/London": "GB",
+      "Europe/Dublin": "IE",
+      "GMT": "EU",
+      "UTC": "EU"
+    };
+    for (const [pattern, country] of Object.entries(tzToCountry)) {
+      if (tz.includes(pattern)) return country;
+    }
+    return null;
+  }
+
+  function initAnalytics() {
+    const hasConsent = localStorage.getItem(CONSENT_KEY);
+    const banner = document.getElementById("consent-banner");
+
+    if (hasConsent === "accept") {
+      loadGA4();
+    } else if (hasConsent === "reject") {
+      // do nothing
+    } else {
+      // No prior choice, check region via Cloudflare header or timezone
+      const cfCountry = document.documentElement.getAttribute("data-country");
+      const isEU = cfCountry ? EU_COUNTRIES.includes(cfCountry) : false;
+
+      if (isEU) {
+        // EU: show banner, require consent
+        banner.removeAttribute("hidden");
+      } else {
+        // Non-EU: load GA4 by default
+        localStorage.setItem(CONSENT_KEY, "accept");
+        loadGA4();
+      }
+    }
+
+    document.getElementById("consent-accept")?.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "accept");
+      banner.setAttribute("hidden", "");
+      loadGA4();
+    });
+
+    document.getElementById("consent-reject")?.addEventListener("click", () => {
+      localStorage.setItem(CONSENT_KEY, "reject");
+      banner.setAttribute("hidden", "");
+    });
+  }
+
+  function loadGA4() {
+    const script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-XHSVDY02F6";
+    script.async = true;
+    document.head.appendChild(script);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", "G-XHSVDY02F6");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAnalytics);
+  } else {
+    initAnalytics();
+  }
+</script>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--panel);
+    border-top: 1px solid var(--line-strong);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .consent-content {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .consent-banner p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .consent-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .consent-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--fg);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .consent-btn:hover {
+    border-color: var(--fg);
+  }
+
+  .consent-accept {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+
+  .consent-accept:hover {
+    background: var(--dim);
+    border-color: var(--dim);
+  }
+
+  @media (max-width: 640px) {
+    .consent-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .consent-banner p {
+      font-size: 13px;
+    }
+
+    .consent-actions {
+      width: 100%;
+    }
+
+    .consent-btn {
+      flex: 1;
+    }
+  }
+</style>

@@ -2,8 +2,12 @@
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import Search from "../components/Search.astro";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 import { SITE, PRE_RELEASE } from "../config";
 import "../styles/style.css";
+
+// Get country from Cloudflare header (CF-IPCountry)
+const country = Astro.request.headers.get("CF-IPCountry") || "";
 
 interface Props {
   title?: string;
@@ -49,7 +53,7 @@ const orgId = `${SITE.url}/#organization`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-country={country}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -159,6 +163,13 @@ const orgId = `${SITE.url}/#organization`;
         />
       )
     }
+
+    <!-- GoatCounter: privacy-respecting analytics (always active) -->
+    <script
+      data-goatcounter="https://termhq.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
   </head>
 
   <body>
@@ -169,5 +180,6 @@ const orgId = `${SITE.url}/#organization`;
     </main>
     <Footer />
     <Search />
+    <AnalyticsConsent />
   </body>
 </html>
