@@ -31,7 +31,7 @@ closed a window.
 TermHQ is a terminal workbench built around that. Panes tile instead of
 stacking behind tabs, with no limit on how many. Terminals keep running after
 you quit the app. Work is grouped into workspaces you can leave and come back
-to. Dictation runs locally, on your own machine, with nothing sent anywhere.
+to. Dictation runs on local Whisper models, on your own machine.
 
 It is a terminal, not an IDE. It does not want to be your editor.
 
@@ -49,11 +49,11 @@ It is a terminal, not an IDE. It does not want to be your editor.
   agent's output is composed at the width it will be read at; color capability
   is forced on so agents render in color; and a pane that goes quiet after being
   busy tells you so.
-- **Local voice dictation** — powered by whisper.cpp, running entirely on your
-  machine. There is no cloud path, by design. Speech models are downloaded (or
-  imported) in Settings rather than bundled, so the installer stays small and
-  voice is strictly opt-in. English plus sixteen other languages; not packaged
-  for Linux yet.
+- **Local voice dictation** — powered by whisper.cpp, with transcription
+  running on your machine. Speech models are downloaded (or imported) in
+  Settings rather than bundled, so the installer stays small and voice is
+  strictly opt-in. English plus sixteen other languages; not packaged for
+  Linux yet.
 - **Theming** — JSON themes applied as CSS variables, with VS Code theme import
   via Open VSX.
 - **Undo close** — closing a pane is reversible for a few seconds.
@@ -97,11 +97,11 @@ TermHQ version, and what you expected to happen.
 
 ## Privacy
 
-TermHQ runs locally. Voice dictation is processed on your own machine by
-whisper.cpp and is never uploaded; the speech model it runs is downloaded only
-when you ask for one, from the whisper.cpp project's public model repository,
-and the app works fully without it. Theme and extension downloads are
-user-initiated and come from [Open VSX](https://open-vsx.org/).
+TermHQ runs locally. Dictation runs on local Whisper models — transcription
+happens on your own machine. Models are downloaded only when you ask for one,
+from the whisper.cpp project's public model repository, and the app works
+fully without one. Theme and extension downloads are user-initiated and come
+from [Open VSX](https://open-vsx.org/).
 
 ## About this repository
 

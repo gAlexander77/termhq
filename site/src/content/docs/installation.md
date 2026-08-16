@@ -41,8 +41,8 @@ sudo dpkg -i termhq_*.deb
 
 ## Voice dictation
 
-Dictation runs entirely on your machine. Audio never leaves it
-— there is no cloud transcription path in TermHQ at all.
+Dictation runs on local Whisper models: transcription happens on your own
+machine.
 
 The installers ship **without a speech model**, which is most of why they are
 small. The first time you want voice, open **Settings → Voice** and download a

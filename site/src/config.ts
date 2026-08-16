@@ -6,7 +6,7 @@ export const SITE = {
   /** Used as the <title> on the home page and as the OG title fallback. */
   title: "TermHQ — A GUI Terminal for AI Coding Agents",
   description:
-    "TermHQ is a keyboard-first GUI terminal for running AI coding agents. Tiling panes, shells that survive quitting the app, resumable workspaces, and fully local voice dictation. Windows, macOS, and Linux.",
+    "TermHQ is a keyboard-first GUI terminal for running AI coding agents. Tiling panes, shells that survive quitting the app, resumable workspaces, and local voice dictation. Windows, macOS, and Linux.",
   repo: "https://github.com/gAlexander77/termhq",
   /**
    * Resolved through GitHub's own redirect rather than naming a version, so a

@@ -39,6 +39,6 @@ machine; git operations run through the `git` already on your `PATH`, with
 your credentials, hooks, and configuration; themes and icon packs install
 from [Open VSX](https://open-vsx.org/).
 
-None of it phones home. There is no telemetry and no account, and the only
-network requests TermHQ makes are the ones you ask for — a theme install, a
-speech-model download, your own git remotes.
+With local Whisper models, dictation is processed on your machine; downloads
+— a theme, an icon pack, a speech model — happen when you ask for them, from
+sources the interface names.

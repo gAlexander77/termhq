@@ -103,10 +103,9 @@ Prompts are long, and typing them is the slow part. TermHQ's dictation writes
 into the focused pane, so you can talk a prompt at an agent and edit it before
 sending.
 
-Transcription happens on your machine, using a speech model you pick and
-download once in **Settings → Voice** (or bring your own). Nothing is uploaded
-and nothing needs an account — which, for a tool sitting in front of
-proprietary source, is the only defensible design. English by default, sixteen
+Transcription happens on your machine, on a local Whisper model you pick and
+download once in **Settings → Voice** (or bring your own) — which matters for
+a tool sitting in front of proprietary source. English by default, sixteen
 other languages in the same panel; not yet available on Linux.
 
 ## Keeping their keystrokes theirs

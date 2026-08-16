@@ -1,5 +1,8 @@
 * text=auto eol=lf
 
+# Website is product/distribution infrastructure, not TermHQ's implementation.
+site/** linguist-generated=true
+
 # Hugo templates and stylesheets are site scaffolding, not the project's
 # language — keep them out of GitHub's language bar.
 *.html linguist-detectable=false linguist-generated=true
