@@ -64,6 +64,22 @@ Windows, macOS, and Linux. Windows is the primary daily-driver target and macOS
 is developed alongside it. Linux is built and published, but has had less
 exercise — and voice dictation is not packaged for it yet.
 
+## How it is built
+
+TermHQ is a Rust application. Everything that touches your system — shells and
+PTYs, session persistence, files, git, speech — is native Rust. The core is
+built from scratch for this app: the session engine (a small background
+process that owns your shells, which is why they survive the window — no
+`tmux` involved), the tiling grid, the theming system, the keymap, and the
+Git panel.
+
+The interface renders in the operating system's own webview via
+[Tauri](https://v2.tauri.app/) — no bundled browser — which is why installers
+are measured in megabytes, not hundreds of them. Terminals are rendered by
+[xterm.js](https://xtermjs.org/), the same emulator VS Code uses; dictation
+runs on [whisper.cpp](https://github.com/ggml-org/whisper.cpp); git runs
+through the `git` on your `PATH`.
+
 ## Links
 
 | | |
