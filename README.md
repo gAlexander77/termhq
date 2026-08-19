@@ -29,9 +29,10 @@ you have to hunt for — and you do not want any of them to die because you
 closed a window.
 
 TermHQ is a terminal workbench built around that. Panes tile instead of
-stacking behind tabs, with no limit on how many. Terminals keep running after
-you quit the app. Work is grouped into workspaces you can leave and come back
-to. Dictation runs on local Whisper models, on your own machine.
+stacking behind tabs, with no limit on how many, sized by dragging the boundary
+between them. Terminals keep running after you quit the app. A pane can hold a
+web page instead of a shell. Work is grouped into workspaces you can leave and
+come back to. Dictation runs on local Whisper models, on your own machine.
 
 It is a terminal, not an IDE. It does not want to be your editor.
 
@@ -39,6 +40,13 @@ It is a terminal, not an IDE. It does not want to be your editor.
 
 - **Tiling panes** — every terminal visible at once, in a grid or in columns,
   arranged from the keyboard or by dragging pane headers to move, swap and grow.
+  Drag the boundary between two panes to resize them: the panes touching it
+  follow, the ones that do not stay put, and a workspace remembers the
+  proportions you set.
+- **Browser panes** — `Ctrl+Shift+B` tiles a real web page in the grid, rendered
+  by the operating system's own browser engine embedded in the window, with a
+  URL bar, devtools and the same drag, stash, resize and fullscreen moves as a
+  terminal. Verified on Windows; macOS and Linux passes are in progress.
 - **Shells that outlive the app** — terminals run in a detached host process,
   tmux-style. Quit TermHQ, reopen it, and your sessions are still running with
   their scrollback intact.
@@ -80,7 +88,10 @@ Git panel.
 
 The interface renders in the operating system's own webview via
 [Tauri](https://v2.tauri.app/) — no bundled browser — which is why installers
-are measured in megabytes, not hundreds of them. Terminals are rendered by
+are measured in megabytes, not hundreds of them. That same engine is what a
+browser pane embeds, so a web page in the grid is the real thing rather than a
+streamed picture of one — and it is given none of the application's
+permissions. Terminals are rendered by
 [xterm.js](https://xtermjs.org/), the same emulator VS Code uses; dictation
 runs on [whisper.cpp](https://github.com/ggml-org/whisper.cpp); git runs
 through the `git` on your `PATH`.
@@ -107,6 +118,11 @@ happens on your own machine. Models are downloaded only when you ask for one,
 from the whisper.cpp project's public model repository, and the app works
 fully without one. Theme and extension downloads are user-initiated and come
 from [Open VSX](https://open-vsx.org/).
+
+A browser pane goes wherever you point it, like any browser, and its cookies
+and logins live in the browser engine's own profile on your machine. The page
+is given no access to TermHQ: it holds none of the application's permissions
+and cannot reach it.
 
 ## About this repository
 

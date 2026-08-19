@@ -39,6 +39,18 @@ produces mangled output.
 Only recent output is kept, not the full history. A pane that comes back emptier
 than you left it is a pane whose program has been very chatty since.
 
+Proportions come back too. If you have [dragged a
+gutter](/docs/panes-and-layout/#resizing-panes) to give one pane more room than
+another, the workspace remembers that alongside the panes themselves.
+
+## Browser panes come back by address
+
+A [browser pane](/docs/browser-panes/) is part of the window rather than of the
+shell host, so quitting closes its page and reopening navigates back to it. What
+survives is the address and its place in the grid — plus your logins and cookies,
+which live in the browser engine's own profile. "Signed into the dashboard" is
+still true after a restart; a half-filled form is not.
+
 ## Several workspaces at once
 
 Workspaces are independent. Closing one leaves the others alone, and one window

@@ -1,7 +1,7 @@
 ---
 title: "Under the hood"
 weight: 95
-description: "What TermHQ is built from: a native Rust core, the OS webview instead of a bundled browser, and first-party parts everywhere it counts."
+description: "What TermHQ is built from: a native Rust core, the OS webview instead of a bundled browser — for the interface and for browser panes alike — and first-party parts everywhere it counts."
 ---
 
 TermHQ is a Rust application. Everything that touches your system — spawning
@@ -23,6 +23,20 @@ process that owns every shell. The window can close, crash, or update; the
 shells keep running, and the next window picks them back up. That is the whole
 mechanism behind [persistent sessions](/docs/persistent-sessions/) — the
 terminal multiplexer is built in, so there is no `tmux` to learn.
+
+## Browser panes are the real engine
+
+The same choice that keeps the installer small pays again for
+[browser panes](/docs/browser-panes/): a browser pane is your operating system's
+browser engine embedded in the window as a child surface, positioned at the
+pane's rectangle. The page is composited by the engine on the GPU. No frame is
+ever streamed through the application, and no keystroke or mouse move is ever
+synthesized — which is the difference between a web page and a screenshot of
+one that lags.
+
+Because the page is arbitrary remote content, it is given no authority: browser
+surfaces hold none of the application's permissions, remote pages are refused
+any channel into TermHQ, and navigation is fenced to `http` and `https`.
 
 ## Built from scratch
 

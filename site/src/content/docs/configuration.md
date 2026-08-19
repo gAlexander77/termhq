@@ -101,6 +101,12 @@ Keys are camelCase.
   rounded corners, the default) or **Boxy** (no gaps, square corners — the
   tiling-window-manager look). Borders stay in both, so two terminals never
   read as one.
+- **Resize panes by dragging** — default on. Off gives every pane an equal share
+  and takes the handles away, which is the grid exactly as it was before the
+  feature existed. Your proportions are remembered either way, so turning it
+  back on returns the layout you had rather than a blank one. Opening or closing
+  a pane resets them regardless of this setting — that rule belongs to
+  [resizing](/docs/panes-and-layout/#resizing-panes), not to the toggle.
 
 ### Terminal
 
@@ -117,6 +123,21 @@ Keys are camelCase.
   art and block characters land exactly in their cells.
   Default on; the escape hatch if the renderer runs out of memory on a very long
   agent session. Applies to newly opened panes.
+
+### Browser
+
+Settings for [browser panes](/docs/browser-panes/).
+
+- **Search engine** — where a browser pane's URL bar sends anything that is not
+  a web address: DuckDuckGo (the default), Google, Bing or Brave. Web addresses
+  and localhost ports are never searched; they open directly.
+- **New panes open** — what <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> lands
+  on. Takes anything the URL bar takes, so `localhost:3000` puts every new pane
+  on your dev server. Empty means a blank pane with the URL bar focused. A pane
+  opened by a page — a link that wanted a new tab — keeps its own address.
+- **Sound in new panes** — default on. Off means new browser panes start muted;
+  the speaker in each pane's header unmutes that one page and stays visible
+  while it is muted, so silence is never a mystery.
 
 ### Agents
 

@@ -30,12 +30,24 @@ const features = [
     body: "Agents that come up monochrome or misaligned elsewhere come up right here — full color, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
   },
   {
+    title: "A browser in the grid",
+    body: "Ctrl+Shift+B tiles a real web page beside your shells — your OS's own browser engine, embedded, not a screenshot of one. Your docs, your dashboard, the localhost your agent is building, all in the layout you are already looking at.",
+  },
+  {
     title: "Voice, locally transcribed",
     body: "Dictate into the focused terminal, transcribed on your own machine by local Whisper models. Models are a download you choose in Settings — English or sixteen other languages — so the app installs small and voice adds nothing until you want it.",
   },
   {
     title: "Closing is reversible",
     body: "A closed pane leaves a countdown you can click to bring it back. The shell keeps running underneath, so nothing is lost.",
+  },
+  {
+    title: "Sized like a window",
+    body: "Drag the boundary between two panes and it moves where you put it — panes touching it follow, panes that do not stay exactly where they were. A web page has a natural width and a terminal does not, so 70/30 is often the honest answer.",
+  },
+  {
+    title: "Every shell you already have",
+    body: "PowerShell, cmd, Git Bash and every WSL distribution on Windows; whatever /etc/shells reports on macOS and Linux. Detected on launch, so there is nothing to configure that the machine already knows.",
   },
   {
     title: "Files and git, alongside",
@@ -45,12 +57,14 @@ const features = [
 
 const keys = [
   { action: "New terminal", chord: ["Ctrl", "J"] },
+  { action: "New browser pane", chord: ["Ctrl", "Shift", "B"] },
   { action: "Command palette", chord: ["Ctrl", "Shift", "P"] },
   { action: "Run an agent by number", chord: ["Ctrl", "Shift", "A"] },
   { action: "Switch workspace", chord: ["Ctrl", "Shift", "W"] },
   { action: "Arrange panes", chord: ["Ctrl", "Shift", "G"] },
   { action: "Dictate into the focused pane", chord: ["Ctrl", "Alt", "Space"] },
   { action: "Copy — or interrupt when nothing is selected", chord: ["Ctrl", "C"] },
+  { action: "Stash a pane, still running", chord: ["Ctrl", "Shift", "S"] },
   { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
 ];
 ---

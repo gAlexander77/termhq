@@ -22,7 +22,11 @@ Windows PowerShell, cmd, Git Bash and each WSL distribution on Windows; whatever
 
 Panes tile automatically — with two open you get two columns, with four you get a
 2×2 grid. Open as many as you like; there is no limit, and the grid grows to hold
-them.
+them. Drag the space between two panes to change how the room is divided.
+
+Not every pane has to be a shell: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
+opens a [browser pane](/docs/browser-panes/), a real web page tiled beside your
+terminals with the same header and the same moves.
 
 ## Layouts
 
@@ -40,6 +44,7 @@ entirely from the keyboard. See [Panes and layout](/docs/panes-and-layout/).
 | Action | Shortcut |
 |---|---|
 | New terminal | <kbd>Ctrl</kbd>+<kbd>J</kbd> |
+| New browser pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> |
 | Delete the focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
 | Move focus between panes | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+arrow |
 | Command palette | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> |
@@ -72,4 +77,5 @@ Dropping a file onto a pane writes its quoted path at the prompt.
 - [Workspaces](/docs/workspaces/) — grouping terminals by what you are doing
 - [Persistent sessions](/docs/persistent-sessions/) — why quitting does not kill
   your shells
+- [Browser panes](/docs/browser-panes/) — a web page as a pane in the grid
 - [Running coding agents](/docs/agents/) — the parts built specifically for this

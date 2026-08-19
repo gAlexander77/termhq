@@ -77,6 +77,17 @@ it gets busy you can park the ones you are not watching without stopping them.
 Each pane's font size is independent, so an agent producing a wall of output can
 be small while the shell you type in stays comfortable.
 
+## Watching what an agent is building
+
+An agent building a web app is producing something you have to look at, and
+alt-tabbing to a browser window is how you lose the pane it is working in.
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> opens a
+[browser pane](/docs/browser-panes/) in the grid instead — point
+**Settings → Browser → New panes open** at `localhost:3000` and every new one
+lands on your dev server. Drag the boundary between it and the agent's terminal
+to give the page the width it wants; a web page has a natural width and a
+terminal does not.
+
 ## Long jobs survive you leaving
 
 Agents run long. Because shells live in a separate process

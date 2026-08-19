@@ -16,19 +16,22 @@ the single-<kbd>Ctrl</kbd> versions nearly all belong to the shell —
 <kbd>Ctrl</kbd>+<kbd>S</kbd> freezes output, <kbd>Ctrl</kbd>+<kbd>L</kbd> clears the
 screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control code.
 
-## Terminals
+## Terminals and panes
 
 | Action | Shortcut |
 |---|---|
 | New terminal (default shell) | <kbd>Ctrl</kbd>+<kbd>J</kbd> |
 | Duplicate focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> |
+| New browser pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> |
 | Delete focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
 | Restore last closed terminal | *unassigned by default* |
 | Find in scrollback (or file names) | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
 
 <kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
 on purpose: <kbd>J</kbd> opens a terminal, <kbd>Shift</kbd>+<kbd>J</kbd> opens one
-like this one.
+like this one. <kbd>B</kbd> is for browser, and it takes
+<kbd>Shift</kbd> because plain <kbd>Ctrl</kbd>+<kbd>B</kbd> is the sidebar —
+and `tmux`'s prefix, which is why neither wanted it.
 
 ## Layout
 
@@ -170,6 +173,30 @@ None of this applies on macOS. There every shortcut hangs off <kbd>⌘</kbd>, wh
 never reaches the terminal at all, so there is nothing to collide.
 
 Any of them can be rebound or cleared in **Settings → Shortcuts**, per machine.
+
+## When a browser pane has focus
+
+A [browser pane](/docs/browser-panes/) is a real web page, and a web page wants
+keys too. On Windows, TermHQ's chords are taken before the page sees them, so
+pane focus, arrange mode, stash, close, fullscreen and the pickers all work with
+a page focused exactly as they do with a terminal focused. Afterwards the
+keyboard goes where the result needs it — back into the page, or into the app
+for arrange mode's arrows and a picker's digits.
+
+A short list is deliberately left to the page, because the page's version is
+the one you meant:
+
+| Chord | Who gets it |
+|---|---|
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> | The page's own find bar |
+| <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> | The browser engine's zoom |
+| Copy | The page |
+
+Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands a browser pane
+every key except its own toggle, the same bargain it makes with a terminal.
+
+On macOS and Linux this interception is not in place yet, so a TermHQ surface —
+another pane, the title bar — needs focus before a chord will fire.
 
 ## When a terminal program wants the same key
 

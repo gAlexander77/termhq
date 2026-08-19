@@ -1,17 +1,22 @@
 ---
 title: "Panes and layout"
 weight: 30
-description: "Tiling, the slot grid, keyboard arranging, zoom, stashing, and undoing a close."
+description: "Tiling, the slot grid, resizing by the gutter, keyboard arranging, zoom, stashing, and undoing a close."
 ---
 
-Every terminal in TermHQ is a pane in a tiled grid. Nothing hides behind a tab.
+Everything TermHQ opens is a pane in a tiled grid — terminals, and
+[browser panes](/docs/browser-panes/) alongside them. Nothing hides behind a
+tab.
 
 ## The slot grid
 
-TermHQ does not use arbitrary split panes with draggable dividers between them.
-Every pane owns an explicit rectangle of grid cells, and **no operation ever
-moves or resizes another pane**. Your arrangement is yours; the app does not
-reflow it behind your back to make room for something.
+Every pane owns an explicit rectangle of grid cells rather than floating at
+whatever size a chain of splits left it, and **no operation ever moves a pane
+you did not touch**. Your arrangement is yours; the app does not reflow it
+behind your back to make room for something.
+
+That is the arrangement. How wide each cell is, is a separate and much simpler
+question — see [Resizing panes](#resizing-panes) below.
 
 There is no limit on how many terminals you can open. The grid keeps growing to
 hold them, and two presets in the title bar decide the shape:
@@ -40,6 +45,9 @@ square corners, the tiling-window-manager look. Borders stay on in either
 style, so two terminals never blur into one, and switching is instant: no
 pane reflows or resizes, only the chrome around it changes.
 
+Either way, the boundary between two panes is a resize handle; boxy simply puts
+it on the seam where they meet instead of in a gutter.
+
 ## Rearranging with the mouse
 
 Drag a pane's **header**. It is one gesture family, borrowed from Windows snap,
@@ -55,6 +63,54 @@ and every drop shows a dashed ghost preview before you commit:
 Closing a pane re-packs the rest in reading order, so middle holes close and the
 grid shrinks back through square sizes — unless you have hand-grown a pane, which
 switches to a gentler reflow that does not disturb your arrangement.
+
+## Resizing panes
+
+The space between two panes is a handle. Put the pointer on it, the cursor
+turns into a resize arrow, and dragging moves that boundary wherever you want
+it — the same gesture as dragging a window edge, and the same one every tiling
+window manager uses.
+
+Which panes move follows from where the boundary is. **Panes with an edge on
+the boundary you are dragging move with it; panes that do not touch it do not
+move at all.** With three columns open, resizing the first two leaves the third
+exactly where it was.
+
+Where four panes meet, the crossing is a **corner**: grab it and both
+boundaries move at once, diagonally, the way an operating system's window
+corner does.
+
+A few things fall out of that:
+
+- **Double-click any boundary** — or a corner — to even up the pair it
+  separates. It is the "make this sensible again" gesture, scoped to the edge
+  you clicked rather than resetting the whole grid.
+- **A pane can never be dragged out of existence.** Columns stop at 160px and
+  rows at 240px, so the boundary refuses rather than tearing.
+- **Only the highlight under your pointer lights up** — a thin line on the
+  boundary that moves, and while dragging, only the one in your hand.
+
+The gesture is the reason a [browser pane](/docs/browser-panes/) and a terminal
+can share a row honestly: a web page has a natural width and a terminal does
+not, so 70/30 is often the right answer and 50/50 never was.
+
+### Opening or closing a pane resets the sizes
+
+A hand-tuned layout is tuned around the panes that were in it. So opening a new
+pane — or closing, stashing, or restoring one — puts every boundary back to
+equal.
+
+Nothing else disturbs them. Swapping, moving, growing, arranging and resizing
+the window all leave your proportions exactly as you set them, and a workspace
+remembers them across restarts.
+
+Fullscreen and the single-pane case have no boundaries to drag, because there
+is nothing on the other side of one.
+
+If you would rather the grid simply divided itself evenly, **Settings →
+Appearance → Resize panes by dragging** turns the whole thing off: equal shares,
+no handles. Your proportions are kept while it is off, so switching back on
+returns the layout you had.
 
 ## Arranging from the keyboard
 
@@ -98,7 +154,9 @@ stays comfortable.
 
 A pane can be stashed with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> or the
 header's ↓ button: hidden from the grid while its shell keeps running and its
-scrollback survives. This hides a job, it does not stop one.
+scrollback survives. This hides a job, it does not stop one. A stashed
+[browser pane](/docs/browser-panes/) is the same bargain — the page stays
+loaded, and restoring it returns the same scroll position.
 
 Stashed panes collapse to a small count pill at the bottom edge; hovering it pops
 up a shelf of cards. Click one to restore it into the first free slot, or use its

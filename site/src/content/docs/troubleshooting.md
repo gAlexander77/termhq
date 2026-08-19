@@ -1,7 +1,7 @@
 ---
 title: "Troubleshooting"
 weight: 100
-description: "Fixes for the problems people actually hit: monochrome agents, missing shells, stale sessions, and where the logs are."
+description: "Fixes for the problems people actually hit: monochrome agents, missing shells, stale sessions, browser panes, resetting pane sizes, and where the logs are."
 ---
 
 ## An agent or CLI renders without color
@@ -88,6 +88,39 @@ If it hears you but the words come out wrong, check the **dictation
 language** in Settings → Voice — and note that models labeled *English only*
 stay English whatever the language is set to; only multilingual models follow
 it.
+
+## A browser pane looks frozen
+
+Almost certainly it is — deliberately, and only for as long as something is
+covering it. A [browser pane](/docs/browser-panes/) is a native surface that the
+interface cannot paint over, so whenever a modal, menu, drag preview or toast
+needs the space, the pane shows a still frame of the page until the overlay
+goes away. Audio and video keep running underneath.
+
+If nothing is covering it and it is still frozen, reload the page from the
+pane's reload button.
+
+## My shortcuts do nothing while a web page is focused
+
+On macOS and Linux, TermHQ's chords are not yet intercepted while a browser
+pane has the keyboard. Click another pane or the title bar first. On Windows
+they fire over the page already, except the short list the page keeps — see
+[Keyboard shortcuts](/docs/keyboard-shortcuts/#when-a-browser-pane-has-focus).
+
+## There is nothing to grab between my panes
+
+Check **Settings → Appearance → Resize panes by dragging**. Off is a supported
+state — equal shares and no handles — and it is remembered per machine, so a
+config carried from elsewhere can arrive with it already off.
+
+## My pane sizes keep resetting
+
+By design, and only on one trigger: opening or closing a pane — including
+stashing one or bringing it back — puts every boundary back to equal. A
+hand-tuned layout describes a particular set of panes, so it is not carried
+onto a different one. Moving, swapping, growing, arranging and resizing the
+window all leave your proportions alone, and a workspace keeps them across
+restarts. See [Resizing panes](/docs/panes-and-layout/#resizing-panes).
 
 ## Windows warns about the installer
 
