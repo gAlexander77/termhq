@@ -168,15 +168,10 @@ Keys are camelCase.
 
 ### Git
 
-- **Commit message agent** — which installed agent CLI the spark button asks
-  for a commit message; it reads your staged changes and the suggestion lands
-  in the box for you to edit. Automatic (first one installed) by default; set
-  it to off to hide the button.
-- **Commit message prompt** — your house rules for those messages: a ticket
-  prefix, a required tense, a language. Empty means the shipped prompt.
-- **Subject length hint** — a note appears when a commit's first line runs
-  longer than this. Nothing is ever blocked or truncated; 0 turns it off.
-- **Add Signed-off-by** — the trailer some projects require on every commit.
+The Git panel is a viewer — it shows status, diffs, and conflicts, switches
+branches, and syncs; it does not stage, commit, or resolve. These settings
+tune it:
+
 - **Branch order** — how the branch picker sorts: most recently committed
   first, or alphabetical.
 - **Pull style** — what pull does when your branch and its upstream have both
@@ -186,16 +181,11 @@ Keys are camelCase.
   counts stay honest. Failures are silent on purpose; a fetch that fails on a
   plane should not raise a banner.
 - **Prune on fetch** — drop remote-tracking branches whose upstream is gone.
-- **Stash carries untracked files** — whether the stash-and-switch offer
-  brings brand-new files along to the other branch.
 - **Refresh every** — how often the panel re-reads status; a very large
   repository may prefer a longer interval.
 - **Conflict count on the Git tab** — a badge on the tab itself, so a merge an
   agent started in a background pane is visible while you are looking at
   Files.
-- **Confirm before discarding** — ask before a file's changes are thrown
-  away. Deleting an untracked file always asks, because that is the one thing
-  git cannot bring back.
 - **Diff layout** — unified (stacked) or side by side; the same toggle lives
   in the diff window's header.
 

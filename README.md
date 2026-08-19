@@ -54,6 +54,11 @@ It is a terminal, not an IDE. It does not want to be your editor.
   Settings rather than bundled, so the installer stays small and voice is
   strictly opt-in. English plus sixteen other languages; not packaged for
   Linux yet.
+- **Files and git, in view** — a file tree that follows the focused pane's
+  directory, and a Git viewer: status, diffs, and conflicts at a glance,
+  branch switching, and syncing. Conflicts open read-only with hand-off to
+  your editor — or a composed resolve prompt copied for whichever AI you
+  trust.
 - **Theming** — JSON themes applied as CSS variables, with VS Code theme import
   via Open VSX.
 - **Undo close** — closing a pane is reversible for a few seconds.

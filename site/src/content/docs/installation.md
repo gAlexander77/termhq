@@ -12,8 +12,10 @@ Download the build for your platform from the
 Run the installer. TermHQ supports Windows 10 and 11.
 
 Because builds are not yet code-signed with an Authenticode certificate,
-SmartScreen shows a warning on the **first** install: *"Windows protected your
-PC."* Choose **More info → Run anyway**. Later updates are unaffected.
+SmartScreen shows a warning the first time you run an installer: *"Windows
+protected your PC."* Choose **More info → Run anyway**. SmartScreen judges
+each file separately, so the warning can reappear when you install a new
+version — same two clicks. [Why the warnings →](#why-the-install-warnings)
 
 There is nothing to install alongside it — no runtime, no separate terminal
 components. TermHQ carries its own copy of the Windows console machinery, which
@@ -26,9 +28,36 @@ duplicated prompt lines in exactly the full-screen tools coding agents use.
 Open the `.dmg` and drag TermHQ to Applications. Builds are for **Apple
 silicon**; there is no Intel build.
 
-Unsigned builds are quarantined by Gatekeeper. The first launch needs
-**right-click → Open** rather than a double-click, which offers an "Open"
-button the normal launch path does not.
+Unsigned builds are quarantined by Gatekeeper, and on current macOS (Sequoia
+and later) the old right-click → Open trick no longer works. The first launch
+is a three-step ritual:
+
+1. Open TermHQ once. macOS says it *"could not verify this app is free of
+   malware"* — dismiss the dialog (don't choose Move to Trash).
+2. Open **System Settings → Privacy & Security**, scroll down to the Security
+   section, and click **Open Anyway** next to the TermHQ message.
+3. Confirm in the dialog that follows. From then on it opens normally.
+
+On older macOS versions, **right-click → Open** still offers an "Open" button
+directly. [Why the warnings →](#why-the-install-warnings)
+
+## Why the install warnings
+
+TermHQ builds are not yet code-signed: no Authenticode certificate on the
+Windows installer, no Apple notarization on the macOS app. Both are paid,
+recurring certificates, and signing changes which dialog your OS shows first —
+not a byte of what actually runs. During the pre-release, the honest warning
+plus this explanation seemed better than a subscription.
+
+Two things worth knowing in the meantime:
+
+- **Download only from this site or the
+  [releases page](https://github.com/gAlexander77/termhq/releases/latest)** —
+  every build is published from an exact tagged commit, so a version always
+  means the same code.
+- **If a downloaded installer vanishes**, an antivirus false positive is the
+  likely cause — unsigned binaries occasionally trip them. The file on the
+  releases page is unchanged; restore it from quarantine or re-download.
 
 ## Linux
 
