@@ -97,8 +97,18 @@ interface cannot paint over, so whenever a modal, menu, drag preview or toast
 needs the space, the pane shows a still frame of the page until the overlay
 goes away. Audio and video keep running underneath.
 
+Sometimes you get the pane's plain background instead of a still frame: a pane
+nobody can see does not pay to capture one, and neither does a second overlay
+arriving right behind the last. Both go live again the moment the overlay does.
+
 If nothing is covering it and it is still frozen, reload the page from the
 pane's reload button.
+
+## A browser pane's mute button does nothing
+
+Muting is Windows-only for now. The speaker toggles on every platform, but off
+Windows it silences nothing — and **Settings → Browser → Sound in new panes**
+cannot start a pane muted there either.
 
 ## My shortcuts do nothing while a web page is focused
 
@@ -121,6 +131,10 @@ hand-tuned layout describes a particular set of panes, so it is not carried
 onto a different one. Moving, swapping, growing, arranging and resizing the
 window all leave your proportions alone, and a workspace keeps them across
 restarts. See [Resizing panes](/docs/panes-and-layout/#resizing-panes).
+
+To level the grid *deliberately*, use the reset button that appears in the title
+bar beside the layout switch whenever a pane is off its equal share — or
+double-click one boundary to even up just that pair.
 
 ## Windows warns about the installer
 

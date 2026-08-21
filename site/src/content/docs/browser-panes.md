@@ -16,12 +16,17 @@ the browser you already use.
 
 ## Opening one
 
-Three ways, all equivalent:
+Four ways, all equivalent:
 
+- The **globe** in the title bar, just right of the favorites star
 - <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
 - The command palette (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>) — "New
   browser pane"
 - The **+** button's shell list, which ends with a Browser entry
+
+**Settings → Browser → Globe button** removes the globe if you would rather have
+the space. It takes away only the button — the chord, the palette and the spawn
+menu are untouched.
 
 Where it lands is **Settings → Browser → New panes open**. Point it at
 `localhost:3000` and the chord drops you on your dev server; leave it empty and
@@ -34,25 +39,50 @@ It reads what you type the way a browser's does:
 | You type | What happens |
 |---|---|
 | `https://termhq.dev` | Opens it |
-| `localhost:3000` | Opens `http://localhost:3000` |
-| `termhq.dev` | Opens `https://termhq.dev` |
+| `localhost:3000`, `127.0.0.1:8080` | Opens it over `http://` |
+| `termhq.dev` | Anything with a dot opens over `https://` |
+| `file:///C:/notes.md` | **Searches for it** — see below |
 | `rust lifetimes` | Searches your configured engine |
 
 The search engine is **Settings → Browser → Search engine** — DuckDuckGo (the
 default), Google, Bing or Brave. Web addresses and localhost ports are never
 searched; they open directly.
 
+A browser pane may only navigate to `http`, `https` and `about`. Type a scheme
+it is not allowed to open — `file:`, `vscode:` — and it becomes a **search**
+rather than an error, because the alternative is a URL bar that silently
+swallows what you typed and looks broken.
+
+<kbd>Enter</kbd> navigates. <kbd>Esc</kbd> hands the keyboard back to the page.
+A blank pane opens with the bar already focused, and while you are typing in it
+no TermHQ chord fires, so an address containing a shortcut is still just an
+address.
+
 Back, forward and reload sit to the left of the bar, and a devtools button to
 the right opens the full inspector for that page in its own window. The pane's
 title follows the page's; renaming it by double-clicking the header pins your
 name instead, the same as a terminal.
 
+Take the pointer off the pane and the header hands its room back: mute, stash
+and fullscreen fade out while the page title glides into the space they were
+holding, un-truncating as far as the address bar can spare. Move back on and it
+reverses. The one thing that does not leave is a **muted** page's speaker — it
+pins itself beside Close and stays visible, because silence with nothing on
+screen to explain it reads as a fault rather than a setting. (A terminal header
+folds its buttons into a `⋯` menu once a pane gets very narrow; a browser
+header does not.)
+
 ## Sound
 
 Pages play audio like any browser. **Settings → Browser → Sound in new panes**
-turns that off for new panes, and each pane's header has a speaker that mutes
-or unmutes that one page live. The speaker stays visible while a pane is muted,
-so silence is never a mystery.
+turns that off for new panes, and each pane's header has a speaker that mutes or
+unmutes that one page live. The speaker stays visible while a pane is muted, so
+silence is never a mystery.
+
+Two things to know. **Muting is Windows-only for now** — the button toggles
+everywhere, but off Windows it silences nothing, and the setting cannot start a
+pane muted there either. And a pane's mute is a choice for that session: the
+workspace does not remember it.
 
 ## It is a pane like any other
 
@@ -68,7 +98,12 @@ Everything the grid does, a browser pane does:
 
 A link that opens a new tab — `target="_blank"`, or a `window.open` from the
 page — opens **another browser pane** rather than an operating-system window.
-Cloning a browser pane opens a sibling at the same URL.
+Cloning a browser pane opens a sibling at the same URL. Neither takes the home
+page: only the panes you open yourself do.
+
+One move a terminal has that a browser pane does not: **closing it is final.**
+The undo window exists because a closed terminal's shell is parked and still
+running in the background, and a page has nothing parked to come back to.
 
 ## Workspaces remember pages
 
@@ -89,34 +124,47 @@ intercepted before the page sees them, exactly as if a terminal were focused.
 After a chord runs, the keyboard lands where the result needs it — back in the
 page, or in the app for arrange mode's arrows and a picker's digits.
 
-A short list stays deliberately with the page, because the page's version is
-the one you want: <kbd>Ctrl</kbd>+<kbd>F</kbd> (its own find bar),
-<kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> (the engine's zoom),
-and copy. Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands the
-page every key except its own toggle.
+A short list stays deliberately with the page. Some because the page's version
+is the one you want — <kbd>Ctrl</kbd>+<kbd>F</kbd> for its own find bar,
+<kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> for the engine's
+zoom, and copy. The other two because they would only type into a terminal that
+is not there: the agent picker and voice dictation.
+
+Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands the page every
+key except its own toggle.
 
 ## The page has no keys to the app
 
 A browser pane loads whatever you point it at, so it is given no authority at
-all. Browser webviews hold none of the application's permissions, remote pages
-are refused any channel to TermHQ outright, and a pane can only navigate to
-`http` and `https` — never to local files, custom protocols, or TermHQ's own
-interface. Development builds re-check every fence on every page load.
+all. Browser surfaces are in none of the application's capabilities, and
+navigation is limited to `http`, `https` and `about` — never a local file, a
+custom protocol, or TermHQ's own interface.
+
+The fence doing most of the work is the third: remote origins are refused any
+channel into TermHQ wholesale, a layer below the point where a page could ask.
+Development builds report what a page can see after every load, as a drift
+detector — the bridge object is visible to the page; what it cannot do is use
+it.
 
 ## What v1 does not do yet
 
 Stated plainly rather than discovered later:
 
-- **Verified on Windows.** macOS and Linux build, and each is getting its own
-  pass. Three behaviors are Windows-only so far: app chords firing while the
-  page holds the keyboard (elsewhere a TermHQ surface needs focus first), the
-  back and forward buttons dimming when there is nowhere to go, and the frozen
-  frame described below.
+- **Verified on Windows.** macOS and Linux build; macOS has had a pass for the
+  inspector and the rest await their own. Five behaviors are Windows-only so
+  far: app chords firing while the page holds the keyboard (elsewhere a TermHQ
+  surface needs focus first), the back and forward buttons dimming when there is
+  nowhere to go, the frozen frame described below, the speaker actually
+  silencing anything, and the pane's rounded bottom corners and the shape the
+  stash pill cuts out of the pane above it.
 - **Anything that must cover the grid covers the page.** A native page cannot
-  be painted over by the interface, so when a modal, menu, drag preview or
-  toast needs the space, the pane shows a **frozen frame** of the page for as
-  long as the overlay is up, then goes live again. Video keeps playing
-  underneath; it simply looks paused while covered.
+  be painted over by the interface, so when a modal, menu, drag preview or toast
+  needs the space, the pane shows a **frozen frame** of the page for as long as
+  the overlay is up, then goes live again. Video keeps playing underneath; it
+  simply looks paused while covered. The frame is a courtesy rather than a
+  guarantee — a pane nobody can see does not pay to capture one, and neither
+  does a second overlay arriving right behind the last, where the previous frame
+  stands or the pane's background does.
 - **Downloads** use the engine's own default handling.
 - **One browser profile**, shared by every workspace. Per-workspace profiles
   are a real feature with real questions, and are deferred rather than faked.

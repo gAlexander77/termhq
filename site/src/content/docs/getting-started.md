@@ -24,8 +24,9 @@ Panes tile automatically — with two open you get two columns, with four you ge
 2×2 grid. Open as many as you like; there is no limit, and the grid grows to hold
 them. Drag the space between two panes to change how the room is divided.
 
-Not every pane has to be a shell: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
-opens a [browser pane](/docs/browser-panes/), a real web page tiled beside your
+Not every pane has to be a shell: the **globe** in the title bar — or
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> — opens a
+[browser pane](/docs/browser-panes/), a real web page tiled beside your
 terminals with the same header and the same moves.
 
 ## Layouts

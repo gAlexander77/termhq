@@ -6,8 +6,6 @@ import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 import { SITE, PRE_RELEASE } from "../config";
 import "../styles/style.css";
 
-// Get country from Cloudflare header (CF-IPCountry)
-const country = Astro.request.headers.get("CF-IPCountry") || "";
 
 interface Props {
   title?: string;
@@ -53,7 +51,7 @@ const orgId = `${SITE.url}/#organization`;
 ---
 
 <!doctype html>
-<html lang="en" data-country={country}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

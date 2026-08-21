@@ -87,12 +87,27 @@ A few things fall out of that:
   you clicked rather than resetting the whole grid.
 - **A pane can never be dragged out of existence.** Columns stop at 160px and
   rows at 240px, so the boundary refuses rather than tearing.
-- **Only the highlight under your pointer lights up** — a thin line on the
-  boundary that moves, and while dragging, only the one in your hand.
+- **Only the boundary under your pointer lights up** — a thin line on the one
+  that would move, and the one you are actually holding is a shade brighter
+  still. It waits a moment before appearing, so sweeping the pointer across a
+  gutter on the way somewhere else lights nothing; stop on one and the line is
+  there immediately. Leaving is never delayed.
 
 The gesture is the reason a [browser pane](/docs/browser-panes/) and a terminal
 can share a row honestly: a web page has a natural width and a terminal does
 not, so 70/30 is often the right answer and 50/50 never was.
+
+### Putting it back
+
+Two ways, at two scales. **Double-clicking one boundary** levels the pair it
+separates. For the whole grid, a small **reset button appears in the title bar**
+beside the Grid/Columns switch.
+
+It is only there when there is something to reset — drag a pane off its equal
+share and it appears; level the grid again and it goes. That is deliberate on
+both counts: a button that spends most of its life doing nothing is furniture,
+and one that shows up only when the grid is custom answers "why is this pane
+wider than the others?" just by being there.
 
 ### Opening or closing a pane resets the sizes
 
@@ -192,7 +207,10 @@ counts down with a draining bar. Restore re-adopts that shell with its program
 still going and its recent output replayed, including whatever it printed while
 it was gone. Only when the timer runs out is the shell actually killed.
 
-A shell that ends by itself is never parked; there is nothing to restore.
+A shell that ends by itself is never parked; there is nothing to restore. Nor
+is a [browser pane](/docs/browser-panes/): closing one is final, because the
+undo window exists to hold a shell that is still running and a page has nothing
+left running to hold.
 
 The behavior is configurable in **Settings → General**:
 

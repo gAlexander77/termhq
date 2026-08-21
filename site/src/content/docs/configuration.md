@@ -128,16 +128,23 @@ Keys are camelCase.
 
 Settings for [browser panes](/docs/browser-panes/).
 
+- **Globe button** — default on: the globe in the title bar, right of the
+  favorites star, that opens a browser pane in one click. Off removes the
+  button and nothing else — the chord, the command palette and the spawn menu's
+  Browser entry all still work.
 - **Search engine** — where a browser pane's URL bar sends anything that is not
   a web address: DuckDuckGo (the default), Google, Bing or Brave. Web addresses
   and localhost ports are never searched; they open directly.
 - **New panes open** — what <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> lands
   on. Takes anything the URL bar takes, so `localhost:3000` puts every new pane
   on your dev server. Empty means a blank pane with the URL bar focused. A pane
-  opened by a page — a link that wanted a new tab — keeps its own address.
+  opened by a page — a link that wanted a new tab — keeps its own address, and
+  so does a clone.
 - **Sound in new panes** — default on. Off means new browser panes start muted;
   the speaker in each pane's header unmutes that one page and stays visible
-  while it is muted, so silence is never a mystery.
+  while it is muted, so silence is never a mystery. **Muting is Windows-only
+  for now** — elsewhere the button toggles but silences nothing, and this
+  setting cannot start a pane muted.
 
 ### Agents
 
@@ -184,6 +191,13 @@ Settings for [browser panes](/docs/browser-panes/).
 - **File openers** — the right-click "open with" list. Each is a name plus a
   command, run either detached (Notepad) or in a new terminal pane opened in the
   file's directory (vim, nano).
+
+  Two entries appear on their own rather than from this list: **Open in IDE**,
+  and **Open in Obsidian** for a folder that is actually a vault on a machine
+  that actually has Obsidian. A folder counts as a vault once it contains the
+  `.obsidian` directory Obsidian writes the first time it opens one. It opens
+  through Obsidian's own URL scheme rather than its executable, so a vault
+  already open is brought to the front instead of opened twice.
 - **Terminal openers run in** — which shell those terminal openers get. Until you
   pick one they stay hidden entirely, because vim in PowerShell helps nobody.
 

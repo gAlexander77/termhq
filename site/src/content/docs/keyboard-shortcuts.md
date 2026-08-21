@@ -183,14 +183,18 @@ a page focused exactly as they do with a terminal focused. Afterwards the
 keyboard goes where the result needs it — back into the page, or into the app
 for arrange mode's arrows and a picker's digits.
 
-A short list is deliberately left to the page, because the page's version is
-the one you meant:
+A short list is deliberately left to the page:
 
-| Chord | Who gets it |
-|---|---|
-| <kbd>Ctrl</kbd>+<kbd>F</kbd> | The page's own find bar |
-| <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> | The browser engine's zoom |
-| Copy | The page |
+| Chord | Who gets it | Why |
+|---|---|---|
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> | The page | Its own find bar is the one you meant |
+| <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> | The page | The browser engine's own zoom |
+| Copy | The page | Same |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> | The page | It would type into a terminal that is not there |
+| <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> | The page | Same — dictation needs somewhere to write |
+
+The URL bar takes precedence over all of it: while you are typing an address,
+no TermHQ chord fires at all.
 
 Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands a browser pane
 every key except its own toggle, the same bargain it makes with a terminal.
