@@ -1,7 +1,7 @@
 ---
 title: "Troubleshooting"
 weight: 100
-description: "Fixes for the problems people actually hit: monochrome agents, missing shells, stale sessions, browser panes, resetting pane sizes, and where the logs are."
+description: "Fixes for the problems people actually hit: monochrome agents, missing shells, stale sessions, language servers, unsaved edits, browser panes, and where the logs are."
 ---
 
 ## An agent or CLI renders without color
@@ -88,6 +88,53 @@ If it hears you but the words come out wrong, check the **dictation
 language** in Settings → Voice — and note that models labeled *English only*
 stay English whatever the language is set to; only multilingual models follow
 it.
+
+## My language server is not doing anything
+
+TermHQ ships no language servers — they are programs you install yourself. Open
+**Settings → Editor** and read the status chip beside the one you expect:
+
+- **not installed** — the command is not on your `PATH`. Install it; pressing
+  Restart will not help, which is why the chip keeps saying this.
+- **would not start** — it is installed but failed. **Hover the chip** for the
+  server's own last words, and open its log underneath.
+- **starting…** for a long time — a large project on first open, usually. Rust
+  and TypeScript both index before they answer.
+- Nothing at all — check the **Language intelligence** master switch, and that
+  the entry itself is enabled.
+
+See [Language servers](/docs/language-servers/) for the whole picture.
+
+## Format on save is not formatting
+
+Formatting comes from your language server, not from TermHQ — so a language with
+no server installed has no formatter. Check the server's status in
+**Settings → Editor** first.
+
+If a server *is* running and you are getting a different result than you expect,
+the first server in the list that offers formatting is the one that owns it.
+Reorder the list to change which. Format on save also gives up after two seconds
+rather than making you wait on a slow formatter.
+
+## A file I am editing changed on its own
+
+That is an agent, a formatter, or a `git checkout` — and it is handled rather
+than ignored. With no unsaved edits the tab reloads quietly, keeping your cursor
+and undo history. With unsaved edits you get a card offering **Compare**,
+**Reload from disk** or **Keep my changes**. Nothing is overwritten without you
+picking one.
+
+## I lost unsaved edits
+
+Two different cases:
+
+- **After a crash or power cut**, you should not have. Reopen the file and the
+  tab comes back still unsaved. If it did not, check **Settings → Editor →
+  Recover unsaved changes after a crash** — and note that text over 4 MB is never
+  mirrored.
+- **After quitting normally**, unsaved buffers are deliberately not kept. Quitting
+  with unsaved work stops and asks first, so *Quit without saving* is the only way
+  past it.
 
 ## A browser pane looks frozen
 

@@ -106,7 +106,11 @@ That works with WSL panes too, so a shell inside a distribution still steers the
 panels correctly.
 
 The `</>` button in the pane header opens that directory in your editor, for the
-moments when the right move is to take over by hand.
+moments when the right move is to take over by hand. For a smaller
+intervention — one line in a config, a typo in a prompt file — an
+[editor pane](/docs/editor/) opens the file right there in the grid, beside the
+agent that is waiting on it. A file an agent rewrites while you have it open
+reloads on its own, or asks first if you have unsaved edits of your own.
 
 ## Dictating to an agent
 

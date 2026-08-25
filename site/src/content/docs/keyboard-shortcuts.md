@@ -23,15 +23,17 @@ screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control 
 | New terminal (default shell) | <kbd>Ctrl</kbd>+<kbd>J</kbd> |
 | Duplicate focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> |
 | New browser pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> |
+| New editor pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> |
 | Delete focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
 | Restore last closed terminal | *unassigned by default* |
 | Find in scrollback (or file names) | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
 
 <kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
 on purpose: <kbd>J</kbd> opens a terminal, <kbd>Shift</kbd>+<kbd>J</kbd> opens one
-like this one. <kbd>B</kbd> is for browser, and it takes
-<kbd>Shift</kbd> because plain <kbd>Ctrl</kbd>+<kbd>B</kbd> is the sidebar —
-and `tmux`'s prefix, which is why neither wanted it.
+like this one. <kbd>B</kbd> is for browser and <kbd>E</kbd> for editor, both
+taking <kbd>Shift</kbd> for the same reason the others do: plain
+<kbd>Ctrl</kbd>+<kbd>B</kbd> is the sidebar and `tmux`'s prefix, and plain
+<kbd>Ctrl</kbd>+<kbd>E</kbd> is end-of-line in every shell.
 
 ## Layout
 
@@ -119,8 +121,11 @@ one you can rebind. The plain-<kbd>Ctrl</kbd> rule is off on macOS, where
 
 ## Rebinding
 
-**Settings → Shortcuts** lists every action with its current chord. Click one and
-press the combination you want. To leave an action with no shortcut at all, use
+**Settings → Shortcuts** lists every action with its current chord, under four
+headings — Open panes, Terminals, Focus and layout, App — so you find one by what
+it does rather than by scanning all of them. Search filters across every group.
+
+Click a row and press the combination you want. To leave an action with no shortcut at all, use
 the slashed-key button that appears beside the chord while you are recording —
 <kbd>Backspace</kbd> does the same thing, but only if you already knew that, and
 while recording every other key means "use this one". Only your overrides are
@@ -140,6 +145,23 @@ a count and a **Reset all shortcuts** button.
 
 An action you have unassigned is still listed in the command palette and still
 runnable from it, so dropping a chord never costs you the command.
+
+The palette also says when an action **cannot do anything right now** and why —
+*only one pane in the grid* beside Arrange pane, *voice is off in Settings*
+beside Voice dictation. Those rows are dimmed but still listed and still
+runnable, because the palette is how you find an action in the first place, and
+hiding one teaches you nothing about what it needs.
+
+## Seeing what a key did
+
+**Settings → Shortcuts → Show shortcuts on screen** (off by default) puts a card
+on screen for each chord you press, saying **what the app did with it**: ran an action, nothing bound, the editor kept it, ultra focus passed
+it through.
+
+It is there for demos and screen recordings, and for the moment a chord seems to
+do nothing and you want to know which of those four it was. Only keys held with
+<kbd>Ctrl</kbd>, <kbd>Alt</kbd> or <kbd>⌘</kbd> and the function keys are ever
+shown — it cannot display your typing.
 
 ## What is not rebindable
 
@@ -173,6 +195,29 @@ None of this applies on macOS. There every shortcut hangs off <kbd>⌘</kbd>, wh
 never reaches the terminal at all, so there is nothing to collide.
 
 Any of them can be rebound or cleared in **Settings → Shortcuts**, per machine.
+
+## When an editor pane has focus
+
+An [editor pane](/docs/editor/) binds keys of its own, and they are bound *in
+the pane* so your shell loses nothing: <kbd>Ctrl</kbd>+<kbd>S</kbd> still
+freezes a terminal's output and <kbd>Ctrl</kbd>+<kbd>W</kbd> still deletes a
+word everywhere else. The full set is on the [editor page](/docs/editor/).
+
+Two app chords also step aside for the editor, because Monaco binds them to
+something you are more likely to want while typing:
+
+| Chord | The editor uses it for |
+|---|---|
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> | Its own find widget, instead of terminal scrollback search |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> | Select all occurrences, instead of the favorites picker |
+
+On macOS, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> joins them — there it is the
+standard redo, so redo wins over fullscreen. On Windows and Linux redo also has
+<kbd>Ctrl</kbd>+<kbd>Y</kbd>, so fullscreen keeps its chord.
+
+**Settings → Editor → Editing shortcuts stay in the editor** turns the yielding
+off and runs the app action everywhere. Ultra focus hands over every key
+regardless.
 
 ## When a browser pane has focus
 

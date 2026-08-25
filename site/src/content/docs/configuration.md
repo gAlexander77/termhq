@@ -146,6 +146,37 @@ Settings for [browser panes](/docs/browser-panes/).
   for now** — elsewhere the button toggles but silences nothing, and this
   setting cannot start a pane muted.
 
+### Editor
+
+Settings for [editor panes](/docs/editor/) and
+[language servers](/docs/language-servers/).
+
+- **Word wrap** — soft-wrap long lines instead of scrolling sideways. Default
+  off.
+- **Minimap** — Monaco's overview column. Default off: grid panes are narrow,
+  and the minimap spends width the code wants.
+- **Font size follows the terminal** — default on, so one knob rules both. Turn
+  it off and an **Editor font size** slider appears beside it. Per-pane zoom
+  stacks on top of whichever is in effect.
+- **Format on save** — ask your language server to format the document every
+  time you save. Default off, because a save that silently reformats a whole
+  file is a diff nobody asked for. Formatting by hand works regardless.
+- **Recover unsaved changes after a crash** — default on. Mirrors unsaved text
+  so a crash, force-quit or power cut does not take it. Turning it off deletes
+  everything it had mirrored.
+- **Files panel shows the repo while editing** — default on: with an editor
+  focused, the Files panel roots at the file's repository and reveals the file
+  in the tree. Off gives you the file's own folder instead. Terminals are
+  unaffected either way.
+- **Editing shortcuts stay in the editor** — default on: app chords that Monaco
+  also binds fall through to the editor while one is focused. See
+  [Keyboard shortcuts](/docs/keyboard-shortcuts/#when-an-editor-pane-has-focus).
+- **Language intelligence** — the master switch for
+  [language servers](/docs/language-servers/), plus the server list itself: add,
+  enable, edit the command and arguments, watch live status, restart one, or read
+  its log. Default on — but TermHQ ships no servers, so nothing runs until you
+  install one.
+
 ### Agents
 
 - **Agent commands** — the list behind every pane header's ✳ button. Name plus
@@ -156,13 +187,9 @@ Settings for [browser panes](/docs/browser-panes/).
   on `PATH` are hidden automatically.
 - **IDE command** — what the `</>` button runs against a directory. Default
   `code`; flags allowed.
-- **Agent idle badge** and **idle notification** — see below.
 - **Notification color** — the color every attention surface draws from.
   Defaults to the active theme's accent; setting it here pins it across all
   themes.
-
-### Notifications
-
 - **Agent idle badge** — badge a pane that was busy while you were looking
   elsewhere and has since gone quiet. Default on.
 - **Quiet seconds** — how long a pane must be silent to count as idle. Default
@@ -246,5 +273,9 @@ tune it:
 
 ### Shortcuts
 
-Every action, rebindable. Only your overrides are stored — see
-[Keyboard shortcuts](/docs/keyboard-shortcuts/).
+Every action, rebindable, grouped under four headings. Only your overrides are
+stored — see [Keyboard shortcuts](/docs/keyboard-shortcuts/).
+
+- **Show shortcuts on screen** — default off. Shows each chord you press along
+  with what the app did with it, for demos, screen recordings, and working out
+  why a chord seems to do nothing.

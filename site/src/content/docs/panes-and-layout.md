@@ -4,9 +4,16 @@ weight: 30
 description: "Tiling, the slot grid, resizing by the gutter, keyboard arranging, zoom, stashing, and undoing a close."
 ---
 
-Everything TermHQ opens is a pane in a tiled grid — terminals, and
-[browser panes](/docs/browser-panes/) alongside them. Nothing hides behind a
-tab.
+Everything TermHQ opens is a pane in a tiled grid. Nothing hides behind a tab.
+
+There are three kinds, and the grid treats them identically — every move below
+works on any of them:
+
+| Pane | Opens with | Holds |
+|---|---|---|
+| Terminal | <kbd>Ctrl</kbd>+<kbd>J</kbd> | A shell |
+| [Browser](/docs/browser-panes/) | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> | A web page |
+| [Editor](/docs/editor/) | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> | Files, as tabs |
 
 ## The slot grid
 
@@ -171,7 +178,8 @@ A pane can be stashed with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> or the
 header's ↓ button: hidden from the grid while its shell keeps running and its
 scrollback survives. This hides a job, it does not stop one. A stashed
 [browser pane](/docs/browser-panes/) is the same bargain — the page stays
-loaded, and restoring it returns the same scroll position.
+loaded, and restoring it returns the same scroll position — and a stashed
+[editor](/docs/editor/) keeps its tabs and any unsaved edits in them.
 
 Stashed panes collapse to a small count pill at the bottom edge; hovering it pops
 up a shelf of cards. Click one to restore it into the first free slot, or use its
@@ -207,10 +215,13 @@ counts down with a draining bar. Restore re-adopts that shell with its program
 still going and its recent output replayed, including whatever it printed while
 it was gone. Only when the timer runs out is the shell actually killed.
 
-A shell that ends by itself is never parked; there is nothing to restore. Nor
-is a [browser pane](/docs/browser-panes/): closing one is final, because the
-undo window exists to hold a shell that is still running and a page has nothing
-left running to hold.
+A shell that ends by itself is never parked; there is nothing to restore. Nor is
+a [browser pane](/docs/browser-panes/): closing one is final, because the undo
+window exists to hold a shell that is still running and a page has nothing left
+running to hold.
+
+An [editor pane](/docs/editor/) has its own protection instead of an undo
+window — closing one with unsaved work asks about each file first.
 
 The behavior is configurable in **Settings → General**:
 

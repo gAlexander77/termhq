@@ -24,10 +24,12 @@ Panes tile automatically — with two open you get two columns, with four you ge
 2×2 grid. Open as many as you like; there is no limit, and the grid grows to hold
 them. Drag the space between two panes to change how the room is divided.
 
-Not every pane has to be a shell: the **globe** in the title bar — or
+Not every pane has to be a shell. The **globe** in the title bar — or
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> — opens a
 [browser pane](/docs/browser-panes/), a real web page tiled beside your
-terminals with the same header and the same moves.
+terminals. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> opens an
+[editor pane](/docs/editor/), which holds files as tabs. Both take the same
+header and the same moves as a terminal.
 
 ## Layouts
 
@@ -46,6 +48,7 @@ entirely from the keyboard. See [Panes and layout](/docs/panes-and-layout/).
 |---|---|
 | New terminal | <kbd>Ctrl</kbd>+<kbd>J</kbd> |
 | New browser pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> |
+| New editor pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> |
 | Delete the focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
 | Move focus between panes | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+arrow |
 | Command palette | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> |
@@ -79,4 +82,5 @@ Dropping a file onto a pane writes its quoted path at the prompt.
 - [Persistent sessions](/docs/persistent-sessions/) — why quitting does not kill
   your shells
 - [Browser panes](/docs/browser-panes/) — a web page as a pane in the grid
+- [The editor](/docs/editor/) — files as tabs, in a pane like any other
 - [Running coding agents](/docs/agents/) — the parts built specifically for this

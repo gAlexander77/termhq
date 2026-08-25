@@ -34,6 +34,18 @@ const features = [
     body: "Ctrl+Shift+B tiles a real web page beside your shells — your OS's own browser engine, embedded, not a screenshot of one. Your docs, your dashboard, the localhost your agent is building, all in the layout you are already looking at.",
   },
   {
+    title: "An editor in the grid",
+    body: "Ctrl+Shift+E opens a pane that holds files as tabs, on the same engine VS Code uses. For the edit you make while something else is running — the config line the agent asked about, the fix that is faster to type than to explain.",
+  },
+  {
+    title: "Your language servers, not ours",
+    body: "Diagnostics, hover, completion, go-to-definition and formatting — from servers you install, at your version, obeying your repo's own config. TermHQ bundles none, so nothing here disagrees with your toolchain.",
+  },
+  {
+    title: "Nothing gets lost",
+    body: "Saves swap a temp file into place, so a failed one leaves the original intact. A file that changes underneath you asks rather than clobbers. And unsaved text is mirrored seconds after you stop typing, so a crash does not take it.",
+  },
+  {
     title: "Voice, locally transcribed",
     body: "Dictate into the focused terminal, transcribed on your own machine by local Whisper models. Models are a download you choose in Settings — English or sixteen other languages — so the app installs small and voice adds nothing until you want it.",
   },
@@ -58,6 +70,7 @@ const features = [
 const keys = [
   { action: "New terminal", chord: ["Ctrl", "J"] },
   { action: "New browser pane", chord: ["Ctrl", "Shift", "B"] },
+  { action: "New editor pane", chord: ["Ctrl", "Shift", "E"] },
   { action: "Command palette", chord: ["Ctrl", "Shift", "P"] },
   { action: "Run an agent by number", chord: ["Ctrl", "Shift", "A"] },
   { action: "Switch workspace", chord: ["Ctrl", "Shift", "W"] },
@@ -65,6 +78,7 @@ const keys = [
   { action: "Dictate into the focused pane", chord: ["Ctrl", "Alt", "Space"] },
   { action: "Copy — or interrupt when nothing is selected", chord: ["Ctrl", "C"] },
   { action: "Stash a pane, still running", chord: ["Ctrl", "Shift", "S"] },
+  { action: "Read a markdown file, rendered", chord: ["Ctrl", "Shift", "V"] },
   { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
 ];
 ---

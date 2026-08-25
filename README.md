@@ -31,10 +31,13 @@ closed a window.
 TermHQ is a terminal workbench built around that. Panes tile instead of
 stacking behind tabs, with no limit on how many, sized by dragging the boundary
 between them. Terminals keep running after you quit the app. A pane can hold a
-web page instead of a shell. Work is grouped into workspaces you can leave and
-come back to. Dictation runs on local Whisper models, on your own machine.
+web page or a file instead of a shell. Work is grouped into workspaces you can
+leave and come back to. Dictation runs on local Whisper models, on your own
+machine.
 
-It is a terminal, not an IDE. It does not want to be your editor.
+It is a terminal, not an IDE. There is an editor in it, but it is there for the
+edit you make *while* something else is running — not to replace the one you
+already have open.
 
 ## Capabilities
 
@@ -47,10 +50,20 @@ It is a terminal, not an IDE. It does not want to be your editor.
   by the operating system's own browser engine embedded in the window, with a
   URL bar, devtools and the same drag, stash, resize and fullscreen moves as a
   terminal. Verified on Windows; macOS and Linux passes are in progress.
+- **Editor panes** — `Ctrl+Shift+E` opens a pane that holds files as tabs, built
+  on Monaco. Saving swaps a temp file into place so a failed save cannot destroy
+  the original; a file changed underneath you asks rather than clobbers; unsaved
+  text is mirrored so a crash does not take it. Markdown reads rendered, in the
+  tab or split beside the source.
+- **Language servers, yours not ours** — diagnostics, hover, completion,
+  go-to-definition and formatting from servers **you** install, launched on
+  demand per project. TermHQ bundles none, ever, so nothing here disagrees with
+  your toolchain. Ships ready for rust-analyzer, gopls, pyright,
+  typescript-language-server and clangd; works with anything speaking LSP.
 - **Shells that outlive the app** — terminals run in a detached host process,
   tmux-style. Quit TermHQ, reopen it, and your sessions are still running with
   their scrollback intact.
-- **Workspaces** — named groups of terminals with their own layout and working
+- **Workspaces** — named groups of panes with their own layout and working
   directories. Resume the one you were in, or pick from a list on launch.
 - **Built for agents** — launch Claude Code, Codex, OpenCode or Antigravity from
   a pane-header menu or a number key, with your own flags; panes are sized so an
@@ -69,7 +82,8 @@ It is a terminal, not an IDE. It does not want to be your editor.
   trust.
 - **Theming** — JSON themes applied as CSS variables, with VS Code theme import
   via Open VSX.
-- **Undo close** — closing a pane is reversible for a few seconds.
+- **Undo close** — closing a terminal is reversible for a few seconds; the shell
+  keeps running underneath the whole time.
 
 ## Platforms
 
@@ -86,15 +100,21 @@ process that owns your shells, which is why they survive the window — no
 `tmux` involved), the tiling grid, the theming system, the keymap, and the
 Git panel.
 
+Two engines are borrowed rather than rebuilt, because they are the acknowledged
+best of their kind: [xterm.js](https://xtermjs.org/) draws the terminals and
+[Monaco](https://microsoft.github.io/monaco-editor/) is the editing surface —
+the same two VS Code uses.
+
 The interface renders in the operating system's own webview via
 [Tauri](https://v2.tauri.app/) — no bundled browser — which is why installers
 are measured in megabytes, not hundreds of them. That same engine is what a
 browser pane embeds, so a web page in the grid is the real thing rather than a
 streamed picture of one — and it is given none of the application's
 permissions. Terminals are rendered by
-[xterm.js](https://xtermjs.org/), the same emulator VS Code uses; dictation
-runs on [whisper.cpp](https://github.com/ggml-org/whisper.cpp); git runs
-through the `git` on your `PATH`.
+xterm.js; dictation runs on
+[whisper.cpp](https://github.com/ggml-org/whisper.cpp); git runs through the
+`git` on your `PATH`; and language intelligence comes from LSP servers you
+install yourself.
 
 ## Links
 

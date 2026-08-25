@@ -12,9 +12,9 @@ The interface is rendered by your operating system's own webview through
 [Tauri](https://v2.tauri.app/), not by a bundled browser. That one choice is
 why the installer is measured in megabytes rather than hundreds of them, why
 there is no runtime to install first, and why memory goes to your shells
-instead of to a second copy of Chromium. The interface itself is React, with
-the terminals rendered by [xterm.js](https://xtermjs.org/) — the same emulator
-VS Code trusts — with GPU rendering and modern Unicode widths on top.
+instead of to a second copy of Chromium. The interface itself is React, with the
+terminals rendered by [xterm.js](https://xtermjs.org/) — the same emulator VS
+Code trusts — with GPU rendering and modern Unicode widths on top.
 
 ## Two processes
 
@@ -23,6 +23,18 @@ process that owns every shell. The window can close, crash, or update; the
 shells keep running, and the next window picks them back up. That is the whole
 mechanism behind [persistent sessions](/docs/persistent-sessions/) — the
 terminal multiplexer is built in, so there is no `tmux` to learn.
+
+## The editor is Monaco
+
+[Editor panes](/docs/editor/) are built on Monaco, the editing engine behind VS
+Code, so the editing surface is the one your hands already know rather than an
+approximation of it. It loads only once you open an editor pane, so a session
+with no files open never pays for it.
+
+Language intelligence is a separate layer, and a strictly opt-in one:
+[language servers](/docs/language-servers/) are programs you install, launched
+on demand and shut down when the files that needed them close. TermHQ bundles
+none, at any version, ever.
 
 ## Browser panes are the real engine
 
@@ -47,11 +59,14 @@ the tiling grid and its gravity, the workspace model, the theming system, the
 keymap, the Git panel.
 
 Where a piece of the stack is the acknowledged best tool, TermHQ uses it and
-says so: dictation runs on
+says so: terminals are drawn by xterm.js and files edited in
+[Monaco](https://microsoft.github.io/monaco-editor/), the two engines VS Code
+itself uses; dictation runs on
 [whisper.cpp](https://github.com/ggml-org/whisper.cpp), entirely on your
-machine; git operations run through the `git` already on your `PATH`, with
-your credentials, hooks, and configuration; themes and icon packs install
-from [Open VSX](https://open-vsx.org/).
+machine; git operations run through the `git` already on your `PATH`, with your
+credentials, hooks, and configuration; language intelligence comes from
+[LSP](https://microsoft.github.io/language-server-protocol/) servers you install
+yourself; themes and icon packs install from [Open VSX](https://open-vsx.org/).
 
 With local Whisper models, dictation is processed on your machine; downloads
 — a theme, an icon pack, a speech model — happen when you ask for them, from

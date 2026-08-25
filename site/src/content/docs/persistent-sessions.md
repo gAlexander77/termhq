@@ -43,6 +43,18 @@ Proportions come back too. If you have [dragged a
 gutter](/docs/panes-and-layout/#resizing-panes) to give one pane more room than
 another, the workspace remembers that alongside the panes themselves.
 
+## Editor panes come back with their tabs
+
+An [editor pane](/docs/editor/) restores its tab order and which tab was active.
+Files load as you need them — the active one straight away, the rest when you
+first click them.
+
+Unsaved edits are the one thing an *orderly* quit does not carry across, and
+that is deliberate: quitting with unsaved work stops and asks first, so leaving
+it behind is always something you chose. A quit you did **not** choose is
+covered separately — see
+[If the app dies instead](/docs/editor/#if-the-app-dies-instead).
+
 ## Browser panes come back by address
 
 A [browser pane](/docs/browser-panes/) is part of the window rather than of the
