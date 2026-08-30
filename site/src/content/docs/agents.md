@@ -30,6 +30,11 @@ numbered agents so the mapping is never guesswork; <kbd>Esc</kbd> cancels.
 Only installed agents are numbered — the same `PATH` filtering as the dropdown,
 so the numbers always match what you can see.
 
+The chord needs a **terminal** focused, since what it does is type a command
+into a shell. Press it with an [editor](/docs/editor/) or a
+[browser pane](/docs/browser-panes/) in front and it says so rather than opening
+a picker that could not have worked.
+
 ## Knowing when one has finished
 
 The problem with running several agents is not starting them, it is noticing when

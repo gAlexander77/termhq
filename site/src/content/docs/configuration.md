@@ -171,6 +171,9 @@ Settings for [editor panes](/docs/editor/) and
 - **Editing shortcuts stay in the editor** — default on: app chords that Monaco
   also binds fall through to the editor while one is focused. See
   [Keyboard shortcuts](/docs/keyboard-shortcuts/#when-an-editor-pane-has-focus).
+  Underneath it sits a read-only reference list of every key an editor pane
+  answers to, grouped by what it does — find, multi-cursor, navigation, tabs,
+  formatting, markdown, and save/close.
 - **Language intelligence** — the master switch for
   [language servers](/docs/language-servers/), plus the server list itself: add,
   enable, edit the command and arguments, watch live status, restart one, or read

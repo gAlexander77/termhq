@@ -148,9 +148,21 @@ runnable from it, so dropping a chord never costs you the command.
 
 The palette also says when an action **cannot do anything right now** and why —
 *only one pane in the grid* beside Arrange pane, *voice is off in Settings*
-beside Voice dictation. Those rows are dimmed but still listed and still
+beside Voice dictation, *the focused pane is an editor, not a terminal* beside
+the ones that need a shell. Those rows are dimmed but still listed and still
 runnable, because the palette is how you find an action in the first place, and
 hiding one teaches you nothing about what it needs.
+
+### Three actions want a terminal
+
+Running an agent by number, voice dictation, and Copy selection all write into a
+shell, so they need a **terminal** focused rather than just any pane. With an
+[editor](/docs/editor/) or a [browser pane](/docs/browser-panes/) in front, they
+refuse and say which kind of pane is in the way instead of quietly doing
+nothing.
+
+You are not left without a way to copy: an editor and a browser each handle
+<kbd>Ctrl</kbd>+<kbd>C</kbd> themselves.
 
 ## Seeing what a key did
 

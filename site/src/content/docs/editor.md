@@ -23,7 +23,8 @@ external routes (your IDE, a terminal editor, the system default).
 Opening a file that is already open just switches to its tab. Opening it in a
 *different* pane gives you a second live view of the same file — type in one and
 the other keeps up, because both are looking at the same file rather than at two
-copies of it.
+copies of it. Duplicating an editor pane does the same thing for every tab at
+once: a second view of the same files, not a copy of them.
 
 ## Files are tabs
 
@@ -50,6 +51,10 @@ Tab cycling wraps, so with two tabs open one chord flips between them.
 <kbd>Ctrl</kbd>+<kbd>9</kbd> is the *last* tab however many there are, the way it
 works in a browser. <kbd>Ctrl</kbd>+<kbd>W</kbd> on the last remaining tab closes
 the pane.
+
+On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> in all of these — with one
+exception: <kbd>Ctrl</kbd>+<kbd>Tab</kbd> stays <kbd>Ctrl</kbd> on every
+platform, because that is the cycle-through-tabs key everywhere.
 
 Those chords are bound inside the pane, which is why they cost your shell
 nothing: <kbd>Ctrl</kbd>+<kbd>S</kbd> still freezes a terminal's output and
@@ -152,8 +157,16 @@ A `.md` tab has three views, and each chord toggles:
 | Split | <kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>V</kbd> | Source on the left, rendered on the right |
 | Full | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> | The rendered page, filling the tab |
 
-The header button walks all three if you would rather not learn the chords, and
-the split divider drags wherever you want it — double-click to even it up.
+On macOS those are <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> and
+<kbd>⌘</kbd>+<kbd>K</kbd> then <kbd>V</kbd>. The header button walks all three if
+you would rather not learn the chords, and the split divider drags wherever you
+want it — double-click to even it up.
+
+Saving and closing work the same in every view, so
+<kbd>Ctrl</kbd>+<kbd>S</kbd> and <kbd>Ctrl</kbd>+<kbd>W</kbd> still do their jobs
+while you are reading. **Find is the one that moves you**: the rendered page has
+no search of its own, so <kbd>Ctrl</kbd>+<kbd>F</kbd> flips the tab back to
+source and opens the find widget there rather than appearing to do nothing.
 
 **The two halves scroll together**, anchored on the source line each rendered
 block came from rather than on a percentage of the two heights, so a long table,
@@ -164,7 +177,11 @@ stays source. And it renders the **buffer**, not the file: your unsaved edits
 show up, and an agent rewriting the file redraws it.
 
 Headings, tables, quotes and code blocks are themed from the same colors as the
-rest of the app, so an imported theme carries the preview with it. Relative links
+rest of the app, so an imported theme carries the preview with it. **Code fences
+are syntax highlighted**, by the same colorizer the editor uses on the file
+itself — so a fence is painted in the theme you are already wearing, and
+switching themes recolors it. A fence tagged with a language name the editor
+does not know simply renders plain. Relative links
 open as another tab in the same pane; web links open a
 [browser pane](/docs/browser-panes/).
 
@@ -173,7 +190,8 @@ as plain text.
 
 > **A document is never trusted.** Real READMEs contain HTML, so the preview
 > keeps what merely presents — centered blocks, badge images, collapsible
-> sections — and drops anything that could run, embed or restyle. Link
+> sections, and the checkboxes of a `- [x]` task list — and drops anything that
+> could run, embed, restyle or navigate somewhere of its own accord. Link
 > destinations are limited to safe ones.
 
 ## Images, binaries, and very large files

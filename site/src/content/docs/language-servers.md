@@ -96,9 +96,10 @@ again.
 
 ## Formatting
 
-<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd> formats the document, and *Format
-Selection* formats a selection. **Settings → Editor → Format on save** (off by
-default) does it on every save.
+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd> formats the document, and
+<kbd>Ctrl</kbd>+<kbd>K</kbd> then <kbd>Ctrl</kbd>+<kbd>F</kbd> formats just the
+selection. **Settings → Editor → Format on save** (off by default) does it on
+every save.
 
 **TermHQ never reformats anything itself.** The request goes to your language
 server, so it is `rustfmt` behind rust-analyzer and `gofmt` behind gopls, already
