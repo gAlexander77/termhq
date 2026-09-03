@@ -18,3 +18,8 @@ artifacts/
 .DS_Store
 Thumbs.db
 .vscode/
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+.playwright-mcp/
+# Local Claude configuration and skills are private workspace state.
+.claude/

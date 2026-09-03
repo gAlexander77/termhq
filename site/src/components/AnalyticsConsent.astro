@@ -35,7 +35,7 @@
       return null;
     }
   };
-  const remember = (value) => {
+  const remember = (value: string) => {
     try {
       localStorage.setItem(KEY, value);
     } catch {
@@ -49,11 +49,16 @@
     tag.async = true;
     document.head.appendChild(tag);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      window.dataLayer.push(arguments);
+    type AnalyticsWindow = Window & {
+      dataLayer?: unknown[][];
+      gtag?: (...args: unknown[]) => void;
+    };
+    const analyticsWindow = window as AnalyticsWindow;
+    analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+    function gtag(...args: unknown[]) {
+      analyticsWindow.dataLayer?.push(args);
     }
-    window.gtag = gtag;
+    analyticsWindow.gtag = gtag;
     gtag("js", new Date());
     gtag("config", GA4);
   }
@@ -70,14 +75,18 @@
     const banner = document.getElementById("consent-banner");
     if (!banner) return;
 
-    const answer = (value) => {
+    const accept = banner.querySelector<HTMLButtonElement>("#consent-accept");
+    const reject = banner.querySelector<HTMLButtonElement>("#consent-reject");
+    if (!accept || !reject) return;
+
+    const answer = (value: "accept" | "reject") => {
       remember(value);
       banner.hidden = true;
       if (value === "accept") loadGA4();
     };
 
-    banner.querySelector("#consent-accept").addEventListener("click", () => answer("accept"));
-    banner.querySelector("#consent-reject").addEventListener("click", () => answer("reject"));
+    accept.addEventListener("click", () => answer("accept"));
+    reject.addEventListener("click", () => answer("reject"));
     banner.hidden = false;
   }
 

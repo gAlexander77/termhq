@@ -56,7 +56,7 @@ Most GUI terminals are assembled from the same off-the-shelf parts — a
 ready-made terminal widget, a layout library, `tmux` underneath for
 persistence. TermHQ's core is built from scratch instead: the session engine,
 the tiling grid and its gravity, the workspace model, the theming system, the
-keymap, the Git panel.
+keymap, and Source Control.
 
 Where a piece of the stack is the acknowledged best tool, TermHQ uses it and
 says so: terminals are drawn by xterm.js and files edited in

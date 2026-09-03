@@ -34,7 +34,7 @@ icon the Files panel uses, so the tree and the strip always show the same
 picture.
 
 The active tab renames the pane and sets its working directory, which means the
-Files and Git panels follow what you are editing exactly as they follow a shell.
+Files and Source Control follow what you are editing exactly as they follow a shell.
 
 | Action | Shortcut |
 |---|---|
@@ -82,6 +82,12 @@ terminal font until you turn **Settings → Editor → Font size follows the
 terminal** off and set the editor's own. That panel also carries soft word wrap
 and the minimap, both off by default, and a reference list of Monaco's own
 keys.
+
+The editor wears the active theme, including its surface, cursor, selections,
+widgets, diffs, and syntax. Built-in and hand-made themes draw syntax from the
+terminal palette, so an editor and terminal beside each other belong to the same
+workspace. Themes imported from Open VSX keep their own editor colors and syntax
+rules. See [Theming](/docs/theming/).
 
 <kbd>Ctrl</kbd>+<kbd>F</kbd> opens Monaco's find widget while an editor is
 focused, rather than the terminal's scrollback search. That is one of a small set

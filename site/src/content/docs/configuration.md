@@ -107,6 +107,11 @@ Keys are camelCase.
   back on returns the layout you had rather than a blank one. Opening or closing
   a pane resets them regardless of this setting — that rule belongs to
   [resizing](/docs/panes-and-layout/#resizing-panes), not to the toggle.
+- **Status bar** — default on. Keeps a thin strip across the bottom of the
+  window, with the stashed-pane shelf at its right edge. Because the strip is
+  always part of the layout, stashing or restoring a pane never makes the grid
+  jump. Turn it off to reclaim the space and return the shelf to its floating
+  pill at the bottom-center of the panes.
 
 ### Terminal
 
@@ -233,9 +238,9 @@ Settings for [editor panes](/docs/editor/) and
 
 ### Git
 
-The Git panel is a viewer — it shows status, diffs, and conflicts, switches
-branches, and syncs; it does not stage, commit, or resolve. These settings
-tune it:
+The [Source Control](/docs/source-control/) panel can review and stage changes,
+commit, browse history, manage branches, sync, resolve conflicts, use stashes,
+and create worktrees. These settings tune its defaults:
 
 - **Branch order** — how the branch picker sorts: most recently committed
   first, or alphabetical.
@@ -248,7 +253,7 @@ tune it:
 - **Prune on fetch** — drop remote-tracking branches whose upstream is gone.
 - **Refresh every** — how often the panel re-reads status; a very large
   repository may prefer a longer interval.
-- **Conflict count on the Git tab** — a badge on the tab itself, so a merge an
+- **Conflict count on the Source Control tab** — a badge on the tab itself, so a merge an
   agent started in a background pane is visible while you are looking at
   Files.
 - **Diff layout** — unified (stacked) or side by side; the same toggle lives

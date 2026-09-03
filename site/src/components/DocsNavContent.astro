@@ -1,0 +1,53 @@
+---
+interface NavItem {
+  href: string;
+  title: string;
+}
+
+interface Props {
+  items: NavItem[];
+  path: string;
+}
+
+const { items, path } = Astro.props;
+---
+
+<div class="docs-nav-content">
+  <div class="docs-side-head">
+    <span class="docs-side-dot" aria-hidden="true"></span>
+    <span>TermHQ documentation</span>
+  </div>
+
+  <div class="docs-nav-group">
+    <h4>Explore</h4>
+    <ul>
+      {
+        items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={path === item.href ? "page" : undefined}
+            >
+              {item.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="docs-nav-group docs-nav-reference">
+    <h4>Reference</h4>
+    <ul>
+      <li>
+        <a
+          href="/docs/all/"
+          aria-current={path === "/docs/all/" ? "page" : undefined}
+        >
+          All documentation
+        </a>
+      </li>
+      <li><a href="/changelog/">Changelog</a></li>
+    </ul>
+  </div>
+</div>

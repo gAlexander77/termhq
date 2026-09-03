@@ -1,14 +1,14 @@
 ---
 /**
- * A still of the app: sidebar open, one full-height pane on the left and two
- * stacked on the right. Decorative only — nothing here is a link or a button,
+ * A still of the app: Source Control open beside one full-height pane and two
+ * stacked panes. Decorative only — nothing here is a link or a button,
  * the whole thing is pointer-events: none, and it is exposed to assistive
  * tech as a single labeled image rather than as a wall of fake terminal text.
  *
  * The fake project is consistent on purpose: the files the agent says it edited
- * are the ones marked modified in the tree and listed by git status in the
- * bottom pane. A mock that contradicts itself is the kind of thing people
- * notice without being able to say why.
+ * are the ones listed in Source Control and by git status in the bottom pane.
+ * A mock that contradicts itself is the kind of thing people notice without
+ * being able to say why.
  *
  * Each output line is one element carrying its whole text, including the
  * prompt and any leading indent, and `white-space: pre` sits on that element
@@ -26,21 +26,10 @@ interface Props {
 }
 const { class: className } = Astro.props;
 
-const tree = [
-  { depth: 0, name: "atlas-checkout", kind: "root", open: true },
-  { depth: 1, name: "src", kind: "dir", open: true },
-  { depth: 2, name: "db", kind: "dir", open: true },
-  { depth: 3, name: "schema.sql", kind: "file", status: "M" },
-  { depth: 2, name: "lib", kind: "dir", open: true },
-  { depth: 3, name: "idempotency.ts", kind: "file", status: "U" },
-  { depth: 3, name: "stripe.ts", kind: "file" },
-  { depth: 2, name: "routes", kind: "dir", open: true },
-  { depth: 3, name: "cart.ts", kind: "file" },
-  { depth: 3, name: "payments.ts", kind: "file", status: "M", active: true },
-  { depth: 2, name: "index.ts", kind: "file" },
-  { depth: 1, name: "tests", kind: "dir" },
-  { depth: 1, name: "package.json", kind: "file" },
-  { depth: 1, name: "README.md", kind: "file" },
+const changes = [
+  { name: "payments.ts", path: "src/routes", status: "M", active: true },
+  { name: "schema.sql", path: "src/db", status: "M" },
+  { name: "idempotency.ts", path: "src/lib", status: "U" },
 ];
 
 const mainPane = {
@@ -98,9 +87,9 @@ const sidePanes = [
 ];
 
 const label =
-  "The TermHQ window: a file tree on the left, one tall terminal running a " +
-  "coding agent, and two shorter terminals stacked beside it running tests " +
-  "and git.";
+  "The TermHQ window: Source Control on the left, one tall terminal running " +
+  "a coding agent, two shorter terminals running tests and git, and a thin " +
+  "status bar along the bottom.";
 ---
 
 <div class:list={["appmock", className]} role="img" aria-label={label}>
@@ -115,25 +104,37 @@ const label =
   <div class="am-body">
     <aside class="am-side">
       <div class="am-side-tabs">
-        <span class="on">Files</span>
-        <span>Git</span>
+        <span>Files</span>
+        <span class="on">Source Control</span>
       </div>
-      <ul class="am-tree">
-        {
-          tree.map((row) => (
-            <li
-              class:list={["am-row", { "is-active": row.active }]}
-              style={`padding-left:${10 + row.depth * 13}px`}
-            >
-              <span class="am-glyph">
-                {row.kind === "file" ? "" : row.open ? "▾" : "▸"}
-              </span>
-              <span class="am-name">{row.name}</span>
-              {row.status && <span class="am-status">{row.status}</span>}
-            </li>
-          ))
-        }
-      </ul>
+      <div class="am-repo">
+        <strong>atlas-checkout</strong>
+        <span>feat/idempotency-keys</span>
+      </div>
+      <div class="am-git-tabs">
+        <span class="on">Changes</span>
+        <span>History</span>
+      </div>
+      <div class="am-commit">
+        <span>Message</span>
+        <i>Commit</i>
+      </div>
+      <div class="am-group">
+        <div class="am-group-head"><span>Changes</span><b>3</b></div>
+        <ul class="am-tree">
+          {
+            changes.map((row) => (
+              <li class:list={["am-row", { "is-active": row.active }]}>
+                <span class="am-status">{row.status}</span>
+                <span class="am-name">{row.name}</span>
+                <span class="am-path">{row.path}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="am-collapsed"><span>Stashes</span><b>0</b></div>
+      <div class="am-collapsed"><span>Worktrees</span></div>
     </aside>
 
     <div class="am-grid">
@@ -163,6 +164,10 @@ const label =
         ))
       }
     </div>
+  </div>
+  <div class="am-statusbar">
+    <span class="am-status-space"></span>
+    <span class="am-stashed">▰ 1</span>
   </div>
 </div>
 
@@ -245,16 +250,19 @@ const label =
 
   .am-side {
     background: var(--bg);
-    padding: 12px 0 16px;
+    padding: 0 0 16px;
     font-family: var(--mono);
     font-size: 12px;
   }
   .am-side-tabs {
     display: flex;
-    gap: 16px;
-    padding: 0 14px 10px;
+    gap: 14px;
+    height: 34px;
+    padding: 0 12px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
     color: var(--faint);
-    font-size: 11px;
+    font-size: 9px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -266,11 +274,61 @@ const label =
     margin: 0;
     padding: 0;
   }
-  .am-row {
+  .am-repo {
+    display: grid;
+    gap: 2px;
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .am-repo strong { color: var(--dim); font-size: 11px; font-weight: 600; }
+  .am-repo span { color: var(--faint); font-size: 10px; overflow: hidden; text-overflow: ellipsis; }
+  .am-git-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    color: var(--faint);
+    font-size: 10px;
+    text-align: center;
+  }
+  .am-git-tabs span { padding: 7px 4px 6px; }
+  .am-git-tabs .on { color: var(--fg); box-shadow: inset 0 -1px 0 var(--fg); }
+  .am-commit {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    padding: 10px 10px 8px;
+  }
+  .am-commit span,
+  .am-commit i {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 9px;
+    font-style: normal;
+  }
+  .am-commit span { color: var(--faint); }
+  .am-commit i { color: var(--bg); background: var(--dim); border-color: var(--dim); }
+  .am-group-head,
+  .am-collapsed {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding-right: 12px;
+    height: 27px;
+    padding: 0 10px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 10px;
+  }
+  .am-group-head::before,
+  .am-collapsed::before { content: "▾"; color: var(--faint); font-size: 9px; }
+  .am-collapsed::before { content: "▸"; }
+  .am-group-head b,
+  .am-collapsed b { color: var(--faint); font-size: 9px; font-weight: 500; }
+  .am-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 10px;
     height: 22px;
     color: var(--muted);
     white-space: nowrap;
@@ -279,20 +337,35 @@ const label =
     background: var(--panel-2);
     color: var(--fg);
   }
-  .am-glyph {
-    width: 9px;
-    color: var(--faint);
-    font-size: 10px;
-  }
   .am-name {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .am-status {
+  .am-path {
     margin-left: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--faint);
-    font-size: 11px;
+    font-size: 9px;
   }
+  .am-status {
+    color: var(--dim);
+    font-size: 11px;
+    flex: 0 0 10px;
+  }
+
+  .am-statusbar {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    border-top: 1px solid var(--line);
+    background: var(--panel);
+    font: 9px var(--mono);
+    color: var(--faint);
+  }
+  .am-status-space { flex: 1; }
+  .am-stashed { padding: 0 4px; color: var(--muted); }
 
   /* One tall pane on the left, two stacked on the right. The tall one spans
      both rows rather than the column being its own grid — one grid keeps the

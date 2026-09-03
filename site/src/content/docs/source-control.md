@@ -1,72 +1,139 @@
 ---
 title: "Source control"
 weight: 65
-description: "The Git panel: a viewer — status, diffs, conflicts, branch switching, and syncing, built for watching repositories that agents work in."
+description: "Review, stage and commit changes, browse history, manage branches, sync, resolve conflicts, use stashes and worktrees — without leaving the workspace."
 ---
 
-The Git tab in the sidebar is deliberately a **viewer**. It shows you the
-truth about the repository — status, diffs, counts, conflicts — lets you
-switch branches and sync with the remote, and stops there. TermHQ is a
-terminal app: the complete git client is always one keystroke below the
-panel, and anything that edits history belongs to it, or to your editor.
-The panel's job is the part a terminal shows poorly — the state of the repo
-at a glance while agents are busy in the panes.
+Open **Source Control** in the sidebar to work with the repository belonging to
+the pane you are focused on. Move to a pane in another project and the panel
+follows it, just like Files.
 
-Like the file tree, it always shows the repository of the pane you are
-focused on — click into a different project's terminal and the panel
-follows.
+The top of the panel shows the repository and branch, followed by two clear
+views:
 
-## What it shows
+- **Changes** is the working view: changed files, staging, commits, conflicts,
+  stashes and worktrees.
+- **History** opens the commit graph and its search and file-history tools.
 
-Changed files sit in staged and unstaged sections with familiar status
-letters. Click a file for its diff — unified or side by side, with
-word-level change highlighting and line numbers that stay out of your
-copies. Untracked files preview as an all-additions diff.
+## Review and stage changes
 
-When a merge, rebase, or cherry-pick is in progress, a banner says so in
-plain words — "Merging feature-x into main — 2 files need a decision" —
-and tells you the exact command that concludes it in the terminal. Errors
-are reported readably: a plain-language summary, the affected files, a
-next-step hint, and git's verbatim message one click away. A genuine git
-failure is reported as what it is, never disguised as "not a repository."
+Files are grouped as **Merge Changes**, **Staged Changes**, and **Changes**. A
+partly staged file appears in both staged and unstaged groups, so the panel never
+hides the part you have not committed yet.
 
-## Branches
+Use the actions beside a file or group to stage, unstage, or discard it. A
+discard confirmation tells you what the file will return to. Untracked files go
+to the operating system's recycle bin or trash rather than disappearing
+permanently.
 
-The branch picker lists branches most-recently-committed first (or
-alphabetically), searchable with ranked matching, remote branches included
-— picking one checks it out, creating the local tracking branch when
-needed. Switching branches is the panel's one local action; git's own
-refusals (uncommitted changes in the way) surface as-is, and the fix is
-yours to make in the terminal.
+Click a file to open its diff. Diffs can be side by side or stacked, controlled
+from **Settings → Git → Diff layout**. From an unstaged diff, select a change in
+the gutter to stage just that hunk; from a staged diff, use the same gesture to
+unstage it. If the file changed after the diff opened, TermHQ refreshes instead
+of applying an action to stale content.
 
-## Syncing
+Binary files and files too large to preview are labeled rather than shown as
+garbled text. New files appear as additions, and deleted files can be staged as
+a whole.
 
-Fetch, pull, and push, with honest ahead/behind counts — an optional
-background auto-fetch keeps them fresh. Pull is **fast-forward only** by
-default: on a diverged branch it stops and says so instead of quietly
-merging. A rejected push offers **pull with rebase**, the non-destructive
-answer. Publishing a new branch follows your git configuration for which
-remote to use rather than assuming one — and when several remotes leave it
-genuinely ambiguous, the panel asks instead of guessing.
+## Commit what you staged
 
-## Conflicts
+The main **Commit** button records exactly what is in **Staged Changes**.
+<kbd>Ctrl</kbd>+<kbd>Enter</kbd> commits from the message box without reaching
+for the pointer.
 
-When an operation stops on conflicts, the panel lists the conflicted files
-and an optional badge puts the count on the Git tab itself, so a merge an
-agent started in a background pane is visible from anywhere. **View** opens
-each conflict read-only, side by side, in the words VS Code taught everyone
-— **Current** and **Incoming**, with the actual branch names attached, and
-labeled truthfully during a rebase (current is the base you are rebasing
-onto; incoming is your own commits). From there, hand the file to your IDE
-— VS Code and Cursor open their merge editors for a conflicted file — or to
-a terminal editor in a pane. Or click **Copy AI prompt**: the panel
-composes a resolve briefing — which files, which marker side belongs to
-which branch (stated correctly even mid-rebase), and the
-stage-don't-commit ground rules — and puts it on your clipboard to paste
-into whichever AI you trust: your IDE's chat, an agent running in a pane,
-anywhere. As markers disappear, rows leave the list.
+If the repository cannot be committed, the reason appears below the box — for
+example, nothing is staged, conflicts remain, or an operation is in progress.
+The menu beside Commit also offers:
 
-Everything the panel reads comes through the `git` on your PATH — your
-credentials, your hooks, your configuration — so what it shows never
-disagrees with your terminal. Repositories on WSL paths are not supported
+- **Commit All** — stages everything first, then commits it.
+- **Amend Last Commit** — loads the last message and warns when the next push
+  will need force.
+- **Undo Last Commit** — removes the latest commit while leaving all of its
+  changes staged. Your files are not lost.
+
+## Browse history
+
+Choose **History** to see the repository's commit graph. Each row shows its
+branches and tags, author, message, and relative time. Select a commit for its
+full message and changed files, then open any file to compare that version with
+its parent.
+
+Search accepts message text, `author:name`, or a commit ID. **Refresh** brings
+new commits into the graph without shifting the history you were already
+reading.
+
+From a selected commit you can copy its ID, create a branch there, or open it on
+the repository's host when TermHQ recognizes the remote. **View File History**
+follows a file through renames and shows the path it had at each commit. It is
+also available from the command palette.
+
+## Branches and syncing
+
+The branch picker is searchable and lists recently used branches first by
+default. From it you can:
+
+- switch to a local or remote branch
+- create a branch by typing a new name
+- rename or delete a local branch
+- see when a tracked upstream branch is gone
+
+Deleting a branch that is not fully merged requires a second, explicit
+confirmation.
+
+Fetch, pull, and push sit beside the current branch with ahead and behind
+counts. A branch without an upstream offers **Publish**. TermHQ follows your Git
+configuration when choosing a remote and asks when there is no honest default.
+
+Pull is fast-forward-only by default, so a diverged branch stops instead of
+creating a surprise merge. You can choose rebase or merge in **Settings → Git**.
+After a rejected push, the panel can offer **Pull with rebase**. A force push is
+available only with a protective lease: if someone else updated the remote
+after the version you confirmed, the push stops rather than overwriting their
+work.
+
+## Resolve conflicts
+
+An in-progress merge, rebase, cherry-pick, or revert gets a banner that says
+what is happening and how many files still need a decision. **Continue**,
+**Skip** where supported, and **Abort** are available in the same place; Abort
+confirms what it will discard.
+
+Select a file under **Merge Changes** to open it in an editor pane. Each conflict
+block offers **Accept Current**, **Accept Incoming**, or **Accept Both**, and you
+can edit the result normally before staging it. The labels stay tied to Git's
+own sides during a rebase, where “current” and “incoming” are easy to read
+backwards.
+
+You can also compare the two sides of a conflict, or choose **Copy AI prompt**.
+That copies a concise briefing — affected files, which side is which, and the
+instruction to resolve and stage without committing — ready for whichever AI
+you trust.
+
+## Stashes and worktrees
+
+The **Stashes** section lets you create a stash with an optional message and
+include untracked files when needed. Expand a stash to review its files and
+diffs, then apply, pop, or drop it. Dropping confirms first because those
+changes may exist nowhere else.
+
+The **Worktrees** section lists the repository's other working folders. Create a
+worktree on a new branch, open a terminal in one, or remove it. If a worktree
+still has changes, TermHQ shows Git's refusal before it offers a forced removal.
+
+## Command palette and errors
+
+The command palette includes actions for opening Source Control or History,
+viewing file history, committing, staging or unstaging everything, fetching,
+pulling, pushing, switching branches, stashing, and refreshing. These actions
+do not take more keyboard shortcuts away from your shells.
+
+When Git refuses an action, the message appears beneath the repository header
+with a plain-language summary and suggested next step. Expand it when you need
+Git's complete response. Background fetch failures stay quiet while their
+ahead/behind counts are marked stale, so going offline does not produce a new
+warning every few minutes.
+
+TermHQ uses the `git` already on your `PATH`, along with your configuration and
+credential helpers. Repositories reached through WSL paths are not supported
 yet; see [Troubleshooting](/docs/troubleshooting/).

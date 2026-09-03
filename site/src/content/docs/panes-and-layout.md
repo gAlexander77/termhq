@@ -57,8 +57,11 @@ it on the seam where they meet instead of in a gutter.
 
 ## Rearranging with the mouse
 
-Drag a pane's **header**. It is one gesture family, borrowed from Windows snap,
-and every drop shows a dashed ghost preview before you commit:
+Drag a pane's **header**. A translucent copy of the header follows the pointer,
+so it stays clear which pane you picked up, while a dashed destination preview
+shows where it will land. Press <kbd>Esc</kbd> at any point to cancel.
+
+It is one gesture family, borrowed from Windows snap:
 
 | Drop target | Result |
 |---|---|
@@ -181,9 +184,17 @@ scrollback survives. This hides a job, it does not stop one. A stashed
 loaded, and restoring it returns the same scroll position — and a stashed
 [editor](/docs/editor/) keeps its tabs and any unsaved edits in them.
 
-Stashed panes collapse to a small count pill at the bottom edge; hovering it pops
-up a shelf of cards. Click one to restore it into the first free slot, or use its
-hover-revealed **×** to close that terminal outright without restoring it first.
+By default, stashed panes collect behind a count at the right edge of the thin
+status bar along the bottom of the window. Click it — or reach it with
+<kbd>Tab</kbd> and press <kbd>Enter</kbd> — to open a shelf of cards upward. Click
+a card to restore it into the first free slot, or use its hover-revealed **×**
+to close that pane outright without restoring it first.
+
+The status bar always keeps its small amount of space, whether anything is
+stashed or not, so the grid does not jump when the first pane is parked or the
+last one returns. Turn **Settings → Appearance → Status bar** off if you prefer
+every pixel for panes. The stash count then becomes a floating pill at the
+bottom-center edge; hover peeks at the shelf and click pins it open.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> pins the shelf open and hands it the
 arrow keys — <kbd>←</kbd> <kbd>→</kbd> along a row, <kbd>↑</kbd> <kbd>↓</kbd>
@@ -199,10 +210,9 @@ and <kbd>Ctrl</kbd>+<kbd>Backspace</kbd> still deletes a word in your shell whil
 the shelf is up. <kbd>Shift</kbd>+<kbd>Tab</kbd> is the one exception — it walks
 the cards backwards.
 
-<kbd>Esc</kbd> dismisses a shelf that is *pinned* — by the chord, or by an arrow
-press that took it over from hover. A shelf you only hovered goes when you move
-the pointer away, and <kbd>Esc</kbd> stays with your terminal, where vim and
-every agent TUI need it.
+<kbd>Esc</kbd> dismisses a shelf that is open for keyboard control. With the
+floating pill, a shelf you only hovered goes when you move the pointer away, and
+<kbd>Esc</kbd> stays with your terminal, where vim and every agent TUI need it.
 
 Cards fill a row left to right, most recently stashed first, then wrap. Two rows
 show at a time and anything past that scrolls **down**, never sideways.

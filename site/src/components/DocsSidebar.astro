@@ -1,44 +1,46 @@
 ---
 import { getCollection } from "astro:content";
+import DocsNavContent from "./DocsNavContent.astro";
 
 const docs = (await getCollection("docs")).sort(
   (a, b) => a.data.weight - b.data.weight,
 );
 const path = Astro.url.pathname;
+const items = [
+  { href: "/docs/", title: "Overview" },
+  ...docs.map((doc) => ({
+    href: `/docs/${doc.id}/`,
+    title: doc.data.title,
+  })),
+];
+const currentTitle =
+  items.find((item) => item.href === path)?.title ?? "Documentation";
 ---
 
 <aside class="docs-side" aria-label="Documentation">
-  <h4>Documentation</h4>
-  <ul>
-    <li>
-      <a href="/docs/" aria-current={path === "/docs/" ? "page" : undefined}>
-        Overview
-      </a>
-    </li>
-    {
-      docs.map((doc) => {
-        const href = `/docs/${doc.id}/`;
-        return (
-          <li>
-            <a href={href} aria-current={path === href ? "page" : undefined}>
-              {doc.data.title}
-            </a>
-          </li>
-        );
-      })
-    }
-  </ul>
+  <div class="docs-nav-desktop">
+    <DocsNavContent items={items} path={path} />
+  </div>
 
-  <h4>Reference</h4>
-  <ul>
-    <li>
-      <a
-        href="/docs/all/"
-        aria-current={path === "/docs/all/" ? "page" : undefined}
+  <details class="docs-nav-mobile">
+    <summary>
+      <span class="docs-mobile-label">
+        <span class="docs-mobile-eyebrow">
+          <span class="docs-side-dot" aria-hidden="true"></span>
+          Documentation
+        </span>
+        <span class="docs-mobile-current">{currentTitle}</span>
+      </span>
+      <svg
+        class="docs-mobile-chevron"
+        viewBox="0 0 16 16"
+        width="16"
+        height="16"
+        aria-hidden="true"
       >
-        All documentation
-      </a>
-    </li>
-    <li><a href="/changelog/">Changelog</a></li>
-  </ul>
+        <path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </summary>
+    <DocsNavContent items={items} path={path} />
+  </details>
 </aside>

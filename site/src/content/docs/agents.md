@@ -103,9 +103,10 @@ an agent is mid-task and pick it up later with its output intact.
 
 TermHQ knows which directory each pane is in, and keeps up as the shell moves
 around. The file panel follows the focused pane, so it is already showing the
-folder the agent is working in rather than your home directory. So does the Git
-panel — repo, branch, staged and changed files for whichever pane you are looking
-at, which is how you review what an agent just did without leaving the app.
+folder the agent is working in rather than your home directory. So does Source
+Control — repository, branch, changes, staging, commits and history for whichever
+pane you are looking at, which is how you review and ship what an agent just did
+without leaving the app.
 
 That works with WSL panes too, so a shell inside a distribution still steers the
 panels correctly.

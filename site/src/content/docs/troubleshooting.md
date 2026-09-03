@@ -188,9 +188,9 @@ double-click one boundary to even up just that pair.
 SmartScreen warns on the first install of a build that is not code-signed. See
 [Installation](/docs/installation/).
 
-## Git panel says it cannot read a WSL repo
+## Source Control says it cannot read a WSL repo
 
-Repositories on a `\\wsl.localhost` path are not supported by the Git panel yet,
+Repositories on a `\\wsl.localhost` path are not supported by Source Control yet,
 and it says so rather than showing you something wrong. Git inside the WSL pane
 itself works normally.
 

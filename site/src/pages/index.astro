@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Mark from "../components/Mark.astro";
-import AppMock from "../components/AppMock.astro";
+// import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
 
 const features = [
@@ -62,8 +62,8 @@ const features = [
     body: "PowerShell, cmd, Git Bash and every WSL distribution on Windows; whatever /etc/shells reports on macOS and Linux. Detected on launch, so there is nothing to configure that the machine already knows.",
   },
   {
-    title: "Files and git, alongside",
-    body: "A file tree that follows the focused pane's directory, and a Git viewer: status, diffs, and conflicts at a glance, branch switching, and syncing — so reviewing what an agent did does not mean leaving. Resolving stays where it belongs: your editor, your terminal, or an AI you hand the composed prompt to.",
+    title: "Source control, without leaving",
+    body: "Review changes, stage files or individual hunks, commit exactly what is staged, browse history, switch branches, sync, stash and manage worktrees. Conflicts open in the editor with clear choices — or as a ready-made prompt for the AI you trust.",
   },
 ];
 
@@ -97,6 +97,11 @@ const keys = [
       <a class="btn btn-primary btn-lg" href="/download/">Download</a>
       <a class="btn btn-lg" href="/docs/">Read the docs</a>
     </div>
+    <ul class="hero-proof" aria-label="Product highlights">
+      <li>Local-first</li>
+      <li>Persistent sessions</li>
+      <li>Windows, macOS and Linux</li>
+    </ul>
     {
       PRE_RELEASE && (
         <p class="hero-note">
@@ -105,7 +110,7 @@ const keys = [
       )
     }
 
-    <AppMock />
+    {/* <AppMock /> */}
   </section>
 
   <section class="section">
@@ -169,8 +174,8 @@ const keys = [
           <p>
             Ten built-ins from true black to true white, your own in one small
             JSON file, and one-click import for VS Code color themes from Open
-            VSX. The terminal palette can follow the interface or come from a
-            different theme entirely.
+            VSX. Themes now carry across the whole workbench and editor, while
+            the terminal palette can still come from a different theme.
           </p>
         </div>
         <div class="cell">
@@ -192,7 +197,7 @@ const keys = [
       <p class="lede" style="margin:0 auto">
         Everything that touches your system — shells, sessions, files, git,
         speech — is native Rust, and the core is built from scratch: the
-        session engine, the tiling grid, the theming system, the Git panel.
+        session engine, the tiling grid, the theming system, Source Control.
         The interface renders in your OS's own webview
         instead of a bundled browser, which is why the installer is measured
         in megabytes, not hundreds of them.

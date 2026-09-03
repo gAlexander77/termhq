@@ -45,7 +45,7 @@ let sections = 0;
 let ids = 0;
 let hrefs = 0;
 
-html = html.replace(SECTION, (whole, slug, body) => {
+html = html.replace(SECTION, (_whole, slug, body) => {
   sections += 1;
 
   const prefixed = body

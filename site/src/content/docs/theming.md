@@ -1,7 +1,7 @@
 ---
 title: "Theming"
 weight: 90
-description: "Built-in themes, writing your own, splitting the terminal palette from the interface, and importing VS Code color themes from Open VSX."
+description: "Built-in themes, writing your own, theming the workbench and editor, splitting the terminal palette, and importing themes from Open VSX."
 ---
 
 TermHQ ships with ten built-in themes and will use any valid theme file you add.
@@ -14,7 +14,7 @@ Dark: **Default**, **Void**, **Pitch** (pure black, for OLED), **Graphite**,
 
 **Settings → Appearance → Theme**. The list previews as you browse it: arrow or
 hover through it and the app repaints behind the dropdown — chrome, terminal
-palette and all — with the option you started on badged `current`.
+palette, editor and all — with the option you started on badged `current`.
 <kbd>Enter</kbd> or a click keeps that one; <kbd>Esc</kbd> or a click elsewhere
 puts back where you were. Nothing is written to disk until you keep something, so
 looking at thirty themes costs zero saves.
@@ -27,6 +27,11 @@ A theme has two halves, and they can be driven by different themes.
 terminal palette while the chrome stays on another — Graphite chrome hosting a
 Dracula terminal is a preference, not a fork. Leave it empty and the terminal
 follows the app theme.
+
+For hand-made and built-in themes, that terminal palette also supplies the
+editor's syntax colors. Choosing a separate terminal theme therefore gives the
+terminals and editor the same visual language while leaving the surrounding
+workbench alone.
 
 Worth knowing if you author a theme whose two halves only look right together:
 your `terminal` block may end up in use under somebody else's `ui` block.
@@ -72,19 +77,20 @@ A theme has a name and those two sections:
 }
 ```
 
-- **`ui`** colors the application around the terminals. Keys it does not
-  recognize are ignored, and **a key you leave out keeps whatever was there
-  before** rather than being invented for you — so the way to write a theme is to
-  copy a built-in and change what you want, not to start from three colors and
-  hope.
+- **`ui`** colors the application around the terminals. The base colors above
+  are enough for a complete theme: TermHQ derives every surface you leave out.
+  A theme can optionally take individual control of the title bar, status bar,
+  sidebar, pane headers, popups, menus, inputs, buttons, selections, focus rings,
+  links, warnings, success states, and Git file colors. The commented template
+  names every option.
 - **`terminal`** colors the terminals themselves: the sixteen ANSI colors plus
   background, foreground, cursor and selection.
 
 A few things you do not have to theme:
 
-- **Hovers and scrollbars** are mixed from `ink`, so they follow your text color
-  and stay visible on light themes as well as dark ones. This is why light themes
-  work as well as dark ones without opting into anything.
+- **Workbench surfaces** are derived from the base colors until you override
+  them. A small theme still paints the whole application, including light
+  themes, without needing dozens of entries.
 - **`ui.selection`** colors selected text in the chrome — inputs, file names,
   settings copy. Omit it and it falls back to `accent` at 30%. The terminal's own
   selection is the separate `terminal.selectionBackground`, because the terminal
@@ -96,9 +102,10 @@ A few things you do not have to theme:
   pane frame, so a theme whose terminal differs from `panel` still reads as one
   surface rather than a black frame.
 
-`accent` does the most work in the interface — focus rings, buttons, folder tint.
-`panel` should sit slightly above `bg` in lightness; the hairlines are the borders
-everywhere.
+`accent` marks the active parts of the interface. When a theme supplies more
+specific colors, focus rings, buttons, selected rows, links, and Git states use
+those instead of forcing the accent into every role. `panel` should sit slightly
+above `bg` in lightness; the hairlines are the borders everywhere.
 
 ### The template is the contract
 
@@ -113,6 +120,19 @@ want listed.
 Themes you add yourself can be deleted from Settings. Built-in themes are
 compiled into the app and have no file to remove.
 
+## The editor follows the theme
+
+Editor panes, diff views, and rendered Markdown now change with the active
+theme — background, gutter, cursor, selections, widgets, diffs, and syntax. A
+light workbench gets a light editor rather than dark syntax on a pale surface.
+
+Built-in and hand-made themes derive syntax from the active terminal palette,
+so the editor and the terminals beside it feel like one environment. Themes
+imported from Open VSX keep the extension's own editor colors and syntax rules.
+
+If you are authoring a theme and want exact control, `_template.jsonc` includes
+an optional `editor` section. Most themes do not need it.
+
 ## Importing VS Code themes
 
 **Settings → Appearance → Manage themes** opens a browser for
@@ -122,18 +142,21 @@ a most-downloaded shelf by default, live search, infinite scroll, and an
 **Apply** rather than a second install, and reads "Applied ✓" when it is the
 active one.
 
-TermHQ *converts* a VS Code color theme into its own format — ANSI palette
-directly, workbench colors mapped with fallbacks, syntax scopes discarded — and
-writes the result into your themes folder as an ordinary editable file. Imported
-themes are marked with where they came from.
+TermHQ converts a VS Code color theme into its own format: the terminal palette,
+the colors for the full workbench, and the extension's editor colors and syntax
+rules. The result is written into your themes folder and marked with where it
+came from.
 
-Conversion also fills in what real-world themes leave out, because a literal
-mapping renders badly: text tiers are faded from the foreground when a theme
-declares none, otherwise secondary text comes out identical to primary; flat
-themes get a darkened window color so panes still separate; and a declared
-`panel.border` carries its own color into TermHQ's strong hairline. Comments in
-the JSON and themes that inherit from another file inside the same extension are
-both handled.
+Conversion fills in what real-world themes leave out, so secondary text remains
+readable, panes stay distinct, buttons keep enough contrast, and focus never
+disappears into the background. Comments in the source and themes that inherit
+from another file inside the same extension are both handled.
+
+An imported file keeps enough of its source colors to benefit when TermHQ's
+converter improves. The next time themes are listed, an older import is refreshed
+automatically. Imports from before that source was retained show **Re-import** in
+the Installed view. If you deliberately hand-edit an imported theme and want to
+freeze it, the template explains which saved source block to remove.
 
 > **Open VSX only.** TermHQ does not use the Visual Studio Marketplace, whose
 > terms of use restrict it to Microsoft products. Open VSX exists precisely so

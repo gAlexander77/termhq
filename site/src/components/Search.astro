@@ -76,7 +76,7 @@
     var list = document.querySelector("[data-search-results]");
     var empty = document.querySelector("[data-search-empty]");
     var openers = document.querySelectorAll("[data-search-open]");
-    var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+    var isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 
     var pagefind = null;
     var loadErr = false;
@@ -89,7 +89,7 @@
       el.textContent = isMac ? "⌘ K" : "Ctrl K";
     });
 
-    function loadPagefind() {
+    async function loadPagefind() {
       if (pagefind || loadErr) return Promise.resolve(pagefind);
       return import("/pagefind/pagefind.js")
         .then(function (m) {
