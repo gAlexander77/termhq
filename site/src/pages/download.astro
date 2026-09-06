@@ -2,9 +2,62 @@
 import Base from "../layouts/Base.astro";
 import { SITE, PRE_RELEASE } from "../config";
 
+// The latest release, read from GitHub's API when the site is built, so each
+// platform's button points at that release's exact installer file. site.yml
+// rebuilds the site whenever a release is published, so the buttons follow
+// releases without anyone editing this page. When the API is unreachable, or
+// there is no release yet, each button falls back to the release page, which
+// resolves through /releases/latest and is never stale.
+type Asset = { name: string; browser_download_url: string; size: number };
+type Release = { tag_name: string; html_url: string; assets: Asset[] };
+
+async function latestRelease(): Promise<Release | null> {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+  };
+  // Unauthenticated calls share a small per-IP budget, which GitHub's own
+  // runners exhaust between them; site.yml passes the workflow token.
+  const token = process.env.GITHUB_TOKEN;
+  if (token) headers.Authorization = `Bearer ${token}`;
+  try {
+    const res = await fetch(`${SITE.api}/releases/latest`, { headers });
+    if (!res.ok) {
+      console.warn(
+        `download page: GitHub answered ${res.status} for the latest release; the buttons fall back to the release page`,
+      );
+      return null;
+    }
+    return (await res.json()) as Release;
+  } catch (err) {
+    console.warn(
+      `download page: GitHub unreachable (${err}); the buttons fall back to the release page`,
+    );
+    return null;
+  }
+}
+
+const release = await latestRelease();
+const asset = (pattern: RegExp) =>
+  release?.assets.find((a) => pattern.test(a.name));
+const mb = (a: Asset) => `${Math.round(a.size / 1048576)} MB`;
+
 const platforms = [
-  { name: "Windows", note: "Windows 10 and 11 · installer", published: true },
-  { name: "macOS", note: "Apple silicon · .dmg", published: true },
+  {
+    name: "Windows",
+    note: "Windows 10 and 11",
+    published: true,
+    primary: asset(/-setup\.exe$/),
+    primaryLabel: "Download .exe",
+    alt: asset(/\.msi$/),
+    altLabel: ".msi installer",
+  },
+  {
+    name: "macOS",
+    note: "Apple silicon",
+    published: true,
+    primary: asset(/\.dmg$/),
+    primaryLabel: "Download .dmg",
+  },
   { name: "Linux", note: "Support pending", published: false },
 ];
 ---
@@ -40,10 +93,20 @@ const platforms = [
           <div class="dl-cell">
             <h3>{p.name}</h3>
             <p>{p.note}</p>
-            {p.published ? (
+            {p.primary ? (
+              <a class="btn btn-primary" href={p.primary.browser_download_url}>
+                {p.primaryLabel} · {mb(p.primary)}
+              </a>
+            ) : p.published ? (
               <a class="btn btn-primary" href={SITE.latestRelease}>
                 Latest release
               </a>
+            ) : null}
+            {p.alt ? (
+              <p class="dl-alt">
+                <a href={p.alt.browser_download_url}>{p.altLabel}</a> ·{" "}
+                {mb(p.alt)}
+              </p>
             ) : null}
           </div>
         ))
@@ -51,18 +114,31 @@ const platforms = [
     </div>
 
     <p>
-      Those links resolve through GitHub's <code>releases/latest</code> redirect
-      rather than naming a version, so they never point at a stale build and this
-      page never needs editing when a release ships.
+      {
+        release ? (
+          <>
+            The buttons download <strong>{release.tag_name}</strong> directly.
+            Every build of it — with the signature files the updater checks and
+            the update feed — is on the{" "}
+            <a href={release.html_url}>GitHub release page</a>, and earlier
+            versions are under <a href={`${SITE.repo}/releases`}>all releases</a>.
+          </>
+        ) : (
+          <>
+            The links go to the latest GitHub release, where every build is
+            listed with the signature files the updater checks.
+          </>
+        )
+      }
     </p>
 
     <h2 id="installing">Installing</h2>
     <p>
       Builds are <strong>not yet code-signed</strong>, so Windows
       and macOS each warn the first time you run one. That is the OS saying
-      "unknown publisher" — not a fault it found. See
+      "unknown publisher" — not a fault it found. See{" "}
       <a href="/docs/installation/">Installation</a> for exactly what each
-      platform shows, the steps past it, and
+      platform shows, the steps past it, and{" "}
       <a href="/docs/installation/#why-the-install-warnings">why the warnings
       exist</a>.
     </p>
@@ -76,7 +152,7 @@ const platforms = [
       TermHQ checks for updates shortly after launch and every six hours.
       Choose <strong>Update and restart</strong> from the update notification or
       Settings → General → Updates when you are ready. Running commands and
-      agents stop during installation; your workspace and settings return.
+      agents stop during installation; your workspace and settings return.{" "}
       <a href="/docs/installation/#updating">Read the update and save guidance</a>.
     </p>
   </article>

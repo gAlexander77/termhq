@@ -537,3 +537,4 @@ pre:hover .copy-btn, .copy-btn:focus { opacity: 1; }
 .dl-cell:hover { background: var(--panel); }
 .dl-cell h3 { margin-bottom: 4px; }
 .dl-cell p { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
+.dl-cell .dl-alt { margin: 12px 0 0; }

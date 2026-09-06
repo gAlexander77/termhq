@@ -8,10 +8,13 @@ export const SITE = {
   description:
     "TermHQ is a keyboard-first GUI terminal for AI coding agents, with persistent tiling panes, workspaces, browser and editor panes, source control, and local voice dictation.",
   repo: "https://github.com/gAlexander77/termhq",
+  /** The REST API root for this repository; the download page reads the latest release from it at build time. */
+  api: "https://api.github.com/repos/gAlexander77/termhq",
   /**
    * Resolved through GitHub's own redirect rather than naming a version, so a
-   * release never requires editing this file. Every download link on the site
-   * points here.
+   * release never requires editing this file. The download page's per-platform
+   * buttons point at the exact files of the latest release instead, and fall
+   * back to this when the release cannot be read at build time.
    */
   latestRelease: "https://github.com/gAlexander77/termhq/releases/latest",
   ogImage: "/og.png",
