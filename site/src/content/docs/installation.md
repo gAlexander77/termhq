@@ -108,13 +108,30 @@ configuration directory:
 
 ## Updating
 
-Update by downloading the current release and installing over the top; your
-configuration directory is untouched.
+TermHQ checks for a new release on its own — shortly after launch and every
+six hours while it runs — and **never installs one on its own**. A new version
+shows up in two places: a toast at the bottom left of the window, and
+Settings → General → Updates. Both have one button, **Update and restart**;
+the toast also has **Later**, which puts that version away until a newer one
+comes along or the next launch.
 
-Built-in update checking is not switched on yet. When it is, installing will
-always be a click you make: TermHQ will not update or restart itself on its own
-initiative, because there are live shells and running agents in those panes and
-an unprompted relaunch destroys work no dialog can apologize for.
+What the click does, in order: the release is downloaded and its signature
+checked (only releases we built will install); any editor with unsaved changes
+asks you to save or discard, the same card as closing the window; other TermHQ
+windows are asked to close and take the same card; then TermHQ closes, the
+installer runs, and TermHQ reopens in the workspace you were in.
+
+**Your shells restart.** The layout, working directories, titles and the stash
+all come back; commands and agents that were running in those panes are
+stopped. The toast says so before you click. Your configuration directory is
+never touched by an update: settings, themes, keyboard shortcuts, favorites,
+saved workspaces and speech models all stay exactly as they were.
+
+If a download fails or its signature does not verify, nothing is installed and
+the app stays as it was; the toast offers to try again. Turn the automatic
+check off in Settings → General → Updates and "Check now" becomes the only way
+to look. Installing over the top from a downloaded release works too, and
+leaves the configuration directory alone just the same.
 
 ## Uninstalling
 
