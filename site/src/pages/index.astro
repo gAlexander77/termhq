@@ -1,68 +1,82 @@
 ---
 import Base from "../layouts/Base.astro";
-import Mark from "../components/Mark.astro";
 // import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
 
 const features = [
   {
     title: "Panes, not tabs",
+    guide: "panes-and-layout",
     body: "Open as many terminals as you need — the grid keeps growing to fit them. Tile them square or as full-height columns, and grow, move and swap them from the keyboard.",
   },
   {
     title: "Shells outlive the app",
+    guide: "persistent-sessions",
     body: "Quit TermHQ entirely, reopen it, and your agents are still running where you left them — recent output intact. The tmux promise, without needing tmux.",
   },
   {
     title: "Workspaces",
+    guide: "workspaces",
     body: "Group terminals by project, each with its own layout and directories. Resume the last one automatically, or pick from a list on launch.",
   },
   {
     title: "Launch agents in one key",
+    guide: "agents",
     body: "Claude Code, Codex, OpenCode and Antigravity from a pane-header menu or a number key — with the flags you always use, and never listing one you have not installed.",
   },
   {
     title: "It taps your shoulder",
+    guide: "agents",
     body: "A pane that went quiet while you were looking elsewhere pulses, and says so — even parked out of sight. The hard part of running several agents is noticing when one stops.",
   },
   {
     title: "Agents render properly",
+    guide: "agents",
     body: "Agents that come up monochrome or misaligned elsewhere come up right here — full color, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
   },
   {
     title: "A browser in the grid",
+    guide: "browser-panes",
     body: "Ctrl+Shift+B tiles a real web page beside your shells — your OS's own browser engine, embedded, not a screenshot of one. Your docs, your dashboard, the localhost your agent is building, all in the layout you are already looking at.",
   },
   {
     title: "An editor in the grid",
+    guide: "editor",
     body: "Ctrl+Shift+E opens a pane that holds files as tabs, on the same engine VS Code uses. For the edit you make while something else is running — the config line the agent asked about, the fix that is faster to type than to explain.",
   },
   {
     title: "Your language servers, not ours",
+    guide: "language-servers",
     body: "Diagnostics, hover, completion, go-to-definition and formatting — from servers you install, at your version, obeying your repo's own config. TermHQ bundles none, so nothing here disagrees with your toolchain.",
   },
   {
     title: "Nothing gets lost",
+    guide: "editor",
     body: "Saves swap a temp file into place, so a failed one leaves the original intact. A file that changes underneath you asks rather than clobbers. And unsaved text is mirrored seconds after you stop typing, so a crash does not take it.",
   },
   {
     title: "Voice, locally transcribed",
+    guide: "configuration",
     body: "Dictate into the focused terminal, transcribed on your own machine by local Whisper models. Models are a download you choose in Settings — English or sixteen other languages — so the app installs small and voice adds nothing until you want it.",
   },
   {
     title: "Closing is reversible",
+    guide: "panes-and-layout",
     body: "A closed pane leaves a countdown you can click to bring it back. The shell keeps running underneath, so nothing is lost.",
   },
   {
     title: "Sized like a window",
+    guide: "panes-and-layout",
     body: "Drag the boundary between two panes and it moves where you put it — panes touching it follow, panes that do not stay exactly where they were. A web page has a natural width and a terminal does not, so 70/30 is often the honest answer.",
   },
   {
     title: "Every shell you already have",
+    guide: "getting-started",
     body: "PowerShell, cmd, Git Bash and every WSL distribution on Windows; whatever /etc/shells reports on macOS. Detected on launch, so there is nothing to configure that the machine already knows.",
   },
   {
     title: "Source control, without leaving",
+    guide: "source-control",
     body: "Review changes, stage files or individual hunks, commit exactly what is staged, browse history, switch branches, sync, stash and manage worktrees. Conflicts open in the editor with clear choices — or as a ready-made prompt for the AI you trust.",
   },
 ];
@@ -81,36 +95,49 @@ const keys = [
   { action: "Read a markdown file, rendered", chord: ["Ctrl", "Shift", "V"] },
   { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
 ];
+
 ---
 
 <Base>
-  <section class="hero wrap">
-    <Mark />
-    {PRE_RELEASE && <span class="badge">Pre-release</span>}
-    <h1>The terminal built for coding agents</h1>
-    <p class="lede">
-      Terminal emulators were designed for one person typing one command at a
-      time. TermHQ runs as many agents as you want side by side — tiled so you
-      can watch all of them, in shells that keep running after you quit.
-    </p>
-    <div class="hero-actions">
-      <a class="btn btn-primary btn-lg" href="/download/">Download</a>
-      <a class="btn btn-lg" href="/docs/">Read the docs</a>
+  <section class="landing-hero" aria-labelledby="hero-title">
+    <div class="hero-art" aria-hidden="true">
+      <img src="/hero-glass.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async" />
     </div>
-    <ul class="hero-proof" aria-label="Product highlights">
-      <li>Local-first</li>
-      <li>Persistent sessions</li>
-      <li>Windows and macOS</li>
-    </ul>
-    {
-      PRE_RELEASE && (
-        <p class="hero-note">
-          Not publicly available yet. This site is a preview.
+    <div class="wrap landing-hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Your agents. One workspace.</span>
+        {PRE_RELEASE && <span class="badge">Pre-release</span>}
+        <h1 id="hero-title">The terminal built for coding agents.</h1>
+        <p class="lede">
+          Run your coding agents side by side. Keep terminals, your editor,
+          and a browser in one workspace — with shells that keep running
+          after you quit.
         </p>
-      )
-    }
-
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="/download/">
+            Download TermHQ <span aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn-lg" href="/docs/">Read the docs</a>
+        </div>
+        <ul class="hero-proof" aria-label="Product highlights">
+          <li>Local-first</li>
+          <li>Persistent sessions</li>
+        </ul>
+        {
+          PRE_RELEASE && (
+            <p class="hero-note">
+              Not publicly available yet. This site is a preview.
+            </p>
+          )
+        }
+      </div>
+    </div>
+    {/* Abstract artwork only. Keep the inaccurate application mock disabled. */}
     {/* <AppMock /> */}
+    <div class="wrap hero-caption">
+      <span>Built for parallel work.</span>
+      <a href="/download/">Windows / macOS <span aria-hidden="true">↗</span></a>
+    </div>
   </section>
 
   <section class="section">
@@ -121,13 +148,13 @@ const keys = [
         <p>Long jobs, several at once, output you watch rather than read once.</p>
       </div>
 
-      <div class="grid grid-3">
+      <div class="grid grid-3 feature-grid">
         {
           features.map((f) => (
-            <div class="cell">
+            <a class="cell" href={`/docs/${f.guide}/`}>
               <h3>{f.title}</h3>
               <p>{f.body}</p>
-            </div>
+            </a>
           ))
         }
       </div>
@@ -192,16 +219,13 @@ const keys = [
 
   <section class="section">
     <div class="wrap" style="text-align:center">
-      <span class="eyebrow">Under the hood</span>
-      <h2>A Rust core, built for this app</h2>
+      <span class="eyebrow">Made for your machine</span>
+      <h2>A focused workspace. A small footprint.</h2>
       <p class="lede" style="margin:0 auto">
-        Everything that touches your system — shells, sessions, files, git,
-        speech — is native Rust, and the core is built from scratch: the
-        session engine, the tiling grid, the theming system, Source Control.
-        The interface renders in your OS's own webview
-        instead of a bundled browser, which is why the installer is measured
-        in megabytes, not hundreds of them.{" "}
-        <a href="/docs/under-the-hood/">How it's built →</a>
+        Use the shells and tools you already have. Keep your work on your
+        machine, with an installer measured in megabytes and no separate
+        runtime to set up.{" "}
+        <a href="/docs/getting-started/">Get started →</a>
       </p>
     </div>
   </section>
