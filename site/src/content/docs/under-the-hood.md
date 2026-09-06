@@ -19,10 +19,14 @@ Code trusts — with GPU rendering and modern Unicode widths on top.
 ## Two processes
 
 TermHQ runs as two pieces: the window you see, and a small headless Rust
-process that owns every shell. The window can close, crash, or update; the
+process that owns every shell. The window can close or reload; the
 shells keep running, and the next window picks them back up. That is the whole
 mechanism behind [persistent sessions](/docs/persistent-sessions/) — the
 terminal multiplexer is built in, so there is no `tmux` to learn.
+
+Installing an application update restarts the shells and stops running commands
+and agents. Your workspace arrangement returns after the update. See
+[Updating](/docs/installation/#updating).
 
 ## The editor is Monaco
 

@@ -39,6 +39,8 @@ Terminals survive quitting TermHQ, but not everything:
 
 - **A restart or shutdown** ends them. Nothing survives that — you get your
   panes and directories back, at fresh prompts.
+- **Installing an update** restarts the shells too. Your panes return, but
+  running commands and agents need to be started again.
 - **A program that exited on its own** — an agent that finished, a build that
   ended — is gone because it ended, not because TermHQ lost it.
 - **Turning off "Keep shells running after close"** (Settings → Workspaces) makes
@@ -54,6 +56,16 @@ workspace instead of the one you lost.
 
 **Your work is not gone.** The terminals are still running. Quit and open TermHQ
 again, or open a second window, and they are adopted back.
+
+## TermHQ shows an error recovery card
+
+Choose **Reload**. The card replaces the old blank-screen failure mode and
+includes the error details needed for a useful bug report. Your shells remain
+safe in the background while the interface reloads.
+
+If the card appeared while previewing an imported theme, TermHQ normally keeps
+the last theme that applied successfully. Include the card's details when
+reporting the theme that triggered it.
 
 ## Output looks mangled after resuming
 
@@ -81,8 +93,7 @@ live: it scrolls with real input, so a flat line means no audio is arriving.
 On macOS the permission matters twice over: without it, microphones do not
 enumerate at all, so the device list comes up empty rather than wrong.
 
-**Linux packages do not currently include the speech engine**, and dictation
-is unavailable there.
+**Linux support is pending.** See [Installation](/docs/installation/#linux).
 
 If it hears you but the words come out wrong, check the **dictation
 language** in Settings → Voice — and note that models labeled *English only*
@@ -140,9 +151,10 @@ Two different cases:
 
 Almost certainly it is — deliberately, and only for as long as something is
 covering it. A [browser pane](/docs/browser-panes/) is a native surface that the
-interface cannot paint over, so whenever a modal, menu, drag preview or toast
-needs the space, the pane shows a still frame of the page until the overlay
-goes away. Audio and video keep running underneath.
+interface cannot paint over, so whenever a modal, menu, or drag preview needs
+the space, the pane shows a still frame of the page until the overlay goes away.
+Audio and video keep running underneath. On Windows, small idle and undo cards
+are cut around instead, so the page stays live beside them.
 
 Sometimes you get the pane's plain background instead of a still frame: a pane
 nobody can see does not pay to capture one, and neither does a second overlay
@@ -193,6 +205,31 @@ SmartScreen warns on the first install of a build that is not code-signed. See
 Repositories on a `\\wsl.localhost` path are not supported by Source Control yet,
 and it says so rather than showing you something wrong. Git inside the WSL pane
 itself works normally.
+
+## A checkout is missing from Worktrees
+
+Open **Settings → Git → Worktree roots** and confirm the folder is still listed.
+The tracker looks for checkouts up to two levels beneath each configured root;
+it does not crawl outside them. Add a closer root if the checkout is nested more
+deeply, then open the [Worktrees](/docs/worktrees/) view and choose **Refresh**.
+
+If a configured root moved or is no longer available, the Worktrees view keeps
+the item visible and shows the reason instead of silently dropping it.
+
+## An update cannot finish
+
+Open **Settings → General → Updates** to read the result and use **Check now**
+or retry **Update and restart**. Automatic checks stay quiet when you are
+offline; a manual check reports the connection problem.
+
+A failed download or signature check leaves your running session in place.
+If another TermHQ window is still open, switch to it and answer any unsaved-file
+prompt before retrying. A workspace-save failure also stops installation before
+shells are shut down.
+
+An installer failure after shutdown is different: TermHQ restores terminal
+availability, but commands that stopped are not resumed. Review the error and
+your work before trying again. See [Updating](/docs/installation/#updating).
 
 ## Where the log is
 

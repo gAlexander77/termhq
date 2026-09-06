@@ -5,15 +5,14 @@ import { SITE, PRE_RELEASE } from "../config";
 const platforms = [
   { name: "Windows", note: "Windows 10 and 11 · installer", published: true },
   { name: "macOS", note: "Apple silicon · .dmg", published: true },
-  // compiles, never run by anyone yet — it ships when someone has lived in it
-  { name: "Linux", note: "Not published yet", published: false },
+  { name: "Linux", note: "Support pending", published: false },
 ];
 ---
 
 <Base
   title="Download"
   metaTitle="Download TermHQ — Windows and macOS"
-  description="Download TermHQ for Windows or macOS. A keyboard-first GUI terminal for running AI coding agents. Linux is not published yet."
+  description="Download TermHQ for Windows or macOS. A keyboard-first GUI terminal for running AI coding agents. Linux support is pending."
 >
   <article class="page prose" data-pagefind-body>
     <h1 data-pagefind-meta="title">Download</h1>
@@ -45,11 +44,7 @@ const platforms = [
               <a class="btn btn-primary" href={SITE.latestRelease}>
                 Latest release
               </a>
-            ) : (
-              <p>
-                <em>Coming once it has been run for real.</em>
-              </p>
-            )}
+            ) : null}
           </div>
         ))
       }
@@ -78,10 +73,11 @@ const platforms = [
       themes and saved workspaces are left alone.
     </p>
     <p>
-      Built-in update checking is not switched on yet. When it is, it will never
-      install on its own and never restart the app on its own initiative — there
-      are live shells and running agents in those panes, and an unprompted
-      relaunch destroys work no dialog can apologize for.
+      TermHQ checks for updates shortly after launch and every six hours.
+      Choose <strong>Update and restart</strong> from the update notification or
+      Settings → General → Updates when you are ready. Running commands and
+      agents stop during installation; your workspace and settings return.
+      <a href="/docs/installation/#updating">Read the update and save guidance</a>.
     </p>
   </article>
 </Base>

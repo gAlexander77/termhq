@@ -1,7 +1,7 @@
 ---
 title: "Source control"
 weight: 65
-description: "Review, stage and commit changes, browse history, manage branches, sync, resolve conflicts, use stashes and worktrees — without leaving the workspace."
+description: "Review, stage and commit changes, browse history, manage branches, sync, resolve conflicts, and work with stashes and worktrees."
 ---
 
 Open **Source Control** in the sidebar to work with the repository belonging to
@@ -110,16 +110,24 @@ That copies a concise briefing — affected files, which side is which, and the
 instruction to resolve and stage without committing — ready for whichever AI
 you trust.
 
-## Stashes and worktrees
+## Stashes
 
 The **Stashes** section lets you create a stash with an optional message and
 include untracked files when needed. Expand a stash to review its files and
 diffs, then apply, pop, or drop it. Dropping confirms first because those
 changes may exist nowhere else.
 
+## Worktrees
+
 The **Worktrees** section lists the repository's other working folders. Create a
 worktree on a new branch, open a terminal in one, or remove it. If a worktree
 still has changes, TermHQ shows Git's refusal before it offers a forced removal.
+
+For a view across several repositories, add one or more folders under
+**Settings → Git → Worktree roots**. A **Worktrees** item then appears in the
+status bar, grouping every checkout it finds by repository and putting a
+terminal, agent, IDE, or file-manager action on each row. See the complete
+[Worktrees guide](/docs/worktrees/).
 
 ## Command palette and errors
 

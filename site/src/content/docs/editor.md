@@ -18,13 +18,19 @@ README you are reading, the fix that is faster to type than to explain.
 The Files panel is the daily door. **Double-click** a file and it opens in the
 editor pane you last used — or opens a new one if you have none. **Right-click**
 gives you the choice: *Open in editor*, *Open in new editor pane*, or the
-external routes (your IDE, a terminal editor, the system default).
+external routes (your IDE, a terminal editor, the system default). The same menu
+can reveal the file in Explorer or Finder with the file selected; on Linux it
+opens the containing folder.
 
 Opening a file that is already open just switches to its tab. Opening it in a
 *different* pane gives you a second live view of the same file — type in one and
 the other keeps up, because both are looking at the same file rather than at two
 copies of it. Duplicating an editor pane does the same thing for every tab at
 once: a second view of the same files, not a copy of them.
+
+If the appropriate editor is stashed, opening a file brings it back into the
+grid. An editor that already holds that file is preferred, so opening it again
+does not leave duplicate editors on the shelf.
 
 ## Files are tabs
 

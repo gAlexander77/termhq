@@ -61,11 +61,7 @@ Two things worth knowing in the meantime:
 
 ## Linux
 
-Not published yet. TermHQ compiles for Linux, but nobody has run it there for
-real, and an installer nobody has launched does not belong on a release page
-next to two that have been lived in. When it has been, an `.AppImage`, a
-`.deb` and an `.rpm` will appear on the releases page and this section will
-say how to use them.
+Linux support is pending.
 
 ## Voice dictation
 
@@ -90,8 +86,7 @@ Dictation listens in **English** by default. **Settings → Voice** has a
 language dropdown with sixteen more, plus an auto-detect option that lets a
 multilingual model identify the language per recording.
 
-When Linux packages arrive they will not include the speech engine at first,
-so dictation will be unavailable there to begin with.
+Linux support is pending.
 
 ## Where TermHQ keeps its files
 

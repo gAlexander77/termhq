@@ -7,7 +7,7 @@ description: "The parts of TermHQ built specifically for running Claude Code, Co
 TermHQ is a terminal, so any agent that runs in a terminal runs in it. These are
 the parts that exist because of agents specifically.
 
-## Launching one
+## Launching one in the focused terminal
 
 Every pane header has an **✳** button listing your agent commands — Claude Code,
 Codex, OpenCode and Antigravity out of the box. Picking one types its command
@@ -18,6 +18,18 @@ The list is yours to edit in **Settings → Agents**, flags included, so
 retype all day. Entries whose program is not on your `PATH` are hidden
 automatically — you never see an agent you do not have, and never press a dead
 button.
+
+## Launching one in a folder or worktree
+
+You do not need to open a terminal first. Anywhere TermHQ offers an **Open in
+&lt;shell&gt;** list — a folder in Files, a favorite, or a row in the global
+[Worktrees](/docs/worktrees/) view — right-click the shell you want. A flyout
+lists the installed agents under the same marks as the pane-header launcher.
+Pick one and TermHQ opens that shell in the selected folder, then starts the
+agent in it.
+
+A normal click still opens only the shell. The agent list waits behind a
+right-click so the ordinary “open a terminal here” action stays unambiguous.
 
 ### By number, without the mouse
 
@@ -42,8 +54,9 @@ one stops.
 
 A pane that was busy while you were looking elsewhere and has since gone quiet
 gets a pulsing header: the dot, an inset wash and the bottom hairline all breathe
-in the theme's attention color. Stashed panes badge their shelf card, so a
-parked job can still get your attention. The same trigger raises a toast naming
+in the theme's attention color. On a stashed terminal, the shell icon on its
+shelf card lights and pulses instead, so a parked job can still get your
+attention. The same trigger raises a toast naming
 the pane and its directory — in-app while the window is focused, a native OS
 notification while it is not — and clicking it jumps to that pane wherever it is,
 including zoomed away or on the shelf.
@@ -99,6 +112,9 @@ Agents run long. Because shells live in a separate process
 ([Persistent sessions](/docs/persistent-sessions/)), you can quit TermHQ while
 an agent is mid-task and pick it up later with its output intact.
 
+Installing an update restarts the shells, however. Finish important jobs before
+choosing **Update and restart**; see [Updating](/docs/installation/#updating).
+
 ## Directory awareness
 
 TermHQ knows which directory each pane is in, and keeps up as the shell moves
@@ -108,8 +124,13 @@ Control — repository, branch, changes, staging, commits and history for whiche
 pane you are looking at, which is how you review and ship what an agent just did
 without leaving the app.
 
-That works with WSL panes too, so a shell inside a distribution still steers the
-panels correctly.
+If you use separate Git checkouts for parallel tasks, the global
+[Worktrees](/docs/worktrees/) view keeps them grouped by repository and puts a
+terminal or agent action directly on each one. It shows checkout state without
+guessing whether an agent is running there.
+
+Files follows WSL directories too. Source Control does not yet support
+repositories reached through WSL paths; use Git in the WSL terminal for those.
 
 The `</>` button in the pane header opens that directory in your editor, for the
 moments when the right move is to take over by hand. For a smaller

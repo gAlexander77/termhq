@@ -17,10 +17,8 @@ works on any of them:
 
 ## The slot grid
 
-Every pane owns an explicit rectangle of grid cells rather than floating at
-whatever size a chain of splits left it, and **no operation ever moves a pane
-you did not touch**. Your arrangement is yours; the app does not reflow it
-behind your back to make room for something.
+Every pane occupies a rectangle of grid cells. Move, swap, and grow panes to
+arrange your workspace; opening and closing panes can repack the grid to fit.
 
 That is the arrangement. How wide each cell is, is a separate and much simpler
 question — see [Resizing panes](#resizing-panes) below.
@@ -67,8 +65,8 @@ It is one gesture family, borrowed from Windows snap:
 |---|---|
 | Onto another pane | The two **swap** places |
 | Into a free cell | The pane **moves** there |
-| Onto the near half of an adjacent free cell | The pane **grows** into it |
-| Onto a grown pane's own half | It **un-snaps** back to a single cell |
+| Onto the near half of an aligned free cell beyond an edge | The pane **grows** to that cell if the space between is free |
+| Onto a grown pane's own cell | It **un-snaps** back to that single cell |
 
 Closing a pane re-packs the rest in reading order, so middle holes close and the
 grid shrinks back through square sizes — unless you have hand-grown a pane, which
@@ -143,13 +141,18 @@ Everything the drag can do, without the mouse. Press
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> to enter arrange mode, then use the
 arrow keys. What a press does depends on what is in that direction:
 
-- **Free space** → the pane **grows** into it.
-- **Press again after growing** → the pane **moves** there.
-- **Another pane** → the two **swap**.
+- **Arrow** pushes the pane that way: it grows into free space, keeps growing
+  on further presses, or swaps with a neighboring pane. When it cannot advance,
+  it pulls its back edge inward.
+- **Shift + arrow** moves the pane one cell while keeping its size, where it fits.
+- **Ctrl + arrow** shrinks it from that direction.
 
-So a repeat walks a pane outward — grow, move, grow, move — and you always see
-the ground before committing to it. It is not a fixed three-step cycle; the
-geometry decides.
+In arrange mode, **Ctrl + arrow stays Ctrl on macOS** too. A size-preserving
+move toward several smaller panes can swap the entire block when it fits.
+
+You can also bind **Push pane left / right / up / down** under **Settings →
+Shortcuts → Arrange without the mode**. These perform the same push without
+entering arrange mode and have no default shortcuts.
 
 A hint bar names the mode while it is on. <kbd>Esc</kbd> or <kbd>Enter</kbd>
 finishes, and any other key — or any mouse click — simply leaves the mode and
@@ -185,10 +188,17 @@ loaded, and restoring it returns the same scroll position — and a stashed
 [editor](/docs/editor/) keeps its tabs and any unsaved edits in them.
 
 By default, stashed panes collect behind a count at the right edge of the thin
-status bar along the bottom of the window. Click it — or reach it with
+status bar along the bottom of the window. The left edge may also show the
+global [Worktrees](/docs/worktrees/) view when you have configured worktree
+roots. Click the stash count — or reach it with
 <kbd>Tab</kbd> and press <kbd>Enter</kbd> — to open a shelf of cards upward. Click
 a card to restore it into the first free slot, or use its hover-revealed **×**
 to close that pane outright without restoring it first.
+
+Each card identifies what you parked at a glance: a shell prompt for a terminal,
+a globe for a browser, or a page for an editor. If a stashed terminal finishes
+work while you are elsewhere, that icon lights and pulses in the attention
+color instead of becoming a separate badge.
 
 The status bar always keeps its small amount of space, whether anything is
 stashed or not, so the grid does not jump when the first pane is parked or the
@@ -220,10 +230,12 @@ show at a time and anything past that scrolls **down**, never sideways.
 ## Undoing a close
 
 Closing a pane removes it immediately — no confirmation, no waiting — so spamming
-close stays fast. But the **shell underneath keeps running**, hidden, and a toast
-counts down with a draining bar. Restore re-adopts that shell with its program
-still going and its recent output replayed, including whatever it printed while
-it was gone. Only when the timer runs out is the shell actually killed.
+close stays fast. But the **shell underneath keeps running**, hidden, and an undo
+card counts down with a draining bar. With the status bar on, these cards collect
+at its right edge instead of stacking over your panes; with it off, they float
+above the bottom edge. Restore re-adopts that shell with its program still going
+and its recent output replayed, including whatever it printed while it was gone.
+Only when the timer runs out is the shell actually killed.
 
 A shell that ends by itself is never parked; there is nothing to restore. Nor is
 a [browser pane](/docs/browser-panes/): closing one is final, because the undo
@@ -242,7 +254,7 @@ The behavior is configurable in **Settings → General**:
 
 There is also an unassigned **Restore last closed terminal** action in the keymap
 if you would rather undo without reaching for the mouse. It ships unbound
-deliberately: the toast already covers the common case, and every chord worth
+deliberately: the undo card already covers the common case, and every chord worth
 having is taken, so guessing one would cost more than it gave.
 
 ## Ultra focus

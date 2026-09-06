@@ -11,7 +11,7 @@ const docs = (await getCollection("docs")).sort(
 <Base
   title="Documentation"
   metaTitle="TermHQ Documentation"
-  description="How TermHQ works: workspaces, persistent sessions, tiling panes, browser and editor panes, language servers, configuration, theming, and keyboard shortcuts."
+  description="How TermHQ works: workspaces, persistent sessions, tiling panes, browser and editor panes, Source Control, worktrees, configuration, theming, and keyboard shortcuts."
 >
   <div class="docs">
     <DocsSidebar />
@@ -21,6 +21,11 @@ const docs = (await getCollection("docs")).sort(
       <p>
         TermHQ is a terminal workbench for running coding agents. These pages
         describe how it behaves and how to change that behavior.
+      </p>
+      <p>
+        The first public release targets Windows and macOS (Apple silicon).
+        Linux support is pending. See <a href="/docs/installation/">Installation</a> for
+        platform availability.
       </p>
       <p>
         Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>⌘</kbd>+<kbd>K</kbd> on macOS)

@@ -51,12 +51,20 @@ Keys are camelCase.
 
 ### General
 
+- **Check for updates automatically** — under **Updates**, on by default.
+  Checks shortly after launch and every six hours while the app runs. **Check
+  now** checks on demand, including when automatic checks are off. An available
+  release offers **Update and restart**; installation requires your click and
+  stops running commands and agents. See [Updating](/docs/installation/#updating).
 - **Default shell** — used by the **+** button, <kbd>Ctrl</kbd>+<kbd>J</kbd> and
   favorites. Unset means the first shell detected.
 - **Undo close** — which close paths get an undo window: none, the keyboard
   shortcut only, or the shortcut and the pane's **×** button. Default: both.
 - **Undo window length** — seconds before the parked shell is actually killed.
   Default 5.
+- **When a shell exits on its own** — keeps failed shells' panes open by
+  default so you can read and copy their output. Press Enter to close the ended
+  pane. You can choose to always keep ended panes or always close them instead.
 - **Clone keeps directory** — whether duplicating a pane opens in the source
   pane's directory or at home. Default on.
 - **Layout preset** — Grid or Columns. Also the title bar switch.
@@ -108,13 +116,18 @@ Keys are camelCase.
   a pane resets them regardless of this setting — that rule belongs to
   [resizing](/docs/panes-and-layout/#resizing-panes), not to the toggle.
 - **Status bar** — default on. Keeps a thin strip across the bottom of the
-  window, with the stashed-pane shelf at its right edge. Because the strip is
-  always part of the layout, stashing or restoring a pane never makes the grid
-  jump. Turn it off to reclaim the space and return the shelf to its floating
-  pill at the bottom-center of the panes.
+  window. It can hold the global **Worktrees** view at the left, and stashed or
+  recently closed terminals at the right. Because the strip is always part of
+  the layout, those items never cover a pane or make the grid jump. Turn it off
+  to reclaim the space; temporary cards and the stash shelf return to floating
+  over the bottom edge of the panes.
 
 ### Terminal
 
+- **Confirm multi-line pastes** — default on. Asks before pasting several lines
+  when the receiving program might execute them immediately. Programs that
+  safely accept the paste as one block do not trigger the prompt. This applies
+  to keyboard and right-click paste.
 - **Scrollback** — lines retained per terminal, default 8000. Memory scales with
   this times the number of open panes.
 - **Ctrl+scroll zoom** — whether the wheel zooms the hovered pane. Default on.
@@ -187,9 +200,10 @@ Settings for [editor panes](/docs/editor/) and
 
 ### Agents
 
-- **Agent commands** — the list behind every pane header's ✳ button. Name plus
-  command, flags welcome (`claude --dangerously-skip-permissions`). Ships with
-  Claude Code, Codex, OpenCode and Antigravity. **The array order is both the
+- **Agent commands** — the list behind every pane header's ✳ button and every
+  “Open in &lt;shell&gt;” agent flyout. Name plus command, flags welcome (`claude
+  --dangerously-skip-permissions`). Ships with Claude Code, Codex, OpenCode and
+  Antigravity. **The array order is both the
   dropdown order and the digit each answers to** after
   <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, and entries whose program is not
   on `PATH` are hidden automatically.
@@ -214,8 +228,9 @@ Settings for [editor panes](/docs/editor/) and
 
 - **Show hidden files** — dotfiles and OS-hidden entries. Default **on**; `ls -a`
   is the terminal user's default worldview, so hiding is the opt-in.
-- **Sidebar side** — left or right. <kbd>Ctrl</kbd>+<kbd>B</kbd> toggles the
-  sidebar itself.
+- **Sidebar side** — left or right. The first button in the title bar toggles
+  the sidebar and mirrors itself to show which side it occupies;
+  <kbd>Ctrl</kbd>+<kbd>B</kbd> does the same thing.
 - **Sidebar** — showing or not. It also follows the grid on its own: the file
   tree reads the focused terminal's directory, so it leaves when your last
   terminal does and comes back with the next one. Shutting it yourself outranks
@@ -241,6 +256,11 @@ Settings for [editor panes](/docs/editor/) and
 The [Source Control](/docs/source-control/) panel can review and stage changes,
 commit, browse history, manage branches, sync, resolve conflicts, use stashes,
 and create worktrees. These settings tune its defaults:
+
+- **Worktree roots** — folders containing repositories or worktrees that you
+  want in the global [Worktrees](/docs/worktrees/) view. Type a path or choose a
+  folder. With no roots set, nothing is scanned and the status-bar item stays
+  hidden. Removing a root only stops tracking it; nothing on disk changes.
 
 - **Branch order** — how the branch picker sorts: most recently committed
   first, or alphabetical.

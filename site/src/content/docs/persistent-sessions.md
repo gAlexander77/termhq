@@ -17,12 +17,14 @@ This is the same promise `tmux` makes, without having to know `tmux`.
 | The window closing while others stay open | **Keep running** | Restored |
 | TermHQ crashing | **Keep running** | Restored |
 | Sleep or hibernate | **Keep running** | Restored |
+| Installing an update | Ended; running commands and agents stop | Restored, with fresh shells |
 | Restart, shutdown, power loss | Ended | Restored, with fresh prompts |
 | A program finishing on its own | Ended — it finished | Restored |
 
-The bottom two rows are the honest limit: a reboot takes everything running with
-it. What comes back is the shape of your work — the same panes, the same shells,
-in the same directories — waiting at a fresh prompt.
+A reboot ends running processes. Installing an update also restarts the shells;
+finish or stop important tasks before choosing **Update and restart**. What
+comes back is your arrangement and working directories, with fresh shells.
+See [Updating](/docs/installation/#updating) for the save prompts and restart flow.
 
 Crash resilience is not a setting you have to find. Whatever else is configured,
 a crash leaves your shells running, because that is the case you would most
@@ -66,7 +68,9 @@ still true after a restart; a half-filled form is not.
 ## Several workspaces at once
 
 Workspaces are independent. Closing one leaves the others alone, and one window
-can never adopt or end another's terminals.
+does not adopt another's terminals. Installing an update is the exception to
+window independence: it asks other windows to close and restarts the shells
+across the app. A window with unsaved edits gets its own save prompt.
 
 A workspace you are not currently looking at is **parked, not lost** — its shells
 keep running in the background, and its agents keep working. Press

@@ -53,10 +53,11 @@ it is not allowed to open — `file:`, `vscode:` — and it becomes a **search**
 rather than an error, because the alternative is a URL bar that silently
 swallows what you typed and looks broken.
 
-<kbd>Enter</kbd> navigates. <kbd>Esc</kbd> hands the keyboard back to the page.
-A blank pane opens with the bar already focused, and while you are typing in it
-no TermHQ chord fires, so an address containing a shortcut is still just an
-address.
+<kbd>Enter</kbd> navigates. Clicking into the bar selects the current address so
+typing replaces it. <kbd>Esc</kbd> discards a half-typed address, restores the
+page's current URL, and hands the keyboard back to the page. A blank pane opens
+with the bar already focused, and while you are typing in it no TermHQ chord
+fires, so an address containing a shortcut is still just an address.
 
 Back, forward and reload sit to the left of the bar, and a devtools button to
 the right opens the full inspector for that page in its own window. The pane's
@@ -68,9 +69,14 @@ and fullscreen fade out while the page title glides into the space they were
 holding, un-truncating as far as the address bar can spare. Move back on and it
 reverses. The one thing that does not leave is a **muted** page's speaker — it
 pins itself beside Close and stays visible, because silence with nothing on
-screen to explain it reads as a fault rather than a setting. (A terminal header
-folds its buttons into a `⋯` menu once a pane gets very narrow; a browser
-header does not.)
+screen to explain it reads as a fault rather than a setting.
+
+On a narrow pane, the page title drops away and a **⋯** menu appears. On an even
+tighter pane, navigation, reload, devtools, and hover-only actions fold into that
+menu as well, so the URL bar and Close button remain reachable at every width.
+A thin sweep along the bottom of the header shows when a page is loading. The
+first real page also gets a simple pulsing loading surface until it is ready,
+instead of an unexplained empty pane.
 
 ## Sound
 
@@ -158,13 +164,15 @@ Stated plainly rather than discovered later:
   silencing anything, and the pane's rounded bottom corners and the shape the
   stash pill cuts out of the pane above it.
 - **Anything that must cover the grid covers the page.** A native page cannot
-  be painted over by the interface, so when a modal, menu, drag preview or toast
-  needs the space, the pane shows a **frozen frame** of the page for as long as
-  the overlay is up, then goes live again. Video keeps playing underneath; it
-  simply looks paused while covered. The frame is a courtesy rather than a
-  guarantee — a pane nobody can see does not pay to capture one, and neither
-  does a second overlay arriving right behind the last, where the previous frame
-  stands or the pane's background does.
+  be painted over by the interface, so when a modal, menu, drag preview, or
+  similar overlay needs the space, the pane shows a **frozen frame** of the page
+  for as long as the overlay is up, then goes live again. Video keeps playing
+  underneath; it simply looks paused while covered. On Windows, small idle and
+  undo cards are cut around instead, so the page stays live and clickable beside
+  them. The frame is a courtesy rather than a guarantee — a pane nobody can see
+  does not pay to capture one, and neither does a second overlay arriving right
+  behind the last, where the previous correctly sized frame or the pane's
+  background is shown.
 - **Downloads** use the engine's own default handling.
 - **One browser profile**, shared by every workspace. Per-workspace profiles
   are a real feature with real questions, and are deferred rather than faked.

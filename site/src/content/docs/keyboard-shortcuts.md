@@ -42,6 +42,7 @@ taking <kbd>Shift</kbd> for the same reason the others do: plain
 | Focus pane left / right | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> / <kbd>→</kbd> |
 | Focus pane up / down | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> / <kbd>↓</kbd> |
 | Arrange pane (mode) | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> |
+| Push pane left / right / up / down | *unassigned by default* |
 | Fullscreen focused pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> |
 | Stash focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> |
 | Show / hide the stash shelf | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> |
@@ -59,6 +60,7 @@ than the order panes were opened. In Columns layout only left and right apply.
 | Settings, with search focused | <kbd>Ctrl</kbd>+<kbd>P</kbd> |
 | Workspace picker | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> |
 | Toggle sidebar | <kbd>Ctrl</kbd>+<kbd>B</kbd> |
+| Worktrees | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> |
 | Run an agent by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
 | Open a favorite by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
 
@@ -71,6 +73,9 @@ categories. Both toggle: the same chord again closes what it opened.
 The two numbered pickers are deliberately two strokes rather than ten chords,
 which keeps the digits free the rest of the time. While one is armed, a card
 lists the numbered entries so the mapping is never guesswork.
+
+The global [Worktrees](/docs/worktrees/) view is also available from the command
+palette and its status-bar item.
 
 ## Zoom
 
@@ -215,13 +220,14 @@ the pane* so your shell loses nothing: <kbd>Ctrl</kbd>+<kbd>S</kbd> still
 freezes a terminal's output and <kbd>Ctrl</kbd>+<kbd>W</kbd> still deletes a
 word everywhere else. The full set is on the [editor page](/docs/editor/).
 
-Two app chords also step aside for the editor, because Monaco binds them to
+Three app chords also step aside for the editor, because the editor binds them to
 something you are more likely to want while typing:
 
 | Chord | The editor uses it for |
 |---|---|
 | <kbd>Ctrl</kbd>+<kbd>F</kbd> | Its own find widget, instead of terminal scrollback search |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> | Select all occurrences, instead of the favorites picker |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> | Reopen the last closed tab, instead of opening Worktrees |
 
 On macOS, <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> joins them — there it is the
 standard redo, so redo wins over fullscreen. On Windows and Linux redo also has

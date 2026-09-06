@@ -84,3 +84,5 @@ Dropping a file onto a pane writes its quoted path at the prompt.
 - [Browser panes](/docs/browser-panes/) — a web page as a pane in the grid
 - [The editor](/docs/editor/) — files as tabs, in a pane like any other
 - [Running coding agents](/docs/agents/) — the parts built specifically for this
+- [Worktrees](/docs/worktrees/) — separate checkouts and a terminal or agent in
+  the right one
