@@ -46,8 +46,8 @@ directly. [Why the warnings →](#why-the-install-warnings)
 TermHQ builds are not yet code-signed: no Authenticode certificate on the
 Windows installer, no Apple notarization on the macOS app. Both are paid,
 recurring certificates, and signing changes which dialog your OS shows first —
-not a byte of what actually runs. During the pre-release, the honest warning
-plus this explanation seemed better than a subscription.
+not a byte of what actually runs. For now, the honest warning plus this
+explanation seemed better than a subscription.
 
 Two things worth knowing in the meantime:
 

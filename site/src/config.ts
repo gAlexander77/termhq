@@ -32,9 +32,10 @@ export const SITE = {
  *
  * Flipping this to false is a deliberate launch step, performed together with
  * setting the SITE_DEPLOY_ENABLED repository variable. It is never a side
- * effect of another change.
+ * effect of another change. Flipped 2026-09-06, with v0.2.0 published as the
+ * first public release.
  */
-export const PRE_RELEASE = true;
+export const PRE_RELEASE = false;
 
 export const NAV = [
   { label: "Docs", href: "/docs/" },

@@ -15,10 +15,9 @@
 
 ---
 
-> **TermHQ has not been released yet.** There are no downloads on this
-> repository, and the links below to the website and release page will start
-> working at launch. This page describes what TermHQ is; it does not yet
-> describe something you can install.
+**Download:** the [latest release](../../releases/latest) — Windows and
+macOS. Installation notes, including the unsigned-build warnings each OS shows,
+are on [termhq.dev/docs/installation](https://termhq.dev/docs/installation/).
 
 ## What TermHQ is
 
@@ -121,16 +120,16 @@ install yourself.
 
 | | |
 |---|---|
-| Website | [termhq.dev](https://termhq.dev) *(at launch)* |
-| Documentation | [termhq.dev/docs](https://termhq.dev/docs) *(at launch)* |
+| Website | [termhq.dev](https://termhq.dev) |
+| Documentation | [termhq.dev/docs](https://termhq.dev/docs) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
-| Downloads | [Releases](../../releases) *(at launch)* |
+| Downloads | [Releases](../../releases) |
 
 ## Reporting a problem
 
-Once TermHQ is public, bug reports and feature requests belong in this
-repository's [Issues](../../issues). Please include your OS and version, the
-TermHQ version, and what you expected to happen.
+Bug reports and feature requests belong in this repository's
+[Issues](../../issues). Please include your OS and version, the TermHQ
+version, and what you expected to happen.
 
 ## Privacy
 
