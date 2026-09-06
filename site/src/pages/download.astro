@@ -3,16 +3,17 @@ import Base from "../layouts/Base.astro";
 import { SITE, PRE_RELEASE } from "../config";
 
 const platforms = [
-  { name: "Windows", note: "Windows 10 and 11 · installer" },
-  { name: "macOS", note: "Apple silicon · .dmg" },
-  { name: "Linux", note: ".AppImage, .deb and .rpm · no voice yet" },
+  { name: "Windows", note: "Windows 10 and 11 · installer", published: true },
+  { name: "macOS", note: "Apple silicon · .dmg", published: true },
+  // compiles, never run by anyone yet — it ships when someone has lived in it
+  { name: "Linux", note: "Not published yet", published: false },
 ];
 ---
 
 <Base
   title="Download"
-  metaTitle="Download TermHQ — Windows, macOS, Linux"
-  description="Download TermHQ for Windows, macOS, or Linux. A keyboard-first GUI terminal for running AI coding agents."
+  metaTitle="Download TermHQ — Windows and macOS"
+  description="Download TermHQ for Windows or macOS. A keyboard-first GUI terminal for running AI coding agents. Linux is not published yet."
 >
   <article class="page prose" data-pagefind-body>
     <h1 data-pagefind-meta="title">Download</h1>
@@ -40,9 +41,15 @@ const platforms = [
           <div class="dl-cell">
             <h3>{p.name}</h3>
             <p>{p.note}</p>
-            <a class="btn btn-primary" href={SITE.latestRelease}>
-              Latest release
-            </a>
+            {p.published ? (
+              <a class="btn btn-primary" href={SITE.latestRelease}>
+                Latest release
+              </a>
+            ) : (
+              <p>
+                <em>Coming once it has been run for real.</em>
+              </p>
+            )}
           </div>
         ))
       }

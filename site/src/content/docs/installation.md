@@ -1,7 +1,7 @@
 ---
 title: "Installation"
 weight: 20
-description: "Install TermHQ on Windows, macOS, or Linux, and what to expect from SmartScreen and Gatekeeper."
+description: "Install TermHQ on Windows or macOS, what to expect from SmartScreen and Gatekeeper, and how updates work."
 ---
 
 Download the build for your platform from the
@@ -61,12 +61,11 @@ Two things worth knowing in the meantime:
 
 ## Linux
 
-An `.AppImage`, a `.deb` and an `.rpm` are published. The AppImage needs no
-installation — mark it executable and run it. For the `.deb`:
-
-```bash
-sudo dpkg -i termhq_*.deb
-```
+Not published yet. TermHQ compiles for Linux, but nobody has run it there for
+real, and an installer nobody has launched does not belong on a release page
+next to two that have been lived in. When it has been, an `.AppImage`, a
+`.deb` and an `.rpm` will appear on the releases page and this section will
+say how to use them.
 
 ## Voice dictation
 
@@ -91,9 +90,8 @@ Dictation listens in **English** by default. **Settings → Voice** has a
 language dropdown with sixteen more, plus an auto-detect option that lets a
 multilingual model identify the language per recording.
 
-Linux is the exception: the Linux packages do not include the speech engine
-yet, so dictation is unavailable there for now. Everything else on this page
-applies to Linux as normal.
+When Linux packages arrive they will not include the speech engine at first,
+so dictation will be unavailable there to begin with.
 
 ## Where TermHQ keeps its files
 
@@ -116,10 +114,19 @@ the toast also has **Later**, which puts that version away until a newer one
 comes along or the next launch.
 
 What the click does, in order: the release is downloaded and its signature
-checked (only releases we built will install); any editor with unsaved changes
-asks you to save or discard, the same card as closing the window; other TermHQ
+checked; any editor with unsaved changes asks you to save or discard, the same
+protection as closing the window; other TermHQ
 windows are asked to close and take the same card; then TermHQ closes, the
 installer runs, and TermHQ reopens in the workspace you were in.
+
+The unsaved-work check happens **after the download**, so it includes edits you
+made while waiting. Choose **Save all & update**, **Update without saving**, or
+**Cancel**. If another window remains open, check it for a save prompt, close it
+when ready, and try the update again. TermHQ does not force it closed.
+
+Update signatures verify that the download comes from TermHQ. They are separate
+from the operating system's installer certificates, so the installation warnings
+described above may still appear.
 
 **Your shells restart.** The layout, working directories, titles and the stash
 all come back; commands and agents that were running in those panes are
@@ -132,6 +139,11 @@ the app stays as it was; the toast offers to try again. Turn the automatic
 check off in Settings → General → Updates and "Check now" becomes the only way
 to look. Installing over the top from a downloaded release works too, and
 leaves the configuration directory alone just the same.
+
+If TermHQ cannot save the workspace, installation stops before shutting down
+your shells. If the installer fails after the shells have stopped, the app
+reports the failure and restores the ability to open terminals for recovery.
+Previously running commands have still stopped; check your work before retrying.
 
 ## Uninstalling
 

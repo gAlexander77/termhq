@@ -49,7 +49,7 @@ already have open.
 - **Browser panes** — `Ctrl+Shift+B` tiles a real web page in the grid, rendered
   by the operating system's own browser engine embedded in the window, with a
   URL bar, devtools and the same drag, stash, resize and fullscreen moves as a
-  terminal. Verified on Windows; macOS and Linux passes are in progress.
+  terminal. Verified on Windows; the macOS pass is in progress.
 - **Editor panes** — `Ctrl+Shift+E` opens a pane that holds files as tabs, built
   on Monaco. Saving swaps a temp file into place so a failed save cannot destroy
   the original; a file changed underneath you asks rather than clobbers; unsaved
@@ -87,9 +87,10 @@ already have open.
 
 ## Platforms
 
-Windows, macOS, and Linux. Windows is the primary daily-driver target and macOS
-is developed alongside it. Linux is built and published, but has had less
-exercise — and voice dictation is not packaged for it yet.
+Windows and macOS. Windows is the primary daily-driver target and macOS is
+developed alongside it. Linux compiles but is not published yet: nobody has
+run it for real, and it ships when someone has — without voice dictation at
+first.
 
 ## How it is built
 
