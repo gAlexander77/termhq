@@ -10,7 +10,7 @@
   <img alt="Windows" src="https://img.shields.io/badge/Windows-0078D4?style=flat-square&logo=windows&logoColor=white">
   <img alt="macOS" src="https://img.shields.io/badge/macOS-000000?style=flat-square&logo=apple&logoColor=white">
   <img alt="Linux" src="https://img.shields.io/badge/Linux-1a1a1a?style=flat-square&logo=linux&logoColor=white">
-  <img alt="Status" src="https://img.shields.io/badge/status-pre--release-111111?style=flat-square">
+  <img alt="Latest release" src="https://img.shields.io/github/v/release/gAlexander77/termhq?style=flat-square&label=release&color=111111">
 </p>
 
 ---
@@ -153,5 +153,5 @@ tagged commit and published to this repository.
 
 ## License
 
-Licensing is not final. A license file will be added before this repository is
-made public.
+Licensing is not final. A license file will be added to this repository; until
+then, the releases are free to download and use as they are.
