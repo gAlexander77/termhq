@@ -30,10 +30,10 @@ screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control 
 
 <kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
 on purpose: <kbd>J</kbd> opens a terminal, <kbd>Shift</kbd>+<kbd>J</kbd> opens one
-like this one. <kbd>B</kbd> is for browser and <kbd>E</kbd> for editor, both
-taking <kbd>Shift</kbd> for the same reason the others do: plain
-<kbd>Ctrl</kbd>+<kbd>B</kbd> is the sidebar and `tmux`'s prefix, and plain
-<kbd>Ctrl</kbd>+<kbd>E</kbd> is end-of-line in every shell.
+like this one. <kbd>B</kbd> is for browser and <kbd>E</kbd> for editor, with
+<kbd>Shift</kbd> keeping them separate from other actions. On Windows, for
+example, plain <kbd>Ctrl</kbd>+<kbd>B</kbd> toggles the sidebar, but Vim also
+uses it to page backward in normal mode.
 
 ## Layout
 
@@ -199,9 +199,9 @@ and it is better that you hear it here than discover it:
 
 | Chord | What it takes on Windows and Linux |
 |---|---|
-| <kbd>Ctrl</kbd>+<kbd>B</kbd> (sidebar) | **`tmux`'s prefix key.** If you use tmux inside TermHQ, rebind one of them. |
+| <kbd>Ctrl</kbd>+<kbd>B</kbd> (sidebar) | Page-backward in Vim's normal mode; cursor-backward in shell line editing. |
 | <kbd>Ctrl</kbd>+<kbd>P</kbd> (settings) | Previous-command history, for anyone who walks history with it instead of ↑. |
-| <kbd>Ctrl</kbd>+<kbd>F</kbd> (find) | Cursor-forward in shell line editing; page-forward in `less` and `vim`. |
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> (find) | Page-forward in Vim's normal mode and `less`; cursor-forward in shell line editing. |
 | <kbd>Ctrl</kbd>+<kbd>J</kbd> (new terminal) | Newline — to a shell, <kbd>Ctrl</kbd>+<kbd>J</kbd> *is* <kbd>Enter</kbd>. |
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> also costs PowerShell
@@ -267,16 +267,17 @@ another pane, the title bar — needs focus before a chord will fire.
 
 ## When a terminal program wants the same key
 
-Full-screen terminal programs — editors, `tmux`, some agents — have their own
-chords, and some collide with TermHQ's.
+Terminal programs such as Vim have their own shortcuts, and some collide with
+TermHQ's. For example, on Windows, <kbd>Ctrl</kbd>+<kbd>B</kbd> opens the sidebar
+instead of paging backward in Vim's normal mode.
 
 Two ways out:
 
-1. **Rebind** the TermHQ action.
+1. **Rebind or clear** the TermHQ action in **Settings → Shortcuts**.
 2. **Ultra focus** (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) — hands every
    keystroke to the terminal and turns TermHQ's shortcuts off. That includes
-   <kbd>Ctrl</kbd>+<kbd>V</kbd>, which normally pastes, because that is vim's
-   visual block and exactly the key someone turns the mode on to get.
+   <kbd>Ctrl</kbd>+<kbd>V</kbd>, which normally pastes, so Vim can receive it to
+   enter visual block mode.
 
 Two things stay TermHQ's by design even in ultra focus:
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> still pastes — it is not a control

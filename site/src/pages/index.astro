@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import HomepageShortcuts from "../components/HomepageShortcuts.astro";
+import AppScreenshots from "../components/AppScreenshots.astro";
 // import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
 
@@ -60,7 +61,7 @@ const features = [
           <a class="btn btn-primary btn-lg" href="/download/">
             Download TermHQ <span aria-hidden="true">↗</span>
           </a>
-          <a class="btn btn-lg" href="#workflows">Explore the workspace</a>
+          <a class="btn btn-lg" href="#screenshots">Explore the workspace</a>
         </div>
         <ul class="hero-proof" aria-label="Product highlights">
           <li>Local-first</li>
@@ -69,7 +70,7 @@ const features = [
         {PRE_RELEASE && <p class="hero-note">Not publicly available yet. This site is a preview.</p>}
       </div>
     </div>
-    {/* Keep the inaccurate application mock disabled. Only add real recordings. */}
+    {/* Keep the inaccurate application mock disabled. Use real captures below. */}
     {/* <AppMock /> */}
     <div class="wrap hero-caption">
       <span>Built for parallel work.</span>
@@ -77,7 +78,8 @@ const features = [
     </div>
   </section>
 
-  {/* A future overview recording belongs here, not behind the hero text. */}
+  <AppScreenshots />
+
   <section class="section" id="workflows" aria-labelledby="workflows-title">
     <div class="wrap">
       <div class="section-head">

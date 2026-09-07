@@ -13,6 +13,8 @@ export default async function checkWebsite(page, baseURL = "http://127.0.0.1:432
   };
   const goto = (path) => page.goto(baseURL + path);
 
+  // Rapid viewport changes and focus moves should not race smooth scrolling.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await goto("/");
   for (const width of [320, 390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
@@ -34,6 +36,62 @@ export default async function checkWebsite(page, baseURL = "http://127.0.0.1:432
     const responses = await Promise.all(urls.map((url) => fetch(url)));
     return responses.every((response) => response.ok);
   }), "Homepage guide links resolve");
+
+  assert(await page.locator('.hero-actions a[href="#screenshots"]').count() === 1, "Hero leads to actual application screenshots");
+  assert(await page.locator('.gallery-options input:checked').inputValue() === "default", "Default screenshot selected initially");
+  assert(await page.locator(".gallery-preview").count() === 3, "Three real theme screenshots");
+  assert((await page.locator("#screenshot-default figcaption").textContent()).includes("Built-in"), "Default is identified as TermHQ's built-in theme");
+  assert((await page.locator("#screenshot-dracula figcaption").textContent()).includes("Marketplace") && (await page.locator("#screenshot-monokai figcaption").textContent()).includes("Marketplace"), "Dracula and Monokai are identified as marketplace themes");
+  assert((await page.locator("#screenshots-title").textContent()) === "This is TermHQ.", "First screenshot introduces the product, not just theming");
+  assert((await page.locator(".gallery-note").textContent()).includes("examples of VS Code themes"), "Theme previews are examples, not the full theme catalog");
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    let galleryHeight;
+    for (const theme of ["Default", "Dracula", "Monokai"]) {
+      await page.locator(".gallery-options label").filter({ hasText: theme }).click();
+      const preview = page.locator(`#screenshot-${theme.toLowerCase()}`);
+      assert(await preview.isVisible() && await page.locator(".gallery-preview:visible").count() === 1, `${theme} is the only visible screenshot at ${width}px`);
+      await preview.locator("img").scrollIntoViewIfNeeded();
+      await preview.locator("img").evaluate((img) => img.decode());
+      assert(await preview.locator("img").evaluate((img) => {
+        const box = img.getBoundingClientRect();
+        return img.naturalWidth > 0 && img.getAttribute("alt").includes("TermHQ on Windows") &&
+          img.getAttribute("srcset").split(",").length === 5 && img.loading === "lazy" &&
+          Math.abs(box.width / box.height - 2560 / 1380) < .01;
+      }), `${theme} loads responsively without cropping at ${width}px`);
+      const height = await page.locator(".app-gallery").evaluate((el) => el.getBoundingClientRect().height);
+      if (galleryHeight !== undefined) assert(Math.abs(height - galleryHeight) < 1, `Switching to ${theme} preserves gallery height at ${width}px`);
+      galleryHeight = height;
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${theme} gallery fits ${width}px`);
+    }
+  }
+  await page.locator('input[name="screenshot-theme"][value="monokai"]').focus();
+  await page.keyboard.press("ArrowRight");
+  assert(await page.locator('.gallery-options input:checked').inputValue() === "default", "Screenshot radios wrap with arrow keys");
+  await page.keyboard.press("ArrowRight");
+  assert(await page.locator("#screenshot-dracula").isVisible(), "Keyboard selects Dracula screenshot");
+  assert(await page.locator('.gallery-options label:has(:focus-visible)').count() === 1, "Theme selection exposes keyboard focus");
+  await page.keyboard.press("Tab");
+  assert(await page.locator("#screenshot-dracula").evaluate((el) => el === document.activeElement), "Tab reaches only the selected full-size screenshot");
+  const [fullSize] = await Promise.all([
+    page.waitForEvent("popup"),
+    page.keyboard.press("Enter"),
+  ]);
+  try {
+    await fullSize.waitForLoadState("load");
+    assert(await fullSize.locator("img").evaluate((img) => img.naturalWidth === 2560 && img.naturalHeight === 1380), "Full-size view opens original screenshot");
+  } finally {
+    await fullSize.close();
+  }
+  const noScriptContext = await page.context().browser().newContext({ javaScriptEnabled: false, reducedMotion: "reduce", viewport: { width: 390, height: 844 } });
+  try {
+    const noScriptPage = await noScriptContext.newPage();
+    await noScriptPage.goto(baseURL + "/#screenshots");
+    await noScriptPage.locator(".gallery-options label").filter({ hasText: "Monokai" }).click();
+    assert(await noScriptPage.locator("#screenshot-monokai").isVisible() && !await noScriptPage.locator("#screenshot-default").isVisible(), "Theme gallery works with JavaScript disabled");
+  } finally {
+    await noScriptContext.close();
+  }
 
   await page.locator('input[value="mac"]').check();
   assert(await page.locator(".keys-mac").isVisible() && !await page.locator(".keys-windows").isVisible(), "macOS shortcut switch");
@@ -135,5 +193,6 @@ export default async function checkWebsite(page, baseURL = "http://127.0.0.1:432
   await page.unroute(indexURL);
 
   await goto("/");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   return { passed: checks.length, checks };
 }
