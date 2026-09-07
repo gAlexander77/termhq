@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="site/public/termhq-mark.svg" alt="TermHQ" width="96">
+  <img src="site/public/readme-banner.png" alt="TermHQ" width="1080">
 </p>
-
-<h1 align="center">TermHQ</h1>
 
 <p align="center"><strong>The terminal built for coding agents.</strong></p>
 
