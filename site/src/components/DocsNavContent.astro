@@ -10,6 +10,21 @@ interface Props {
 }
 
 const { items, path } = Astro.props;
+const sections = [
+  { title: "Getting started", slugs: ["", "getting-started", "installation"] },
+  { title: "Workspace", slugs: ["panes-and-layout", "workspaces", "persistent-sessions", "worktrees"] },
+  { title: "Tools", slugs: ["agents", "browser-panes", "editor", "language-servers", "source-control"] },
+];
+const docPath = (slug: string) => slug ? `/docs/${slug}/` : "/docs/";
+const groupedPaths = new Set(sections.flatMap((section) => section.slugs.map(docPath)));
+const groups = [
+  ...sections.map((section) => ({
+    title: section.title,
+    items: items.filter((item) => section.slugs.some((slug) => item.href === docPath(slug))),
+  })),
+  // Newly added guides remain reachable even before they are assigned a group.
+  { title: "Reference", items: items.filter((item) => !groupedPaths.has(item.href)) },
+];
 ---
 
 <div class="docs-nav-content">
@@ -18,26 +33,23 @@ const { items, path } = Astro.props;
     <span>TermHQ documentation</span>
   </div>
 
-  <div class="docs-nav-group">
-    <h4>Explore</h4>
-    <ul>
-      {
-        items.map((item) => (
+  {groups.map((group) => (
+    <div class="docs-nav-group">
+      <h4>{group.title}</h4>
+      <ul>
+        {group.items.map((item) => (
           <li>
-            <a
-              href={item.href}
-              aria-current={path === item.href ? "page" : undefined}
-            >
+            <a href={item.href} aria-current={path === item.href ? "page" : undefined}>
               {item.title}
             </a>
           </li>
-        ))
-      }
-    </ul>
-  </div>
+        ))}
+      </ul>
+    </div>
+  ))}
 
   <div class="docs-nav-group docs-nav-reference">
-    <h4>Reference</h4>
+    <h4>More</h4>
     <ul>
       <li>
         <a

@@ -1,0 +1,33 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+  collapsible?: boolean;
+}
+const { headings, collapsible = false } = Astro.props;
+---
+
+{collapsible ? (
+  <details class="toc toc-inline" data-pagefind-ignore>
+    <summary>On this page <span aria-hidden="true">⌄</span></summary>
+    <nav aria-label="On this page">
+      <ul>
+        {headings.map((h) => (
+          <li class={h.depth === 3 ? "toc-sub" : undefined}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </details>
+) : (
+  <nav class="toc toc-rail" aria-label="On this page" data-pagefind-ignore>
+    <div class="toc-title">On this page</div>
+    <ul>
+      {headings.map((h) => (
+        <li class={h.depth === 3 ? "toc-sub" : undefined}>
+          <a href={`#${h.slug}`}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

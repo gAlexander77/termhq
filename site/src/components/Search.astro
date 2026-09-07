@@ -10,13 +10,8 @@
  */
 ---
 
-<div class="search-backdrop" data-search-backdrop hidden>
-  <div
-    class="search-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Search documentation"
-  >
+<dialog class="search-backdrop" data-search-backdrop aria-label="Search documentation">
+  <div class="search-modal">
     <div class="search-head">
       <svg
         viewBox="0 0 24 24"
@@ -34,6 +29,10 @@
         class="search-input"
         data-search-input
         type="search"
+        role="combobox"
+        aria-label="Search documentation"
+        aria-expanded="false"
+        aria-haspopup="listbox"
         placeholder="Search the documentation…"
         autocomplete="off"
         autocorrect="off"
@@ -42,7 +41,7 @@
         aria-controls="search-results"
         aria-autocomplete="list"
       />
-      <span class="search-esc">Esc</span>
+      <button type="button" class="search-close" data-search-close aria-label="Close search">✕</button>
     </div>
 
     <ul
@@ -56,6 +55,7 @@
     <div class="search-empty" data-search-empty>
       Type to search the documentation.
     </div>
+    <span class="sr-only" data-search-status role="status" aria-live="polite" aria-atomic="true"></span>
 
     <div class="search-foot">
       <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> navigate</span>
@@ -63,7 +63,7 @@
       <span><kbd>Esc</kbd> close</span>
     </div>
   </div>
-</div>
+</dialog>
 
 {/* is:inline keeps Vite's hands off the dynamic import — /pagefind/ does not
     exist until after the build, so bundling it would fail at compile time. */}
@@ -75,6 +75,7 @@
     var input = document.querySelector("[data-search-input]");
     var list = document.querySelector("[data-search-results]");
     var empty = document.querySelector("[data-search-empty]");
+    var status = document.querySelector("[data-search-status]");
     var openers = document.querySelectorAll("[data-search-open]");
     var isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 
@@ -84,37 +85,53 @@
     var active = -1;
     var seq = 0;
     var lastFocus = null;
+    var previousOverflow = "";
+    var loading = null;
+    var timer = null;
 
     document.querySelectorAll("[data-search-kbd]").forEach(function (el) {
       el.textContent = isMac ? "⌘ K" : "Ctrl K";
     });
 
     async function loadPagefind() {
-      if (pagefind || loadErr) return Promise.resolve(pagefind);
-      return import("/pagefind/pagefind.js")
-        .then(function (m) {
+      if (pagefind) return pagefind;
+      if (loading) return loading;
+      loadErr = false;
+      loading = import("/pagefind/pagefind.js")
+        .then(async function (m) {
+          if (m.init) await m.init();
           pagefind = m;
-          return m.init ? m.init().then(function () { return m; }) : m;
+          return m;
         })
         .catch(function () {
           loadErr = true;
           return null;
-        });
+        }).finally(function () { loading = null; });
+      return loading;
     }
 
     function open() {
       lastFocus = document.activeElement;
-      backdrop.hidden = false;
+      previousOverflow = document.body.style.overflow;
+      ++seq;
+      clearTimeout(timer);
+      loadErr = false;
+      backdrop.showModal();
       document.body.style.overflow = "hidden";
       input.value = "";
       render([]);
       input.focus();
-      loadPagefind();
+      var mine = seq;
+      loadPagefind().then(function (pf) {
+        if (!pf && backdrop.open && mine === seq) render([]);
+      });
     }
 
     function close() {
-      backdrop.hidden = true;
-      document.body.style.overflow = "";
+      ++seq;
+      clearTimeout(timer);
+      backdrop.close();
+      document.body.style.overflow = previousOverflow;
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
@@ -124,33 +141,46 @@
       var nodes = list.querySelectorAll(".search-result");
       nodes.forEach(function (n, idx) {
         n.dataset.active = String(idx === active);
+        n.setAttribute("aria-selected", String(idx === active));
       });
       var el = nodes[active];
-      if (el) el.scrollIntoView({ block: "nearest" });
+      if (el) {
+        input.setAttribute("aria-activedescendant", el.id);
+        el.scrollIntoView({ block: "nearest" });
+      }
     }
 
     function render(items) {
       results = items;
       active = -1;
       list.innerHTML = "";
+      input.removeAttribute("aria-activedescendant");
+      input.setAttribute("aria-expanded", String(items.length > 0));
+      list.removeAttribute("aria-busy");
 
       if (!items.length) {
         empty.hidden = false;
         empty.textContent = loadErr
-          ? "Search index not built. Run `npm run build`, then preview dist."
+          ? "Search is temporarily unavailable. Try again or browse the documentation."
           : input.value.trim()
             ? "No matches."
             : "Type to search the documentation.";
+        status.textContent = empty.textContent;
         return;
       }
       empty.hidden = true;
+      status.textContent = items.length + " results. Use the arrow keys to choose a result, then Enter to open it.";
 
       items.forEach(function (r, i) {
         var li = document.createElement("li");
+        li.setAttribute("role", "presentation");
         var a = document.createElement("a");
         a.className = "search-result";
         a.href = r.url;
         a.setAttribute("role", "option");
+        a.id = "search-result-" + i;
+        a.tabIndex = -1;
+        a.setAttribute("aria-selected", String(i === 0));
         a.dataset.active = String(i === 0);
 
         var crumb = document.createElement("div");
@@ -172,6 +202,7 @@
         list.appendChild(li);
       });
       active = 0;
+      input.setAttribute("aria-activedescendant", "search-result-0");
     }
 
     /* Sub-results are Pagefind's per-heading anchors. Promoting them above the
@@ -197,18 +228,22 @@
       return out.slice(0, 24);
     }
 
-    var timer = null;
     input &&
       input.addEventListener("input", function () {
         var q = input.value.trim();
         clearTimeout(timer);
+        var mine = ++seq;
+        loadErr = false;
+        render([]);
         if (!q) {
-          render([]);
           return;
         }
+        empty.textContent = "Searching…";
+        status.textContent = "Searching…";
+        list.setAttribute("aria-busy", "true");
         timer = setTimeout(function () {
-          var mine = ++seq;
           loadPagefind().then(function (pf) {
+            if (mine !== seq || !backdrop.open) return;
             if (!pf) {
               render([]);
               return;
@@ -223,6 +258,10 @@
                 if (mine === seq) render(flatten(data));
               });
             });
+          }).catch(function () {
+            if (mine !== seq || !backdrop.open) return;
+            loadErr = true;
+            render([]);
           });
         }, 110);
       });
@@ -231,10 +270,10 @@
       var mod = isMac ? e.metaKey : e.ctrlKey;
       if (mod && (e.key === "k" || e.key === "K")) {
         e.preventDefault();
-        backdrop.hidden ? open() : close();
+        backdrop.open ? close() : open();
         return;
       }
-      if (backdrop.hidden) {
+      if (!backdrop.open) {
         /* "/" is the other convention people try; ignore it while typing. */
         var t = e.target.tagName;
         if (
@@ -251,13 +290,20 @@
       if (e.key === "Escape") {
         e.preventDefault();
         close();
-      } else if (e.key === "ArrowDown") {
+      } else if (e.key === "Tab" && !e.ctrlKey && !e.metaKey) {
+        // Native modality makes the page inert. Explicit cycling also keeps
+        // Shift+Tab from handing focus to browser chrome at the first field.
+        var stops = Array.from(backdrop.querySelectorAll('input, button, a[href]:not([tabindex="-1"])'));
+        var index = stops.indexOf(document.activeElement);
+        e.preventDefault();
+        stops[(index + (e.shiftKey ? -1 : 1) + stops.length) % stops.length].focus();
+      } else if (e.target === input && e.key === "ArrowDown") {
         e.preventDefault();
         setActive(active + 1);
-      } else if (e.key === "ArrowUp") {
+      } else if (e.target === input && e.key === "ArrowUp") {
         e.preventDefault();
         setActive(active - 1);
-      } else if (e.key === "Enter" && active >= 0 && results[active]) {
+      } else if (e.target === input && e.key === "Enter" && active >= 0 && results[active]) {
         e.preventDefault();
         window.location.href = results[active].url;
       }
@@ -265,6 +311,11 @@
 
     openers.forEach(function (b) {
       b.addEventListener("click", open);
+    });
+    document.querySelector("[data-search-close]").addEventListener("click", close);
+    backdrop.addEventListener("cancel", function (e) {
+      e.preventDefault();
+      close();
     });
     backdrop.addEventListener("click", function (e) {
       if (e.target === backdrop) close();

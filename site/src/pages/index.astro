@@ -1,101 +1,44 @@
 ---
 import Base from "../layouts/Base.astro";
+import HomepageShortcuts from "../components/HomepageShortcuts.astro";
 // import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
 
-const features = [
+const workflows = [
   {
-    title: "Panes, not tabs",
-    guide: "panes-and-layout",
-    body: "Open as many terminals as you need — the grid keeps growing to fit them. Tile them square or as full-height columns, and grow, move and swap them from the keyboard.",
+    id: "parallel-agents",
+    label: "Run agents together",
+    title: "Keep every task in view.",
+    body: "Launch your installed coding agents in separate panes. Arrange them around the work, and notice when an agent goes quiet and needs your attention.",
+    guide: "agents",
+    link: "Running coding agents",
   },
   {
-    title: "Shells outlive the app",
+    id: "persistent-work",
+    label: "Pick up where you left off",
+    title: "Close the window. Keep working.",
+    body: "Your shells keep running when you quit TermHQ. Reopen it to reconnect with recent output intact, and organize each project in its own workspace.",
     guide: "persistent-sessions",
-    body: "Quit TermHQ entirely, reopen it, and your agents are still running where you left them — recent output intact. The tmux promise, without needing tmux.",
+    link: "How persistent sessions work",
   },
   {
-    title: "Workspaces",
-    guide: "workspaces",
-    body: "Group terminals by project, each with its own layout and directories. Resume the last one automatically, or pick from a list on launch.",
-  },
-  {
-    title: "Launch agents in one key",
-    guide: "agents",
-    body: "Claude Code, Codex, OpenCode and Antigravity from a pane-header menu or a number key — with the flags you always use, and never listing one you have not installed.",
-  },
-  {
-    title: "It taps your shoulder",
-    guide: "agents",
-    body: "A pane that went quiet while you were looking elsewhere pulses, and says so — even parked out of sight. The hard part of running several agents is noticing when one stops.",
-  },
-  {
-    title: "Agents render properly",
-    guide: "agents",
-    body: "Agents that come up monochrome or misaligned elsewhere come up right here — full color, correct emoji and box-drawing widths, and panes sized before the first line is printed.",
-  },
-  {
-    title: "A browser in the grid",
-    guide: "browser-panes",
-    body: "Ctrl+Shift+B tiles a real web page beside your shells — your OS's own browser engine, embedded, not a screenshot of one. Your docs, your dashboard, the localhost your agent is building, all in the layout you are already looking at.",
-  },
-  {
-    title: "An editor in the grid",
-    guide: "editor",
-    body: "Ctrl+Shift+E opens a pane that holds files as tabs, on the same engine VS Code uses. For the edit you make while something else is running — the config line the agent asked about, the fix that is faster to type than to explain.",
-  },
-  {
-    title: "Your language servers, not ours",
-    guide: "language-servers",
-    body: "Diagnostics, hover, completion, go-to-definition and formatting — from servers you install, at your version, obeying your repo's own config. TermHQ bundles none, so nothing here disagrees with your toolchain.",
-  },
-  {
-    title: "Nothing gets lost",
-    guide: "editor",
-    body: "Saves swap a temp file into place, so a failed one leaves the original intact. A file that changes underneath you asks rather than clobbers. And unsaved text is mirrored seconds after you stop typing, so a crash does not take it.",
-  },
-  {
-    title: "Voice, locally transcribed",
-    guide: "configuration",
-    body: "Dictate into the focused terminal, transcribed on your own machine by local Whisper models. Models are a download you choose in Settings — English or sixteen other languages — so the app installs small and voice adds nothing until you want it.",
-  },
-  {
-    title: "Closing is reversible",
+    id: "connected-tools",
+    label: "Work in one place",
+    title: "Code, preview, and review.",
+    body: "Keep an editor and a live browser beside your terminals. Make a change, check your local preview, and review your diff without leaving the workspace.",
     guide: "panes-and-layout",
-    body: "A closed pane leaves a countdown you can click to bring it back. The shell keeps running underneath, so nothing is lost.",
-  },
-  {
-    title: "Sized like a window",
-    guide: "panes-and-layout",
-    body: "Drag the boundary between two panes and it moves where you put it — panes touching it follow, panes that do not stay exactly where they were. A web page has a natural width and a terminal does not, so 70/30 is often the honest answer.",
-  },
-  {
-    title: "Every shell you already have",
-    guide: "getting-started",
-    body: "PowerShell, cmd, Git Bash and every WSL distribution on Windows; whatever /etc/shells reports on macOS. Detected on launch, so there is nothing to configure that the machine already knows.",
-  },
-  {
-    title: "Source control, without leaving",
-    guide: "source-control",
-    body: "Review changes, stage files or individual hunks, commit exactly what is staged, browse history, switch branches, sync, stash and manage worktrees. Conflicts open in the editor with clear choices — or as a ready-made prompt for the AI you trust.",
+    link: "Build your workspace",
   },
 ];
 
-const keys = [
-  { action: "New terminal", chord: ["Ctrl", "J"] },
-  { action: "New browser pane", chord: ["Ctrl", "Shift", "B"] },
-  { action: "New editor pane", chord: ["Ctrl", "Shift", "E"] },
-  { action: "Command palette", chord: ["Ctrl", "Shift", "P"] },
-  { action: "Run an agent by number", chord: ["Ctrl", "Shift", "A"] },
-  { action: "Switch workspace", chord: ["Ctrl", "Shift", "W"] },
-  { action: "Arrange panes", chord: ["Ctrl", "Shift", "G"] },
-  { action: "Dictate into the focused pane", chord: ["Ctrl", "Alt", "Space"] },
-  { action: "Copy — or interrupt when nothing is selected", chord: ["Ctrl", "C"] },
-  { action: "Stash a pane, still running", chord: ["Ctrl", "Shift", "S"] },
-  { action: "Read a markdown file, rendered", chord: ["Ctrl", "Shift", "V"] },
-  { action: "Hand every key to the terminal", chord: ["Ctrl", "Shift", "U"] },
+const features = [
+  { title: "Source control & worktrees", guide: "source-control", body: "Review changes, stage hunks, commit, and keep parallel branches organized." },
+  { title: "Local voice dictation", guide: "configuration", body: "Dictate into a terminal with speech transcribed on your machine. Download a voice model when you need it." },
+  { title: "Language assistance", guide: "language-servers", body: "Get completion, diagnostics, and navigation from the language servers you already use." },
+  { title: "Recover your work", guide: "editor", body: "Restore unsaved editor text after a restart. Get a warning when a file changes outside TermHQ." },
+  { title: "Your themes and shortcuts", guide: "theming", body: "Choose a built-in theme, import a VS Code color theme, and rebind shortcuts to suit your workflow." },
+  { title: "Your existing shells", guide: "getting-started", body: "Use PowerShell, cmd, Git Bash, or WSL on Windows, and the shells installed on your Mac." },
 ];
-
 ---
 
 <Base>
@@ -117,22 +60,16 @@ const keys = [
           <a class="btn btn-primary btn-lg" href="/download/">
             Download TermHQ <span aria-hidden="true">↗</span>
           </a>
-          <a class="btn btn-lg" href="/docs/">Read the docs</a>
+          <a class="btn btn-lg" href="#workflows">Explore the workspace</a>
         </div>
         <ul class="hero-proof" aria-label="Product highlights">
           <li>Local-first</li>
           <li>Persistent sessions</li>
         </ul>
-        {
-          PRE_RELEASE && (
-            <p class="hero-note">
-              Not publicly available yet. This site is a preview.
-            </p>
-          )
-        }
+        {PRE_RELEASE && <p class="hero-note">Not publicly available yet. This site is a preview.</p>}
       </div>
     </div>
-    {/* Abstract artwork only. Keep the inaccurate application mock disabled. */}
+    {/* Keep the inaccurate application mock disabled. Only add real recordings. */}
     {/* <AppMock /> */}
     <div class="wrap hero-caption">
       <span>Built for parallel work.</span>
@@ -140,104 +77,68 @@ const keys = [
     </div>
   </section>
 
-  <section class="section">
+  {/* A future overview recording belongs here, not behind the hero text. */}
+  <section class="section" id="workflows" aria-labelledby="workflows-title">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Built for agents</span>
-        <h2>Made for how agents actually run</h2>
-        <p>Long jobs, several at once, output you watch rather than read once.</p>
+        <span class="eyebrow">The way you work</span>
+        <h2 id="workflows-title">From the first command to the final change.</h2>
+        <p>Three ways to keep your work moving, without switching context.</p>
       </div>
+      <div class="workflow-grid">
+        {workflows.map((workflow) => (
+          <article class="workflow" id={workflow.id}>
+            <span class="workflow-label">{workflow.label}</span>
+            <h3>{workflow.title}</h3>
+            <p>{workflow.body}</p>
+            {/* Add this workflow's real recording here when it is available. */}
+            <a class="text-link" href={`/docs/${workflow.guide}/`}>{workflow.link} <span aria-hidden="true">→</span></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
 
+  <section class="section" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="section-head section-head-compact">
+        <span class="eyebrow">Everything around the terminal</span>
+        <h2 id="features-title">The tools that keep you in flow.</h2>
+      </div>
       <div class="grid grid-3 feature-grid">
-        {
-          features.map((f) => (
-            <a class="cell" href={`/docs/${f.guide}/`}>
-              <h3>{f.title}</h3>
-              <p>{f.body}</p>
-            </a>
-          ))
-        }
+        {features.map((feature) => (
+          <a class="cell" href={`/docs/${feature.guide}/`}>
+            <h3>{feature.title}</h3>
+            <p>{feature.body}</p>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" aria-labelledby="shortcuts-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head section-head-compact">
         <span class="eyebrow">Keyboard-first</span>
-        <h2>Your hands stay on the keys</h2>
-        <p>Everything reachable without the mouse — and every chord rebindable.</p>
+        <h2 id="shortcuts-title">Start with four shortcuts.</h2>
+        <p>Open a pane or find a command. Rebind the keys whenever you want.</p>
       </div>
-      <div class="keys">
-        {
-          keys.map((k) => (
-            <div class="keys-row">
-              <span>{k.action}</span>
-              <span>
-                {k.chord.map((c) => (
-                  <kbd>{c}</kbd>
-                ))}
-              </span>
-            </div>
-          ))
-        }
-      </div>
+      <HomepageShortcuts />
+      <p class="section-link"><a class="text-link" href="/docs/keyboard-shortcuts/">All shortcuts and platform details <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Make it yours</span>
-        <h2>Settings you can search, files you can edit</h2>
-        <p>
-          A searchable settings panel for every option — and plain JSON
-          underneath, for when you would rather just edit the file.
-        </p>
+    <div class="wrap closing-cta">
+      <div>
+        <span class="eyebrow">Windows · macOS</span>
+        <h2>Make room for your next project.</h2>
+        <p class="lede">Use the shells and tools you already have. A small download, with no separate runtime to set up.</p>
       </div>
-      <div class="grid grid-2">
-        <div class="cell">
-          <h3>Bring your theme</h3>
-          <p>
-            Ten built-ins from true black to true white, your own in one small
-            JSON file, and one-click import for VS Code color themes from Open
-            VSX. Themes now carry across the whole workbench and editor, while
-            the terminal palette can still come from a different theme.
-          </p>
-        </div>
-        <div class="cell">
-          <h3>Every key rebindable</h3>
-          <p>
-            The whole keymap is yours, including an ultra-focus mode that hands
-            every keystroke to the terminal so a TUI with its own chords gets
-            them unmodified.
-          </p>
-        </div>
+      <div class="closing-actions">
+        <a class="btn btn-primary btn-lg" href="/download/">Get TermHQ</a>
+        <a class="text-link" href="/docs/getting-started/">Get started <span aria-hidden="true">→</span></a>
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap" style="text-align:center">
-      <span class="eyebrow">Made for your machine</span>
-      <h2>A focused workspace. A small footprint.</h2>
-      <p class="lede" style="margin:0 auto">
-        Use the shells and tools you already have. Keep your work on your
-        machine, with an installer measured in megabytes and no separate
-        runtime to set up.{" "}
-        <a href="/docs/getting-started/">Get started →</a>
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap" style="text-align:center">
-      <span class="eyebrow">Windows · macOS</span>
-      <h2>One download per platform</h2>
-      <p class="lede" style="margin:0 auto 32px">
-        No runtime to install first.
-      </p>
-      <a class="btn btn-primary btn-lg" href="/download/">Get TermHQ</a>
     </div>
   </section>
 </Base>
