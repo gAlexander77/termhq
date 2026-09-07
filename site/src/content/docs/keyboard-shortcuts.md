@@ -73,6 +73,8 @@ categories. Both toggle: the same chord again closes what it opened.
 The two numbered pickers are deliberately two strokes rather than ten chords,
 which keeps the digits free the rest of the time. While one is armed, a card
 lists the numbered entries so the mapping is never guesswork.
+Both the number row and numeric keypad work in the agent and favorite pickers,
+including <kbd>0</kbd> for the tenth entry.
 
 The global [Worktrees](/docs/worktrees/) view is also available from the command
 palette and its status-bar item.

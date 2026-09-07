@@ -10,10 +10,15 @@ Dark: **Default**, **Void**, **Pitch** (pure black, for OLED), **Graphite**,
 **Abyss**, **Aurora**, **Ember**, **Moss**. Light: **Paper** (true white) and
 **Dawn** (warm cream).
 
+**Default** uses neutral black, gray and white with a restrained glass-inspired
+finish. The controls, spacing options and interactions are shared across all
+themes; choosing a downloaded theme keeps that theme's palette. The default look
+does not recolor themes you already installed.
+
 ## Choosing one
 
-**Settings → Appearance → Theme**. The list previews as you browse it: arrow or
-hover through it and the app repaints behind the dropdown — chrome, terminal
+**Settings → Appearance → Theme**. Type to filter the list, then arrow or hover
+through it to preview. The app repaints behind the dropdown — chrome, terminal
 palette, editor and all — with the option you started on badged `current`.
 <kbd>Enter</kbd> or a click keeps that one; <kbd>Esc</kbd> or a click elsewhere
 puts back where you were. Nothing is written to disk until you keep something, so
@@ -138,9 +143,25 @@ an optional `editor` section. Most themes do not need it.
 **Settings → Appearance → Manage themes** opens a browser for
 [Open VSX](https://open-vsx.org/), a vendor-neutral extension registry:
 a most-downloaded shelf by default, live search, infinite scroll, and an
-**Installed** view of everything you already have. Anything installed offers
-**Apply** rather than a second install, and reads "Applied ✓" when it is the
-active one.
+**Installed** view of everything you already have.
+
+### Packs and variants
+
+One extension can contain several color themes, such as light, dark and softer
+contrast variants. TermHQ keeps that relationship visible:
+
+1. In **Browse**, choose **See variants** to inspect what a pack includes.
+2. **Install pack** downloads its variants without changing your current theme.
+3. In **Installed**, expand the pack and choose **Apply** beside the variant you
+   want. Applying an installed variant does not download it again; the active
+   one is marked **Applied**.
+
+Search the Installed view by pack, variant or publisher to narrow the list.
+You can remove a single variant or choose **Remove pack** to delete all of its
+installed variants. The confirmation names everything affected, even when your
+search shows only one match. Updating a pack can bring back a variant you removed.
+
+### How imported colors are used
 
 TermHQ converts a VS Code color theme into its own format: the terminal palette,
 the colors for the full workbench, and the extension's editor colors and syntax

@@ -31,6 +31,23 @@ terminals. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> opens an
 [editor pane](/docs/editor/), which holds files as tabs. Both take the same
 header and the same moves as a terminal.
 
+With no panes open, the start panel offers **New terminal**, **Find a command**,
+**Workspaces**, and your favorite directories. If your panes are all stashed,
+it points you back to the shelf. Workspace selection also lives at the far
+right of the bottom status bar, beside Stash.
+
+## Make the interface comfortable
+
+In **Settings → Appearance**, choose **Compact** or **Comfortable** interface
+density and scale the app's labels and controls from 100% to 150%. Terminal and
+editor text keep their own size settings, and these options work with every
+theme.
+
+Need a little more room for file names or Git changes? Drag the sidebar's inner
+edge to widen it. Its original width is the minimum, the maximum is bounded,
+and a double-click on that edge resets it. See
+[Configuration](/docs/configuration/#general) for keyboard controls.
+
 ## Layouts
 
 Two presets live in the title bar:

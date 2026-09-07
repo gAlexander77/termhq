@@ -9,6 +9,9 @@ Everything configurable lives in **Settings**. <kbd>Ctrl</kbd>+<kbd>P</kbd>
 so you type the setting you want instead of hunting through categories. The same
 chord — or <kbd>Esc</kbd> — closes it.
 
+Search also finds options inside collapsed advanced sections. If nothing matches,
+use the empty-search state's clear action to return to the settings list.
+
 Settings are written to a JSON file you can also edit by hand.
 
 ## Where it lives
@@ -68,6 +71,16 @@ Keys are camelCase.
 - **Clone keeps directory** — whether duplicating a pane opens in the source
   pane's directory or at home. Default on.
 - **Layout preset** — Grid or Columns. Also the title bar switch.
+- **Sidebar side** — left or right. The sidebar button beside Settings in the
+  title bar toggles it and mirrors itself to show which side it occupies;
+  <kbd>Ctrl</kbd>+<kbd>B</kbd> does the same thing.
+- **Sidebar extra width** — gives the Files and Source Control sidebar more
+  room, up to 98 extra pixels before interface scaling. Drag its inner edge to
+  resize it, or use this slider. The original width is the minimum, the maximum
+  adapts to narrow windows, and your choice is remembered. Double-click the edge
+  to reset; with the edge focused, use the left/right arrows to resize,
+  <kbd>Home</kbd> to reset or <kbd>End</kbd> for the maximum. Its highlight appears
+  after a brief hover, so passing over the edge does not light it up.
 - **Favorites** — starred directories, reorderable with ↑/↓. One order drives
   the title bar dropdown, the welcome list *and* the number keys, so there is
   never a second ordering to keep in sync. They are stored shell-agnostically:
@@ -80,7 +93,7 @@ Keys are camelCase.
   new one. Default: most recent. A taskbar jump-list click overrides it for that
   launch.
 - **Open a terminal in new workspaces** — whether a workspace with nothing to
-  restore starts with one default terminal or on the welcome list. Default on.
+  restore starts with one default terminal or on the start panel. Default on.
   Turning it off is also what makes a workspace you opened, looked at and closed
   clean up after itself, since a workspace closed with no terminals in it is
   deleted rather than kept.
@@ -96,8 +109,15 @@ Keys are camelCase.
 
 ### Appearance
 
+- **Interface density** — **Compact** keeps the default spacing;
+  **Comfortable** gives buttons and rows larger click targets. Neither changes
+  terminal or editor text size.
+- **Interface scale** — 100% (default), 110%, 125% or 150% for app labels and
+  controls. Terminal fonts, editor fonts and browser-page zoom keep their own
+  settings. Density and scale work with every theme.
 - **Theme** and **Terminal theme** — the second can point at a different theme,
-  so the terminal palette and the interface need not match.
+  so the terminal palette and the interface need not match. Both are searchable;
+  see [Theming](/docs/theming/) for previews and theme-pack variants.
 - **Default font size** and **font family** — the font list is the monospaced
   fonts actually installed on the machine; anything else can be typed by name. A
   chosen family sits in front of the shipped stack, so a missing glyph still
@@ -116,11 +136,13 @@ Keys are camelCase.
   a pane resets them regardless of this setting — that rule belongs to
   [resizing](/docs/panes-and-layout/#resizing-panes), not to the toggle.
 - **Status bar** — default on. Keeps a thin strip across the bottom of the
-  window. It can hold the global **Worktrees** view at the left, and stashed or
-  recently closed terminals at the right. Because the strip is always part of
-  the layout, those items never cover a pane or make the grid jump. Turn it off
-  to reclaim the space; temporary cards and the stash shelf return to floating
-  over the bottom edge of the panes.
+  window. The global **Worktrees** view sits at the left when configured.
+  **Workspace** selection is at the far right, with **Stash** immediately beside
+  it when panes are stashed. Temporary **Undo close** and closed-pane controls appear
+  before that pair without separating them. These items never cover a pane or
+  make the grid jump. Turn the bar off to reclaim the space; temporary cards and
+  the stash shelf return to floating over the panes. The workspace shortcut and
+  command-palette action remain available.
 
 ### Terminal
 
@@ -189,16 +211,19 @@ Settings for [editor panes](/docs/editor/) and
 - **Editing shortcuts stay in the editor** — default on: app chords that Monaco
   also binds fall through to the editor while one is focused. See
   [Keyboard shortcuts](/docs/keyboard-shortcuts/#when-an-editor-pane-has-focus).
-  Underneath it sits a read-only reference list of every key an editor pane
-  answers to, grouped by what it does — find, multi-cursor, navigation, tabs,
-  formatting, markdown, and save/close.
+  Expand **Editor shortcut reference** for a read-only list of the keys an
+  editor pane answers to, grouped by what they do — find, multi-cursor,
+  navigation, tabs, formatting, markdown, and save/close.
 - **Language intelligence** — the master switch for
-  [language servers](/docs/language-servers/), plus the server list itself: add,
-  enable, edit the command and arguments, watch live status, restart one, or read
-  its log. Default on — but TermHQ ships no servers, so nothing runs until you
-  install one.
+  [language servers](/docs/language-servers/). Expand **Language server setup** to
+  add or enable a server, edit its command and arguments, watch live status,
+  restart it, or read its log. Default on — but TermHQ ships no servers, so
+  nothing runs until you install one.
 
 ### Agents
+
+Agent and IDE commands live inside the expandable **Launcher commands** section.
+They remain discoverable through Settings search while it is collapsed.
 
 - **Agent commands** — the list behind every pane header's ✳ button and every
   “Open in &lt;shell&gt;” agent flyout. Name plus command, flags welcome (`claude
@@ -208,7 +233,9 @@ Settings for [editor panes](/docs/editor/) and
   <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, and entries whose program is not
   on `PATH` are hidden automatically.
 - **IDE command** — what the `</>` button runs against a directory. Default
-  `code`; flags allowed.
+  `code`; flags allowed. On macOS, command detection uses your login-shell path
+  even when TermHQ opens from Finder or the Dock; see
+  [Running coding agents](/docs/agents/#command-detection-on-macos).
 - **Notification color** — the color every attention surface draws from.
   Defaults to the active theme's accent; setting it here pins it across all
   themes.
@@ -228,16 +255,14 @@ Settings for [editor panes](/docs/editor/) and
 
 - **Show hidden files** — dotfiles and OS-hidden entries. Default **on**; `ls -a`
   is the terminal user's default worldview, so hiding is the opt-in.
-- **Sidebar side** — left or right. The first button in the title bar toggles
-  the sidebar and mirrors itself to show which side it occupies;
-  <kbd>Ctrl</kbd>+<kbd>B</kbd> does the same thing.
 - **Sidebar** — showing or not. It also follows the grid on its own: the file
   tree reads the focused terminal's directory, so it leaves when your last
   terminal does and comes back with the next one. Shutting it yourself outranks
   that — it then stays shut, including while you move between terminals, until
   you open it yourself again. Opening it with no terminals open leaves it open
   and empty, which is the honest answer rather than a toggle that appears to do
-  nothing.
+  nothing. The sidebar header identifies the pane or folder it is following;
+  its side and extra width are configured under **General**.
 - **File openers** — the right-click "open with" list. Each is a name plus a
   command, run either detached (Notepad) or in a new terminal pane opened in the
   file's directory (vim, nano).

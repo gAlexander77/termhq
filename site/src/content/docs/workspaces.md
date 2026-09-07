@@ -14,8 +14,14 @@ by [dragging a gutter](/docs/panes-and-layout/#resizing-panes).
 
 ## The picker
 
-<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> opens the workspace picker.
-Pressing it again closes it.
+Click the workspace name and window icon at the far right of the bottom status
+bar to open the picker. **Stash** sits immediately to its left when you have
+stashed panes; temporary recovery controls do not split the two.
+
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> also opens the picker
+(<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> on macOS). Pressing it again
+closes it. This shortcut and the command-palette action still work with the
+status bar hidden.
 
 Each row shows the workspace's title, when it was last used, how many panes it
 has, and the directories those panes are in. Workspaces are listed most recently
@@ -62,8 +68,11 @@ workspace, so that is what you get.
 
 One terminal, in your default shell. **Settings → Workspaces → Open a terminal in
 new workspaces** turns that off, and a new workspace then opens on the welcome
-list instead — your favorites, or a pointer at the **+** button — so you can
-choose the directory before anything starts.
+panel instead: **New terminal**, **Find a command**, **Workspaces**, and any
+favorite directories. You can choose where to work before starting a shell.
+
+If all your panes are stashed, the empty view points you back to the stash shelf
+instead of making the workspace look as though it has lost them.
 
 The same setting covers any workspace with nothing to restore, not just brand new
 ones.

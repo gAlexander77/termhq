@@ -9,15 +9,27 @@ the parts that exist because of agents specifically.
 
 ## Launching one in the focused terminal
 
-Every pane header has an **✳** button listing your agent commands — Claude Code,
+Every terminal pane header has an **✳** button listing your agent commands — Claude Code,
 Codex, OpenCode and Antigravity out of the box. Picking one types its command
 into that pane's shell and hands keyboard focus back to the terminal.
 
-The list is yours to edit in **Settings → Agents**, flags included, so
+The list is yours to edit in **Settings → Agents → Launcher commands**, flags included, so
 `claude --dangerously-skip-permissions` is one click rather than something you
 retype all day. Entries whose program is not on your `PATH` are hidden
-automatically — you never see an agent you do not have, and never press a dead
-button.
+automatically. If the numbered picker has no available entries, its feedback
+distinguishes an unconfigured agent list from commands it could not find.
+
+### Command detection on macOS
+
+Opening TermHQ from Finder or the Dock should find the same agent CLIs as your
+terminal. TermHQ reads the `PATH` from your interactive login shell and caches
+it, including paths added by Homebrew, npm and shell startup files. IDE and file
+openers use that resolved path too. The initial launcher lookup runs in the
+background so it does not hold up the interface.
+
+If you install an agent or change your shell's `PATH` while TermHQ is open,
+restart TermHQ to refresh command detection. On Windows, TermHQ uses the path
+in its process environment.
 
 ## Launching one in a folder or worktree
 
@@ -40,7 +52,8 @@ order the list is arranged in Settings. While it is armed, a card lists the
 numbered agents so the mapping is never guesswork; <kbd>Esc</kbd> cancels.
 
 Only installed agents are numbered — the same `PATH` filtering as the dropdown,
-so the numbers always match what you can see.
+so the numbers always match what you can see. Both the number row and numeric
+keypad work, including <kbd>0</kbd> for the tenth entry.
 
 The chord needs a **terminal** focused, since what it does is type a command
 into a shell. Press it with an [editor](/docs/editor/) or a

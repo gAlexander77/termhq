@@ -229,13 +229,17 @@ show at a time and anything past that scrolls **down**, never sideways.
 
 ## Undoing a close
 
-Closing a pane removes it immediately — no confirmation, no waiting — so spamming
-close stays fast. But the **shell underneath keeps running**, hidden, and an undo
-card counts down with a draining bar. With the status bar on, these cards collect
-at its right edge instead of stacking over your panes; with it off, they float
-above the bottom edge. Restore re-adopts that shell with its program still going
-and its recent output replayed, including whatever it printed while it was gone.
-Only when the timer runs out is the shell actually killed.
+Closing a terminal removes its pane immediately, but the **shell underneath keeps
+running** during the undo window. With the status bar on, **Undo close** restores the
+most recently closed terminal in one click; the closed-pane count opens the full
+list. These controls appear before Stash and Workspace, keeping that pair
+together at the far right. With the bar off, undo cards float above the bottom
+edge of the panes.
+
+A draining bar shows how long each shell will remain available. Restoring one
+re-adopts that shell with its program still going and its recent output replayed,
+including whatever it printed while it was gone. Only when its timer runs out is
+the shell actually killed; opening the list does not extend that deadline.
 
 A shell that ends by itself is never parked; there is nothing to restore. Nor is
 a [browser pane](/docs/browser-panes/): closing one is final, because the undo
