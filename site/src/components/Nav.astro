@@ -13,9 +13,10 @@ const path = Astro.url.pathname;
 
   <nav class="nav-links" aria-label="Main">
     {
-      NAV.map((item) => (
+      NAV.filter((item) => item.href !== "/download/").map((item) => (
         <a
           href={item.href}
+          class:list={{ "nav-secondary": item.href === "/changelog/" }}
           aria-current={path.startsWith(item.href) ? "page" : undefined}
         >
           {item.label}
@@ -48,6 +49,6 @@ const path = Astro.url.pathname;
       <span class="search-open-label">Search</span>
       <kbd class="search-open-kbd" data-search-kbd>Ctrl K</kbd>
     </button>
-    <a class="btn btn-primary" href="/download/">Download</a>
+    <a class="btn btn-primary" href="/download/" aria-current={path === "/download/" ? "page" : undefined}>Download</a>
   </div>
 </header>

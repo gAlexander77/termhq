@@ -4,117 +4,127 @@
 
 <h1 align="center">TermHQ</h1>
 
-<p align="center"><strong>A GUI terminal built for coding agents.</strong></p>
+<p align="center"><strong>The terminal built for coding agents.</strong></p>
 
 <p align="center">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-0078D4?style=flat-square&logo=windows&logoColor=white">
-  <img alt="macOS" src="https://img.shields.io/badge/macOS-000000?style=flat-square&logo=apple&logoColor=white">
-  <img alt="Linux" src="https://img.shields.io/badge/Linux-1a1a1a?style=flat-square&logo=linux&logoColor=white">
+  <img alt="macOS — Apple silicon" src="https://img.shields.io/badge/macOS-Apple%20silicon-000000?style=flat-square&logo=apple&logoColor=white">
+  <img alt="Linux — support pending" src="https://img.shields.io/badge/Linux-support%20pending-1a1a1a?style=flat-square&logo=linux&logoColor=white">
   <img alt="Latest release" src="https://img.shields.io/github/v/release/gAlexander77/termhq?style=flat-square&label=release&color=111111">
 </p>
 
 ---
 
-**Download:** the [latest release](../../releases/latest) — Windows and
-macOS. Installation notes, including the unsigned-build warnings each OS shows,
-are on [termhq.dev/docs/installation](https://termhq.dev/docs/installation/).
+Run your coding agents side by side. Keep terminals, an editor, and a live
+browser in one workspace, with shells that keep running after you quit.
+
+[Download TermHQ](https://termhq.dev/download/) ·
+[Get started](https://termhq.dev/docs/getting-started/) ·
+[Documentation](https://termhq.dev/docs/)
+
+Available for **Windows 10/11** and **macOS (Apple silicon)**. **Linux support is
+pending.** Builds are not yet code-signed; read the
+[installation guide](https://termhq.dev/docs/installation/) for the Windows
+SmartScreen and macOS Gatekeeper warnings before your first launch.
+
+## See TermHQ
+
+Coding agents, an editor, and a live browser — together in one workspace.
+
+![TermHQ on Windows in its built-in Default theme, with coding agents, an editor, and a browser side by side.](site/src/assets/screenshots/termhq-default.png)
+
+*Shown in TermHQ’s own Default theme. All screenshots were captured on Windows.*
+
+<details>
+<summary>More theme examples: Dracula and Monokai</summary>
+
+Dracula and Monokai are examples of VS Code themes installed through TermHQ’s
+integrated marketplace, not the full set of available themes. You can also
+choose other built-in themes or create your own.
+[Explore theming](https://termhq.dev/docs/theming/).
+
+### Dracula · Marketplace
+
+![TermHQ on Windows with the Dracula VS Code theme installed through its integrated marketplace.](site/src/assets/screenshots/termhq-dracula.png)
+
+### Monokai · Marketplace
+
+![TermHQ on Windows with the Monokai VS Code theme installed through its integrated marketplace.](site/src/assets/screenshots/termhq-monokai.png)
+
+</details>
 
 ## What TermHQ is
 
-Terminal emulators were designed for a person typing one command at a time.
-That is not how anyone works with coding agents. You run several at once, you
-want to see all of them, you want the one that finished to stop being the one
-you have to hunt for — and you do not want any of them to die because you
-closed a window.
+TermHQ is a local-first terminal workspace for parallel work. Give each agent
+its own pane, keep your preview beside the code, and review changes without
+leaving the project. Named workspaces keep your projects organized, and idle
+notifications help you notice when a busy agent goes quiet.
 
-TermHQ is a terminal workbench built around that. Panes tile instead of
-stacking behind tabs, with no limit on how many, sized by dragging the boundary
-between them. Terminals keep running after you quit the app. A pane can hold a
-web page or a file instead of a shell. Work is grouped into workspaces you can
-leave and come back to. Dictation runs on local Whisper models, on your own
-machine.
-
-It is a terminal, not an IDE. There is an editor in it, but it is there for the
-edit you make *while* something else is running — not to replace the one you
-already have open.
+Use the shells and coding agents you already have installed. TermHQ does not
+bundle agent CLIs or replace their accounts and subscriptions. The built-in
+editor handles edits and reviews alongside your terminals; you can keep using
+your preferred IDE too.
 
 ## Capabilities
 
-- **Tiling panes** — every terminal visible at once, in a grid or in columns,
-  arranged from the keyboard or by dragging pane headers to move, swap and grow.
-  Drag the boundary between two panes to resize them: the panes touching it
-  follow, the ones that do not stay put, and a workspace remembers the
-  proportions you set.
-- **Browser panes** — `Ctrl+Shift+B` tiles a real web page in the grid, rendered
-  by the operating system's own browser engine embedded in the window, with a
-  URL bar, devtools and the same drag, stash, resize and fullscreen moves as a
-  terminal. Verified on Windows; the macOS pass is in progress.
-- **Editor panes** — `Ctrl+Shift+E` opens a pane that holds files as tabs, built
-  on Monaco. Saving swaps a temp file into place so a failed save cannot destroy
-  the original; a file changed underneath you asks rather than clobbers; unsaved
-  text is mirrored so a crash does not take it. Markdown reads rendered, in the
-  tab or split beside the source.
-- **Language servers, yours not ours** — diagnostics, hover, completion,
-  go-to-definition and formatting from servers **you** install, launched on
-  demand per project. TermHQ bundles none, ever, so nothing here disagrees with
-  your toolchain. Ships ready for rust-analyzer, gopls, pyright,
-  typescript-language-server and clangd; works with anything speaking LSP.
-- **Shells that outlive the app** — terminals run in a detached host process,
-  tmux-style. Quit TermHQ, reopen it, and your sessions are still running with
-  their scrollback intact.
-- **Workspaces** — named groups of panes with their own layout and working
-  directories. Resume the one you were in, or pick from a list on launch.
-- **Built for agents** — launch Claude Code, Codex, OpenCode or Antigravity from
-  a pane-header menu or a number key, with your own flags; panes are sized so an
-  agent's output is composed at the width it will be read at; color capability
-  is forced on so agents render in color; and a pane that goes quiet after being
-  busy tells you so.
-- **Local voice dictation** — powered by whisper.cpp, with transcription
-  running on your machine. Speech models are downloaded (or imported) in
-  Settings rather than bundled, so the installer stays small and voice is
-  strictly opt-in. English plus sixteen other languages; not packaged for
-  Linux yet.
-- **Files and git, in view** — a file tree that follows the focused pane's
-  directory, and a Git viewer: status, diffs, and conflicts at a glance,
-  branch switching, and syncing. Conflicts open read-only with hand-off to
-  your editor — or a composed resolve prompt copied for whichever AI you
-  trust.
-- **Theming** — JSON themes applied as CSS variables, with VS Code theme import
-  via Open VSX.
-- **Undo close** — closing a terminal is reversible for a few seconds; the shell
-  keeps running underneath the whole time.
+- **Tiling panes** — arrange terminals, editors, and browsers in a grid or
+  columns. Resize by dragging boundaries, move panes with the keyboard, focus
+  one fullscreen, or stash a terminal while it keeps running.
+- **Persistent sessions** — close TermHQ and reconnect to running shells with
+  recent output when you return. Each workspace remembers its layout and
+  working directories. No separate terminal multiplexer is needed.
+- **Agent launchers** — start installed tools such as Claude Code, Codex,
+  OpenCode, or Antigravity in a terminal, folder, or worktree. Customize agent
+  commands and flags in Settings.
+- **Browser panes** — keep a live site or local preview beside your terminals,
+  with an address bar and developer tools. See the
+  [browser guide](https://termhq.dev/docs/browser-panes/) for platform differences.
+- **Editor panes** — edit files in tabs, preview Markdown, and recover unsaved
+  text after a crash. Save prompts and external-change warnings help protect
+  your work.
+- **Language assistance** — get completion, diagnostics, navigation, and
+  formatting from language servers you install and configure for your projects.
+- **Source control** — review diffs, stage files or individual hunks, commit,
+  browse history, manage branches and stashes, and sync with your remote.
+  Resolve merge conflicts directly in the editor, or copy a briefing for an agent.
+- **Worktrees** — keep parallel branches in separate working folders. Track
+  checkouts across chosen repositories and open a terminal or agent in the
+  right one.
+- **Local voice dictation** — dictate into a terminal with transcription on
+  your machine. Download or import a speech model in **Settings → Voice** when
+  you want to use it; dictation is optional.
+- **Themes and shortcuts** — choose a built-in theme, install VS Code color
+  and icon themes from Open VSX, and rebind shortcuts to fit your workflow.
+- **Recovery and updates** — undo an accidental terminal close during the
+  brief undo window. Check for app updates in Settings and choose when to
+  install them.
 
-## Platforms
+By default, shells keep running after you close TermHQ. **Restarting your
+computer or installing an app update stops running commands and agents**;
+your layout and working directories return with fresh shells. See
+[persistent sessions](https://termhq.dev/docs/persistent-sessions/) for the
+settings and recovery details.
 
-Windows and macOS. Windows is the primary daily-driver target and macOS is
-developed alongside it. Linux compiles but is not published yet: nobody has
-run it for real, and it ships when someone has — without voice dictation at
-first.
+## Get started
 
-## How it is built
+1. [Download and install TermHQ](https://termhq.dev/download/) for your platform.
+2. Open a terminal in your project and run your installed coding agent, or use
+   the agent launcher in the pane header.
+3. Add terminals, an editor, or a browser pane alongside it. Organize each
+   project in a named workspace; TermHQ remembers its layout for your return.
 
-TermHQ is a Rust application. Everything that touches your system — shells and
-PTYs, session persistence, files, git, speech — is native Rust. The core is
-built from scratch for this app: the session engine (a small background
-process that owns your shells, which is why they survive the window — no
-`tmux` involved), the tiling grid, the theming system, the keymap, and the
-Git panel.
+| Action | Windows | macOS |
+|---|---|---|
+| New terminal | `Ctrl+J` | `⌘+J` |
+| New browser pane | `Ctrl+Shift+B` | `⌘+Shift+B` |
+| New editor pane | `Ctrl+Shift+E` | `⌘+Shift+E` |
+| Command palette | `Ctrl+Shift+P` | `⌘+Shift+P` |
 
-Two engines are borrowed rather than rebuilt, because they are the acknowledged
-best of their kind: [xterm.js](https://xtermjs.org/) draws the terminals and
-[Monaco](https://microsoft.github.io/monaco-editor/) is the editing surface —
-the same two VS Code uses.
-
-The interface renders in the operating system's own webview via
-[Tauri](https://v2.tauri.app/) — no bundled browser — which is why installers
-are measured in megabytes, not hundreds of them. That same engine is what a
-browser pane embeds, so a web page in the grid is the real thing rather than a
-streamed picture of one — and it is given none of the application's
-permissions. Terminals are rendered by
-xterm.js; dictation runs on
-[whisper.cpp](https://github.com/ggml-org/whisper.cpp); git runs through the
-`git` on your `PATH`; and language intelligence comes from LSP servers you
-install yourself.
+If a TermHQ shortcut overlaps with Vim or another terminal program, rebind or
+clear it in **Settings → Shortcuts**, or turn on **Ultra focus** to pass
+shortcuts through. See the
+[keyboard shortcut guide](https://termhq.dev/docs/keyboard-shortcuts/#when-a-terminal-program-wants-the-same-key)
+for the toggle and exceptions.
 
 ## Links
 
@@ -133,23 +143,19 @@ version, and what you expected to happen.
 
 ## Privacy
 
-TermHQ runs locally. Dictation runs on local Whisper models — transcription
-happens on your own machine. Models are downloaded only when you ask for one,
-from the whisper.cpp project's public model repository, and the app works
-fully without one. Theme and extension downloads are user-initiated and come
-from [Open VSX](https://open-vsx.org/).
+TermHQ runs locally, and voice transcription happens on your machine. Speech
+models are downloaded only when you request them; the app works without one.
+Theme and icon downloads from [Open VSX](https://open-vsx.org/) are also optional.
 
-A browser pane goes wherever you point it, like any browser, and its cookies
-and logins live in the browser engine's own profile on your machine. The page
-is given no access to TermHQ: it holds none of the application's permissions
-and cannot reach it.
+Local-first does not mean offline-only: browser panes connect to the sites you
+open, and coding agents use their own services and privacy policies. Automatic
+update checks can be turned off in **Settings → General → Updates**.
 
 ## About this repository
 
 This is TermHQ's user-facing home: the website, the documentation, the
 changelog, and the releases. The application source is maintained privately and
-is not published here. Releases are built from that private source at an exact
-tagged commit and published to this repository.
+is not published here.
 
 ## License
 

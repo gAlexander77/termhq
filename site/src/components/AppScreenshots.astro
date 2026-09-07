@@ -1,0 +1,151 @@
+---
+import { Image } from "astro:assets";
+import defaultTheme from "../assets/screenshots/termhq-default.png";
+import draculaTheme from "../assets/screenshots/termhq-dracula.png";
+import monokaiTheme from "../assets/screenshots/termhq-monokai.png";
+
+const themes = [
+  { id: "default", name: "Default", source: "Built-in", image: defaultTheme },
+  { id: "dracula", name: "Dracula", source: "Marketplace", image: draculaTheme },
+  { id: "monokai", name: "Monokai", source: "Marketplace", image: monokaiTheme },
+];
+---
+
+<section class="section screenshots-section" id="screenshots" aria-labelledby="screenshots-title">
+  <div class="wrap">
+    <div class="section-head section-head-compact">
+      <span class="eyebrow">Inside TermHQ</span>
+      <h2 id="screenshots-title">This is TermHQ.</h2>
+      <p>Coding agents, an editor, and a live browser — together in one workspace.</p>
+    </div>
+
+    <div class="app-gallery">
+      {/* Native radios keep theme selection usable without JavaScript. */}
+      <fieldset class="gallery-themes">
+        <legend class="sr-only">Screenshot theme</legend>
+        <span class="gallery-label" aria-hidden="true">Theme</span>
+        <div class="gallery-options">
+          {themes.map((theme, index) => (
+            <label>
+              <input class="sr-only" type="radio" name="screenshot-theme" value={theme.id} checked={index === 0} aria-controls={`screenshot-${theme.id}`} />
+              <span class:list={["theme-swatch", `swatch-${theme.id}`]} aria-hidden="true"></span>
+              {theme.name}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      {themes.map((theme) => (
+        <a
+          class:list={["gallery-preview", `preview-${theme.id}`]}
+          id={`screenshot-${theme.id}`}
+          href={theme.image.src}
+          target="_blank"
+          rel="noopener"
+          aria-label={`View the ${theme.name} theme screenshot at full size (opens in a new tab)`}
+        >
+          <figure>
+            <Image
+              src={theme.image}
+              alt={`TermHQ on Windows in the ${theme.name} theme, with Claude Code, Codex, and OpenCode terminals alongside an editor and browser pane.`}
+              widths={[640, 960, 1440, 1920, 2560]}
+              sizes="(min-width: 1200px) 1152px, (max-width: 640px) calc(100vw - 40px), calc(100vw - 48px)"
+              format="webp"
+              quality={85}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span>{theme.name} <span class="theme-source">· {theme.source}</span></span>
+              <span class="gallery-expand">View full size <span aria-hidden="true">↗</span></span>
+            </figcaption>
+          </figure>
+        </a>
+      ))}
+    </div>
+    <p class="gallery-note">Captured on Windows. Default is TermHQ’s own theme; Dracula and Monokai are examples of VS Code themes from the integrated marketplace. <a href="/docs/theming/">Explore theming <span aria-hidden="true">↗</span></a></p>
+  </div>
+</section>
+
+<style>
+  .gallery-themes {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0 0 20px;
+    padding: 0;
+    min-width: 0;
+    border: 0;
+  }
+  .gallery-label { font-size: 13px; color: var(--muted); }
+  .gallery-options {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: var(--surface-shadow);
+  }
+  .gallery-options label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .gallery-options label:hover { background: var(--panel-2); color: var(--fg); }
+  .gallery-options label:has(:checked) { background: var(--fg); color: var(--bg); }
+  .gallery-options label:has(:focus-visible) { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .theme-swatch { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(128,128,128,.45); }
+  .swatch-default { background: #878787; }
+  .swatch-dracula { background: #bd93f9; }
+  .swatch-monokai { background: #e6db74; }
+  .gallery-preview {
+    display: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    cursor: zoom-in;
+  }
+  .app-gallery:has(input[value="default"]:checked) .preview-default,
+  .app-gallery:has(input[value="dracula"]:checked) .preview-dracula,
+  .app-gallery:has(input[value="monokai"]:checked) .preview-monokai { display: block; }
+  .gallery-preview:hover { text-decoration: none; border-color: var(--faint); }
+  .gallery-preview figure { margin: 0; }
+  .gallery-preview img { display: block; width: 100%; height: auto; }
+  .gallery-preview figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .theme-source { color: var(--faint); margin-left: 6px; white-space: nowrap; }
+  .gallery-expand { color: var(--fg); white-space: nowrap; }
+  .gallery-expand span { margin-left: 6px; }
+  .gallery-note { margin: 18px 0 0; color: var(--faint); font-size: 13px; }
+  .gallery-note a { color: var(--muted); margin-left: 8px; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .gallery-label { display: none; }
+    .gallery-options { flex: 1; }
+    .gallery-options label { flex: 1; padding-inline: 8px; font-size: 13px; }
+    .gallery-preview { border-radius: 8px; }
+    .gallery-preview figcaption { padding: 10px 12px; font-size: 12px; }
+    .gallery-note a { display: block; margin: 8px 0 0; }
+  }
+</style>

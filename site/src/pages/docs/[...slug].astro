@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import DocsSidebar from "../../components/DocsSidebar.astro";
+import DocsToc from "../../components/DocsToc.astro";
 
 export async function getStaticPaths() {
   const docs = await getCollection("docs");
@@ -28,7 +29,7 @@ const next = i < docs.length - 1 ? docs[i + 1] : undefined;
   metaTitle={doc.data.metaTitle}
   article
 >
-  <div class="docs">
+  <div class:list={["docs", { "docs-with-toc": toc.length > 2 }]}>
     <DocsSidebar />
 
     {/* data-pagefind-body marks what gets indexed; the nav chrome around it
@@ -43,16 +44,7 @@ const next = i < docs.length - 1 ? docs[i + 1] : undefined;
 
       {
         toc.length > 2 && (
-          <nav class="toc" aria-label="On this page" data-pagefind-ignore>
-            <div class="toc-title">On this page</div>
-            <ul>
-              {toc.map((h) => (
-                <li class={h.depth === 3 ? "toc-sub" : undefined}>
-                  <a href={`#${h.slug}`}>{h.text}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <DocsToc headings={toc} collapsible />
         )
       }
 
@@ -67,5 +59,6 @@ const next = i < docs.length - 1 ? docs[i + 1] : undefined;
         </span>
       </nav>
     </article>
+    {toc.length > 2 && <DocsToc headings={toc} />}
   </div>
 </Base>

@@ -1,0 +1,27 @@
+---
+const shortcuts = [
+  { action: "New terminal", keys: ["J"] },
+  { action: "New browser pane", keys: ["Shift", "B"] },
+  { action: "New editor pane", keys: ["Shift", "E"] },
+  { action: "Command palette", keys: ["Shift", "P"] },
+];
+---
+
+<div class="shortcut-switcher">
+  {/* Native radios and CSS work with keyboard, touch, and JavaScript disabled. */}
+  <fieldset class="shortcut-platform">
+    <legend>Show shortcuts for</legend>
+    <label><input type="radio" name="shortcut-platform" value="windows" checked /> Windows</label>
+    <label><input type="radio" name="shortcut-platform" value="mac" /> macOS</label>
+  </fieldset>
+  {(["windows", "mac"] as const).map((platform) => (
+    <div class:list={["keys", `keys-${platform}`]} aria-label={`${platform === "mac" ? "macOS" : "Windows"} shortcuts`}>
+      {shortcuts.map((shortcut) => (
+        <div class="keys-row">
+          <span>{shortcut.action}</span>
+          <span>{[platform === "mac" ? "⌘" : "Ctrl", ...shortcut.keys].map((key) => <kbd>{key}</kbd>)}</span>
+        </div>
+      ))}
+    </div>
+  ))}
+</div>

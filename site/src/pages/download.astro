@@ -50,6 +50,8 @@ const platforms = [
     primaryLabel: "Download .exe",
     alt: asset(/\.msi$/),
     altLabel: ".msi installer",
+    installGuide: "windows",
+    warning: "Windows may show an unknown-publisher warning. These builds are not yet code-signed.",
   },
   {
     name: "macOS",
@@ -57,8 +59,9 @@ const platforms = [
     published: true,
     primary: asset(/\.dmg$/),
     primaryLabel: "Download .dmg",
+    installGuide: "macos",
+    warning: "macOS may block the first launch because these builds are not yet code-signed.",
   },
-  { name: "Linux", note: "Support pending", published: false },
 ];
 ---
 
@@ -70,9 +73,8 @@ const platforms = [
   <article class="page prose download-page" data-pagefind-body>
     <h1 data-pagefind-meta="title">Download</h1>
     <p>
-      TermHQ builds are published on GitHub Releases, each one built from an
-      exact tagged source commit rather than from a moving branch — so a given
-      version always means the same code.
+      Choose your platform and get your first workspace running.
+      Available for Windows and macOS (Apple silicon).
     </p>
 
     {
@@ -87,60 +89,65 @@ const platforms = [
       )
     }
 
+    {!PRE_RELEASE && (
+      <p class="release-summary">
+        {release ? <>Current release <strong>{release.tag_name}</strong> · <a href="/changelog/">What’s new</a></> : <a href={SITE.latestRelease}>View the latest release on GitHub</a>}
+      </p>
+    )}
+
     <div class="dl-grid">
       {
         platforms.map((p) => (
           <div class="dl-cell">
             <h3>{p.name}</h3>
             <p>{p.note}</p>
-            {p.primary ? (
+            {p.primary && !PRE_RELEASE ? (
               <a class="btn btn-primary" href={p.primary.browser_download_url}>
                 {p.primaryLabel} · {mb(p.primary)}
               </a>
-            ) : p.published ? (
+            ) : p.published && !PRE_RELEASE ? (
               <a class="btn btn-primary" href={SITE.latestRelease}>
                 Latest release
               </a>
             ) : null}
-            {p.alt ? (
+            {p.alt && !PRE_RELEASE ? (
               <p class="dl-alt">
                 <a href={p.alt.browser_download_url}>{p.altLabel}</a> ·{" "}
                 {mb(p.alt)}
               </p>
             ) : null}
+            <div class="dl-install-note">
+              <p>{p.warning}</p>
+              <a href={`/docs/installation/#${p.installGuide}`}>Installation guide <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         ))
       }
     </div>
+    <p class="platform-pending">Linux support is pending.</p>
 
     <p>
       {
         release ? (
           <>
-            The buttons download <strong>{release.tag_name}</strong> directly.
-            Every build of it — with the signature files the updater checks and
-            the update feed — is on the{" "}
-            <a href={release.html_url}>GitHub release page</a>, and earlier
-            versions are under <a href={`${SITE.repo}/releases`}>all releases</a>.
+            Downloads are hosted on <a href={release.html_url}>GitHub Releases</a>.
+            Need an earlier version? Browse <a href={`${SITE.repo}/releases`}>all releases</a>.
           </>
         ) : (
           <>
-            The links go to the latest GitHub release, where every build is
-            listed with the signature files the updater checks.
+            The download links open GitHub Releases, where you can choose
+            the installer for your platform.
           </>
         )
       }
     </p>
 
-    <h2 id="installing">Installing</h2>
+    <h2 id="installing">Your first workspace</h2>
     <p>
-      Builds are <strong>not yet code-signed</strong>, so Windows
-      and macOS each warn the first time you run one. That is the OS saying
-      "unknown publisher" — not a fault it found. See{" "}
-      <a href="/docs/installation/">Installation</a> for exactly what each
-      platform shows, the steps past it, and{" "}
-      <a href="/docs/installation/#why-the-install-warnings">why the warnings
-      exist</a>.
+      Once installed, open a terminal, arrange your panes, and launch an agent.
+      The <a href="/docs/getting-started/">getting started guide</a> walks through
+      your first session. For help with installation warnings, see{" "}
+      <a href="/docs/installation/#why-the-install-warnings">why the warnings appear</a>.
     </p>
 
     <h2 id="updating">Updating</h2>

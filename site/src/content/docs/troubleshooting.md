@@ -26,12 +26,19 @@ restart.
 On Windows, WSL distributions are listed individually; a distribution that is
 installed but not yet initialized will not appear until it has been run once.
 
-## My tmux prefix stopped working
+## Vim's shortcuts trigger TermHQ actions
 
-<kbd>Ctrl</kbd>+<kbd>B</kbd> toggles TermHQ's sidebar by default, which is also
-tmux's prefix key. Rebind one of the two — TermHQ's is in **Settings →
-Shortcuts**. Three other defaults take a key the shell wanted; they are listed in
-[Keyboard shortcuts](/docs/keyboard-shortcuts/).
+On Windows, <kbd>Ctrl</kbd>+<kbd>B</kbd> toggles TermHQ's sidebar by default,
+but Vim uses it to page backward in normal mode. Similarly,
+<kbd>Ctrl</kbd>+<kbd>F</kbd> opens TermHQ's find instead of paging forward in Vim.
+
+Rebind or clear the corresponding TermHQ actions in **Settings → Shortcuts**,
+or turn on **Ultra focus** with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd> to
+pass shortcuts through to Vim. Press the same shortcut again to leave Ultra focus.
+
+On macOS, the sidebar and find use <kbd>⌘</kbd>, leaving Vim's
+<kbd>Ctrl</kbd> shortcuts available. For other conflicts and Ultra focus
+behavior, see [Keyboard shortcuts](/docs/keyboard-shortcuts/#when-a-terminal-program-wants-the-same-key).
 
 ## My terminals did not come back
 
