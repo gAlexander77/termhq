@@ -10,6 +10,45 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.1 — 2026-09-07
+
+A workbench usability update, with a refreshed default look and a fix for
+agent launching on macOS. Existing downloaded theme palettes are preserved.
+
+### Added
+
+- Compact and Comfortable interface density, plus interface scaling from
+  100% to 150%, independent of terminal and editor text size.
+- A resizable sidebar with a remembered width, a bounded maximum, and
+  keyboard and double-click reset controls.
+- Clearer theme-pack downloads: inspect included variants, find installed
+  themes by search, choose a variant explicitly, and remove a whole pack.
+- An empty-workspace start panel and one-click Undo for recently closed panes.
+
+### Changed
+
+- The Default theme now uses neutral black, gray and white with a restrained
+  glass-inspired finish. Header controls and interaction styling are shared
+  consistently across all themes.
+- Slimmer header controls and clearer microphone recording, processing and
+  error states, with more room for the waveform and timer.
+- Workspace selection lives at the far right of the status bar, with Stash
+  immediately beside it even when recovery controls appear.
+- Settings has clearer grouping, searchable advanced options and a helpful
+  empty-search state. The sidebar shows which pane or folder it follows.
+
+### Fixed
+
+- Agent CLIs installed through Homebrew, npm or other shell-managed paths
+  are detected when TermHQ starts from Finder or the Dock. IDE and file
+  openers use the same resolved path, and initial launcher lookups run in
+  the background.
+- Agent and favorite pickers accept numeric-keypad digits as well as the
+  number row, including 0 for the tenth entry. Missing-agent feedback now
+  distinguishes an unavailable command from an unconfigured agent.
+- Keyboard focus and accessible control names across dialogs, menus and
+  Git actions, plus overlapping or clipped controls in narrow layouts.
+
 ## 0.2.0 — 2026-09-06
 
 The first public release, for Windows and macOS (Apple silicon). Linux is
