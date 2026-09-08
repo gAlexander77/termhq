@@ -39,6 +39,11 @@ reorder them, middle-click to close one. Every tab carries the same file-type
 icon the Files panel uses, so the tree and the strip always show the same
 picture.
 
+The selected tab is exposed to accessibility tools. When the tab strip has
+keyboard focus, the left/right arrows switch files, and <kbd>Home</kbd> or
+<kbd>End</kbd> selects the first or last tab. The shortcuts below still work
+from inside the editor.
+
 The active tab renames the pane and sets its working directory, which means the
 Files and Source Control follow what you are editing exactly as they follow a shell.
 

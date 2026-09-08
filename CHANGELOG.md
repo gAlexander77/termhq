@@ -10,6 +10,22 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.2 — 2026-09-08
+
+### Changed
+
+- Added a restrained theme-colored glow around focused panes, preserving downloaded palettes.
+- Improved editor-tab accessibility and arrow-key navigation.
+
+### Fixed
+
+- Fast pane creation sending input to the previous terminal.
+- Incorrect restored terminal directories affecting Git context and cloning.
+- Selected-pane restoration when reopening a workspace with running terminals.
+- Browser address editing leaving the wrong pane selected.
+- Workspace keyboard navigation, launch-error feedback and inconsistent workspace names.
+- Markdown Find losing the first character, Escape closing the entire Git diff, and tooltips obstructing menus.
+
 ## 0.2.1 — 2026-09-07
 
 A workbench usability update, with a refreshed default look and a fix for

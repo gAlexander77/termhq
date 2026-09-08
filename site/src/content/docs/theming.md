@@ -15,6 +15,13 @@ finish. The controls, spacing options and interactions are shared across all
 themes; choosing a downloaded theme keeps that theme's palette. The default look
 does not recolor themes you already installed.
 
+Focused panes have a restrained, theme-colored glow around their outer edge.
+The pane header keeps its normal divider, so focus is marked on the frame rather
+than by an extra line inside it. This applies to downloaded themes too. If a
+theme makes its accent transparent, TermHQ uses another visible theme color for
+the pane cue without rewriting the theme's palette or file. Boxy panes keep the
+cue inside their edge; increased-contrast settings remove the halo.
+
 ## Choosing one
 
 **Settings → Appearance → Theme**. Type to filter the list, then arrow or hover

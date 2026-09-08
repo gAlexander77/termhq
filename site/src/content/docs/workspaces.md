@@ -12,6 +12,12 @@ a copy of the first.
 Anything you tune by hand is remembered with it, including proportions you set
 by [dragging a gutter](/docs/panes-and-layout/#resizing-panes).
 
+When you reopen a workspace whose terminals are still running, the pane you
+last selected is selected again, provided it is still available and visible.
+Selection is saved when you switch panes, even if nothing else changes. After a
+reboot or update, terminals are new processes, so their previous selection may
+fall back to another visible pane.
+
 ## The picker
 
 Click the workspace name and window icon at the far right of the bottom status
@@ -27,17 +33,18 @@ Each row shows the workspace's title, when it was last used, how many panes it
 has, and the directories those panes are in. Workspaces are listed most recently
 used first.
 
-The picker is keyboard-first: the first entry is selected when it opens, the
-arrow keys move, <kbd>Enter</kbd> opens, and <kbd>Esc</kbd> closes. Moving the
-mouse takes over the highlight, and moving the pointer off the list clears it
-rather than leaving the last thing you hovered lit up.
+Use the up/down arrow keys to focus a workspace row, then <kbd>Enter</kbd> to
+open it. <kbd>Tab</kbd> moves among controls such as **New workspace** and
+**Rename**; <kbd>Enter</kbd> activates whichever control has keyboard focus.
+<kbd>Esc</kbd> closes the picker. Moving the mouse takes over the highlight,
+and moving the pointer off the list clears the hover highlight.
 
 ## Naming a workspace
 
 Naming one is optional. An untitled workspace is not "Untitled" — it is
 identified by the directories its panes are in, which is usually the name you
-would have typed anyway. Give it a title from the picker and it keeps that
-instead.
+would have typed anyway. That folder-based name appears in both the picker and
+the status bar. Give it a title from the picker and it keeps that instead.
 
 You can rename the workspace you are in, and any that is closed. One that is
 open in *another* window cannot be renamed from here — that window is still
@@ -48,6 +55,9 @@ saving over it, and would undo the change.
 From the picker, <kbd>Enter</kbd> or a click. If the workspace is already open
 in another window, TermHQ raises that window to the front instead of opening a
 duplicate — two windows adopting the same shells would be a bad time for both.
+
+If TermHQ cannot open or bring forward a workspace, the picker stays open and
+shows the reason, so a failed action does not disappear without explanation.
 
 ## On startup
 
