@@ -64,10 +64,10 @@ const orgId = `${SITE.url}/#organization`;
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonicalURL} />
 
-    {/* ICO alongside the SVG: several crawlers and older browsers do not render
-        SVG favicons, and many request /favicon.ico directly. */}
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    {/* Keep the ICO fallback for crawlers and older browsers; prefer the SVG
+        where supported. Version both URLs to refresh cached tab icons. */}
+    <link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={article ? "article" : "website"} />

@@ -31,6 +31,60 @@ export default async function checkWebsite(page, baseURL = "http://127.0.0.1:432
     const graph = JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent)["@graph"];
     return graph.some((item) => item["@type"] === "SoftwareApplication" && item.operatingSystem === "Windows, macOS");
   }), "Product structured data preserved");
+
+  const favicons = await page.evaluate(async () => {
+    const links = [...document.querySelectorAll('link[rel="icon"]')];
+    const svg = links.find((link) => link.type === "image/svg+xml");
+    const ico = links.find((link) => link.type === "image/x-icon");
+    if (!svg || !ico) throw new Error("Both favicon formats must be declared");
+    const response = await fetch(ico.href);
+    if (!response.ok) throw new Error("ICO fallback failed to load");
+    const buffer = await response.arrayBuffer();
+    const view = new DataView(buffer);
+    if (view.getUint16(0, true) !== 0 || view.getUint16(2, true) !== 1) throw new Error("Invalid ICO header");
+    const frames = [];
+    for (let i = 0; i < view.getUint16(4, true); i++) {
+      const entry = 6 + i * 16;
+      const size = view.getUint8(entry) || 256;
+      const length = view.getUint32(entry + 8, true);
+      const offset = view.getUint32(entry + 12, true);
+      const url = URL.createObjectURL(new Blob([buffer.slice(offset, offset + length)], { type: "image/png" }));
+      try {
+        const img = new Image();
+        img.src = url;
+        await img.decode();
+        const canvas = document.createElement("canvas");
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        frames.push({
+          size,
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+          corners: [[0, 0], [size - 1, 0], [0, size - 1], [size - 1, size - 1]]
+            .map(([x, y]) => [...ctx.getImageData(x, y, 1, 1).data]),
+        });
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    }
+    return {
+      svgPreferred: links.at(-1) === svg && svg.sizes.contains("any"),
+      versioned: [svg, ico].every((link) => new URL(link.href).searchParams.has("v")),
+      frames,
+    };
+  });
+  assert(favicons.svgPreferred, "Scalable SVG favicon is preferred over the ICO fallback");
+  assert(favicons.versioned, "Favicon URLs refresh cached tab icons");
+  assert(favicons.frames.map((frame) => frame.size).join(",") === "16,32,48", "ICO contains all three tab icon sizes");
+  for (const frame of favicons.frames) {
+    // A rounded edge can lightly cover a corner pixel at 16px. It must stay
+    // translucent black, never the nearly opaque white matte of the old ICO.
+    assert(frame.width === frame.size && frame.height === frame.size &&
+      frame.corners.every(([r, g, b, a]) => r === 0 && g === 0 && b === 0 && a <= 16),
+    `${frame.size}px favicon corners are transparent without a white matte`);
+  }
+
   assert(await page.evaluate(async () => {
     const urls = [...new Set([...document.querySelectorAll('main a[href^="/"]')].map((el) => el.href))];
     const responses = await Promise.all(urls.map((url) => fetch(url)));
