@@ -28,9 +28,10 @@ duplicated prompt lines in exactly the full-screen tools coding agents use.
 Open the `.dmg` and drag TermHQ to Applications. Builds are for **Apple
 silicon**; there is no Intel build.
 
-Unsigned builds are quarantined by Gatekeeper, and on current macOS (Sequoia
-and later) the old right-click → Open trick no longer works. The first launch
-is a three-step ritual:
+From v0.2.3, the app bundle has an ad-hoc signature that macOS can verify for
+integrity. It is not signed with an Apple Developer ID or notarized by Apple,
+so Gatekeeper still requires approval. On current macOS (Sequoia and later),
+use System Settings for the first launch:
 
 1. Open TermHQ once. macOS says it *"could not verify this app is free of
    malware"* — dismiss the dialog (don't choose Move to Trash).
@@ -41,13 +42,21 @@ is a three-step ritual:
 On older macOS versions, **right-click → Open** still offers an "Open" button
 directly. [Why the warnings →](#why-the-install-warnings)
 
+### If v0.2.2 says TermHQ is damaged
+
+Download **v0.2.3 or later** and replace the older TermHQ app in Applications.
+The v0.2.2 macOS bundle had an incomplete code signature; v0.2.3 fixes that
+packaging defect. Your settings and saved workspaces live outside the app and
+are preserved when you replace it. Follow the approval steps above after
+installing the new version.
+
 ## Why the install warnings
 
-TermHQ builds are not yet code-signed: no Authenticode certificate on the
-Windows installer, no Apple notarization on the macOS app. Both are paid,
-recurring certificates, and signing changes which dialog your OS shows first —
-not a byte of what actually runs. For now, the honest warning plus this
-explanation seemed better than a subscription.
+TermHQ does not yet use verified publisher certificates: the Windows installer
+has no Authenticode certificate, and the macOS app uses an ad-hoc signature
+without Apple notarization. The macOS signature seals the app's contents but
+does not establish an Apple-verified publisher identity. That is why explicit
+approval is still required even when the bundle passes signature verification.
 
 Two things worth knowing in the meantime:
 

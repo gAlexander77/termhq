@@ -10,6 +10,16 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.3 — 2026-09-08
+
+### Fixed
+
+- Fixed the incomplete macOS app bundle signature in v0.2.2 that caused a
+  "TermHQ is damaged and can't be opened" error. Release builds now sign the
+  complete app bundle and verify its signature before publication.
+- Updated macOS installation guidance. The app is still not Apple-notarized
+  and requires approval in System Settings → Privacy & Security → Open Anyway.
+
 ## 0.2.2 — 2026-09-08
 
 ### Changed
