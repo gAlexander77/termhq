@@ -178,6 +178,24 @@ pinch, which arrives as the same event — changes whichever pane is under the
 pointer. An agent's wall of output can be small while the shell you type in
 stays comfortable.
 
+## The status bar
+
+The thin bar along the bottom of the window is always visible. The pane grid
+ends above it, so items appearing or disappearing do not cover your work or
+change the space available to panes.
+
+**Workspace** is at the far right, with **Stash** immediately beside it when
+panes are parked. **Worktrees** appears at the left when you have configured
+[worktree roots](/docs/worktrees/). **Undo close** and the waiting-pane list
+appear as needed, before Stash and Workspace.
+
+The waiting item shows the latest pane needing attention and a count of any
+others. Open it to see the list, then select a pane to return to it. It is
+hidden when empty unless you enable **Settings → Agents → Always show it,
+even when nothing is waiting**. See
+[When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)
+for notification controls and what makes a pane qualify.
+
 ## Stashing
 
 A pane can be stashed with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> or the
@@ -187,24 +205,19 @@ scrollback survives. This hides a job, it does not stop one. A stashed
 loaded, and restoring it returns the same scroll position — and a stashed
 [editor](/docs/editor/) keeps its tabs and any unsaved edits in them.
 
-By default, stashed panes collect behind a count at the right edge of the thin
-status bar along the bottom of the window. The left edge may also show the
-global [Worktrees](/docs/worktrees/) view when you have configured worktree
-roots. Click the stash count — or reach it with
+Stashed panes collect behind a count in the status bar, immediately to the left
+of Workspace. Click the stash count — or reach it with
 <kbd>Tab</kbd> and press <kbd>Enter</kbd> — to open a shelf of cards upward. Click
 a card to restore it into the first free slot, or use its hover-revealed **×**
 to close that pane outright without restoring it first.
 
 Each card identifies what you parked at a glance: a shell prompt for a terminal,
-a globe for a browser, or a page for an editor. If a stashed terminal finishes
-work while you are elsewhere, that icon lights and pulses in the attention
+a globe for a browser, or a page for an editor. If a busy stashed terminal goes
+quiet while you are elsewhere, that icon lights and pulses in the attention
 color instead of becoming a separate badge.
 
-The status bar always keeps its small amount of space, whether anything is
-stashed or not, so the grid does not jump when the first pane is parked or the
-last one returns. Turn **Settings → Appearance → Status bar** off if you prefer
-every pixel for panes. The stash count then becomes a floating pill at the
-bottom-center edge; hover peeks at the shelf and click pins it open.
+When the last stashed pane is restored or closed, the stash count disappears.
+The status bar itself stays in place.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> pins the shelf open and hands it the
 arrow keys — <kbd>←</kbd> <kbd>→</kbd> along a row, <kbd>↑</kbd> <kbd>↓</kbd>
@@ -220,9 +233,7 @@ and <kbd>Ctrl</kbd>+<kbd>Backspace</kbd> still deletes a word in your shell whil
 the shelf is up. <kbd>Shift</kbd>+<kbd>Tab</kbd> is the one exception — it walks
 the cards backwards.
 
-<kbd>Esc</kbd> dismisses a shelf that is open for keyboard control. With the
-floating pill, a shelf you only hovered goes when you move the pointer away, and
-<kbd>Esc</kbd> stays with your terminal, where vim and every agent TUI need it.
+<kbd>Esc</kbd> dismisses the shelf and returns keyboard focus to the terminal.
 
 Cards fill a row left to right, most recently stashed first, then wrap. Two rows
 show at a time and anything past that scrolls **down**, never sideways.
@@ -230,11 +241,10 @@ show at a time and anything past that scrolls **down**, never sideways.
 ## Undoing a close
 
 Closing a terminal removes its pane immediately, but the **shell underneath keeps
-running** during the undo window. With the status bar on, **Undo close** restores the
+running** during the undo window. **Undo close** in the status bar restores the
 most recently closed terminal in one click; the closed-pane count opens the full
 list. These controls appear before Stash and Workspace, keeping that pair
-together at the far right. With the bar off, undo cards float above the bottom
-edge of the panes.
+together at the far right.
 
 A draining bar shows how long each shell will remain available. Restoring one
 re-adopts that shell with its program still going and its recent output replayed,

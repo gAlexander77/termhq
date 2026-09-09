@@ -9,8 +9,10 @@ Everything configurable lives in **Settings**. <kbd>Ctrl</kbd>+<kbd>P</kbd>
 so you type the setting you want instead of hunting through categories. The same
 chord — or <kbd>Esc</kbd> — closes it.
 
-Search also finds options inside collapsed advanced sections. If nothing matches,
-use the empty-search state's clear action to return to the settings list.
+Search accepts several words in any order, such as **Interface scale** or
+**scale interface**. You can combine a category with a setting name, and options
+inside collapsed advanced sections remain searchable. If nothing matches, use
+the empty-search state's clear action to return to the settings list.
 
 Settings are written to a JSON file you can also edit by hand.
 
@@ -135,14 +137,9 @@ Keys are camelCase.
   back on returns the layout you had rather than a blank one. Opening or closing
   a pane resets them regardless of this setting — that rule belongs to
   [resizing](/docs/panes-and-layout/#resizing-panes), not to the toggle.
-- **Status bar** — default on. Keeps a thin strip across the bottom of the
-  window. The global **Worktrees** view sits at the left when configured.
-  **Workspace** selection is at the far right, with **Stash** immediately beside
-  it when panes are stashed. Temporary **Undo close** and closed-pane controls appear
-  before that pair without separating them. These items never cover a pane or
-  make the grid jump. Turn the bar off to reclaim the space; temporary cards and
-  the stash shelf return to floating over the panes. The workspace shortcut and
-  command-palette action remain available.
+The [status bar](/docs/panes-and-layout/#the-status-bar) is always visible. Its
+space stays reserved, so waiting notices and recovery controls do not resize
+the pane grid. Waiting-pane visibility is configured under **Agents**, below.
 
 ### Terminal
 
@@ -218,7 +215,11 @@ Settings for [editor panes](/docs/editor/) and
   [language servers](/docs/language-servers/). Expand **Language server setup** to
   add or enable a server, edit its command and arguments, watch live status,
   restart it, or read its log. Default on — but TermHQ ships no servers, so
-  nothing runs until you install one.
+  nothing runs until you install one. **Arguments**, **Languages** and **Root
+  markers** keep spaces and commas while you type; press <kbd>Enter</kbd> or
+  move to another field to apply the entry. See
+  [Adding your own server](/docs/language-servers/#adding-your-own) for the field
+  formats.
 
 ### Agents
 
@@ -241,15 +242,25 @@ They remain discoverable through Settings search while it is collapsed.
   themes.
 - **Agent idle badge** — badge a pane that was busy while you were looking
   elsewhere and has since gone quiet. Default on.
-- **Quiet seconds** — how long a pane must be silent to count as idle. Default
-  10. It also decides how long a pane may pause mid-job without the pause being
-  read as the job ending, so raise it for agents that stop to think.
-- **Agent idle notification** — the same trigger raises a toast: in-app while
-  the window is focused, a native OS notification while it is not. Default on.
-- **Toast auto-dismiss** — seconds, or 0 to stay until dismissed. Default 0. Set
-  above zero and the toast drains a countdown bar so you can see the deadline
-  running; at 0 there is no bar, because a timer that never expires would read as
-  a stuck toast.
+- **Quiet seconds before badge** — how long a busy pane must stay silent before
+  it is marked for attention. Default 10 seconds; applies to both badges and
+  waiting notices. Shown while **Agent idle badge** is on. Raise it for agents
+  that pause to think; silence is not confirmation that a job succeeded.
+- **Show waiting panes in the status bar** — default on. While the window is
+  focused, an agent or command that goes quiet while you are looking elsewhere
+  appears in the waiting list. While the window is in the background, it sends
+  a native OS notification instead. Off disables both, without changing
+  **Agent idle badge**.
+- **Always show it, even when nothing is waiting** — default off. Appears while
+  waiting notifications are enabled. On keeps a muted **Waiting** item in the
+  bar when the list is empty; off hides it until a pane needs your attention.
+
+The waiting list shows panes newest first, with the time each notice appeared
+and its pane's current location. Select one to return to the pane, or dismiss
+the notice without interrupting its work. Notices have no auto-dismiss timer.
+Fresh terminals do not raise waiting notices just for startup output. See
+[When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)
+for the full behavior.
 
 ### Files
 

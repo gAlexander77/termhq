@@ -18,6 +18,25 @@ Confirm with:
 echo "TERM=$TERM NO_COLOR=$NO_COLOR COLORTERM=$COLORTERM"
 ```
 
+## I cannot find the waiting-pane list
+
+The waiting item in the bottom status bar is hidden when there are no waiting
+notices. Enable **Settings → Agents → Show waiting panes in the status bar**,
+then **Always show it, even when nothing is waiting** if you want it visible all
+the time. An empty list says **Nothing waiting right now.**
+
+Not every quiet terminal raises a notice: fresh startup output, short commands,
+and work you watched happen are ignored. If TermHQ was in the background when
+the pane went quiet, it sends a native OS notification instead of adding an
+in-app notice. If those are missing, check your operating system's notification
+permissions and Do Not Disturb settings as well.
+
+Waiting notices do not time out. Return to the pane or use the notice's
+**Dismiss** button to clear one. Dismissing a notice does not stop the command.
+If an agent is flagged during a normal pause, increase **Quiet seconds before
+badge** under **Settings → Agents**. See
+[When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention).
+
 ## A shell is missing from the list
 
 TermHQ detects shells at startup. Something installed afterwards appears after a
@@ -160,8 +179,9 @@ Almost certainly it is — deliberately, and only for as long as something is
 covering it. A [browser pane](/docs/browser-panes/) is a native surface that the
 interface cannot paint over, so whenever a modal, menu, or drag preview needs
 the space, the pane shows a still frame of the page until the overlay goes away.
-Audio and video keep running underneath. On Windows, small idle and undo cards
-are cut around instead, so the page stays live beside them.
+Audio and video keep running underneath. Opening the waiting-pane list,
+closed-pane list or stash shelf has the same effect. Their buttons in the
+status bar do not freeze the page while those lists are closed.
 
 Sometimes you get the pane's plain background instead of a still frame: a pane
 nobody can see does not pay to capture one, and neither does a second overlay

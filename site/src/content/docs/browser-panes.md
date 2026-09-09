@@ -156,21 +156,22 @@ it.
 
 Stated plainly rather than discovered later:
 
-- **Verified on Windows.** macOS and Linux build; macOS has had a pass for the
-  inspector and the rest await their own. Five behaviors are Windows-only so
-  far: app chords firing while the page holds the keyboard (elsewhere a TermHQ
+- **Verified on Windows.** macOS has had a pass for the inspector; the remaining
+  browser behaviors await their own verification. Linux support is pending.
+  Five behaviors are Windows-only so far: app chords firing while the page holds
+  the keyboard (elsewhere a TermHQ
   surface needs focus first), the back and forward buttons dimming when there is
   nowhere to go, the frozen frame described below, the speaker actually
-  silencing anything, and the pane's rounded bottom corners and the shape the
-  stash pill cuts out of the pane above it.
+  silencing anything, and the pane's rounded bottom corners.
 - **Anything that must cover the grid covers the page.** A native page cannot
   be painted over by the interface, so when a modal, menu, drag preview, or
   similar overlay needs the space, the pane shows a **frozen frame** of the page
   for as long as the overlay is up, then goes live again. Video keeps playing
-  underneath; it simply looks paused while covered. On Windows, small idle and
-  undo cards are cut around instead, so the page stays live and clickable beside
-  them. The frame is a courtesy rather than a guarantee — a pane nobody can see
-  does not pay to capture one, and neither does a second overlay arriving right
+  underneath; it simply looks paused while covered. This includes opening the
+  waiting-pane list, closed-pane list or stash shelf. Their status-bar buttons
+  sit below the grid and do not freeze the page on their own. The frame is a
+  courtesy rather than a guarantee — a pane nobody can see does not pay to
+  capture one, and neither does a second overlay arriving right
   behind the last, where the previous correctly sized frame or the pane's
   background is shown.
 - **Downloads** use the engine's own default handling.

@@ -26,8 +26,7 @@ stashed panes; temporary recovery controls do not split the two.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> also opens the picker
 (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> on macOS). Pressing it again
-closes it. This shortcut and the command-palette action still work with the
-status bar hidden.
+closes it. You can also choose **Workspaces** from the command palette.
 
 Each row shows the workspace's title, when it was last used, how many panes it
 has, and the directories those panes are in. Workspaces are listed most recently

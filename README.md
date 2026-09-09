@@ -55,8 +55,9 @@ choose other built-in themes or create your own.
 
 TermHQ is a local-first terminal workspace for parallel work. Give each agent
 its own pane, keep your preview beside the code, and review changes without
-leaving the project. Named workspaces keep your projects organized, and idle
-notifications help you notice when a busy agent goes quiet.
+leaving the project. Named workspaces keep your projects organized. When a busy
+pane goes quiet, a waiting list in the status bar helps you find it again;
+native notifications get your attention when TermHQ is in the background.
 
 Use the shells and coding agents you already have installed. TermHQ does not
 bundle agent CLIs or replace their accounts and subscriptions. The built-in

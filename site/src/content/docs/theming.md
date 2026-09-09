@@ -107,8 +107,8 @@ A few things you do not have to theme:
   settings copy. Omit it and it falls back to `accent` at 30%. The terminal's own
   selection is the separate `terminal.selectionBackground`, because the terminal
   draws that one itself.
-- **`ui.attn`** is the attention color for agent-idle badges and toasts. Omit it
-  and attention surfaces follow `accent`. A color chosen in **Settings → Agents →
+- **`ui.attn`** is the attention color for agent-idle badges and the waiting dock.
+  Omit it and attention surfaces follow `accent`. A color chosen in **Settings → Agents →
   Notification color** overrides it, so a theme cannot count on winning that one.
 - **`terminal.background`** also paints the padding ring between the rows and the
   pane frame, so a theme whose terminal differs from `panel` still reads as one

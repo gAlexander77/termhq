@@ -45,14 +45,23 @@ language. Install none and nothing breaks.
 
 ## Adding your own
 
-**Settings → Editor → Add a server** takes anything that speaks the Language
-Server Protocol over standard input and output. Each entry has:
+Open **Settings → Editor → Language server setup**, then choose **Add a
+server**. TermHQ accepts servers that speak the Language Server Protocol over
+standard input and output. Each entry has:
 
-- **Command and arguments** — what to run
-- **Languages** — which file types it should handle
-- **Root markers** — the filenames that mark the top of a project, like
-  `Cargo.toml`, `go.mod` or `tsconfig.json`
+- **Command** — the program name on your `PATH`, or its full path
+- **Arguments** — space-separated options passed to that program, such as
+  `--stdio`. Quoted arguments containing spaces are not supported by this field.
+- **Languages** — comma-separated language IDs for the file types it should
+  handle, such as `typescript, javascript`
+- **Root markers** — comma-separated filenames that mark the top of a project,
+  such as `tsconfig.json, package.json`
 - **Enabled** — a switch, so you can park one without deleting it
+
+In **Arguments**, **Languages** and **Root markers**, spaces and commas stay in
+place while you type. Press <kbd>Enter</kbd>, press <kbd>Tab</kbd> to move to the
+next field, or click elsewhere to apply that field's value. There is no separate
+Save button.
 
 **Restore default servers** brings the five above back if you have edited them
 into a corner.

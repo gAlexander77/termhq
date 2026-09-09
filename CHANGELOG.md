@@ -10,6 +10,44 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.4 — 2026-09-09
+
+### Added
+
+- A permanent "waiting" indicator in the status bar. When an agent finishes its
+  turn or a script ends in a pane you aren't watching, it collects there; open
+  it for a list of everything waiting on you, newest first, each showing when it
+  started waiting and whether it's out in the grid or on the stash shelf. Click
+  one to jump straight to that pane.
+- Settings to keep the waiting indicator always visible even when nothing is
+  waiting, or to turn it off entirely.
+
+### Changed
+
+- The status bar is now always present, holding the undo, waiting, stash and
+  workspace controls.
+- Settings search matches a setting's category together with its name in any
+  word order, so "Terminal font" finds the terminal font setting.
+- Redrew the worktrees icon.
+
+### Fixed
+
+- Launching an agent no longer occasionally drops the first character of the
+  command (for example "laude" instead of "claude").
+- Editing a language server's arguments, languages or root markers keeps the
+  separators you type and no longer discards the edit when Settings is closed
+  with Escape or a click outside.
+- Deleting a stashed pane from the shelf no longer rearranges the panes still on
+  screen.
+- The reopen-last-tab shortcut works again in an editor's reading mode.
+- The Files panel no longer shows a stale directory after some actions, and
+  Enter in the stash shelf and worktrees list no longer activates the wrong
+  control.
+- Closing a waiting pane on its own no longer leaves the window unresponsive to
+  Escape; "waiting since" shows when the pane actually went quiet; a pane that
+  finished while the app was in the background now shows up when you return; and
+  dismissing a notice also clears that pane's badge.
+
 ## 0.2.3 — 2026-09-08
 
 ### Fixed

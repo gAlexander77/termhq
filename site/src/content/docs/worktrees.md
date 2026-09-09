@@ -73,6 +73,10 @@ Open the row menu with **⋯**, right-click, or <kbd>Shift</kbd>+<kbd>F10</kbd> 
 - copy its path
 - remove a linked worktree
 
+When the row's **⋯** button has keyboard focus, <kbd>Enter</kbd> opens that menu;
+it does not fold the repository group or open a terminal. With a checkout row
+selected instead, <kbd>Enter</kbd> keeps its open-or-focus-terminal action.
+
 To start an agent there, open the row menu and **right-click an “Open in
 &lt;shell&gt;” row**. Pick one of the installed agents from the flyout. TermHQ
 opens that shell in the checkout and starts the agent in it.

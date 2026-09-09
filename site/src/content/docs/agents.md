@@ -13,6 +13,10 @@ Every terminal pane header has an **✳** button listing your agent commands —
 Codex, OpenCode and Antigravity out of the box. Picking one types its command
 into that pane's shell and hands keyboard focus back to the terminal.
 
+Use a terminal at an idle shell prompt. Finish or clear any partially typed
+command first, and do not launch into a program that is already using the
+terminal. To keep that program running, launch the agent in a new pane instead.
+
 The list is yours to edit in **Settings → Agents → Launcher commands**, flags included, so
 `claude --dangerously-skip-permissions` is one click rather than something you
 retype all day. Entries whose program is not on your `PATH` are hidden
@@ -60,7 +64,9 @@ into a shell. Press it with an [editor](/docs/editor/) or a
 [browser pane](/docs/browser-panes/) in front and it says so rather than opening
 a picker that could not have worked.
 
-## Knowing when one has finished
+<span id="knowing-when-one-has-finished"></span>
+
+## When a pane needs your attention
 
 The problem with running several agents is not starting them, it is noticing when
 one stops.
@@ -69,17 +75,39 @@ A pane that was busy while you were looking elsewhere and has since gone quiet
 gets a pulsing header: the dot, an inset wash and the bottom hairline all breathe
 in the theme's attention color. On a stashed terminal, the shell icon on its
 shelf card lights and pulses instead, so a parked job can still get your
-attention. The same trigger raises a toast naming
-the pane and its directory — in-app while the window is focused, a native OS
-notification while it is not — and clicking it jumps to that pane wherever it is,
-including zoomed away or on the shelf.
+attention. This works for longer-running commands as well as coding agents.
 
-It deliberately stays quiet about three things, each measured rather than
-assumed: the echo of your own typing, work you watched happen (launching an agent
-and reading its banner is not news), and anything over in under three seconds.
-The quiet threshold is configurable, which matters for agents that pause to
-think — it decides how long a pane may wait mid-job before the wait reads as the
-job ending.
+While the TermHQ window is focused, waiting panes collect in the bottom status
+bar. The item shows the most recent pane's name, with **+N** for any others.
+Click it to open the list, newest first. Each entry shows when the notice
+appeared and whether the pane is **in the grid** or **in the stash shelf**.
+
+Click an entry to focus that pane, restoring it from the shelf or bringing it
+back into view if another pane is fullscreen. You can also focus an entry with
+<kbd>Tab</kbd> and press <kbd>Enter</kbd> or <kbd>Space</kbd>. Its **Dismiss**
+button removes only the notice; it does not close the pane or stop its work.
+<kbd>Esc</kbd> closes the list without clearing it.
+
+Notices do not expire on a timer. Returning to the pane, dismissing its notice,
+or closing the pane clears its entry. The waiting item disappears when the list
+is empty by default. To keep it visible, enable **Settings → Agents → Always
+show it, even when nothing is waiting**. It then reads **Waiting**, and opening
+the empty list shows **Nothing waiting right now.**
+
+When TermHQ is in the background, the same trigger sends a native OS
+notification instead of adding an in-app notice. **Show waiting panes in the
+status bar** in **Settings → Agents** controls both kinds of notification;
+**Agent idle badge** controls the pane and shelf highlights separately.
+
+TermHQ ignores the echo of your own typing, work you watched happen, and jobs
+over in under three seconds. A fresh terminal's startup output does not trigger
+a waiting notice before you run a command or launch an agent in it.
+
+**Quiet does not necessarily mean finished or successful.** An agent may be
+thinking or asking for input. Read the pane's output to confirm its state. The
+default quiet period is 10 seconds; increase **Quiet seconds before badge** in
+**Settings → Agents** if an agent is being flagged during normal pauses. That
+threshold also applies to waiting notices.
 
 ## Agents come up in color
 
@@ -161,7 +189,7 @@ sending.
 Transcription happens on your machine, on a local Whisper model you pick and
 download once in **Settings → Voice** (or bring your own) — which matters for
 a tool sitting in front of proprietary source. English by default, sixteen
-other languages in the same panel; not yet available on Linux.
+other languages in the same panel. Linux support is pending.
 
 ## Keeping their keystrokes theirs
 
