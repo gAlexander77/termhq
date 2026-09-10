@@ -189,8 +189,11 @@ panes are parked. **Worktrees** appears at the left when you have configured
 [worktree roots](/docs/worktrees/). **Undo close** and the waiting-pane list
 appear as needed, before Stash and Workspace.
 
-The waiting item shows the latest pane needing attention and a count of any
-others. Open it to see the list, then select a pane to return to it. It is
+The waiting item is a count — **N waiting** — that stays as long as anything
+is waiting. For a few seconds after a new pane goes quiet, a chip joined to
+its left names that pane under a draining bar; click the chip to jump straight
+there, the way **Undo close** restores. Open the count to see the list, then
+select a pane to return to it. It is
 hidden when empty unless you enable **Settings → Agents → Always show it,
 even when nothing is waiting**. See
 [When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)

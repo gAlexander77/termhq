@@ -10,6 +10,45 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.5 — 2026-09-10
+
+### Added
+
+- A toolbar on the Files sidebar: **New file** and **New folder** (name the
+  entry right in the tree; a new file opens straight into the editor), **Collapse
+  all**, **Refresh**, and — when the folder is an Obsidian vault on a machine
+  that has Obsidian — an **Open in Obsidian** button carrying Obsidian's mark.
+  Folder right-click menus start with **New file…** and **New folder…** too.
+- **Pin** the sidebar: stop it following the focused pane, so Files stays on
+  its folder and Source Control on that folder's repository while you move
+  between terminals. One pin, on both tabs; the header reads **Pinned**.
+- The Ctrl+Shift+A agent picker shows each agent's mark beside its digit.
+
+### Changed
+
+- The Files path bar stays on one line: a deep path folds its middle folders
+  into a `…` button whose menu still opens each of them (or a terminal there on
+  right-click), and widening the sidebar brings them back.
+- The sidebar can be dragged much wider — up to 338 extra pixels, still capped
+  so panes keep most of the window. Its default width is unchanged.
+- The waiting indicator in the status bar now mirrors Undo close: a **N
+  waiting** count that stays, and for a few seconds after a pane goes quiet, a
+  chip beside it naming that pane under a draining bar — click the chip to jump
+  straight there. Both controls are drawn in the theme's own ink rather than a
+  solid accent block, so they sit quietly on every theme.
+- Every refresh button (Files, Git History, Source Control, worktrees) turns
+  once per click and stays disabled until the re-read has finished, so a click
+  is always visibly acknowledged and never queues up.
+
+### Fixed
+
+- Release builds no longer show the browser's default right-click menu over
+  the app's own interface, and no longer open a web inspector on it. Browser
+  panes keep their own right-click menus and their DevTools button.
+- Background-finished panes are recorded in the waiting list as well as raising
+  the OS notification, so they are there when you return (the description was
+  wrong; the behavior is now what the docs say).
+
 ## 0.2.4 — 2026-09-09
 
 ### Added

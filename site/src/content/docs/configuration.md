@@ -77,7 +77,7 @@ Keys are camelCase.
   title bar toggles it and mirrors itself to show which side it occupies;
   <kbd>Ctrl</kbd>+<kbd>B</kbd> does the same thing.
 - **Sidebar extra width** — gives the Files and Source Control sidebar more
-  room, up to 98 extra pixels before interface scaling. Drag its inner edge to
+  room, up to 338 extra pixels before interface scaling. Drag its inner edge to
   resize it, or use this slider. The original width is the minimum, the maximum
   adapts to narrow windows, and your choice is remembered. Double-click the edge
   to reset; with the edge focused, use the left/right arrows to resize,
@@ -249,8 +249,8 @@ They remain discoverable through Settings search while it is collapsed.
 - **Show waiting panes in the status bar** — default on. While the window is
   focused, an agent or command that goes quiet while you are looking elsewhere
   appears in the waiting list. While the window is in the background, it sends
-  a native OS notification instead. Off disables both, without changing
-  **Agent idle badge**.
+  a native OS notification as well, and the entry is still there when you come
+  back. Off disables both, without changing **Agent idle badge**.
 - **Always show it, even when nothing is waiting** — default off. Appears while
   waiting notifications are enabled. On keeps a muted **Waiting** item in the
   bar when the list is empty; off hides it until a pane needs your attention.
@@ -274,11 +274,26 @@ for the full behavior.
   and empty, which is the honest answer rather than a toggle that appears to do
   nothing. The sidebar header identifies the pane or folder it is following;
   its side and extra width are configured under **General**.
+
+  The header's right edge holds a small toolbar. On both tabs, **Pin** stops
+  the sidebar following the focused pane — Files stays on its folder, Source
+  Control on that folder's repository, and the header reads **Pinned** until
+  you unpin. On the Files tab it adds **New file** and **New folder** (a name
+  row appears in the tree; Enter creates, Escape cancels, and a new file opens
+  straight into the editor), **Collapse all**, **Refresh** (the icon turns once
+  and the button stays disabled until the re-read has finished), and, when
+  the folder is an Obsidian vault on a machine that has Obsidian, a button
+  carrying Obsidian's mark that opens the vault. The path bar above the tree
+  stays on one line: a deep path folds its middle folders into a `…` button
+  whose menu lists them, and each still opens on click or offers a terminal
+  on right-click.
 - **File openers** — the right-click "open with" list. Each is a name plus a
   command, run either detached (Notepad) or in a new terminal pane opened in the
   file's directory (vim, nano).
 
-  Two entries appear on their own rather than from this list: **Open in IDE**,
+  A folder's menu starts with **New file…** and **New folder…**, which create
+  inside that folder. Two more entries appear on their own rather than from
+  this list: **Open in IDE**,
   and **Open in Obsidian** for a folder that is actually a vault on a machine
   that actually has Obsidian. A folder counts as a vault once it contains the
   `.obsidian` directory Obsidian writes the first time it opens one. It opens

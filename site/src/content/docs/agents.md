@@ -77,10 +77,12 @@ in the theme's attention color. On a stashed terminal, the shell icon on its
 shelf card lights and pulses instead, so a parked job can still get your
 attention. This works for longer-running commands as well as coding agents.
 
-While the TermHQ window is focused, waiting panes collect in the bottom status
-bar. The item shows the most recent pane's name, with **+N** for any others.
-Click it to open the list, newest first. Each entry shows when the notice
-appeared and whether the pane is **in the grid** or **in the stash shelf**.
+Waiting panes collect in the bottom status bar as a count — **N waiting** —
+that stays as long as anything is waiting. For a few seconds after a new pane
+goes quiet, a chip joined to its left names that pane under a draining bar;
+click the chip to jump straight to it. Click the count to open the list,
+newest first. Each entry shows when the notice appeared and whether the pane
+is **in the grid** or **in the stash shelf**.
 
 Click an entry to focus that pane, restoring it from the shelf or bringing it
 back into view if another pane is fullscreen. You can also focus an entry with
@@ -94,9 +96,10 @@ is empty by default. To keep it visible, enable **Settings → Agents → Always
 show it, even when nothing is waiting**. It then reads **Waiting**, and opening
 the empty list shows **Nothing waiting right now.**
 
-When TermHQ is in the background, the same trigger sends a native OS
-notification instead of adding an in-app notice. **Show waiting panes in the
-status bar** in **Settings → Agents** controls both kinds of notification;
+When TermHQ is in the background, the same trigger also sends a native OS
+notification, and the in-app entry is waiting for you when you return. **Show
+waiting panes in the status bar** in **Settings → Agents** controls both kinds
+of notification;
 **Agent idle badge** controls the pane and shelf highlights separately.
 
 TermHQ ignores the echo of your own typing, work you watched happen, and jobs
