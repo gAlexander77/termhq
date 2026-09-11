@@ -10,6 +10,48 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.6 — 2026-09-11
+
+### Added
+
+- **Rename** and **Delete** in the Files panel: every file and folder menu ends
+  with **Rename…** and **Delete…**, and a focused row answers **F2** and
+  **Delete**. Rename edits the name in place with the name (not the extension)
+  preselected. Delete asks first and moves the item to the Recycle Bin (Trash
+  on macOS) — nothing is ever deleted outright.
+- Keyboard-operable menus: a row's context menu opens with **Shift+F10** or the
+  menu key, the shell rows ("Open in PowerShell" and the like) open their agent
+  flyout with **→** and close it with **←** or **Esc**, and menus stay open until you click elsewhere
+  or press Esc.
+
+### Changed
+
+- On macOS, all workspaces now belong to one application: one Dock icon, every
+  workspace in the Window menu, each window keeping its own terminals, editors
+  and language servers.
+- On macOS, the standard Edit-menu actions (Select All, Undo, Cut, Copy, Paste)
+  work inside editors and terminals; in a browser pane, ⌘L, ⌘[, ⌘], ⌘R and ⌘= /
+  ⌘+ act on the address bar, history, reload and zoom.
+- Dragging a pane targets the exact grid track under the pointer, including
+  uneven column and row sizes.
+- Directory listings and file operations in the Files panel run off the window's
+  thread, so a slow network or cloud folder cannot freeze the app.
+
+### Fixed
+
+- Switching between open workspaces on Windows leaves the keyboard in the
+  window you switched to — no click needed.
+- Reopening a workspace selects the pane that was active when it was saved, and
+  a pane that has just appeared no longer takes keyboard focus from the one you
+  selected.
+- A stashed or zoomed-away terminal no longer resizes to a tiny size underneath
+  a running full-screen program, so its layout is intact when it returns.
+- Launching an agent right after using a menu no longer loses the first
+  characters of the command.
+- Picking a workspace whose window has gone shows the reason instead of
+  silently doing nothing.
+- A folder menu opened near the bottom of the window stays fully on screen.
+
 ## 0.2.5 — 2026-09-10
 
 ### Added

@@ -79,6 +79,22 @@ including <kbd>0</kbd> for the tenth entry.
 The global [Worktrees](/docs/worktrees/) view is also available from the command
 palette and its status-bar item.
 
+## In the Files panel
+
+With a row focused (click one, or <kbd>Tab</kbd> into the tree):
+
+| Action | Key |
+| --- | --- |
+| Open a file, or expand / collapse a folder | <kbd>Enter</kbd> |
+| Walk the tree | <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Home</kbd> <kbd>End</kbd> |
+| Expand or step in / collapse or step out | <kbd>→</kbd> / <kbd>←</kbd> |
+| Open the row's menu | <kbd>Shift</kbd>+<kbd>F10</kbd> or the menu key |
+| Rename | <kbd>F2</kbd> |
+| Delete (asks first; moves to the Recycle Bin / Trash) | <kbd>Delete</kbd> |
+
+Inside a row's menu, <kbd>→</kbd> opens a shell row's agent flyout ("Open in
+PowerShell" and the like) and <kbd>←</kbd> or <kbd>Esc</kbd> closes it.
+
 ## Zoom
 
 | Action | Shortcut |

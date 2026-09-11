@@ -292,7 +292,12 @@ for the full behavior.
   file's directory (vim, nano).
 
   A folder's menu starts with **New file…** and **New folder…**, which create
-  inside that folder. Two more entries appear on their own rather than from
+  inside that folder, and every file and folder menu ends with **Rename…** and
+  **Delete…** (<kbd>F2</kbd> and <kbd>Delete</kbd> on a focused row do the
+  same). Rename edits the name in place with the name preselected and the
+  extension kept; Delete asks first and moves the item to the Recycle Bin or
+  Trash, never deleting outright. The panel's root and the folders above it
+  offer neither. Two more entries appear on their own rather than from
   this list: **Open in IDE**,
   and **Open in Obsidian** for a folder that is actually a vault on a machine
   that actually has Obsidian. A folder counts as a vault once it contains the

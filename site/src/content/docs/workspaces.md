@@ -7,7 +7,9 @@ description: "Group terminals by what you are working on, name them, resume them
 A workspace is a window's worth of panes: their layout, the directories their
 terminals are in, the pages any [browser panes](/docs/browser-panes/) are on,
 and optionally a name. Open a second window and you get a second workspace, not
-a copy of the first.
+a copy of the first. On macOS every workspace window belongs to the one TermHQ
+application — one Dock icon, all of them in the Window menu — while each keeps
+its own terminals, editors and language servers.
 
 Anything you tune by hand is remembered with it, including proportions you set
 by [dragging a gutter](/docs/panes-and-layout/#resizing-panes).
