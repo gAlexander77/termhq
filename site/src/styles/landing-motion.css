@@ -1,10 +1,5 @@
 /* Landing-page motion only. The document and its controls work without it;
    no looping decoration, pinned scrolling, or dependency on a JS animation library. */
-.hero-depth {
-  position: absolute;
-  inset: 0;
-}
-
 @keyframes landing-enter {
   from { opacity: .35; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
@@ -43,10 +38,6 @@
   .hero-art img {
     transform-origin: 70% 50%;
     animation: glass-settle 3800ms cubic-bezier(.16, 1, .3, 1) both;
-  }
-  .hero-depth {
-    transform: translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0);
-    transition: transform 650ms cubic-bezier(.2, .7, .2, 1);
   }
 
   /* Only the observer opts offscreen content in. No JS means visible content. */
@@ -112,7 +103,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-depth,
   [data-reveal] { opacity: 1; transform: none; animation: none; transition: none; }
 }
 

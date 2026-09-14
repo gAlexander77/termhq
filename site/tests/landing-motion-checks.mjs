@@ -20,13 +20,16 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
   })), "Opening animations settle within five seconds without looping");
   assert(await page.locator(".hero-art img").evaluate((el) => getComputedStyle(el).animationName === "glass-settle"), "Existing glass artwork has its entrance animation");
 
-  await page.mouse.move(1100, 400);
-  await page.waitForFunction(() => document.querySelector('.landing-hero').style.getPropertyValue('--hero-x') !== '');
-  assert(await page.locator(".landing-hero").evaluate((el) =>
-    Math.abs(parseFloat(el.style.getPropertyValue("--hero-x"))) <= 8 &&
-    Math.abs(parseFloat(el.style.getPropertyValue("--hero-y"))) <= 5), "Mouse depth stays restrained");
-  await page.mouse.move(10, 10);
-  assert(await page.locator(".landing-hero").evaluate((el) => el.style.getPropertyValue("--hero-x") === ""), "Leaving the hero resets depth");
+  await page.locator('.hero-art img').evaluate(async (el) => {
+    await Promise.all(el.getAnimations().map((animation) => animation.finished));
+  });
+  const artworkBounds = await page.locator('.hero-art img').boundingBox();
+  for (const [x, y] of [[1100, 400], [200, 200], [10, 10]]) {
+    await page.mouse.move(x, y);
+    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    assert(JSON.stringify(await page.locator('.hero-art img').boundingBox()) === JSON.stringify(artworkBounds),
+      `Mouse movement to ${x},${y} leaves the artwork stationary`);
+  }
 
   await page.locator('#parallel-agents').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => document.querySelector('#parallel-agents').dataset.revealState === 'revealed');
@@ -56,8 +59,8 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => !document.querySelector('[data-reveal-state]'));
   assert(await page.locator('[data-reveal]').evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === '1')), "Reduced motion immediately exposes all content");
-  assert(await page.locator('.hero-depth, .hero-art img, .hero-copy h1, .gallery-preview figure').evaluateAll((els) =>
-    els.every((el) => getComputedStyle(el).animationName === 'none' && getComputedStyle(el).transform === 'none')), "Reduced motion disables entrances and depth");
+  assert(await page.locator('.hero-art img, .hero-copy h1, .gallery-preview figure').evaluateAll((els) =>
+    els.every((el) => getComputedStyle(el).animationName === 'none' && getComputedStyle(el).transform === 'none')), "Reduced motion disables entrances");
   assert(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior === 'auto'), "Reduced motion keeps anchor scrolling instant");
 
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -88,8 +91,12 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
       const local = await context.newPage();
       await local.goto(baseURL);
       if (mode === 'touch') {
+        await local.locator('.hero-art img').evaluate(async (el) => {
+          await Promise.all(el.getAnimations().map((animation) => animation.finished));
+        });
+        const beforeTouch = await local.locator('.hero-art img').boundingBox();
         await local.locator('.landing-hero').dispatchEvent('pointermove', { pointerType: 'touch', clientX: 300, clientY: 400 });
-        assert(await local.locator('.landing-hero').evaluate((el) => el.style.getPropertyValue('--hero-x') === ''), "Touch scrolling does not trigger mouse depth");
+        assert(JSON.stringify(await local.locator('.hero-art img').boundingBox()) === JSON.stringify(beforeTouch), "Touch movement leaves the artwork stationary");
       } else {
         assert(await local.locator('[data-reveal]').evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === '1')), `${mode}: all content remains visible`);
       }
