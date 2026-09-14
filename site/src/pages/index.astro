@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import HomepageShortcuts from "../components/HomepageShortcuts.astro";
 import AppScreenshots from "../components/AppScreenshots.astro";
+import "../styles/landing-motion.css";
 // import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
 
@@ -45,7 +46,9 @@ const features = [
 <Base>
   <section class="landing-hero" aria-labelledby="hero-title">
     <div class="hero-art" aria-hidden="true">
-      <img src="/hero-glass.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async" />
+      <div class="hero-depth">
+        <img src="/hero-glass.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async" />
+      </div>
     </div>
     <div class="wrap landing-hero-inner">
       <div class="hero-copy">
@@ -82,14 +85,14 @@ const features = [
 
   <section class="section" id="workflows" aria-labelledby="workflows-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <span class="eyebrow">The way you work</span>
         <h2 id="workflows-title">From the first command to the final change.</h2>
         <p>Three ways to keep your work moving, without switching context.</p>
       </div>
       <div class="workflow-grid">
-        {workflows.map((workflow) => (
-          <article class="workflow" id={workflow.id}>
+        {workflows.map((workflow, index) => (
+          <article class="workflow" id={workflow.id} data-reveal style={`--reveal-delay: ${index * 70}ms`}>
             <span class="workflow-label">{workflow.label}</span>
             <h3>{workflow.title}</h3>
             <p>{workflow.body}</p>
@@ -103,13 +106,13 @@ const features = [
 
   <section class="section" aria-labelledby="features-title">
     <div class="wrap">
-      <div class="section-head section-head-compact">
+      <div class="section-head section-head-compact" data-reveal>
         <span class="eyebrow">Everything around the terminal</span>
         <h2 id="features-title">The tools that keep you in flow.</h2>
       </div>
       <div class="grid grid-3 feature-grid">
-        {features.map((feature) => (
-          <a class="cell" href={`/docs/${feature.guide}/`}>
+        {features.map((feature, index) => (
+          <a class="cell" href={`/docs/${feature.guide}/`} data-reveal style={`--reveal-delay: ${(index % 3) * 70}ms`}>
             <h3>{feature.title}</h3>
             <p>{feature.body}</p>
           </a>
@@ -120,18 +123,18 @@ const features = [
 
   <section class="section" aria-labelledby="shortcuts-title">
     <div class="wrap">
-      <div class="section-head section-head-compact">
+      <div class="section-head section-head-compact" data-reveal>
         <span class="eyebrow">Keyboard-first</span>
         <h2 id="shortcuts-title">Start with four shortcuts.</h2>
         <p>Open a pane or find a command. Rebind the keys whenever you want.</p>
       </div>
-      <HomepageShortcuts />
+      <div data-reveal><HomepageShortcuts /></div>
       <p class="section-link"><a class="text-link" href="/docs/keyboard-shortcuts/">All shortcuts and platform details <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap closing-cta">
+    <div class="wrap closing-cta" data-reveal>
       <div>
         <span class="eyebrow">Windows · macOS</span>
         <h2>Make room for your next project.</h2>
@@ -144,3 +147,11 @@ const features = [
     </div>
   </section>
 </Base>
+
+<script>
+  import { initLandingMotion } from "../lib/landing-motion";
+
+  const dispose = initLandingMotion();
+  // Avoid duplicate observers and listeners during local development.
+  if (import.meta.hot) import.meta.hot.dispose(dispose);
+</script>

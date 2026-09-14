@@ -1,0 +1,121 @@
+/* Landing-page motion only. The document and its controls work without it;
+   no looping decoration, pinned scrolling, or dependency on a JS animation library. */
+.hero-depth {
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes landing-enter {
+  from { opacity: .35; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes landing-title {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+
+@keyframes glass-settle {
+  from { transform: translate3d(24px, 16px, 0) scale(1.045); }
+  to { transform: none; }
+}
+
+@keyframes section-enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes screenshot-enter {
+  from { opacity: .55; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy > :not(h1) {
+    animation: landing-enter 700ms cubic-bezier(.2, .7, .2, 1) both;
+  }
+  /* Keep the headline opaque from first paint; don't delay the main content. */
+  .hero-copy h1 { animation: landing-title 800ms cubic-bezier(.16, 1, .3, 1) both; }
+  .hero-copy .lede { animation-delay: 70ms; }
+  .hero-copy .hero-actions { animation-delay: 140ms; }
+  .hero-copy .hero-proof { animation-delay: 210ms; }
+  .hero-caption { animation: landing-enter 800ms 240ms cubic-bezier(.2, .7, .2, 1) both; }
+  .hero-art img {
+    transform-origin: 70% 50%;
+    animation: glass-settle 3800ms cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .hero-depth {
+    transform: translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0);
+    transition: transform 650ms cubic-bezier(.2, .7, .2, 1);
+  }
+
+  /* Only the observer opts offscreen content in. No JS means visible content. */
+  [data-reveal][data-reveal-state="pending"] { opacity: 0; transform: translateY(20px); }
+  [data-reveal][data-reveal-state="revealed"] {
+    animation: section-enter 650ms var(--reveal-delay, 0ms) cubic-bezier(.16, 1, .3, 1) both;
+  }
+  /* Keyboard focus and direct anchor navigation must never wait for a reveal. */
+  [data-reveal]:focus-within,
+  [data-reveal]:target {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .gallery-preview figure { animation: screenshot-enter 320ms cubic-bezier(.2, .7, .2, 1) both; }
+  .shortcut-switcher .keys { animation: landing-enter 260ms ease-out both; }
+
+  .hero-actions .btn,
+  .closing-actions .btn {
+    transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, border-color 200ms ease;
+  }
+  .hero-actions .btn-primary:hover,
+  .closing-actions .btn-primary:hover { box-shadow: 0 6px 24px rgba(255,255,255,.12); }
+  .hero-actions .btn:active,
+  .closing-actions .btn:active { transform: translateY(1px); }
+
+  .text-link > span,
+  .hero-actions .btn > span,
+  .hero-caption a > span,
+  .gallery-expand > span { display: inline-block; transition: transform 220ms cubic-bezier(.2, .7, .2, 1); }
+  .text-link:is(:hover, :focus-visible) > span { transform: translateX(4px); }
+  .hero-actions .btn:is(:hover, :focus-visible) > span,
+  .hero-caption a:is(:hover, :focus-visible) > span,
+  .gallery-preview:is(:hover, :focus-visible) .gallery-expand > span { transform: translate(2px, -2px); }
+
+  .feature-grid .cell::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    inset: -1px 0 auto;
+    background: var(--fg);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 350ms cubic-bezier(.2, .7, .2, 1);
+  }
+  .feature-grid .cell:is(:hover, :focus-visible)::before { transform: scaleX(1); }
+  .feature-grid .cell::after { transition: transform 220ms ease, color 220ms ease; }
+  .feature-grid .cell:is(:hover, :focus-visible)::after { transform: translate(2px, -2px); color: var(--fg); }
+  .gallery-preview { transition: border-color 220ms ease, box-shadow 220ms ease; }
+  .gallery-preview:is(:hover, :focus-visible) { box-shadow: 0 24px 80px rgba(0,0,0,.3), 0 0 0 1px var(--line-strong); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero-actions .btn:hover,
+    .closing-actions .btn:hover { transform: translateY(-2px); }
+    .hero-actions .btn:active,
+    .closing-actions .btn:active { transform: translateY(1px); }
+  }
+  @media (max-width: 900px) {
+    [data-reveal] { --reveal-delay: 0ms !important; }
+    .hero-art img { animation-duration: 2400ms; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-depth,
+  [data-reveal] { opacity: 1; transform: none; animation: none; transition: none; }
+}
+
+@media print {
+  [data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; }
+}
