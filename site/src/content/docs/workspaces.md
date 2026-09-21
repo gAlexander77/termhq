@@ -32,7 +32,8 @@ closes it. You can also choose **Workspaces** from the command palette.
 
 Each row shows the workspace's title, when it was last used, how many panes it
 has, and the directories those panes are in. Workspaces are listed most recently
-used first.
+used first. Two that share a name show their slot beside it — *window-1*,
+*window-3* — the one thing about them guaranteed to differ.
 
 Use the up/down arrow keys to focus a workspace row, then <kbd>Enter</kbd> to
 open it. <kbd>Tab</kbd> moves among controls such as **New workspace** and
@@ -90,9 +91,12 @@ ones.
 
 ## Deleting one
 
-The picker offers deletion. It removes the workspace's saved state and ends any
-shells still parked for it, and is refused while a window owns that workspace —
-close the window first.
+The picker offers deletion, and asks first: the row names the workspace,
+counts its panes, and says its shells will end if it is still running. Cancel
+has focus, so <kbd>Enter</kbd> answers the safe way, and <kbd>Esc</kbd> cancels
+the question rather than closing the picker. Deleting removes the workspace's
+saved state and ends any shells still parked for it, and is refused while a
+window owns that workspace — close the window first.
 
 Deleting a workspace does not touch anything on disk in those directories. It
 only forgets the arrangement.

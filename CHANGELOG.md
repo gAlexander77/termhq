@@ -10,6 +10,89 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.7 — 2026-09-20
+
+### Added
+
+- **Hold to talk.** Opt in under **Settings → Voice** and holding the space bar
+  in a terminal for a moment starts dictating; let go and it transcribes — the
+  gesture Claude Code's own dictation uses, here for every program. A tap still
+  types a space, and a key pressed mid-hold flushes the space ahead of it. The
+  key is yours to change by pressing it: any single key, Right Ctrl included.
+  Off by default, because on Space it takes the hold away from Claude Code's
+  own dictation; on a key of its own, both work.
+- **The cursor shows the dictation.** While recording, the terminal's cursor
+  becomes a bar that rises with your voice — gray in a quiet room, cycling
+  through color the moment it hears you. While transcribing it is a chrome
+  block with the light traveling upward, in time with the mic's three dots and
+  the *Transcribing…* label.
+- **Grok Build** joins the agent launchers beside Claude Code, Codex, OpenCode
+  and Antigravity, shown once its `grok` command is on your PATH. Existing
+  installs pick it up on their own.
+- **Restore all** and **Close all** on the stash count's right-click menu.
+  Restore asks first when the panes in the grid plus the ones on the shelf
+  would exceed nine; Close all always asks, and says what closing means under
+  your Undo close setting.
+- **Restore last closed terminal** has a default shortcut: Ctrl+Shift+R
+  (⌘+Shift+R on macOS).
+- The title bar's **+** button reaches further: right-click a shell for your
+  favorite folders, then right-click a favorite for the agent to start there.
+  Rows that hold a flyout now carry a chevron.
+- **Committer pictures** in Git History — a GitHub noreply address names its
+  account, anything else asks Gravatar — cached after the first fetch.
+  **Settings → Git → Committer pictures in History** turns the lookups off.
+- A word before the **tenth browser pane** opens onto the grid (stashed panes
+  not counted): every pane is a native webview with its own renderer process.
+  *Open anyway*, *Don't warn again*, or the switch under **Settings →
+  Browser**.
+- Git-ignored files and folders are **dimmed** in the Files panel, with an
+  *Ignored by Git* tooltip. They stay visible and openable.
+- Diffs open on their first change, and **Previous change** / **Next change**
+  step through the rest — in History as well as in Changes.
+- An empty editor pane has an **Open file…** button.
+- Each launcher row in **Settings → Agents** says whether its command was
+  found on PATH, so an agent missing from the menu is explained where you
+  would look.
+- Settings search results carry the name of the category they came from.
+
+### Changed
+
+- Dictation lands in the terminal you started it in, even if you click into
+  another pane while it records or transcribes — the dictation cursor stays
+  there too. Only if that pane is gone by then does the focused terminal take
+  the words.
+- One-click destructive actions now ask first: deleting a branch from the
+  picker, removing a worktree, deleting a speech model, deleting a workspace
+  (the ask names it, counts its panes and says its shells will end), and
+  **Update and restart** while terminals are open.
+- The empty workspace shows the TermHQ mark and name, centered.
+- The command palette opens on the first row that can actually run.
+- Workspaces that share a name show their slot beside it in the picker.
+- **Settings → Voice** says at the top why dictation cannot run, before it
+  offers anything to download.
+- On macOS: the window buttons align with the toolbar, the commit box says
+  ⌘+Enter, the Files menu offers TextEdit rather than Notepad, and prose about
+  the Windows taskbar menu appears only where that menu exists.
+
+### Fixed
+
+- `git log` pages again in every shell. A coding agent that launched TermHQ
+  handed its `PAGER=cat` and `GIT_PAGER=cat` to every terminal; those are
+  scrubbed now, while a pager you set yourself is kept.
+- On Windows, **New workspace** could fail with "The request is not supported"
+  when TermHQ had been started from a console. It opens reliably now.
+- A freshly opened or restored terminal is no longer flagged as *waiting*
+  before you have run anything in it: the terminal's own replies to the app no
+  longer count as typing.
+- The theme picker's search box stays put while its rows scroll.
+- Saving a file refreshes its row in the Files panel, so the size shown is the
+  size on disk.
+- Settings saves, browser page loads, the Files panel and the grid's columns
+  report failure instead of silently falling behind: a failed save keeps the
+  previous config intact and offers **Retry**; a page that fails to load keeps
+  the address in the bar and offers **Retry** or **Open externally**; Files
+  picks up external changes to the folders it shows.
+
 ## 0.2.6 — 2026-09-11
 
 ### Added

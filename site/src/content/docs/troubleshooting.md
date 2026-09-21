@@ -106,7 +106,9 @@ it thoroughly.
 
 If there is **no mic button at all**, no speech model is installed yet — that
 is the intended off state, not a bug. Open **Settings → Voice**, download a
-model (or import your own), close Settings, and the button appears.
+model (or import your own), close Settings, and the button appears. The panel
+says at the top whether dictation can run on this build at all and whether a
+model is ready, before it offers anything to download.
 
 If the button is there but nothing comes out, use **Settings → Voice → Test
 microphone**: it records a few seconds and plays them back through the same
@@ -125,6 +127,11 @@ If it hears you but the words come out wrong, check the **dictation
 language** in Settings → Voice — and note that models labeled *English only*
 stay English whatever the language is set to; only multilingual models follow
 it.
+
+If the words landed in a different pane than you expected: they go to the
+terminal you started dictating in, whatever you clicked since. The full feature
+— starting it, Hold to talk, the cursor — is on the
+[Dictation](/docs/dictation/) page.
 
 ## My language server is not doing anything
 

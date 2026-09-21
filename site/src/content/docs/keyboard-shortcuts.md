@@ -25,7 +25,7 @@ screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control 
 | New browser pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> |
 | New editor pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> |
 | Delete focused terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd> |
-| Restore last closed terminal | *unassigned by default* |
+| Restore last closed terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> |
 | Find in scrollback (or file names) | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
 
 <kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
@@ -120,11 +120,16 @@ latter, see Fullscreen above.
 | Action | Shortcut |
 |---|---|
 | Dictation (start / stop) | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> |
+| Hold to talk (opt in) | hold <kbd>Space</kbd>, or the key you set |
 
 The one chord that does not move to <kbd>⌘</kbd> on macOS:
 <kbd>⌘</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> is Finder's search window, while
 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> collides with nothing a shell
 wants.
+
+Hold to talk is a hold, not a chord, so it lives in **Settings → Voice** rather
+than here: turn it on there and set its key by pressing it — any single key,
+Right Ctrl included. See [Dictation](/docs/dictation/).
 
 ## Why Ctrl+C does two things
 

@@ -32,6 +32,11 @@ Where it lands is **Settings → Browser → New panes open**. Point it at
 `localhost:3000` and the chord drops you on your dev server; leave it empty and
 you get a blank pane with the URL bar waiting.
 
+Every browser pane is a native webview with its own renderer process, so
+opening a **tenth** one onto the grid asks first — *Open anyway*, or *Don't
+warn again*. Stashed panes are not counted. **Settings → Browser → Warn before
+the tenth browser pane** is the switch.
+
 ## The URL bar
 
 It reads what you type the way a browser's does:

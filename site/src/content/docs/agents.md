@@ -10,8 +10,10 @@ the parts that exist because of agents specifically.
 ## Launching one in the focused terminal
 
 Every terminal pane header has an **✳** button listing your agent commands — Claude Code,
-Codex, OpenCode and Antigravity out of the box. Picking one types its command
-into that pane's shell and hands keyboard focus back to the terminal.
+Codex, OpenCode, Antigravity and Grok Build out of the box. Picking one types
+its command into that pane's shell and hands keyboard focus back to the
+terminal. A launcher appears once its command is on your `PATH`, and an
+install that predates one of them picks it up on its own.
 
 Use a terminal at an idle shell prompt. Finish or clear any partially typed
 command first, and do not launch into a program that is already using the
@@ -20,8 +22,11 @@ terminal. To keep that program running, launch the agent in a new pane instead.
 The list is yours to edit in **Settings → Agents → Launcher commands**, flags included, so
 `claude --dangerously-skip-permissions` is one click rather than something you
 retype all day. Entries whose program is not on your `PATH` are hidden
-automatically. If the numbered picker has no available entries, its feedback
-distinguishes an unconfigured agent list from commands it could not find.
+automatically, and each row in Settings says whether its command was found —
+*found*, *not on PATH*, or *checking…* — so a launcher missing from the menu is
+explained where you would look for it. If the numbered picker has no available
+entries, its feedback distinguishes an unconfigured agent list from commands it
+could not find.
 
 ### Command detection on macOS
 
@@ -46,6 +51,11 @@ agent in it.
 
 A normal click still opens only the shell. The agent list waits behind a
 right-click so the ordinary “open a terminal here” action stays unambiguous.
+
+The **+** button in the title bar reaches the same place without opening the
+Files panel: right-click a shell for your favorite folders, then right-click a
+favorite for the agents to start there. Rows that hold a flyout carry a chevron
+at their edge.
 
 ### By number, without the mouse
 
@@ -185,14 +195,19 @@ reloads on its own, or asks first if you have unsaved edits of your own.
 
 ## Dictating to an agent
 
-Prompts are long, and typing them is the slow part. TermHQ's dictation writes
-into the focused pane, so you can talk a prompt at an agent and edit it before
-sending.
+Prompts are long, and typing them is the slow part. TermHQ's dictation types
+into the terminal you started it in, so you can talk a prompt at an agent and
+edit it before sending — and click over to another pane while it transcribes
+without the words following you. Opt in to **Hold to talk** and holding the
+space bar for a moment is the whole gesture, the way Claude Code's own
+dictation works, for every program; rebind it to a key of its own (Right Ctrl,
+say) and Claude Code's keeps working beside it.
 
 Transcription happens on your machine, on a local Whisper model you pick and
 download once in **Settings → Voice** (or bring your own) — which matters for
 a tool sitting in front of proprietary source. English by default, sixteen
-other languages in the same panel. Linux support is pending.
+other languages in the same panel. Linux support is pending. The whole feature
+has its own page: [Dictation](/docs/dictation/).
 
 ## Keeping their keystrokes theirs
 

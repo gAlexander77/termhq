@@ -182,6 +182,11 @@ Settings for [browser panes](/docs/browser-panes/).
   while it is muted, so silence is never a mystery. **Muting is Windows-only
   for now** — elsewhere the button toggles but silences nothing, and this
   setting cannot start a pane muted.
+- **Warn before the tenth browser pane** — default on. Each browser pane is a
+  native webview with its own renderer process, so ten live pages are a real
+  memory and CPU load; opening a tenth onto the grid asks first, with *Open
+  anyway* and *Don't warn again*. Stashed panes are not counted. Off skips the
+  ask.
 
 ### Editor
 
@@ -228,8 +233,10 @@ They remain discoverable through Settings search while it is collapsed.
 
 - **Agent commands** — the list behind every pane header's ✳ button and every
   “Open in &lt;shell&gt;” agent flyout. Name plus command, flags welcome (`claude
-  --dangerously-skip-permissions`). Ships with Claude Code, Codex, OpenCode and
-  Antigravity. **The array order is both the
+  --dangerously-skip-permissions`). Ships with Claude Code, Codex, OpenCode,
+  Antigravity and Grok Build, and an install that predates one of those picks it
+  up once. Each row says whether its command was found on `PATH`. **The array
+  order is both the
   dropdown order and the digit each answers to** after
   <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, and entries whose program is not
   on `PATH` are hidden automatically.
@@ -334,6 +341,10 @@ and create worktrees. These settings tune its defaults:
   Files.
 - **Diff layout** — unified (stacked) or side by side; the same toggle lives
   in the diff window's header.
+- **Committer pictures in History** — default on. A picture beside each commit
+  in History: a GitHub noreply address names its account, anything else asks
+  Gravatar by email digest, cached after the first fetch. Off shows initials
+  and sends nothing.
 
 ### Voice
 
@@ -354,6 +365,14 @@ and create worktrees. These settings tune its defaults:
   file. Every row shows its size and language coverage, every downloaded
   model records where it came from and when, and the panel links its sources
   so you can verify them yourself.
+- **Hold to talk** — default off. Hold the key below in a terminal for a moment
+  to start dictating; let go to transcribe. A tap still types what the key
+  normally types. Off by default because on Space it takes the hold away from
+  the programs in the terminal, Claude Code's own hold-to-dictate included.
+- **Hold key** — Space by default. Click it and press any single key, a
+  modifier such as Right Ctrl included; <kbd>Esc</kbd> keeps the current one.
+  On a key of its own, Claude Code's hold-to-dictate keeps working alongside.
+  See [Dictation](/docs/dictation/).
 
 ### Shortcuts
 

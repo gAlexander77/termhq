@@ -95,6 +95,9 @@ Dictation listens in **English** by default. **Settings → Voice** has a
 language dropdown with sixteen more, plus an auto-detect option that lets a
 multilingual model identify the language per recording.
 
+How dictation works day to day — the mic button, the chord, Hold to talk, where
+the words land — is on the [Dictation](/docs/dictation/) page.
+
 Linux support is pending.
 
 ## Where TermHQ keeps its files

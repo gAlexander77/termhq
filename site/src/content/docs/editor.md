@@ -32,6 +32,9 @@ If the appropriate editor is stashed, opening a file brings it back into the
 grid. An editor that already holds that file is preferred, so opening it again
 does not leave duplicate editors on the shelf.
 
+An empty editor pane has an **Open file…** button that goes through the system
+picker, for when the Files panel is closed or showing Source Control.
+
 ## Files are tabs
 
 Each editor pane has its own tab strip. Scroll it with the wheel, drag tabs to
@@ -234,6 +237,9 @@ The tree draws a hairline down each level of indentation so a deeply nested file
 still reads as belonging to its folder. Most stay invisible until your pointer is
 in the panel; **the deepest open folder on each branch stays lit**, so "how far
 down am I on this side" is answerable at a glance.
+
+Saving a file refreshes its row in the tree, so the size shown is the size on
+disk rather than the size from the last listing.
 
 ## What it does not do yet
 

@@ -55,9 +55,15 @@ The menu beside Commit also offers:
 ## Browse history
 
 Choose **History** to see the repository's commit graph. Each row shows its
-branches and tags, author, message, and relative time. Select a commit for its
-full message and changed files, then open any file to compare that version with
-its parent.
+branches and tags, author with their picture, message, and relative time.
+Select a commit for its full message and changed files, then open any file to
+compare that version with its parent. The diff opens on its first change, and
+**Previous change** / **Next change** step through the rest, with a counter
+between them.
+
+Committer pictures come from GitHub for noreply addresses and from Gravatar
+otherwise, cached after the first fetch; **Settings → Git → Committer pictures
+in History** turns the lookups off and shows initials instead.
 
 Search accepts message text, `author:name`, or a commit ID. **Refresh** brings
 new commits into the graph without shifting the history you were already
@@ -78,8 +84,8 @@ default. From it you can:
 - rename or delete a local branch
 - see when a tracked upstream branch is gone
 
-Deleting a branch that is not fully merged requires a second, explicit
-confirmation.
+Deleting a branch asks first, and a branch that is not fully merged asks a
+second, explicit time.
 
 Fetch, pull, and push sit beside the current branch with ahead and behind
 counts. A branch without an upstream offers **Publish**. TermHQ follows your Git
@@ -120,8 +126,9 @@ changes may exist nowhere else.
 ## Worktrees
 
 The **Worktrees** section lists the repository's other working folders. Create a
-worktree on a new branch, open a terminal in one, or remove it. If a worktree
-still has changes, TermHQ shows Git's refusal before it offers a forced removal.
+worktree on a new branch, open a terminal in one, or remove it — removal asks
+first. If a worktree still has changes, TermHQ shows Git's refusal before it
+offers a forced removal.
 
 For a view across several repositories, add one or more folders under
 **Settings → Git → Worktree roots**. A **Worktrees** item then appears in the

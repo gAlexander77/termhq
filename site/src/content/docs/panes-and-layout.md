@@ -212,7 +212,11 @@ Stashed panes collect behind a count in the status bar, immediately to the left
 of Workspace. Click the stash count — or reach it with
 <kbd>Tab</kbd> and press <kbd>Enter</kbd> — to open a shelf of cards upward. Click
 a card to restore it into the first free slot, or use its hover-revealed **×**
-to close that pane outright without restoring it first.
+to close that pane outright without restoring it first. Right-click the count
+(or press <kbd>Shift</kbd>+<kbd>F10</kbd> with it focused) for **Restore all**
+and **Close all**: restore asks first only when the panes in the grid plus the
+ones on the shelf would exceed nine, and close always asks, saying what closing
+means under your Undo close setting.
 
 Each card identifies what you parked at a glance: a shell prompt for a terminal,
 a globe for a browser, or a page for an editor. If a busy stashed terminal goes
@@ -269,10 +273,8 @@ The behavior is configurable in **Settings → General**:
   keyboard shortcut does
 - whether the feature is on at all
 
-There is also an unassigned **Restore last closed terminal** action in the keymap
-if you would rather undo without reaching for the mouse. It ships unbound
-deliberately: the undo card already covers the common case, and every chord worth
-having is taken, so guessing one would cost more than it gave.
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> — **Restore last closed terminal**
+— undoes without reaching for the mouse, the same restore as the card's button.
 
 ## Ultra focus
 
