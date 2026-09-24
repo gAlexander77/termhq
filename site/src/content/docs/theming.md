@@ -17,10 +17,17 @@ does not recolor themes you already installed.
 
 Focused panes have a restrained, theme-colored glow around their outer edge.
 The pane header keeps its normal divider, so focus is marked on the frame rather
-than by an extra line inside it. This applies to downloaded themes too. If a
-theme makes its accent transparent, TermHQ uses another visible theme color for
-the pane cue without rewriting the theme's palette or file. Boxy panes keep the
-cue inside their edge; increased-contrast settings remove the halo.
+than by an extra line inside it. This applies to downloaded themes too. Boxy
+panes keep the cue inside their edge; increased-contrast settings remove the
+halo. To make the focused pane stand out further in any theme, turn on
+**Settings → Appearance → Dim unfocused panes**, which washes the others toward
+the theme's background.
+
+A few themes make their accent transparent. TermHQ then stands the theme's own
+focus, link or text color — the first of them that is visible — in for the
+accent everywhere it paints: focus rings, primary buttons, the focused pane's
+mark, unsaved-tab markers, the branch name and progress bars. The theme's file
+is not rewritten; the stand-in lasts only while that theme is applied.
 
 ## Choosing one
 
@@ -29,7 +36,8 @@ through it to preview. The app repaints behind the dropdown — chrome, terminal
 palette, editor and all — with the option you started on badged `current`.
 <kbd>Enter</kbd> or a click keeps that one; <kbd>Esc</kbd> or a click elsewhere
 puts back where you were. Nothing is written to disk until you keep something, so
-looking at thirty themes costs zero saves.
+looking at thirty themes costs zero saves. A theme you keep applies to every
+open window at once.
 
 ## The terminal palette can differ from the interface
 
@@ -37,8 +45,8 @@ A theme has two halves, and they can be driven by different themes.
 
 **Settings → Appearance → Terminal theme** picks any theme as the source of the
 terminal palette while the chrome stays on another — Graphite chrome hosting a
-Dracula terminal is a preference, not a fork. Leave it empty and the terminal
-follows the app theme.
+Dracula terminal is a preference, not a fork. Leave it on **Match app theme**
+and the terminal follows the app theme.
 
 For hand-made and built-in themes, that terminal palette also supplies the
 editor's syntax colors. Choosing a separate terminal theme therefore gives the
@@ -47,6 +55,26 @@ workbench alone.
 
 Worth knowing if you author a theme whose two halves only look right together:
 your `terminal` block may end up in use under somebody else's `ui` block.
+
+## Backgrounds
+
+**Settings → Appearance → Background** puts a picture, a GIF or a looping video
+behind your terminals, and it works with every theme, light or dark. The
+background lies on the terminal palette's own `background` color, drawn at the
+**Transparency** you set, and the terminals let it through. So
+`terminal.background` becomes the base color under the picture, and a picture
+set to **Fit** that does not fill the grid sits on that color.
+
+The rest of the theme draws as usual. Pane headers stay solid, so names, tools
+and the focused pane's edge read as before, and editor panes and web pages keep
+their own surfaces. Terminal text renders slightly softer while a background is
+set, because the terminal then draws on a see-through surface; pick **None** and
+full sharpness returns.
+
+A background belongs to the whole app, like the theme: one for every workspace,
+and a change reaches every open window at once. Files over 1 GB are refused.
+Blur, Fit and playback speed are covered under
+[Configuration](/docs/configuration/#appearance).
 
 ## Writing your own
 
@@ -66,7 +94,7 @@ A theme has a name and those two sections:
     "hairlineStrong": "rgba(255,255,255,0.14)",
     "ink": "#fafafa",
     "muted": "#8a8a93",
-    "faint": "#5a5a63",
+    "faint": "#7d7d86",
     "accent": "#7c8cf8",
     "rec": "#ff5c5c",
     "attn": "#e8b34c",
@@ -110,6 +138,9 @@ A few things you do not have to theme:
 - **`ui.attn`** is the attention color for agent-idle badges and the waiting dock.
   Omit it and attention surfaces follow `accent`. A color chosen in **Settings → Agents →
   Notification color** overrides it, so a theme cannot count on winning that one.
+- **`ui.gitIgnored`** colors only the name of a Git-ignored file or folder in
+  the Files tree. Its icon keeps its color and the row is never dimmed. Omit it
+  and the name follows `faint`.
 - **`terminal.background`** also paints the padding ring between the rows and the
   pane frame, so a theme whose terminal differs from `panel` still reads as one
   surface rather than a black frame.
@@ -118,6 +149,14 @@ A few things you do not have to theme:
 specific colors, focus rings, buttons, selected rows, links, and Git states use
 those instead of forcing the accent into every role. `panel` should sit slightly
 above `bg` in lightness; the hairlines are the borders everywhere.
+
+TermHQ keeps text readable whatever a palette says. `muted`, `faint`, `link`,
+`warn`, `ok` and the Git added, modified and deleted colors are raised toward
+`ink` until they reach a 4.5:1 contrast on the theme's own surfaces. The accent
+gets the same floor wherever it is read as text — a branch name, a selected
+tab — while buttons and other fills keep its exact color. The built-in themes
+already clear the floor; it matters most for imported light themes. The
+example's `faint` is chosen to clear it, which is why it reads `#7d7d86`.
 
 ### The template is the contract
 
@@ -129,8 +168,9 @@ It never loads as a theme itself: the loader skips `.jsonc` files and anything
 whose name starts with `_`. That prefix is also how you park a theme you do not
 want listed.
 
-Themes you add yourself can be deleted from Settings. Built-in themes are
-compiled into the app and have no file to remove.
+Themes you add yourself are listed under **Custom themes** in the Marketplace's
+**Installed** view, where **Remove** deletes one. Built-in themes are compiled
+into the app and have no file to remove.
 
 ## The editor follows the theme
 
@@ -147,10 +187,11 @@ an optional `editor` section. Most themes do not need it.
 
 ## Importing VS Code themes
 
-**Settings → Appearance → Manage themes** opens a browser for
-[Open VSX](https://open-vsx.org/), a vendor-neutral extension registry:
-a most-downloaded shelf by default, live search, infinite scroll, and an
-**Installed** view of everything you already have.
+**Settings → Appearance → Manage themes → Marketplace & installed…** opens the
+Marketplace, a page inside Settings for [Open VSX](https://open-vsx.org/), a
+vendor-neutral extension registry. Its **Themes** tab has a most-downloaded
+shelf by default, live search, infinite scroll, and an **Installed** view of
+everything you already have. Back or <kbd>Esc</kbd> returns to Appearance.
 
 ### Packs and variants
 
@@ -160,31 +201,40 @@ contrast variants. TermHQ keeps that relationship visible:
 1. In **Browse**, choose **See variants** to inspect what a pack includes.
 2. **Install pack** downloads its variants without changing your current theme.
 3. In **Installed**, expand the pack and choose **Apply** beside the variant you
-   want. Applying an installed variant does not download it again; the active
-   one is marked **Applied**.
+   want. Applying an installed variant does not download it again. The variant
+   the app uses reads **In use**, and the one your terminals use says **Used by
+   terminal**; the pack's own line says **App theme in use** or **Terminal
+   theme in use**.
 
 Search the Installed view by pack, variant or publisher to narrow the list.
 You can remove a single variant or choose **Remove pack** to delete all of its
 installed variants. The confirmation names everything affected, even when your
-search shows only one match. Updating a pack can bring back a variant you removed.
+search shows only one match. **Update pack** checks for a newer release first
+and says so when the pack is already up to date. Updating a pack can bring back
+a variant you removed.
 
 ### How imported colors are used
 
-TermHQ converts a VS Code color theme into its own format: the terminal palette,
-the colors for the full workbench, and the extension's editor colors and syntax
-rules. The result is written into your themes folder and marked with where it
-came from.
+TermHQ converts each VS Code color theme in the pack into its own format: the
+terminal palette, the colors for the full workbench, and the extension's editor colors
+and syntax rules. The result is written into your themes folder and marked with
+where it came from.
 
 Conversion fills in what real-world themes leave out, so secondary text remains
 readable, panes stay distinct, buttons keep enough contrast, and focus never
 disappears into the background. Comments in the source and themes that inherit
 from another file inside the same extension are both handled.
 
-An imported file keeps enough of its source colors to benefit when TermHQ's
-converter improves. The next time themes are listed, an older import is refreshed
-automatically. Imports from before that source was retained show **Re-import** in
-the Installed view. If you deliberately hand-edit an imported theme and want to
-freeze it, the template explains which saved source block to remove.
+An imported file keeps the extension's original colors in its `vscode` block,
+so it benefits when TermHQ's converter improves: the next time themes are
+listed, an older import is re-derived from them automatically. That also means
+a hand edit to an imported file's `ui` or `terminal` block is replaced when the
+converter next improves. To freeze a file exactly as you edited it, delete that
+`vscode` block, which holds the extension's original color table and syntax
+rules, and the converter leaves the file alone from then on. The editor
+then takes its colors and syntax from the file's `ui` and `terminal` blocks, as
+it does for a hand-made theme. Imports from before the source was saved have no
+such block; **Update pack** in the Installed view re-imports them.
 
 > **Open VSX only.** TermHQ does not use the Visual Studio Marketplace, whose
 > terms of use restrict it to Microsoft products. Open VSX exists precisely so
@@ -193,11 +243,12 @@ freeze it, the template explains which saved source block to remove.
 
 ## File icons
 
-File icon themes use the VS Code icon-theme format and install the same way, from
-**Settings → Appearance → Manage icon packs** — Material, Catppuccin and
-vscode-icons among them. **Settings → Appearance → File icons** picks the active
-one, and it previews as you browse just like the theme list does.
+File icon themes use the VS Code icon-theme format and install the same way,
+from **Settings → Appearance → Manage icon packs → Marketplace & installed…**,
+the Marketplace's **Icon packs** tab — Material, Catppuccin and vscode-icons
+among them, each under its publisher's license.
+**Settings → Appearance → File icons** picks the active one, and it previews as
+you browse just like the theme list does.
 
 Manual installs work too: drop a VS Code-format icon theme folder into the
-`icons/` directory and reopen Settings. SVG only. Icon themes affect the file
-panel, not the terminals.
+`icons/` directory and reopen Settings. SVG only. Icon themes affect the file panel, not the terminals.

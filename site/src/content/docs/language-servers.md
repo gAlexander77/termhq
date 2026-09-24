@@ -46,9 +46,11 @@ language. Install none and nothing breaks.
 ## Adding your own
 
 Open **Settings → Editor → Language server setup**, then choose **Add a
-server**. TermHQ accepts servers that speak the Language Server Protocol over
-standard input and output. Each entry has:
+server**; the new entry goes at the end of the list. (The setup section is
+hidden while **Language intelligence** is off.) TermHQ accepts servers that speak
+the Language Server Protocol over standard input and output. Each entry has:
 
+- **Name** — the field at the top of the entry, which labels it in the list
 - **Command** — the program name on your `PATH`, or its full path
 - **Arguments** — space-separated options passed to that program, such as
   `--stdio`. Quoted arguments containing spaces are not supported by this field.
@@ -63,8 +65,12 @@ place while you type. Press <kbd>Enter</kbd>, press <kbd>Tab</kbd> to move to th
 next field, or click elsewhere to apply that field's value. There is no separate
 Save button.
 
-**Restore default servers** brings the five above back if you have edited them
-into a corner.
+To delete an entry, press its **×**; it turns into **Remove?**, and only a second
+click removes the entry.
+
+**Restore default servers** replaces the entire list with the five above, exactly
+as a fresh install has them. It does not ask first, and any server you added
+yourself is deleted along with your changes to the five.
 
 ## How servers start and stop
 
@@ -79,21 +85,28 @@ start does not spin), and shuts down with the window.
 
 ## When a server is not working
 
-Every entry in **Settings → Editor** carries a status chip that tells you the
-truth rather than a green light:
+Every entry under **Settings → Editor → Language server setup** carries a status
+chip that tells you the truth rather than a green light:
 
 | Status | What it means |
 |---|---|
+| **running** | Working, serving one project |
 | **running · 2 roots** | Working, serving two projects |
 | **starting…** | Launched, still coming up |
+| **checking…** | Still looking for the command on your `PATH` |
+| *its path*, such as `/usr/local/bin/gopls` | Installed; it starts when you open a file it handles |
 | **not installed** | The command is not on your `PATH` — install it |
 | **would not start** | It is there, but it failed. Hover for its own last words |
 | **restarting…** | Recovering from a crash |
+| **disabled** | Its **Enabled** switch is off, so it never launches |
+
+The dot beside each entry's name says the same at a glance: lit while the server
+runs, hollow when it is missing, failing or switched off.
 
 **Hover any status for the full story**, including whatever the server itself
-said on the way down — "not found on PATH", "no answer to initialize after 30s",
-or the exit code that killed it. Each entry also keeps the server's own log,
-which is the first thing worth reading when something is wrong.
+said on the way down — "not found on PATH", "initialize: no answer after 30s",
+or the exit code that killed it. Each entry also keeps the server's own log
+under **Logs**, which is the first thing worth reading when something is wrong.
 
 **Restart** shows its work: a spinner while a relaunch is genuinely in flight,
 and a plain answer when there is nothing to relaunch ("cleared — no open file
@@ -119,9 +132,14 @@ middle to disagree with your repo.
 
 The first server in the list that offers formatting owns it. So to format with
 Prettier, Black, shfmt or Ruff, add a formatting-only server — `efm-langserver`,
-`diagnostic-languageserver`, or `ruff server` — and drag it **above** the
+`diagnostic-languageserver`, or `ruff server` — and put it **above** the
 language's main server. That one formats; the main server keeps diagnostics,
 hover and completion.
+
+Settings cannot reorder the list, and **Add a server** puts a new entry at the
+end. To move it up, [close TermHQ and edit `config.json`](/docs/configuration/#editing-by-hand):
+servers are listed in the `languageServers` array, in order, and the formatter's
+entry has to come before the main server's.
 
 Format on save never waits more than two seconds for a formatter, and never
 applies edits computed against a version of the document you have already typed
@@ -149,8 +167,8 @@ partly done.
 ## Turning it off
 
 **Settings → Editor → Language intelligence** is the master switch. Off, no
-server ever launches and editor panes behave exactly as they do with nothing
-installed.
+server ever launches, editor panes behave exactly as they do with nothing
+installed, and **Language server setup** is hidden until you turn it back on.
 
 Individual entries have their own **Enabled** switch, which is the lighter
 version of the same idea.

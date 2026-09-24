@@ -10,8 +10,9 @@ parallel, without switching the files underneath either task.
 
 TermHQ gives you two views of them:
 
-- **Source Control → Worktrees** manages worktrees for the repository belonging
-  to the pane you are focused on.
+- The **Worktrees** section of the sidebar's **Git** panel manages worktrees for
+  the repository belonging to the pane you are focused on. A browser or
+  [SSH pane](/docs/ssh/) has no local folder, so the panel does not follow one.
 - The **Worktrees** item in the status bar shows checkouts across every folder
   you chose to track, no matter which pane is focused.
 
@@ -19,11 +20,13 @@ TermHQ gives you two views of them:
 
 Open **Settings → Git → Worktree roots** and add the folders that contain your
 repositories or worktrees. Type a path, or use **Choose folder…** to pick one
-with the system dialog.
+with the system dialog. A folder that cannot be read is refused when you add it,
+with the reason.
 
-As soon as at least one root is set, **Worktrees** appears at the left of the
-status bar with the number of checkouts found. No root means no scan and no
-status-bar item.
+As soon as at least one root is set, **Worktrees** appears at the far left of the
+status bar with the number of checkouts found. It comes first in the bar, ahead
+of the focused repository's branch, so it stays put while the branch beside it
+changes with every pane you focus. No root means no scan and no status-bar item.
 
 The scan looks for Git checkouts up to two levels beneath each root, which
 covers both common arrangements:
@@ -40,25 +43,30 @@ searching beyond the roots.
 
 ## Reading the Worktrees view
 
-Click the status-bar item to open the full list. Checkouts are grouped by
-repository, with each repository open by default. Fold a group with a click,
-<kbd>Enter</kbd>, or <kbd>←</kbd>; <kbd>→</kbd> opens it again. The folded state is
-remembered until that TermHQ window closes.
+Click the status-bar item to open the full list. Its header sums it up — "12
+checkouts · 5 repositories" — and once there is more than one checkout, a filter
+box narrows the list to the repositories, branches or folders matching what you
+type.
+
+Checkouts are grouped by repository, with each repository open by default. Fold a
+group with a click, <kbd>Enter</kbd>, or <kbd>←</kbd>; <kbd>→</kbd> opens it again.
+The folded state is remembered until that TermHQ window closes.
 
 Each row shows:
 
+- whether it is the **primary** checkout or a **linked** worktree
 - the branch, or a detached-head label
 - the folder path
-- whether a linked worktree is locked or its folder is missing
-- whether it sits outside the roots you selected
+- badges for what else is true: **changes**, **detached**, **locked**,
+  **folder missing**, or **outside roots**
 
-After the view opens, TermHQ checks the worktrees one at a time. An
-**uncommitted changes** badge appears as each checkout is checked, so a long
-list can become useful immediately instead of making you wait for every folder.
+After the view opens, TermHQ checks the worktrees one at a time. The **changes**
+badge appears as each checkout is checked, so a long list can become useful
+immediately instead of making you wait for every folder.
 
-A plain clone is labeled **Primary checkout**. Folders created with `git
-worktree` are labeled **Linked worktree**. “Primary” describes its role in Git;
-it does not assume the branch is named `main`.
+A plain clone is labeled **primary**. Folders created with `git worktree` are
+labeled **linked**. “Primary” describes its role in Git; it does not assume the
+branch is named `main`.
 
 ## Open the right terminal or agent
 
@@ -78,12 +86,17 @@ it does not fold the repository group or open a terminal. With a checkout row
 selected instead, <kbd>Enter</kbd> keeps its open-or-focus-terminal action.
 
 To start an agent there, open the row menu and **right-click an “Open in
-&lt;shell&gt;” row**. Pick one of the installed agents from the flyout. TermHQ
-opens that shell in the checkout and starts the agent in it.
+&lt;shell&gt;” row**, or click the chevron at its edge. Pick one of the installed
+agents from the flyout. TermHQ opens that shell in the checkout and starts the
+agent in it.
 
-Removing a linked worktree follows Git's safety checks. A checkout with changes
-is refused first; forcing the removal is a separate, clearly named decision.
-The primary checkout is never offered for removal here.
+Every removal asks first, and says what it means: the worktree's folder is
+deleted, while the branch and its commits stay. Answer **Keep it** or **Remove
+worktree**. A checkout with uncommitted changes gets a second, separate
+question, because those changes would be lost — **Force remove** is the only way
+past it. The primary checkout is never offered for removal here, and a worktree
+whose folder is already gone cannot be removed from the list —
+`git worktree prune` drops its entry.
 
 ## Refresh and change the roots
 
@@ -93,9 +106,10 @@ you want an immediate scan. While a refresh runs, the status bar keeps the last
 count in place and turns its Worktrees mark into a spinning refresh symbol.
 
 The gear in the Worktrees header opens **Settings → Git → Worktree roots**
-directly. Removing a root only stops tracking it; nothing on disk is changed.
-A root that has moved or disappeared stays in Settings and shows a warning so
-you can repair or remove it.
+directly. Removing a root there asks **Remove?** first, and only stops tracking
+it; nothing on disk is changed. A root that has moved or disappeared stays in
+the list: the status-bar item turns to a warning, and the Worktrees view names
+the root it could not read, so you can repair or remove it.
 
 Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>, or choose **Worktrees** from
 the command palette, to open the view without the pointer. On macOS, use
@@ -106,11 +120,12 @@ focused. Click the status-bar item, focus another pane, or turn off **Settings �
 Editor → Editing shortcuts stay in the editor** when you want the Worktrees
 view instead.
 
-## Repository worktrees in Source Control
+## Repository worktrees in the Git panel
 
-For the repository you are already reviewing, use **Source Control → Changes →
-Worktrees**. You can create a sibling checkout on a new branch, open a terminal
-in an existing one, or remove a linked worktree without leaving the panel.
+For the repository you are already reviewing, open the **Worktrees** section in
+the Git panel's **Changes** view. You can create a sibling checkout on a new
+branch, open a terminal in an existing one, or remove a linked worktree without
+leaving the panel — with the same questions before a removal.
 
 The global tracker is a view across repositories; it does not replace this
 repository-specific section.

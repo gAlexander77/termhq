@@ -9,24 +9,46 @@ the parts that exist because of agents specifically.
 
 ## Launching one in the focused terminal
 
-Every terminal pane header has an **✳** button listing your agent commands — Claude Code,
-Codex, OpenCode, Antigravity and Grok Build out of the box. Picking one types
-its command into that pane's shell and hands keyboard focus back to the
-terminal. A launcher appears once its command is on your `PATH`, and an
-install that predates one of them picks it up on its own.
+A terminal pane's header has an **✳** button listing your agent commands —
+Claude Code, Codex, OpenCode, Antigravity and Grok Build out of the box. Like the
+header's other tools, it shows on the focused pane, and on any other pane while
+the pointer is over it. Picking one types its command into that pane's shell and
+hands keyboard focus back to the terminal. The menu ends with **Manage agents…**,
+which opens **Settings → Agents**.
+
+A launcher appears once its command is on your `PATH`, and an install that
+predates one of them picks it up on its own. With none found, the button stays,
+dimmed, and takes you to **Settings → Agents** to set one up. A pane whose shell
+has ended has no agent button, since there is nothing to type into, and neither
+has an [SSH pane](/docs/ssh/): the agents TermHQ found are on this machine, and
+the command would run on the far host.
 
 Use a terminal at an idle shell prompt. Finish or clear any partially typed
 command first, and do not launch into a program that is already using the
 terminal. To keep that program running, launch the agent in a new pane instead.
 
-The list is yours to edit in **Settings → Agents → Launcher commands**, flags included, so
-`claude --dangerously-skip-permissions` is one click rather than something you
-retype all day. Entries whose program is not on your `PATH` are hidden
-automatically, and each row in Settings says whether its command was found —
-*found*, *not on PATH*, or *checking…* — so a launcher missing from the menu is
-explained where you would look for it. If the numbered picker has no available
-entries, its feedback distinguishes an unconfigured agent list from commands it
-could not find.
+Where the shell reports each prompt to TermHQ — as PowerShell, Command Prompt,
+Git Bash and WSL's bash do on Windows — TermHQ catches the most common slip for
+you. If the agent it last launched in a pane is still running there, because the
+shell has not shown a prompt since, a second launch opens a new pane with the
+same shell and folder and starts the agent in that, instead of typing the command
+into the running agent.
+
+In any shell, a second launch into the same pane within three seconds is not sent
+at all, so a double click never types the command twice; the pane says **Sent a
+moment ago · one command every 3 s**.
+
+The list is yours to edit in **Settings → Agents → Agent launchers**, flags
+included, so `claude --dangerously-skip-permissions` is one click rather than
+something you retype all day. Each row shows the number the agent answers to, its
+mark, its name, whether its command was found — *found*, *not on PATH*, or
+*checking…* — and the command itself. **Add agent** starts a new row; drag a row
+by its grip to reorder, or focus the grip and use the arrow keys; removing one
+asks **Remove?** first. Entries whose program is not on your `PATH` are hidden
+from the menus automatically, so a launcher missing from the menu is explained
+where you would look for it. If the numbered picker has no available entries,
+the command palette tells an empty agent list apart from agents it could not find
+on your `PATH`.
 
 ### Command detection on macOS
 
@@ -44,18 +66,18 @@ in its process environment.
 
 You do not need to open a terminal first. Anywhere TermHQ offers an **Open in
 &lt;shell&gt;** list — a folder in Files, a favorite, or a row in the global
-[Worktrees](/docs/worktrees/) view — right-click the shell you want. A flyout
-lists the installed agents under the same marks as the pane-header launcher.
-Pick one and TermHQ opens that shell in the selected folder, then starts the
-agent in it.
+[Worktrees](/docs/worktrees/) view — open the flyout on the shell you want: click
+the chevron at the row's edge, right-click the row, or press <kbd>→</kbd> on it.
+The flyout lists the installed agents under the same marks as the pane-header
+launcher. Pick one and TermHQ opens that shell in the selected folder, then starts
+the agent in it.
 
-A normal click still opens only the shell. The agent list waits behind a
-right-click so the ordinary “open a terminal here” action stays unambiguous.
+A click on the row itself still opens only the shell. The agent list waits behind
+the chevron so the ordinary “open a terminal here” action stays unambiguous.
 
-The **+** button in the title bar reaches the same place without opening the
-Files panel: right-click a shell for your favorite folders, then right-click a
-favorite for the agents to start there. Rows that hold a flyout carry a chevron
-at their edge.
+The arrow beside the **+** button in the title bar opens the shell menu, which
+reaches the same place without the Files panel: a shell's flyout lists your
+favorite folders, and a favorite's flyout lists the agents to start there.
 
 ### By number, without the mouse
 
@@ -63,16 +85,21 @@ Several agents across several panes should not mean a trip to a dropdown for eac
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> then a digit runs an agent in the
 focused terminal: <kbd>1</kbd>–<kbd>9</kbd> and <kbd>0</kbd> for the tenth, in the
 order the list is arranged in Settings. While it is armed, a card lists the
-numbered agents so the mapping is never guesswork; <kbd>Esc</kbd> cancels.
+numbered agents so the mapping is never guesswork, and its title names the
+terminal the command will be typed into; <kbd>Esc</kbd> cancels.
 
 Only installed agents are numbered — the same `PATH` filtering as the dropdown,
 so the numbers always match what you can see. Both the number row and numeric
 keypad work, including <kbd>0</kbd> for the tenth entry.
 
-The chord needs a **terminal** focused, since what it does is type a command
-into a shell. Press it with an [editor](/docs/editor/) or a
-[browser pane](/docs/browser-panes/) in front and it says so rather than opening
-a picker that could not have worked.
+The chord needs a **terminal** with its shell still running, since what it does
+is type a command into it. With an [editor](/docs/editor/) or a
+[browser pane](/docs/browser-panes/) in front, a terminal whose shell has ended,
+or an SSH pane, it does not open a picker that could not work: the key goes on to
+the pane, and the command palette's **Run an agent by number** row says why.
+
+The command palette also lists each installed agent by name — **Run Claude
+Code** and the like — to type into the focused terminal.
 
 <span id="knowing-when-one-has-finished"></span>
 
@@ -82,28 +109,36 @@ The problem with running several agents is not starting them, it is noticing whe
 one stops.
 
 A pane that was busy while you were looking elsewhere and has since gone quiet
-gets a pulsing header: the dot, an inset wash and the bottom hairline all breathe
-in the theme's attention color. On a stashed terminal, the shell icon on its
-shelf card lights and pulses instead, so a parked job can still get your
-attention. This works for longer-running commands as well as coding agents.
+gets a pulsing header: the icon at its left that shows what kind of pane it is
+pulses in the theme's attention color, and an inset wash and the bottom hairline
+breathe with it. On a stashed terminal, the shell icon on its shelf card lights
+and pulses instead, so a parked job can still get your attention. This works for
+longer-running commands as well as coding agents.
 
 Waiting panes collect in the bottom status bar as a count — **N waiting** —
 that stays as long as anything is waiting. For a few seconds after a new pane
 goes quiet, a chip joined to its left names that pane under a draining bar;
 click the chip to jump straight to it. Click the count to open the list,
-newest first. Each entry shows when the notice appeared and whether the pane
-is **in the grid** or **in the stash shelf**.
+newest first. Each entry shows the time the pane went quiet — *waiting since
+2:45 PM* — and whether it is **in the grid** or **in the stash shelf**.
 
 Click an entry to focus that pane, restoring it from the shelf or bringing it
-back into view if another pane is fullscreen. You can also focus an entry with
-<kbd>Tab</kbd> and press <kbd>Enter</kbd> or <kbd>Space</kbd>. Its **Dismiss**
-button removes only the notice; it does not close the pane or stop its work.
+back into view if another pane is maximized. From the keyboard, <kbd>Tab</kbd> to
+the count and press <kbd>Enter</kbd>: the list opens with focus on its first
+entry, <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Home</kbd> and <kbd>End</kbd> move between
+entries, and <kbd>Enter</kbd> or <kbd>Space</kbd> jumps. An entry's **Dismiss**
+button removes only the notice; it does not close the pane or stop its work. With
+more than one waiting, **Dismiss all** clears every notice at once.
 <kbd>Esc</kbd> closes the list without clearing it.
+
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> — **Jump to the newest waiting
+pane** — goes straight to the pane that went quiet most recently, the first entry
+in the list, without opening it.
 
 Notices do not expire on a timer. Returning to the pane, dismissing its notice,
 or closing the pane clears its entry. The waiting item disappears when the list
 is empty by default. To keep it visible, enable **Settings → Agents → Always
-show it, even when nothing is waiting**. It then reads **Waiting**, and opening
+show it, even when nothing is waiting**. It then reads **0 waiting**, and opening
 the empty list shows **Nothing waiting right now.**
 
 When TermHQ is in the background, the same trigger also sends a native OS
@@ -205,12 +240,13 @@ say) and Claude Code's keeps working beside it.
 
 Transcription happens on your machine, on a local Whisper model you pick and
 download once in **Settings → Voice** (or bring your own) — which matters for
-a tool sitting in front of proprietary source. English by default, sixteen
+a tool sitting in front of proprietary source. English by default, fifteen
 other languages in the same panel. Linux support is pending. The whole feature
 has its own page: [Dictation](/docs/dictation/).
 
 ## Keeping their keystrokes theirs
 
 Agents with full-screen interfaces want chords TermHQ also uses. Ultra focus
-turns off every TermHQ shortcut so the terminal receives all of them unmodified.
-See [Panes and layout](/docs/panes-and-layout/).
+hands the terminal every key unmodified; only its own toggle and
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>, which pastes, stay TermHQ's. See
+[Keyboard shortcuts](/docs/keyboard-shortcuts/#when-a-terminal-program-wants-the-same-key).

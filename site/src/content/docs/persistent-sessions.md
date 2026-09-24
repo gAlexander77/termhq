@@ -22,9 +22,19 @@ This is the same promise `tmux` makes, without having to know `tmux`.
 | A program finishing on its own | Ended — it finished | Restored |
 
 A reboot ends running processes. Installing an update also restarts the shells;
-finish or stop important tasks before choosing **Update and restart**. What
+finish or stop important tasks before choosing **Update and restart**. When
+terminals are running in any workspace, TermHQ asks before it goes ahead. What
 comes back is your arrangement and working directories, with fresh shells.
 See [Updating](/docs/installation/#updating) for the save prompts and restart flow.
+
+[SSH panes](#ssh-panes-reconnect-when-you-ask) are the exception in the sleep,
+update and restart rows. Sleep can drop the connection even though the `ssh`
+program itself keeps running, and after an update or a restart an SSH pane
+comes back disconnected rather than connecting again on its own.
+
+A terminal you have already closed is different too. While its **Undo close**
+countdown runs, its shell is still alive, and closing the window or quitting
+TermHQ ends it there and then, rather than leaving it running out of sight.
 
 Crash resilience is not a setting you have to find. Whatever else is configured,
 a crash leaves your shells running, because that is the case you would most
@@ -40,6 +50,11 @@ produces mangled output.
 
 Only recent output is kept, not the full history. A pane that comes back emptier
 than you left it is a pane whose program has been very chatty since.
+
+The workspace appears in one piece. It stays out of sight while its panes are
+reattached or restarted, then fades in already laid out, sidebar and all — no
+empty start page first, and no pane arriving on its own. With
+**Settings → Appearance → Animate panes** off, it simply appears.
 
 Proportions come back too. If you have [dragged a
 gutter](/docs/panes-and-layout/#resizing-panes) to give one pane more room than
@@ -64,6 +79,24 @@ shell host, so quitting closes its page and reopening navigates back to it. What
 survives is the address and its place in the grid — plus your logins and cookies,
 which live in the browser engine's own profile. "Signed into the dashboard" is
 still true after a restart; a half-filled form is not.
+
+## SSH panes reconnect when you ask
+
+An [SSH connection](/docs/ssh/) is a pane running your machine's own `ssh`
+program, and that program lives in the background host like any shell. Close
+the window and it keeps running; reopen and the pane is picked back up with its
+connection still open, as long as the network held.
+
+What the host cannot do is carry the connection itself through a dropped
+network, a laptop going to sleep, a reboot or an update. When a connection
+ends, the pane stays with its output and a card: **Reconnect**, **Open local
+terminal here** or **Close**. A pane whose `ssh` program is gone by the time
+you reopen comes back *disconnected*, in its place, with the same card.
+
+Nothing reconnects until you ask, so a workspace with five SSH panes does not
+open with five password prompts. **Reconnect**, or <kbd>Enter</kbd> in the
+pane, opens a new connection. TermHQ does not keep programs on the far side
+running across a lost connection.
 
 ## Several workspaces at once
 
@@ -102,7 +135,10 @@ Two settings, under **Settings → Workspaces**:
 
 ## If you want everything gone
 
-Close the panes. That is the reliable route, and it is instant.
+Close the panes. That is the reliable route. With **Undo close** on — the
+default — a closed terminal's shell keeps running until its countdown ends,
+5 seconds unless you changed it in **Settings → General**. **Close now** in the
+undo list ends it at once, and so does closing the window.
 
 Deleting a workspace from the picker also ends any terminals still parked for it,
 which is the quickest way to clear out one project's worth of background work

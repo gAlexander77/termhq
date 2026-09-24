@@ -98,18 +98,23 @@ multilingual model identify the language per recording.
 How dictation works day to day — the mic button, the chord, Hold to talk, where
 the words land — is on the [Dictation](/docs/dictation/) page.
 
-Linux support is pending.
-
 ## Where TermHQ keeps its files
 
 Settings, themes, saved workspaces and a log file live in a per-user
-configuration directory:
+configuration directory, along with the pictures and videos you add as
+backgrounds (`backgrounds/`) and your saved SSH profiles and recent
+connections (`ssh-profiles.json`, which never holds a password or a key):
 
 | Platform | Path |
 |---|---|
 | Windows | `%APPDATA%\dev.termhq.app` |
 | macOS | `~/Library/Application Support/dev.termhq.app` |
 | Linux | `~/.config/dev.termhq.app` |
+
+If `config.json` there ever cannot be read — a typo in a hand edit, say —
+TermHQ keeps a copy of it named `config.json.broken-` plus the time in UTC,
+such as `config.json.broken-2026-09-23T101500Z`, starts with default settings,
+and shows a notice with the reason and a button that opens the folder.
 
 ## Updating
 
@@ -118,18 +123,25 @@ six hours while it runs — and **never installs one on its own**. A new version
 shows up in two places: a toast at the bottom left of the window, and
 Settings → General → Updates. Both have one button, **Update and restart**;
 the toast also has **Later**, which puts that version away until a newer one
-comes along or the next launch.
+comes along or the next launch, and **What's new**, which opens
+Settings → General → Updates, where the release notes are.
 
 What the click does, in order: the release is downloaded and its signature
 checked; any editor with unsaved changes asks you to save or discard, the same
-protection as closing the window; other TermHQ
-windows are asked to close and take the same card; then TermHQ closes, the
-installer runs, and TermHQ reopens in the workspace you were in.
+protection as closing the window; if terminals are running in any workspace,
+TermHQ asks **Update and restart now?** and says how many will end; other
+TermHQ windows are asked to close and take the same card; then TermHQ closes,
+the installer runs, and TermHQ reopens in the workspace you were in.
 
 The unsaved-work check happens **after the download**, so it includes edits you
 made while waiting. Choose **Save all & update**, **Update without saving**, or
 **Cancel**. If another window remains open, check it for a save prompt, close it
 when ready, and try the update again. TermHQ does not force it closed.
+
+The terminals question counts every workspace, not only the window you clicked
+in, because the restart ends the shells in all of them, along with the commands
+and agents running there. **Cancel** has focus, so <kbd>Enter</kbd> alone backs
+out; **Update and restart** goes ahead.
 
 Update signatures verify that the download comes from TermHQ. They are separate
 from the operating system's installer certificates, so the installation warnings
@@ -139,7 +151,8 @@ described above may still appear.
 all come back; commands and agents that were running in those panes are
 stopped. The toast says so before you click. Your configuration directory is
 never touched by an update: settings, themes, keyboard shortcuts, favorites,
-saved workspaces and speech models all stay exactly as they were.
+saved workspaces, backgrounds, SSH profiles and speech models all stay exactly
+as they were.
 
 If a download fails or its signature does not verify, nothing is installed and
 the app stays as it was; the toast offers to try again. Turn the automatic
@@ -155,5 +168,5 @@ Previously running commands have still stopped; check your work before retrying.
 ## Uninstalling
 
 Use the platform's normal uninstall route. The configuration directory above is
-left in place; delete it by hand if you want TermHQ's settings, themes and saved
-workspaces gone too.
+left in place; delete it by hand if you want TermHQ's settings, themes, saved
+workspaces, backgrounds and SSH profiles gone too.

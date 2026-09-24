@@ -6,8 +6,15 @@ description: "Editor panes: files as tabs, saving that cannot lose work, reading
 
 A pane can hold a file. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> opens an
 empty editor pane, and it behaves like every other pane — drag it, stash it,
-fullscreen it, resize it, zoom its text, and find it where you left it when the
+maximize it, resize it, zoom its text, and find it where you left it when the
 workspace comes back.
+
+Its header works the way a terminal's does. A page mark stands where a terminal
+shows its prompt; double-click the header to maximize the pane, and right-click
+it or press <kbd>F2</kbd> on it to rename the pane. The focused pane keeps its
+header tools — **Stash**, **Maximize**, and the reading view for a markdown
+file — in view, while other panes show theirs when the pointer is over them. On
+a narrow pane they move into a **⋯** menu, so Close is always in reach.
 
 TermHQ is still a terminal, not an IDE. The editor exists for the edit you make
 *while* something else is running: the config line an agent asked about, the
@@ -18,9 +25,16 @@ README you are reading, the fix that is faster to type than to explain.
 The Files panel is the daily door. **Double-click** a file and it opens in the
 editor pane you last used — or opens a new one if you have none. **Right-click**
 gives you the choice: *Open in editor*, *Open in new editor pane*, or the
-external routes (your IDE, a terminal editor, the system default). The same menu
-can reveal the file in Explorer or Finder with the file selected; on Linux it
-opens the containing folder.
+external routes — the system default, your IDE, and the editors grouped under
+**Open with**, terminal editors included. The same menu can reveal the file in
+File Explorer or Finder with the file selected (on Linux it opens the containing
+folder), **Copy path**, **Copy relative path** — the path from the panel's
+root — and **File history**, which opens the file's history in the Git panel.
+
+You can also drag a file onto an editor pane — out of the Files tree, or from
+your desktop — and it opens there as a tab. An empty cell in the grid offers
+**New terminal** and **Open file…**; a file picked there opens in a new editor
+pane in that cell.
 
 Opening a file that is already open just switches to its tab. Opening it in a
 *different* pane gives you a second live view of the same file — type in one and
@@ -33,14 +47,16 @@ grid. An editor that already holds that file is preferred, so opening it again
 does not leave duplicate editors on the shelf.
 
 An empty editor pane has an **Open file…** button that goes through the system
-picker, for when the Files panel is closed or showing Source Control.
+picker, for when the Files panel is closed or showing the Git tab.
 
 ## Files are tabs
 
 Each editor pane has its own tab strip. Scroll it with the wheel, drag tabs to
-reorder them, middle-click to close one. Every tab carries the same file-type
-icon the Files panel uses, so the tree and the strip always show the same
-picture.
+reorder them, middle-click to close one. The strip keeps the active tab in view,
+and fades at an edge where more tabs continue. Every tab carries the same
+file-type icon the Files panel uses, so the tree and the strip always show the
+same picture. Two tabs with the same name each show their parent folder, so
+`index.ts` from `src` and `index.ts` from `lib` can be told apart.
 
 The selected tab is exposed to accessibility tools. When the tab strip has
 keyboard focus, the left/right arrows switch files, and <kbd>Home</kbd> or
@@ -48,7 +64,7 @@ keyboard focus, the left/right arrows switch files, and <kbd>Home</kbd> or
 from inside the editor.
 
 The active tab renames the pane and sets its working directory, which means the
-Files and Source Control follow what you are editing exactly as they follow a shell.
+Files and Git tabs follow what you are editing exactly as they follow a shell.
 
 | Action | Shortcut |
 |---|---|
@@ -88,14 +104,15 @@ back in one never scrolls another you were not looking at.
 ## Editing
 
 The editing surface is Monaco — the engine behind VS Code — so multi-cursor,
-column selection, find and replace, bracket matching and the rest of the usual
-moves are already there. It uses your terminal font, and
-<kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> zoom one pane's text
-exactly as they do a terminal's — on top of a base size that follows your
-terminal font until you turn **Settings → Editor → Font size follows the
-terminal** off and set the editor's own. That panel also carries soft word wrap
-and the minimap, both off by default, and a reference list of Monaco's own
-keys.
+column selection, find and
+replace, bracket matching and the rest of the usual moves are already there. It
+uses your terminal font, and <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> /
+<kbd>0</kbd> zoom one pane's text exactly as they do a terminal's, as does
+<kbd>Ctrl</kbd>+wheel (<kbd>⌘</kbd>+wheel on macOS) — on top of a base size that
+follows your terminal font until you turn **Settings → Editor → Font size
+follows the terminal** off and set the editor's own. That panel also carries
+soft word wrap and the minimap, both off by default, and a reference list of
+Monaco's own keys.
 
 The editor wears the active theme, including its surface, cursor, selections,
 widgets, diffs, and syntax. Built-in and hand-made themes draw syntax from the
@@ -117,7 +134,8 @@ TermHQ ships none.
 Every save writes to a temporary file first and then swaps it into place, so a
 save that fails partway — a full disk, a permission, a read-only file — leaves
 the original exactly as it was. You get a card naming which of those happened, a
-**Retry**, and your edits still sitting in the buffer.
+**Retry**, and your edits still sitting in the buffer. A save that lands shows
+**Saved** on the pane for a moment.
 
 Saves are also guarded against overwriting someone else: if the file changed on
 disk since you opened it, TermHQ notices before writing rather than after.
@@ -133,19 +151,33 @@ Agents write files. So do formatters, `git checkout`, and the pane next door.
   disk** (throw your edits away), or **Keep my changes** (your next save wins,
   and you knew it would).
 
-A file deleted while you have it open is flagged rather than closed. Saving
-writes it back.
+A file deleted while you have it open is flagged rather than closed. The card
+waits 800 ms first — a program that saves by writing a new file and renaming it
+over the old one looks like a delete for an instant — and then offers
+**Dismiss**, **Close tab**, or **Save to restore it**, which writes your buffer
+back to disk.
+
+These cards arrive on the file's schedule, not yours, so they are careful with
+the keyboard. A card takes it only in the pane you are using, and then it
+focuses the card itself rather than one of its buttons, so an <kbd>Enter</kbd>
+meant for another pane can never answer it. <kbd>Esc</kbd> returns the keyboard
+to your text.
+
+Renaming a file or folder in the Files panel carries open tabs along to the new
+name. A tab with unsaved edits stays where it was, because its buffer holds the
+only copy of that work; its card then reports the file as deleted, and saving
+writes it back under the old name.
 
 ## Closing without losing work
 
 Three guards, at three scales:
 
 1. **Closing a tab** with unsaved edits asks Save / Don't save / Cancel.
-2. **Closing a pane** asks once for each unsaved file about to lose its last
-   view. A file still open in another pane needs no question — it is not going
-   anywhere.
+2. **Closing a pane** asks once about every unsaved file about to lose its last
+   view — *Save all and close*, *Discard and close*, or *Cancel*. A file still
+   open in another pane needs no question — it is not going anywhere.
 3. **Closing the window** with unsaved work anywhere stops and offers *Save all
-   and quit*, *Quit without saving*, or *Cancel*.
+   & quit*, *Quit without saving*, or *Cancel*.
 
 ## If the app dies instead
 
@@ -219,27 +251,33 @@ as plain text.
 Images (PNG, JPEG, GIF, WebP, SVG and friends) open in an image view inside the
 same tab strip. Binary files, anything that is not UTF-8 text, and files over
 20 MB get a plain notice rather than a mangled buffer. SVG opens as a picture —
-to edit one as text, use the Files panel's *open with* routes.
+to edit one as text, use the Files panel's **Open with** routes.
 
 ## The Files panel while you edit
 
 With an editor focused on a file inside a git repository, the Files panel roots
 itself at the **repository** rather than at the file's own folder, expands the
 tree down to that file, and keeps its row highlighted — the shape VS Code's
-explorer uses. A file outside any repository falls back to the folder view, and
-terminals are never affected either way.
+explorer uses. A file outside any
+repository falls back to the folder view, and terminals are never affected
+either way.
 
 Wandering the tree yourself is respected: nothing yanks the view back until the
 file you are editing actually changes. **Settings → Editor → Files panel shows
 the repo while editing** turns it off.
+
+Inside a repository, the tree also shows where things stand with Git: a changed
+file's name is tinted and carries its status letter, a folder holding changes
+is marked with a dot, and names Git ignores are slightly gray — hover one and it
+says "Ignored by Git". Outside a repository, nothing in the tree looks different.
 
 The tree draws a hairline down each level of indentation so a deeply nested file
 still reads as belonging to its folder. Most stay invisible until your pointer is
 in the panel; **the deepest open folder on each branch stays lit**, so "how far
 down am I on this side" is answerable at a glance.
 
-Saving a file refreshes its row in the tree, so the size shown is the size on
-disk rather than the size from the last listing.
+Saving a file refreshes its row in the tree, so a size shown there is the size
+on disk rather than the size from the last listing.
 
 ## What it does not do yet
 
