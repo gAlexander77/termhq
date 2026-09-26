@@ -1,10 +1,11 @@
 ---
 title: "Dictation"
 weight: 62
-description: "Talk into a terminal or a text field: on-device transcription with a local Whisper model, started from a button, a chord, or a held key, with a cursor that shows it listening."
+description: "Talk into a terminal, a text field or a web page: on-device transcription with a local Whisper model, started from a button, a chord, or a held key, with a cursor that shows it listening."
 ---
 
-TermHQ types what you say into a terminal, or into one of its own text fields.
+TermHQ types what you say into a terminal, into one of its own text fields, or
+into a text field on a web page in a browser pane.
 Transcription happens on your own machine, on a Whisper model you download
 once — nothing is sent anywhere, which matters for a terminal sitting in front
 of proprietary source. It exists because prompts to coding agents are long and
@@ -36,7 +37,8 @@ Linux support is pending.
 - **The chord**, <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> on every
   platform — the one shortcut that does not move to <kbd>⌘</kbd> on macOS,
   because <kbd>⌘</kbd>+<kbd>Alt</kbd>+<kbd>Space</kbd> is Finder's search. It
-  works in a terminal and in TermHQ's own text fields.
+  works in a terminal, in TermHQ's own text fields, and over a web page in a
+  browser pane.
 - **Hold to talk**, off by default. Turn it on under **Settings → Voice** and
   holding the space bar in a terminal for a moment starts dictating; let go and
   it transcribes — the gesture Claude Code's own dictation uses, here for every
@@ -46,8 +48,8 @@ Linux support is pending.
 Stopping — a second click, the chord again, or letting go of the held key —
 sends the recording to the model. The button and the chord stop a recording even
 if you have clicked into another terminal, an editor or a text field since. The
-exceptions are a web page in a browser pane, which keeps the chord for itself,
-and ultra focus, which hands it to the terminal — use the button there. A
+exception is ultra focus, which hands the chord to the terminal — use the button
+there. A
 recording under 0.4 seconds is dropped rather than transcribed.
 
 ## The key you hold
@@ -78,8 +80,16 @@ the words go in at the cursor, replacing any selected text, with a space in
 front where they would otherwise run into the word before. The field takes them
 as if you had typed them.
 
-Anywhere else there is nothing to type into: an editor, a web page, a terminal
-whose shell has ended. There dictation does not start. The mic button says
+On a web page in a browser pane, the words go into the text field the page had
+focused when you started — a search box, a comment form, a chat input —
+typed through the page's own editing, so the site sees ordinary typing and its
+own undo takes them back. They go where you started even if you click
+elsewhere while they are being transcribed, with a space in front where they
+would otherwise run into the word before. A page with no text field focused
+has nothing to type into, and dictation says so before the microphone opens.
+
+Anywhere else there is nothing to type into: an editor, a terminal whose shell
+has ended. There dictation does not start. The mic button says
 **Nothing to dictate into** in the status bar, and the chord goes on to the pane
 like any shortcut with nothing to do.
 

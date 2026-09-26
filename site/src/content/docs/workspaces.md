@@ -50,8 +50,10 @@ them guaranteed to differ.
 Past eight workspaces, a filter box appears above the list. It matches names
 and folders, and <kbd>Esc</kbd> clears it before it closes anything.
 
-The keyboard starts on the first row, so <kbd>Enter</kbd> alone opens it;
-choosing the workspace this window already shows simply closes the picker. Use
+The keyboard starts on your most recently used *other* workspace, so the
+picker's shortcut and then <kbd>Enter</kbd> switches to it — the way back to
+where you just were. Choosing the workspace this window already shows simply
+closes the picker. Use
 the up/down arrow keys to focus another row, then <kbd>Enter</kbd> to open it.
 <kbd>Tab</kbd> moves among controls such as **New workspace** and **Rename**;
 <kbd>Enter</kbd> activates whichever control has keyboard focus.
@@ -131,9 +133,14 @@ The picker offers deletion, and asks first: the row names the workspace,
 counts its panes, and says its shells will end if it is still running. Cancel
 has focus, so <kbd>Enter</kbd> answers the safe way, and <kbd>Esc</kbd> cancels
 the question rather than closing the picker. Deleting removes the workspace's
-saved state and ends any shells still parked for it. It is not available while
-a window has that workspace open, and the button says so on hover — close the
-window first.
+saved state and ends any shells still parked for it.
+
+A workspace open in another window can be deleted too: the question says that
+window will close, and on **Delete** it closes the way its own close button
+would, then the workspace is deleted. If that window has unsaved editor work,
+it comes to the front and asks about it; if it stays open, the workspace is
+kept and the picker says why. The workspace in the window you're using can't be
+deleted from its own picker.
 
 Deleting a workspace does not touch anything on disk in those directories. It
 only forgets the arrangement.

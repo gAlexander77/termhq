@@ -71,7 +71,9 @@ page's current URL, and hands the keyboard back to the page. A blank pane opens
 with the bar already focused. While you are typing in it, the chords that act on
 panes stand down, so closing or stashing cannot fire from the address bar; only
 the launchers — the command palette, Settings, the workspace picker and the
-like — and dictation still answer.
+like — dictation, and the shortcuts that move focus to a neighboring pane still
+answer. Those last ones work from the pane's find bar too, so the keyboard can
+always leave a browser pane.
 
 Back, forward and reload sit to the left of the bar. The back and forward
 buttons dim when there is nowhere to go, like a real browser's, and while a page
@@ -146,9 +148,11 @@ reads at a glance, and it renames the way a terminal's does: <kbd>F2</kbd> or a
 right-click on the header.
 
 Panes glide into place when you swap, move or resize them, with a browser pane
-on screen too: the page rides along as a still picture and comes back live where
-it lands. On macOS it rides as a blank frame instead, since the still is
-Windows-only. A new browser pane settles into its cell, a closed one fades from
+on screen too: the page rides along as a still picture, keeping its size while
+the pane reshapes around it, and comes back live where it lands. While you
+resize the window, a border between panes or the sidebar, the page holds still
+in the same way until you stop, so it never runs ahead of its pane. A new
+browser pane settles into its cell, a closed one fades from
 its place, and stashing and restoring fly it into and out of the shelf.
 **Settings → Appearance → Animate panes** turns all of that off, and so does
 reduced motion in your system settings — see
@@ -186,10 +190,12 @@ keyboard: pane focus, arrange mode, stash, close, maximize and the pickers are
 all intercepted before the page sees them, exactly as if a terminal were
 focused. After a chord runs, the keyboard lands where the result needs it — back
 in the page, or in the app for arrange mode's arrows and a picker's digits.
+The dictation chord is caught too, and over a page it types what you say into
+the page's focused text field — see [Dictation](/docs/dictation/).
 
 A short list stays deliberately with the page. Copy, because the page's version
-is the one you want. The agent picker and voice dictation, because they would
-only type into a terminal that is not there. And on Windows,
+is the one you want. The agent picker, because it would only type into a
+terminal that is not there. And on Windows,
 <kbd>Ctrl</kbd>+<kbd>F</kbd> opens the engine's own find bar and
 <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> / <kbd>0</kbd> are the engine's page
 zoom.
@@ -223,10 +229,9 @@ it.
 
 Stated plainly rather than discovered later:
 
-- **Windows and macOS have both had a full pass.** Two things are still
-  Windows-only: the frozen frame described below, and the pane's rounded bottom
-  corners. On macOS a covered page shows the pane's own background instead of a
-  still, and a gliding one shows a blank frame. Linux support is pending.
+- **Windows and macOS have both had a full pass**, including the frozen frame
+  described below and the pane's rounded bottom corners. Linux support is
+  pending.
 - **Anything that must cover the grid covers the page.** A native page cannot
   be painted over by the interface, so when a modal, menu, drag preview, or
   similar overlay needs the space, the pane shows a **frozen frame** of the page

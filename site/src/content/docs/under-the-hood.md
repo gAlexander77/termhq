@@ -92,13 +92,27 @@ comes from [LSP](https://microsoft.github.io/language-server-protocol/) servers
 you install yourself; themes and icon packs install from
 [Open VSX](https://open-vsx.org/).
 
+## What reaches the network
+
 With local Whisper models, dictation is processed on your machine; downloads
 — a theme, an icon pack, a speech model — happen when you ask for them, from
-sources the interface names. Two things reach the network without a separate
-request. The update check runs shortly after launch and every six hours;
-**Settings → General → Updates** turns it off. And committer pictures in
-Source Control's History are on by default: a GitHub noreply address asks
-GitHub for that account's picture, any other address goes to Gravatar only as a
-SHA-256 hash, and each picture is cached after its first fetch.
-**Settings → Git → Committer pictures in History** turns them off, and then
-nothing is sent.
+sources the interface names. Three things reach the network without a
+separate request, and each has a switch:
+
+- **The update check** runs shortly after launch and every six hours.
+  **Settings → General → Updates** turns it off.
+- **A startup report.** Each time the app starts, it sends one request to
+  `api.termhq.dev` saying it started, on which operating system (`windows`,
+  `macos` or `linux`), and which version of TermHQ it is, such as `0.2.9`.
+  That is the whole report. There is no account, device or
+  installation ID, and no hardware details, performance numbers, terminal
+  content or workspace data. It is sent once per start, never retried, and
+  only over a verified HTTPS connection. **Settings → General → Privacy → Send
+  startup reports** turns it off. Turning it off sends nothing, cancels a report still
+  on its way, and holds for every later start. It does not delete reports
+  already received.
+- **Committer pictures in Source Control's History**, on by default: a GitHub
+  noreply address asks GitHub for that account's picture, any other address
+  goes to Gravatar only as a SHA-256 hash, and each picture is cached after
+  its first fetch. **Settings → Git → Committer pictures in History** turns
+  them off, and then nothing is sent.

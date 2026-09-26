@@ -142,6 +142,11 @@ Keys are camelCase.
   stops running commands and agents. The same card shows the **Version** you are
   running, the one to quote in a bug report. See
   [Updating](/docs/installation/#updating).
+- **Send startup reports** — under **Privacy**, on by default. Each start sends
+  one anonymous report naming only the operating system and the app's
+  version, which is how launches are counted. Off sends nothing, cancels a report still on its way, and stays
+  off for every later start. See
+  [What reaches the network](/docs/under-the-hood/#what-reaches-the-network).
 
 Grid or Columns is not a row here. It is the switch in the title bar, or the
 **Switch between Grid and Columns** action — unassigned by default, so bind it
@@ -182,7 +187,9 @@ in, and it is not synced to windows already open.
   in a theme whose focus edge is subtle. The dimmed panes still take clicks.
 - **Theme** and **Terminal theme** — the second can point at a different theme,
   so the terminal palette and the interface need not match; **Match app theme**
-  keeps them together. Both are searchable; see [Theming](/docs/theming/) for
+  keeps them together and leads its list. Both lists start with the built-in
+  themes, **Default** first, then each installed pack. Both are searchable;
+  see [Theming](/docs/theming/) for
   previews and theme-pack variants. **Manage themes → Marketplace & installed…**
   opens the Marketplace, a page inside Settings for theme packs from Open VSX;
   Back or <kbd>Esc</kbd> returns to Appearance.
@@ -375,11 +382,14 @@ The launchers lead the category, in a card that is always open:
 - **Agent launchers** — the list behind every pane header's ✳ button and every
   “Open in &lt;shell&gt;” agent flyout. Each row shows the digit it answers to
   after <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, the mark the menu shows for
-  it, its name, whether its command was *found* or is *not on PATH*, and the
-  command itself, typed into the pane's shell as written — flags welcome
-  (`claude --dangerously-skip-permissions`). Ships with Claude Code, Codex,
-  OpenCode, Antigravity and Grok Build, and an install that predates one of
-  those picks it up once. **Add agent** adds a row with the cursor in its name.
+  it, its name, whether its command was *found*, is *not on PATH* or is *not
+  verified*, and the command itself, typed into the pane's shell as written —
+  flags welcome (`claude --dangerously-skip-permissions`). Ships with Claude
+  Code, Codex, OpenCode, Antigravity, Grok Build, Gemini CLI, GitHub Copilot
+  CLI and Cursor CLI, and an install that predates one of those picks it up
+  once; one you remove stays removed. The refresh button beside **Add agent**
+  looks for installed agents again. **Add agent** adds a row with the cursor
+  in its name.
   Reorder by the grip — drag it, or focus it and use the arrow keys,
   <kbd>Home</kbd> and <kbd>End</kbd> — or with the up and down buttons, and
   removing one asks **Remove?** first. **The order is both the menu's order and
@@ -448,6 +458,9 @@ and create worktrees. These settings tune its defaults:
 - **Conflict count on the Source Control tab** — a badge on the tab itself, so a merge an
   agent started in a background pane is visible while you are looking at
   Files.
+- **Counts beside the branch in the status bar** — default on: changed files,
+  commits to push and commits to pull, beside the branch name. Off leaves the
+  branch alone; hovering it still gives the counts.
 - **Diff layout** — unified (stacked) or side by side; the same toggle lives
   in the diff window's header, and under **Appearance** as **Git diff view**.
 - **Committer pictures in History** — default on. A picture beside each commit

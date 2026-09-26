@@ -10,14 +10,23 @@ the parts that exist because of agents specifically.
 ## Launching one in the focused terminal
 
 A terminal pane's header has an **✳** button listing your agent commands —
-Claude Code, Codex, OpenCode, Antigravity and Grok Build out of the box. Like the
+Claude Code, Codex, OpenCode, Antigravity, Grok Build, Gemini CLI, GitHub
+Copilot CLI and Cursor CLI out of the box. Like the
 header's other tools, it shows on the focused pane, and on any other pane while
 the pointer is over it. Picking one types its command into that pane's shell and
 hands keyboard focus back to the terminal. The menu ends with **Manage agents…**,
 which opens **Settings → Agents**.
 
 A launcher appears once its command is on your `PATH`, and an install that
-predates one of them picks it up on its own. With none found, the button stays,
+predates one of them picks it up on its own. Gemini CLI, GitHub Copilot CLI and
+Cursor CLI must also be the product they claim. A program name can belong to
+something else — `agent` is also Grok's, and `copilot` is also AWS's — so
+TermHQ runs each with `--help` and checks that it names the right product
+before listing it. That check passes nothing else, not your configured prompt
+or flags, and gives up after five seconds. An agent you install while TermHQ is
+open shows up the next time the window comes to the front, when Settings or the
+agent picker opens, or when you press the refresh button in
+**Settings → Agents**. With none found, the button stays,
 dimmed, and takes you to **Settings → Agents** to set one up. A pane whose shell
 has ended has no agent button, since there is nothing to type into, and neither
 has an [SSH pane](/docs/ssh/): the agents TermHQ found are on this machine, and
@@ -41,7 +50,8 @@ moment ago · one command every 3 s**.
 The list is yours to edit in **Settings → Agents → Agent launchers**, flags
 included, so `claude --dangerously-skip-permissions` is one click rather than
 something you retype all day. Each row shows the number the agent answers to, its
-mark, its name, whether its command was found — *found*, *not on PATH*, or
+mark, its name, whether its command was found — *found*, *not on PATH*, *not
+verified* (found, but not the product it's named for; its hint says why), or
 *checking…* — and the command itself. **Add agent** starts a new row; drag a row
 by its grip to reorder, or focus the grip and use the arrow keys; removing one
 asks **Remove?** first. Entries whose program is not on your `PATH` are hidden
@@ -58,9 +68,11 @@ it, including paths added by Homebrew, npm and shell startup files. IDE and file
 openers use that resolved path too. The initial launcher lookup runs in the
 background so it does not hold up the interface.
 
-If you install an agent or change your shell's `PATH` while TermHQ is open,
-restart TermHQ to refresh command detection. On Windows, TermHQ uses the path
-in its process environment.
+If you change your shell's `PATH` while TermHQ is open, restart TermHQ so it
+reads the new one; an agent installed into a folder already on it is found
+without a restart. On Windows, TermHQ uses the path in its process environment
+plus any folders an installer has added since, so a new install is found
+without restarting.
 
 ## Launching one in a folder or worktree
 
@@ -111,8 +123,9 @@ one stops.
 A pane that was busy while you were looking elsewhere and has since gone quiet
 gets a pulsing header: the icon at its left that shows what kind of pane it is
 pulses in the theme's attention color, and an inset wash and the bottom hairline
-breathe with it. On a stashed terminal, the shell icon on its shelf card lights
-and pulses instead, so a parked job can still get your attention. This works for
+breathe with it. A stashed terminal moves to the top of the stash shelf under
+**Waiting on you**, with the time it went quiet, and its row glows the same
+way, so a parked job can still get your attention. This works for
 longer-running commands as well as coding agents.
 
 Waiting panes collect in the bottom status bar as a count — **N waiting** —

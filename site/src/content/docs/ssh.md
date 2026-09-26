@@ -206,7 +206,8 @@ far side.
 If nothing arrives within two seconds, the pane says so — *Connecting to
 build.example.com… 5 s*, counting — with a **Cancel** button that closes it.
 
-On the shelf, a stashed SSH pane's card says **SSH** under the host.
+On the stash shelf, a stashed SSH pane's row names the host, followed by the
+remote folder when the shell reports one.
 
 ## When a connection ends
 

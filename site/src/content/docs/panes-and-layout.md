@@ -100,6 +100,8 @@ to read all of it, and click its text to copy it.
 
 - **Double-click the header**, name included, to
   [maximize](#maximize) the pane.
+- **Middle-click the header** (click the scroll wheel) to close the pane, as on
+  a browser tab. It closes exactly the way the header's own close button does.
 - **Right-click a terminal's header** for **Rename…**, **Copy path**,
   **Reveal in File Explorer** (**Reveal in Finder** on macOS), the pane's own
   actions, and **Close**. On a browser or editor pane, a right-click on the
@@ -129,8 +131,12 @@ Closing a pane re-packs the rest in reading order, so middle holes close and the
 grid shrinks back through square sizes — unless you have hand-grown a pane, which
 switches to a gentler reflow that does not disturb your arrangement.
 
-Closing or stashing the pane you are in hands focus to the pane you used before
-it, not to whichever one opened last.
+Closing or stashing the pane you are in keeps your place: the grid closes up,
+and the pane that moves into that cell takes the keyboard. Close the sixth pane
+of a three-wide grid and what was the seventh is selected. If the grid loses a
+column or a row, the pane in the same corner takes it instead, so closing the
+top-right pane leaves you top right. When nothing moves in because the last
+pane went, the one before it does.
 
 ## Resizing panes
 
@@ -314,45 +320,50 @@ of Workspace. With [pane motion](#pane-motion) on, a stashed pane flies down
 into the count, which bumps as it lands, and a restored one rises back out of
 it into its cell.
 
-Click the stash count — or reach it with
-<kbd>Tab</kbd> and press <kbd>Enter</kbd> — to open a shelf of cards upward. Click
-a card to restore it into the first free slot, or use its hover-revealed **×**
-to close that pane outright without restoring it first. Right-click the count
-(or press <kbd>Shift</kbd>+<kbd>F10</kbd> with it focused) for **Restore all**
-and **Close all**: restore asks first only when the panes in the grid plus the
-ones on the shelf would exceed nine, and close always asks, saying what closing
-means under your Undo close setting. Both are in the command palette too, as
-**Restore all stashed panes** and **Close all stashed panes**, with no default
-shortcut.
+Click the stash count — or reach it with <kbd>Tab</kbd> and press
+<kbd>Enter</kbd>, or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> from
+anywhere — to open the shelf in the window's bottom-right corner: a list with
+one row per parked pane. A row says what the pane is, with a mark for its kind
+and the name its header shows, and where it is: a terminal's whole folder, a
+page's address, the file an editor has open, an SSH pane's host.
 
-Each card identifies what you parked at a glance: a shell prompt for a terminal,
-a globe for a browser, or a page for an editor. If a busy stashed terminal goes
-quiet while you are elsewhere, that icon lights and pulses in the attention
-color instead of becoming a separate badge.
+- **Click a row**, or press <kbd>Enter</kbd> on it, to restore that pane into
+  the first free slot. The list closes so you can watch it land.
+- **Close a pane without restoring it** with the row's **×**, a middle click on
+  the row, or <kbd>Delete</kbd> (<kbd>Backspace</kbd> too, while the list has no
+  filter). The row slides out and the list stays open, so you can close
+  several in a row.
+- **Restore all** and **Close all** sit at the foot of the list whenever more
+  than one pane is parked, and on the count's right-click menu (or
+  <kbd>Shift</kbd>+<kbd>F10</kbd> with the count focused). Restore asks first
+  only when the panes in the grid plus the ones on the shelf would exceed
+  nine, and close always asks, saying what closing means under your Undo close
+  setting. Both are in the command palette too, as **Restore all stashed
+  panes** and **Close all stashed panes**, with no default shortcut.
+
+A parked pane that went quiet while you were elsewhere moves to the top under
+**Waiting on you**, with the time it went quiet, and its row glows in the
+attention color. The rest follow under **Stashed**, most recently stashed
+first.
+
+The list takes the keyboard while it is open. <kbd>↑</kbd> and <kbd>↓</kbd>
+move through the rows and the foot and wrap around, <kbd>Home</kbd> and
+<kbd>End</kbd> go to either end, and <kbd>Esc</kbd> puts the list away and
+hands the keyboard back to your pane. Nothing you type reaches a shell while
+the list is open, and any other shortcut puts the list away first and then does
+its job. Opened from the keyboard, the list starts on its first row. Opened
+with a click, nothing is selected until you press an arrow or point at a row,
+and pointing and the arrows move the same single selection.
+
+Past eight parked panes a filter box appears above the rows, and every opening
+starts on the first row. The filter is one more stop in the loop: <kbd>↑</kbd>
+from the first row reaches it, and <kbd>↑</kbd> again continues from the
+bottom, so holding an arrow cycles through everything. Start typing on any row
+to filter by name or place; <kbd>Enter</kbd> in the filter moves to the first
+match, and <kbd>Enter</kbd> again restores it.
 
 When the last stashed pane is restored or closed, the stash count disappears.
 The status bar itself stays in place.
-
-<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>O</kbd> pins the shelf open and hands it the
-arrow keys — <kbd>←</kbd> <kbd>→</kbd> along a row, <kbd>↑</kbd> <kbd>↓</kbd>
-between rows, <kbd>Home</kbd> and <kbd>End</kbd> to either end, <kbd>Tab</kbd>
-through the cards in order, <kbd>Enter</kbd> to restore, <kbd>Delete</kbd> or
-<kbd>Backspace</kbd> to close, <kbd>Esc</kbd> to dismiss. Those keys are
-swallowed rather than passed on, which
-is the point: you can browse what is parked without a single keystroke reaching a
-shell. Letters still reach the focused terminal, so press <kbd>Esc</kbd> first if
-you mean to type.
-
-Only *bare* presses belong to the shelf. Hold a modifier and the key does what it
-always does, so <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+arrow still steps between panes
-and <kbd>Ctrl</kbd>+<kbd>Backspace</kbd> still deletes a word in your shell while
-the shelf is up. <kbd>Shift</kbd>+<kbd>Tab</kbd> is the one exception — it walks
-the cards backwards.
-
-<kbd>Esc</kbd> dismisses the shelf and returns keyboard focus to the terminal.
-
-Cards fill a row left to right, most recently stashed first, then wrap. Two rows
-show at a time and anything past that scrolls **down**, never sideways.
 
 ## Undoing a close
 

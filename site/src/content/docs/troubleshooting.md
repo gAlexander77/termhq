@@ -18,6 +18,21 @@ Confirm with:
 echo "TERM=$TERM NO_COLOR=$NO_COLOR COLORTERM=$COLORTERM"
 ```
 
+## An installed agent is missing from the menu
+
+Open **Settings → Agents** and read what its row says:
+
+- ***not on PATH*** — TermHQ can't find the program. Press the refresh button
+  beside **Add agent** to look again. If it's still missing, check that your
+  terminal finds it (`where gemini` on Windows, `which gemini` elsewhere), or
+  put the program's full path in the launcher's command. On macOS, restart
+  TermHQ after changing your shell's `PATH`.
+- ***not verified*** — a program with that name exists, but it isn't the
+  product the launcher is for: `agent` might be Grok's rather than Cursor's,
+  or `copilot` AWS's rather than GitHub's. Hover the status for what TermHQ
+  found. If the right one is installed under another name or path, put that
+  in the command.
+
 ## I cannot find the waiting-pane list
 
 The waiting item in the bottom status bar is hidden when there are no waiting

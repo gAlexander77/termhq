@@ -234,16 +234,21 @@ yet; see [Troubleshooting](/docs/troubleshooting/).
   problem — the panel says **Source Control can't read this folder**, gives the
   reason, and offers **Retry**. When the cause looks like a missing or old Git,
   it adds that Source Control needs git 2.23 or newer.
-- Outside a repository, **Initialize repository…** runs `git init` in that
-  folder, after asking.
+- Outside a repository, the panel says **No repository here**, names the
+  folder, and offers **Initialize repository…**, which runs `git init` there
+  after asking. The question starts on **Cancel**, so a click by mistake
+  followed by <kbd>Enter</kbd> changes nothing.
 - A clean working tree says so, and offers **View history**.
 
 ## Elsewhere in the app
 
 - While the sidebar is open, the status bar shows the branch of the repository
   the Git panel is showing — at its left, after the Worktrees item if you track
-  worktrees — with the number of changed files and how far the branch is ahead
-  or behind. Click it to open the Git panel.
+  worktrees. Beside it, a dot in your theme's color counts changed files, and
+  the push and pull arrows count commits ahead of and behind the upstream;
+  hover it for the counts in words. Click it to open the Git panel.
+  **Settings → Git → Counts beside the branch in the status bar** turns the
+  counts off and keeps the branch.
 - Switching between the Files and Git tabs keeps your commit message, amend
   mode, and a push, pull or commit that is still running.
 - A file's right-click menu in the Files panel has **File history**, which opens

@@ -10,6 +10,92 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.9 — 2026-09-25
+
+### Added
+
+- **Gemini CLI, GitHub Copilot CLI and Cursor CLI** join the agent launchers,
+  each with its own product mark. Because a program name alone can belong to
+  something else (`agent` is also Grok's, and `copilot` is also AWS's), TermHQ
+  asks each one for its help text before listing it, and
+  **Settings → Agents** marks one that doesn't match as *not verified*, with
+  the reason. Your own launchers keep their commands, flags and order. The new
+  ones are added to them once, and one you remove stays removed.
+- **Agents you install while TermHQ is open are found.** The list is checked
+  again when the window comes back to the front, when Settings or the agent
+  picker opens, and with the refresh button in **Settings → Agents**. On Windows this
+  includes folders an installer has just added to your `PATH`.
+- **Dictation into web pages.** Start dictating over a browser pane and the
+  words go into the text field the page has focused, typed the way the page
+  expects typing, so its own undo and autosave see them. A page with nothing
+  to type into says so before the microphone opens.
+- **Startup reports.** Each time the app starts, it sends one anonymous report
+  saying it started, on which operating system (Windows, macOS or Linux), and
+  which version of TermHQ, so we can estimate how many people use TermHQ and
+  how quickly they update. It contains nothing else: no
+  account, no device ID, no hardware details, no terminal content, no
+  workspace data. Turn it off under **Settings → General → Privacy → Send
+  startup reports**. Turning it off sends nothing, and it stays off. See
+  [Under the hood](/docs/under-the-hood/#what-reaches-the-network).
+- **A middle click closes things**, as on a browser tab: a pane, on its header,
+  and a stashed pane, on its row in the stash shelf.
+- **Settings → Git → Counts beside the branch in the status bar**, on by
+  default. Off, the status bar shows the branch alone. Its tooltip and the Git
+  panel still show the counts.
+
+### Changed
+
+- **The stash shelf is a list.** Each parked pane has a row saying what it is
+  and where: the terminal's folder, the page's address, the editor's file.
+  Panes waiting on you lead the list and glow. **Restore all** and **Close
+  all** sit at its foot. Closing a row slides it out and keeps the list open,
+  so you can close several in a row. Past eight panes a filter appears. The
+  keyboard starts on the first row, the arrows loop through the filter, the
+  rows and the foot, and typing filters the list. Any other shortcut puts the
+  list away and then does its job.
+- **Closing or stashing a pane keeps your place.** The pane that moves into
+  its cell takes the keyboard. If the grid loses a column or a row, the pane
+  in the same corner does.
+- **The branch in the status bar says what its numbers count.** Changed files
+  have a dot in your theme's color, and commits to push and pull have the
+  same arrows as the Git panel's buttons.
+- **The Git tab outside a repository** names the folder and offers
+  **Initialize repository…** as its main button. It still asks first, and the
+  question now starts on **Cancel**, so an accidental click and Enter do
+  nothing.
+- **Deleting a workspace that's open in another window** now closes that
+  window first, instead of refusing.
+- **The workspace picker opens on your most recent other workspace**, so
+  opening it and pressing Enter switches to it.
+- **Default comes first** in both theme lists. In the terminal theme list it
+  follows **Match app theme**.
+- **The Files panel no longer flashes "reading…"** when you switch terminals.
+  A folder that takes more than five seconds to read says so, and shows
+  placeholder rows while it waits.
+- **Zooming an editor shows its new size**, as zooming a terminal does.
+- **Browser panes move more smoothly.** A page keeps up with its pane while the
+  window, a pane border or the sidebar is being resized. Every pane motion
+  starts smoothly instead of with a jump, and switching between Grid and
+  Columns glides. On macOS a moving or covered page now shows a still of
+  itself instead of a blank frame, and its bottom corners follow the pane's
+  rounded edge.
+- The focus shortcuts move you off a browser pane from its address bar and its
+  find bar, as they do from the page.
+
+### Fixed
+
+- A workspace window brought up from the picker or the taskbar's jump list
+  could sink behind the window you switched from. It stays in front now.
+- A new, empty browser pane lost its "Type an address above to get started"
+  prompt and showed a loading placeholder that never finished.
+- Opening the command palette or another launcher over Settings canceled a
+  speech-model download without asking. It asks first, as closing Settings
+  does.
+- Clicking the mic while typing in a text field moved the keyboard to the
+  terminal until the words arrived. It stays in the field.
+- A custom agent whose name merely contained another's, such as
+  `my-codex-helper`, wore that agent's mark.
+
 ## 0.2.8 — 2026-09-24
 
 ### Added

@@ -108,7 +108,8 @@ column selection, find and
 replace, bracket matching and the rest of the usual moves are already there. It
 uses your terminal font, and <kbd>Ctrl</kbd>+<kbd>=</kbd> / <kbd>-</kbd> /
 <kbd>0</kbd> zoom one pane's text exactly as they do a terminal's, as does
-<kbd>Ctrl</kbd>+wheel (<kbd>⌘</kbd>+wheel on macOS) — on top of a base size that
+<kbd>Ctrl</kbd>+wheel (<kbd>⌘</kbd>+wheel on macOS), each showing the new size
+low in the pane — on top of a base size that
 follows your terminal font until you turn **Settings → Editor → Font size
 follows the terminal** off and set the editor's own. That panel also carries
 soft word wrap and the minimap, both off by default, and a reference list of
