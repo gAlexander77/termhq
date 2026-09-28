@@ -10,6 +10,114 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.10 — 2026-09-28
+
+### Added
+
+- **History shows any branch.** A branch button beside History's title lists
+  your local and remote branches. Pick one to read its history, and search
+  follows it. Nothing is checked out: **back to** returns to the branch you're
+  on, and History always opens there.
+- **Settings search takes you to the setting.** Typing lists the matching
+  settings under the field, each with its place, such as Terminal › Text.
+  Enter or a click opens its page, unfolds its section if it was folded, and
+  flashes it.
+- **Reset Appearance.** Once anything on **Settings → Appearance** differs from
+  how TermHQ ships, the page ends with a **Reset Appearance** button. It says
+  what it will put back and asks first. Themes, backgrounds and icon packs stay
+  installed.
+- **Backdrop blur and darkness.** The window behind softens and dims while the
+  command palette, the workspace picker, Settings, the worktrees view, History
+  or a Git diff is open. **Settings → Appearance → Backdrop blur** and
+  **Backdrop darkness** set how much.
+- **Moving between panes in fullscreen.** While a pane is maximized, the focus
+  shortcuts step to the next pane in that direction, and a small map of the
+  grid shows where you are. **Settings → Appearance → Move between panes in
+  fullscreen** turns it off.
+- **Muse Code, Hermes Agent and OpenClaw** join the agent launchers, each
+  checked before it's listed. **Settings → Agents** now sorts the agents it
+  found and the ones you added. Built-in ones it didn't find wait in a folded
+  list and join when you install them, and **Restore removed agents** brings
+  back one you removed.
+- **Open in IDE finds your editors.** **Settings → Agents** offers the
+  supported editors installed on this computer, each with its mark.
+  **Automatic** uses the first one found, an editor you pick stays picked, and
+  your own command still works.
+- **A first run for the worktrees view.** With no folders to track yet, its
+  shortcut suggests your favorites that hold checkouts, or lets you choose a
+  folder, then scans them and shows what it found.
+- **Files: Open the Files panel** in the command palette, the twin of
+  **Git: Open the Git panel**.
+
+### Changed
+
+- **The command palette** opens over a softened backdrop and splits its
+  results into scopes: All, Commands, Git, Panes, Themes and Workspaces.
+  Tab moves between them. Ctrl+D (⌘+D on macOS) shows a details pane: what a
+  command does, its shortcut, why it can't run right now, or a theme in its
+  own colors. **Panes** lists your open panes and takes you to one.
+- **The workspace picker searches first.** Type to find a workspace by name or
+  folder; a name nobody has makes a new workspace. Rows show folders, pane
+  counts and when each was last used. F2 renames, Del deletes with an
+  **Undo**, and deleting the workspace you're in says clearly what closes and
+  what's lost before anything happens.
+- **The worktrees view is rebuilt.** Each repository is a card with its
+  worktrees beneath, a dot marks uncommitted changes, and a details pane shows
+  the branch, how far it is from its upstream, its status and its recent
+  commits. Right-click a row for its actions, or a card's header for **New
+  worktree…**, made in place. Ctrl+R (⌘+R) refreshes.
+- **Settings, History and Git diffs open and close like the command palette,**
+  rising into place and fading away. With **Animate panes** off or reduced
+  motion on, they simply appear.
+- **The title bar keeps working under any dialog.** Minimize, maximize and
+  close stay live, and the bar still drags the window.
+- **Git speaks plainly.** A pull that can't fast-forward says both sides moved
+  and offers **Pull with rebase**. A force push stopped by its safety check
+  says nothing was overwritten. A conflict names the files and points to
+  **Merge Changes**. A leftover lock file says another git process is busy,
+  and a remote that can't be reached says why.
+- **The terminal's scrollbar** matches the rest of the app: a slim, rounded
+  thumb that shows while there's something to scroll back to.
+- **The undo list and the waiting panes** in the status bar look and work like
+  the stash shelf's list, and each undo row drains its countdown. Rows fade out
+  as they leave, and a long name scrolls on the highlighted row so you can read
+  all of it.
+- **A maximized pane holds the layout still.** The commands that switch
+  layouts or reset pane sizes don't run while a pane is maximized, and the
+  command palette says why. Dragging a pane's header does nothing while one is
+  maximized.
+- On macOS, in fullscreen, the title bar's items slide into the room the window
+  buttons leave.
+
+### Fixed
+
+- Choosing **Git: Commit**, **Git: Switch Branch** or **Git: Stash Changes**
+  in the command palette sent your typing to the terminal instead of the Git
+  panel.
+- A Git error's recovery buttons, such as **Pull with rebase**, could act on
+  another repository if the panel had moved on. They act where the action ran.
+- A bare repository showed the previous repository's state under an error. It's
+  named as a bare repository now.
+- History offered no **open on github.com** link for a remote added in a
+  terminal until you left the repository and came back.
+- A brand-new repository offered **Publish** before its first commit, which
+  could only fail.
+- An agent installed while TermHQ was open wasn't found, or couldn't launch in
+  a terminal opened before the install. The refresh button in **Settings →
+  Agents** finds it, and it launches from older terminals too.
+- In a large grid that scrolls, a browser page trailed its pane, and a pane
+  scrolled partly out of view squeezed its page into the visible strip. The
+  page now moves with its pane, cropped where it really is, and a click brings
+  the pane into view.
+- Swapping panes from the keyboard sometimes had no animation when a browser
+  page had only just loaded.
+- On macOS, entering native fullscreen left the keyboard nowhere: shortcuts
+  did nothing and every key beeped.
+- On macOS, ⌘+W inside a web page could close the whole window, or close
+  several panes after a delay. It closes that one pane.
+- Typing could land in the terminal you used last while a browser pane was
+  selected.
+
 ## 0.2.9 — 2026-09-25
 
 ### Added

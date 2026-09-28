@@ -149,19 +149,28 @@ right-click on the header.
 
 Panes glide into place when you swap, move or resize them, with a browser pane
 on screen too: the page rides along as a still picture, keeping its size while
-the pane reshapes around it, and comes back live where it lands. While you
-resize the window, a border between panes or the sidebar, the page holds still
-in the same way until you stop, so it never runs ahead of its pane. A new
-browser pane settles into its cell, a closed one fades from
-its place, and stashing and restoring fly it into and out of the shelf.
+the pane reshapes around it, and comes back live where it lands. A page shown
+only a moment ago, before its first picture is taken, hides for the glide
+instead and comes back where its pane lands. A new browser pane settles into
+its cell, a closed one fades from its place, and stashing and restoring fly it
+into and out of the shelf.
 **Settings → Appearance → Animate panes** turns all of that off, and so does
 reduced motion in your system settings — see
 [Pane motion](/docs/panes-and-layout/#pane-motion).
 
-Closing or stashing the browser pane you are using hands focus to the pane you
-used before it, so the keyboard always has somewhere to go. And a file dropped on
-a browser pane is turned away with a note rather than opened: a browser pane
-opens web addresses, not files.
+While you resize the window, a border between panes or the sidebar, the page
+holds still as its picture until you stop, so it never runs ahead of its pane.
+A grid with more panes than the window can fit scrolls, and every page rides
+the scroll as its picture too, coming back live once the scrolling stops, so a
+page never strays outside its pane. A pane scrolled partly out of view keeps
+its picture, cut off by the grid's edge where the page really sits, until a
+click on it scrolls the pane into view.
+
+Closing or stashing the browser pane you are in keeps your place, as it does for
+any pane: the grid closes up, and the pane that moves into its cell takes the
+keyboard (see [Rearranging with the mouse](/docs/panes-and-layout/#rearranging-with-the-mouse)).
+And a file dropped on a browser pane is turned away with a note rather than
+opened: a browser pane opens web addresses, not files.
 
 A link that opens a new tab — `target="_blank"`, or a `window.open` from the
 page — opens **another browser pane** rather than an operating-system window.
@@ -208,6 +217,9 @@ zoom the page, and the usual browser keys work while the page has the keyboard �
 <kbd>⌘</kbd>+<kbd>L</kbd> for the address bar, <kbd>⌘</kbd>+<kbd>[</kbd> and
 <kbd>⌘</kbd>+<kbd>]</kbd> for back and forward, <kbd>⌘</kbd>+<kbd>R</kbd> to
 reload — unless you have bound one of those chords to something else.
+Inside a page, <kbd>⌘</kbd>+<kbd>W</kbd> closes that browser pane rather than
+the window, the way a browser closes a tab, and one press closes one pane, even
+while a page is still loading.
 
 Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands the page every
 key except its own toggle.
@@ -238,11 +250,16 @@ Stated plainly rather than discovered later:
   for as long as the overlay is up, then goes live again. Video keeps playing
   underneath; it simply looks paused while covered. This includes opening the
   waiting-pane list, closed-pane list or stash shelf. Their status-bar buttons
-  sit below the grid and do not freeze the page on their own. The frame is a
+  sit below the grid and do not freeze the page on their own. The map of the
+  grid that shows while you
+  [step between maximized panes](/docs/panes-and-layout/#moving-between-panes-in-fullscreen)
+  freezes the page under it too. The frame is a
   courtesy rather than a guarantee — a pane nobody can see does not pay to
   capture one, and neither does a second overlay arriving right
   behind the last, where the previous correctly sized frame or the pane's
-  background is shown.
+  background is shown. A frame is the page as it was when it last loaded,
+  navigated, was shown or changed size, so a page you have scrolled or typed in
+  since can appear as it was until it goes live again.
 - **Downloads** use the engine's own default handling.
 - **One browser profile**, shared by every workspace. Per-workspace profiles
   are a real feature with real questions, and are deferred rather than faked.

@@ -20,18 +20,43 @@ echo "TERM=$TERM NO_COLOR=$NO_COLOR COLORTERM=$COLORTERM"
 
 ## An installed agent is missing from the menu
 
-Open **Settings → Agents** and read what its row says:
+Open **Settings → Agents** and find its row. A built-in launcher TermHQ has not
+found waits under the list, folded into **Built-in agents not detected**; one
+you removed comes back from **Restore removed agents**. Then read what the row
+says:
 
 - ***not on PATH*** — TermHQ can't find the program. Press the refresh button
-  beside **Add agent** to look again. If it's still missing, check that your
-  terminal finds it (`where gemini` on Windows, `which gemini` elsewhere), or
-  put the program's full path in the launcher's command. On macOS, restart
-  TermHQ after changing your shell's `PATH`.
+  beside **Add agent** to look again; on macOS it also asks your login shell
+  for its `PATH` again, so a folder an installer just added is seen without a
+  restart. If it's still missing, check that your terminal finds it (`where
+  gemini` on Windows, `which gemini` elsewhere), or put the program's full path
+  in the command of a launcher of your own — **Add agent** makes one.
 - ***not verified*** — a program with that name exists, but it isn't the
   product the launcher is for: `agent` might be Grok's rather than Cursor's,
   or `copilot` AWS's rather than GitHub's. Hover the status for what TermHQ
   found. If the right one is installed under another name or path, put that
-  in the command.
+  in the command of a launcher of your own — **Add agent** makes one.
+
+If the agent starts from TermHQ's menus but typing its name in a terminal gets
+an unknown-command error, that terminal was open before the install and its
+shell still has the old `PATH`. Open a new terminal, or keep launching the agent
+from TermHQ, which types its full path there.
+
+## The Open in IDE button is missing
+
+The `</>` button in a terminal's header, and **Open in IDE** in the app's menus,
+open the editor chosen in **Settings → Agents → Open in IDE**. They are left out
+while that choice has nothing to open:
+
+- **Automatic (no IDE found)** — none of the
+  [editors TermHQ recognizes](/docs/agents/#directory-awareness) is installed
+  where it looks. Install one and press the refresh button under the picker,
+  or choose **Use IDE command…** and enter the command that starts your editor.
+- **(not found)** beside the editor you picked — it is no longer where TermHQ
+  found it, and TermHQ does not swap in a different one. Pick another, or press
+  the refresh button once it is back.
+
+An [SSH pane](/docs/ssh/) never has the button: its folder is on the far host.
 
 ## I cannot find the waiting-pane list
 
@@ -255,20 +280,27 @@ Two different cases:
 
 ## A browser pane looks frozen
 
-Almost certainly it is — deliberately, and only while something covers it or
-moves it. A [browser pane](/docs/browser-panes/) is a native surface that the
-interface cannot paint over, so whenever a modal, menu, or drag preview needs
-the space, or the panes glide into new places, the pane shows a stand-in until
-the overlay goes away or the pane lands. On Windows the stand-in is a still
-frame of the page; on macOS it is the pane's plain background. Audio and video
-keep running underneath. Opening the waiting-pane list, closed-pane list or
-stash shelf has the same effect. Their buttons in the status bar do not freeze
-the page while those lists are closed.
+Almost certainly it is — deliberately, and only while something covers or moves
+it, or part of it is out of view. A [browser pane](/docs/browser-panes/) is a
+native surface that the interface cannot paint over, so whenever a modal, menu,
+or drag preview needs the space, or the panes glide into new places, the pane
+shows a still frame of the page until the overlay goes away or the pane lands.
+Audio and video keep running underneath. Opening the waiting-pane list,
+closed-pane list or stash shelf has the same effect. Their buttons in the status
+bar do not freeze the page while those lists are closed.
 
-On Windows you sometimes get the plain background instead of a still frame: a
-pane nobody can see does not pay to capture one, and neither does a second
-overlay arriving right behind the last. Both go live again the moment the
-overlay does.
+A grid with more panes than fit the window scrolls, and while it does, each
+page rides along as its still frame and goes live once the scrolling stops. A
+pane left partly out of view stays on its still, cropped where the page really
+is, until you click it: the click scrolls the pane into view and the page goes
+live. A still is taken when the page loads, resizes or comes back into view, so
+after you scroll or type inside a page, its still can briefly show it as it was.
+
+Sometimes you get the plain background instead of a still frame: a pane nobody
+can see does not pay to capture one, a second overlay arriving right behind the
+last does not wait for a new one, and a page shown only a moment ago has none
+yet when its pane glides. Each goes live again the moment the overlay goes or
+the pane lands.
 
 If nothing is covering it and it is still frozen, reload the page from the
 pane's reload button.

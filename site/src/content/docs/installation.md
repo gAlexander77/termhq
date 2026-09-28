@@ -92,7 +92,7 @@ and if you already have a compatible model file of your own, **Import** brings
 it in instead.
 
 Dictation listens in **English** by default. **Settings → Voice** has a
-language dropdown with sixteen more, plus an auto-detect option that lets a
+language dropdown with fifteen more, plus an auto-detect option that lets a
 multilingual model identify the language per recording.
 
 How dictation works day to day — the mic button, the chord, Hold to talk, where

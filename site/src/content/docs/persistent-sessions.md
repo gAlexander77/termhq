@@ -140,6 +140,9 @@ default — a closed terminal's shell keeps running until its countdown ends,
 5 seconds unless you changed it in **Settings → General**. **Close now** in the
 undo list ends it at once, and so does closing the window.
 
-Deleting a workspace from the picker also ends any terminals still parked for it,
-which is the quickest way to clear out one project's worth of background work
-without touching another's.
+Deleting a workspace from the picker also ends any terminals still parked for it
+once its **Undo** runs out or the picker closes, which is the quickest way to
+clear out one project's worth of background work without touching another's.
+The workspace you are in can be deleted from its own picker too: its window
+closes and its terminals end with it. See
+[Deleting one](/docs/workspaces/#deleting-one).

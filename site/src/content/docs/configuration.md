@@ -7,12 +7,21 @@ description: "Where TermHQ keeps its settings, every setting you can change, and
 Everything configurable lives in **Settings**. <kbd>Ctrl</kbd>+<kbd>P</kbd>
 (<kbd>⌘</kbd>+<kbd>P</kbd> on macOS) opens it with the search box already focused,
 so you type the setting you want instead of hunting through categories. The same
-chord — or <kbd>Esc</kbd> — closes it.
+chord — or <kbd>Esc</kbd> — closes it; in the search box, <kbd>Esc</kbd> first
+clears what you typed.
+
+Typing lists the settings that match under the search box, grouped by category,
+each with the card or section it sits in beside it. Move through the list with
+<kbd>↑</kbd> <kbd>↓</kbd>; <kbd>Enter</kbd> or a click goes to the setting — its
+page opens, a folded section unfolds on the way, and the row scrolls into view
+and flashes once, with the keyboard on it. The page behind the list stays as it
+was until you pick one.
 
 Search accepts several words in any order, such as **Interface scale** or
-**scale interface**. You can combine a category with a setting name, and options
-inside collapsed advanced sections remain searchable. If nothing matches,
-**Clear search** takes you back to the settings list.
+**scale interface**, each matching from the start of a word. You can combine a
+category with a setting name, settings inside folded advanced sections are
+found too, and a shortcut can be found by its chord as well as its name. If
+nothing matches, the list says so.
 
 The categories run General, Workspaces, Appearance, Terminal, Browser, SSH,
 Editor, Agents, Git, Voice, Files and Shortcuts — the order this page follows.
@@ -102,7 +111,9 @@ Keys are camelCase.
   running out of sight, so **Undo close** in the status bar brings back the
   program and its scrollback exactly as they were.
 - **Undo window** — shown while undo is on: how many seconds, 3 to 60, a
-  parked terminal waits before its shell is actually killed. Default 5.
+  parked terminal waits before its shell is actually killed. Default 5. A
+  workspace you delete in the workspace picker waits as long under its
+  **Undo** chip, while the picker stays open.
 - **When a shell exits on its own** — keeps failed shells' panes open by
   default so you can read and copy their output. Press Enter to close the ended
   pane. You can choose to always keep ended panes or always close them instead.
@@ -185,6 +196,13 @@ in, and it is not synced to windows already open.
 - **Dim unfocused panes** — default off. Washes every pane but the focused one
   toward the theme's background, so the one you are typing into stands out even
   in a theme whose focus edge is subtle. The dimmed panes still take clicks.
+- **Backdrop blur** — how much the window behind softens while the command
+  palette, the workspace picker, Settings, the [Worktrees](/docs/worktrees/)
+  view, History or a Git diff is open: off to 12 px, default 2 px. Off keeps
+  it sharp; the dimming stays either way.
+- **Backdrop darkness** — how dark that window turns: off to 80%, default 40%.
+  A light theme dims more gently at the same setting. Either slider changes the
+  window behind Settings as you drag it.
 - **Theme** and **Terminal theme** — the second can point at a different theme,
   so the terminal palette and the interface need not match; **Match app theme**
   keeps them together and leads its list. Both lists start with the built-in
@@ -226,9 +244,17 @@ in, and it is not synced to windows already open.
   or resize; a maximized pane grows from its cell to fill the grid and shrinks
   back when restored; a new pane settles into its cell and a closed one fades
   from its place; a stashed pane flies into the shelf's count and back out. The
-  sidebar slides in and out, and a workspace fades in once it has opened. Off,
-  everything jumps straight to where it goes. Reduced motion in your system
-  settings turns it off too.
+  sidebar slides in and out, and a workspace fades in once it has opened. The
+  command palette, the workspace picker, Settings, the Worktrees view, History
+  and the Git diff rise into place and fade as they close. Off, everything jumps
+  straight to where it goes, and those simply appear and go. Reduced motion in
+  your system settings turns it off too.
+- **Move between panes in fullscreen** — default on. While a pane is
+  maximized, the focus shortcuts step to the next pane in that direction,
+  filling the grid with it, and a small map of the grid shows where you are,
+  fading a moment after the last step. Off, a maximized pane holds still: the
+  focus shortcuts do nothing until you restore the grid. See
+  [Keyboard shortcuts](/docs/keyboard-shortcuts/#layout).
 - **Git diff view** — side by side or stacked; the same setting as **Diff
   layout** under **Git**.
 - **Default font size** — 11 to 18 px, the base text size for every terminal.
@@ -241,6 +267,11 @@ in, and it is not synced to windows already open.
 - **Folders** — **Themes folder**, **Icons folder** and **Backgrounds folder**
   open those directories. Drop a theme, an icon pack or a background in by hand
   and reopen Settings to see it.
+
+Once any of these differs from how TermHQ ships, the Appearance category ends
+with a count of the changed settings and a **Reset Appearance** button. It names
+each setting it will put back and asks first; your backgrounds, themes and icon
+packs stay installed.
 
 The [status bar](/docs/panes-and-layout/#the-status-bar) is always visible. Its
 space stays reserved, so waiting notices and recovery controls do not resize
@@ -386,19 +417,33 @@ The launchers lead the category, in a card that is always open:
   verified*, and the command itself, typed into the pane's shell as written —
   flags welcome (`claude --dangerously-skip-permissions`). Ships with Claude
   Code, Codex, OpenCode, Antigravity, Grok Build, Gemini CLI, GitHub Copilot
-  CLI and Cursor CLI, and an install that predates one of those picks it up
-  once; one you remove stays removed. The refresh button beside **Add agent**
-  looks for installed agents again. **Add agent** adds a row with the cursor
-  in its name.
+  CLI, Cursor CLI, Muse Code, Hermes Agent and OpenClaw, and an install that
+  predates one of those picks it up once. The list holds the agents TermHQ
+  found and the ones you added; a built-in one it did not find waits, folded,
+  under **Built-in agents not detected**, and joins the list once it is
+  installed. One you remove stays removed until you bring it back from
+  **Restore removed agents**. The refresh button beside **Add agent** looks for
+  installed agents again, including one installed while TermHQ is open. **Add
+  agent** adds a row with the cursor in its name.
   Reorder by the grip — drag it, or focus it and use the arrow keys,
   <kbd>Home</kbd> and <kbd>End</kbd> — or with the up and down buttons, and
   removing one asks **Remove?** first. **The order is both the menu's order and
   the digits**; an entry whose program is not on `PATH` is left out of the menu,
   and the next one takes its number.
-- **IDE command** — in the **Open in IDE** card: what the `</>` button runs
-  against a directory. Default `code`; flags allowed. On macOS, command
-  detection uses your login-shell path even when TermHQ opens from Finder or the
-  Dock; see [Running coding agents](/docs/agents/#command-detection-on-macos).
+- **Open in IDE** — in a card of its own: the editor **Open in IDE** uses, from
+  the `</>` button or anywhere else it is offered. The list holds the supported
+  editors installed on this machine, each with its mark. **Automatic**, the
+  default, takes the first one found; an editor you pick stays picked, and if
+  it goes missing, Open in IDE is unavailable rather than opening another. The
+  last choice, **Use IDE command…**, shows an **IDE command** field and runs
+  what you type there — default `code`, flags allowed. That command stays saved
+  while you try other choices, and a setup from before this list starts on it,
+  so it keeps working. The refresh button in the card looks again, for an
+  editor installed since. With none found, Automatic says so, and Open in IDE
+  is unavailable until you install one and recheck, or pick **Use IDE
+  command…**. On macOS, command detection uses your login-shell path even when
+  TermHQ opens from Finder or the Dock; see
+  [Running coding agents](/docs/agents/#command-detection-on-macos).
 
 The **Idle agents** card holds the rest:
 
@@ -439,8 +484,9 @@ and create worktrees. These settings tune its defaults:
 - **Worktree roots** — folders containing repositories or worktrees that you
   want in the global [Worktrees](/docs/worktrees/) view. Type a path or use
   **Choose folder…**. With no roots set, nothing is scanned and the status-bar
-  item stays hidden. Removing a root only stops tracking it; nothing on disk
-  changes.
+  item stays hidden; the Worktrees shortcut then asks which folders to track
+  and saves the ones you choose here. Removing a root only stops tracking it;
+  nothing on disk changes.
 
 - **Branch order** — how the branch picker sorts: most recently committed
   first, or alphabetical.

@@ -38,7 +38,8 @@ you read them. **Switch between Grid and Columns** does it from the keyboard
 once you give it a shortcut in **Settings → Shortcuts**.
 
 When the columns no longer fit the window, the grid scrolls sideways rather
-than squeezing them. A window too narrow for both the sidebar and the grid
+than squeezing them, and once the rows reach their smallest height it scrolls
+down the same way. A window too narrow for both the sidebar and the grid
 closes the sidebar first, and opens it again once there is room, without
 changing your sidebar setting.
 
@@ -240,9 +241,10 @@ single pane, or a pane already maximized over the others.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>, a double-click on a pane header, or
 the header's **Maximize** button fills the grid with one pane; the same action
-restores the grid. Hidden panes stay alive throughout, and moving focus while
-maximized carries the maximize to the next pane rather than dropping back to
-the grid.
+restores the grid. Hidden panes stay alive throughout, and the grid behind a
+maximized pane holds still: **Switch between Grid and Columns**,
+**Reset pane sizes** and arranging are refused until you restore the grid —
+the command palette says why — and dragging the header does nothing.
 
 With [pane motion](#pane-motion) on, the pane grows from its cell until it
 fills the grid, and Restore shrinks it back into place, with the other panes
@@ -250,6 +252,22 @@ fading in around it once it lands.
 
 With only one pane in the grid there is nothing to maximize: the chord is
 refused, and a double-click on the header does nothing.
+
+### Moving between panes in fullscreen
+
+Moving focus while maximized carries the maximize with it rather than dropping
+back to the grid: each press of a focus shortcut —
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+arrow (<kbd>⌘</kbd>+<kbd>Shift</kbd>+arrow on
+macOS) — fills the grid with the next pane in that direction. A small map of
+the grid appears in the middle as you go: every pane a cell, the one now
+filling the grid in the accent color, and its name underneath. A press with no
+pane that way still shows the map, its cell nudging toward that edge, and the
+map fades a moment after your last step. **Focus the previous pane** steps back
+to the pane you came from.
+
+**Settings → Appearance → Move between panes in fullscreen** is on by default.
+Turn it off and a maximized pane stays put: the focus shortcuts do nothing
+until you restore the grid.
 
 ## Font size
 
@@ -288,13 +306,19 @@ place and can be dismissed.
 The waiting item is a count — **N waiting** — that stays as long as anything
 is waiting. For a few seconds after a new pane goes quiet, a chip joined to
 its left names that pane under a draining bar; click the chip to jump straight
-there, the way **Undo close** restores. Open the count to see the list, then
-select a pane to return to it; with two or more waiting, **Dismiss all**
-clears them at once. It is
-hidden when empty unless you enable **Settings → Agents → Always show it,
-even when nothing is waiting**, in which case it reads **0 waiting**. See
+there, the way **Undo close** restores. The count is hidden when empty unless
+you enable **Settings → Agents → Always show it, even when nothing is
+waiting**, in which case it reads **0 waiting**. See
 [When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)
 for notification controls and what makes a pane qualify.
+
+Open the count for the list, which looks and works like the
+[stash shelf](#stashing)'s: one row per waiting pane, newest first, with its
+kind, its name, its folder and the time it went quiet, and **stashed** beside
+the folder when the pane is parked on the shelf. Click a row, or press
+<kbd>Enter</kbd> on it, to go to that pane; its **×**, <kbd>Delete</kbd> or a
+middle click dismisses it, and with two or more waiting, **Dismiss all** sits at
+the foot of the list. A row that leaves fades out where it stood.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>
 (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> on macOS) jumps to the newest
@@ -325,7 +349,11 @@ Click the stash count — or reach it with <kbd>Tab</kbd> and press
 anywhere — to open the shelf in the window's bottom-right corner: a list with
 one row per parked pane. A row says what the pane is, with a mark for its kind
 and the name its header shows, and where it is: a terminal's whole folder, a
-page's address, the file an editor has open, an SSH pane's host.
+page's address, the file an editor has open, an SSH pane's host. A name or
+place too long for its row ends in an ellipsis, and the highlighted row scrolls
+it to its end and back so all of it can be read — here and in the status bar's
+undo and waiting lists. With reduced motion in your system settings, the
+highlighted row wraps instead.
 
 - **Click a row**, or press <kbd>Enter</kbd> on it, to restore that pane into
   the first free slot. The list closes so you can watch it land.
@@ -373,12 +401,16 @@ most recently closed terminal in one click, and names the pane it will bring
 back; the closed-pane count opens the full list. These controls appear before
 Stash and Workspace, keeping that pair together at the far right.
 
-A draining bar shows how long each shell will remain available, and each row of
-the list counts its seconds down. A row's **Restore** brings that terminal back
-and its **×** closes it now; with two or more closed, **Restore all** and
-**Close all now** act on the whole list. **Show recently closed panes** opens
-the list with the keyboard on its first row, from the command palette or a
-shortcut you give it.
+On **Undo close**, a draining bar shows how long that shell will remain
+available. The list looks and works like the [stash shelf](#stashing)'s,
+newest first: each row has the pane's kind, its name, its folder and the
+seconds it has left, with its own bar draining along its bottom edge. Click a
+row, or press <kbd>Enter</kbd> on it, to bring that terminal back; its **×**,
+<kbd>Delete</kbd> or a middle click closes it now. With two or more closed,
+**Restore all** and **Close all now** sit at the foot of the list. A row that
+leaves — restored, closed or out of time — fades out where it stood.
+**Show recently closed panes** opens the list with the keyboard on its first
+row, from the command palette or a shortcut you give it.
 
 Restoring one re-adopts that shell with its program still going and its recent
 output replayed, including whatever it printed while it was gone. If no pane

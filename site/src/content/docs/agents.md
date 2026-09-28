@@ -11,26 +11,33 @@ the parts that exist because of agents specifically.
 
 A terminal pane's header has an **✳** button listing your agent commands —
 Claude Code, Codex, OpenCode, Antigravity, Grok Build, Gemini CLI, GitHub
-Copilot CLI and Cursor CLI out of the box. Like the
-header's other tools, it shows on the focused pane, and on any other pane while
-the pointer is over it. Picking one types its command into that pane's shell and
-hands keyboard focus back to the terminal. The menu ends with **Manage agents…**,
-which opens **Settings → Agents**.
+Copilot CLI, Cursor CLI, Muse Code, Hermes Agent and OpenClaw out of the box.
+Like the header's other tools, it shows on the focused pane, and on any other
+pane while the pointer is over it. Picking one types its command into that
+pane's shell and hands keyboard focus back to the terminal. The menu ends with
+**Manage agents…**, which opens **Settings → Agents**.
 
 A launcher appears once its command is on your `PATH`, and an install that
-predates one of them picks it up on its own. Gemini CLI, GitHub Copilot CLI and
-Cursor CLI must also be the product they claim. A program name can belong to
-something else — `agent` is also Grok's, and `copilot` is also AWS's — so
-TermHQ runs each with `--help` and checks that it names the right product
-before listing it. That check passes nothing else, not your configured prompt
-or flags, and gives up after five seconds. An agent you install while TermHQ is
-open shows up the next time the window comes to the front, when Settings or the
-agent picker opens, or when you press the refresh button in
-**Settings → Agents**. With none found, the button stays,
-dimmed, and takes you to **Settings → Agents** to set one up. A pane whose shell
-has ended has no agent button, since there is nothing to type into, and neither
-has an [SSH pane](/docs/ssh/): the agents TermHQ found are on this machine, and
-the command would run on the far host.
+predates one of them picks it up on its own. Gemini CLI, GitHub Copilot CLI,
+Cursor CLI, Muse Code, Hermes Agent and OpenClaw must also be the product they
+claim. A program name can belong to something else — `agent` is also Grok's,
+and `copilot` is also AWS's — so TermHQ runs each with `--help` and checks that
+it names the right product before listing it. That check passes nothing else,
+not your configured prompt or flags, and gives up after five seconds. With none
+found, the button stays, dimmed, and takes you to **Settings → Agents** to set
+one up. A pane whose shell has ended has no agent button, since there is
+nothing to type into, and neither has an [SSH pane](/docs/ssh/): the agents
+TermHQ found are on this machine, and the command would run on the far host.
+
+An agent you install while TermHQ is open shows up the next time the window
+comes to the front, when Settings or the agent picker opens, or when you press
+the refresh button in **Settings → Agents**. On macOS, if the installer added a
+folder of its own to your `PATH`, the refresh button is what finds it — see
+[Command detection on macOS](#command-detection-on-macos). Once TermHQ has
+found it, a terminal you open finds it by name. One that was already open may
+not, since its shell's `PATH` was set when it started: typing the name there can
+fail, but launching the agent from TermHQ types its full path instead, flags
+kept. A WSL terminal still gets the name, since its `PATH` is Linux's.
 
 Use a terminal at an idle shell prompt. Finish or clear any partially typed
 command first, and do not launch into a program that is already using the
@@ -49,16 +56,22 @@ moment ago · one command every 3 s**.
 
 The list is yours to edit in **Settings → Agents → Agent launchers**, flags
 included, so `claude --dangerously-skip-permissions` is one click rather than
-something you retype all day. Each row shows the number the agent answers to, its
-mark, its name, whether its command was found — *found*, *not on PATH*, *not
-verified* (found, but not the product it's named for; its hint says why), or
-*checking…* — and the command itself. **Add agent** starts a new row; drag a row
-by its grip to reorder, or focus the grip and use the arrow keys; removing one
-asks **Remove?** first. Entries whose program is not on your `PATH` are hidden
-from the menus automatically, so a launcher missing from the menu is explained
-where you would look for it. If the numbered picker has no available entries,
-the command palette tells an empty agent list apart from agents it could not find
-on your `PATH`.
+something you retype all day. It holds the agents TermHQ found and the ones you
+added or edited yourself. Each row shows the number the agent answers to (a dash
+if it has none), its mark, its name, whether its command was found — *found*,
+*not on PATH*, *not verified* (found, but not the product it's named for; its
+hint says why), or *checking…* — and the command itself. **Add agent** starts a
+new row; drag a row by its grip to reorder, or focus the grip and use the arrow
+keys; removing one asks **Remove?** first.
+
+Built-in launchers TermHQ has not found wait under the list, folded into
+**Built-in agents not detected**, and join it on their own once installed. A
+built-in you removed is offered under **Restore removed agents**: one click puts
+it back, and it is checked like the rest. Entries whose program is not on your
+`PATH` are hidden from the menus automatically, so a launcher missing from the
+menu is explained where you would look for it. If the numbered picker has no
+available entries, the command palette tells an empty agent list apart from
+agents it could not find on your `PATH`.
 
 ### Command detection on macOS
 
@@ -68,11 +81,15 @@ it, including paths added by Homebrew, npm and shell startup files. IDE and file
 openers use that resolved path too. The initial launcher lookup runs in the
 background so it does not hold up the interface.
 
-If you change your shell's `PATH` while TermHQ is open, restart TermHQ so it
-reads the new one; an agent installed into a folder already on it is found
-without a restart. On Windows, TermHQ uses the path in its process environment
-plus any folders an installer has added since, so a new install is found
-without restarting.
+If your shell's `PATH` changes while TermHQ is open — an installer adding a
+folder of its own, say — press the refresh button in **Settings → Agents**: it
+asks your login shell for its `PATH` again before it looks, so there is no need
+to restart. The one under the **Open in IDE** picker does the same for
+editors. The quiet checks — when the window comes to the front, or when Settings
+or the agent picker opens — keep the `PATH` TermHQ already read, which still
+finds an agent installed into a folder already on it. On Windows, TermHQ uses
+the path in its process environment plus any folders an installer has added
+since, so a new install is found without restarting.
 
 ## Launching one in a folder or worktree
 
@@ -132,17 +149,20 @@ Waiting panes collect in the bottom status bar as a count — **N waiting** —
 that stays as long as anything is waiting. For a few seconds after a new pane
 goes quiet, a chip joined to its left names that pane under a draining bar;
 click the chip to jump straight to it. Click the count to open the list,
-newest first. Each entry shows the time the pane went quiet — *waiting since
-2:45 PM* — and whether it is **in the grid** or **in the stash shelf**.
+newest first, laid out like the stash shelf's: each entry shows what kind of
+pane it is, its name and its folder — followed by **· stashed** when it is
+parked on the shelf — and, at the right, the time it went quiet, such as
+*2:45 PM*.
 
 Click an entry to focus that pane, restoring it from the shelf or bringing it
 back into view if another pane is maximized. From the keyboard, <kbd>Tab</kbd> to
 the count and press <kbd>Enter</kbd>: the list opens with focus on its first
 entry, <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Home</kbd> and <kbd>End</kbd> move between
-entries, and <kbd>Enter</kbd> or <kbd>Space</kbd> jumps. An entry's **Dismiss**
-button removes only the notice; it does not close the pane or stop its work. With
-more than one waiting, **Dismiss all** clears every notice at once.
-<kbd>Esc</kbd> closes the list without clearing it.
+entries, and <kbd>Enter</kbd> or <kbd>Space</kbd> jumps. The **×** on an entry —
+or <kbd>Delete</kbd>, or a middle click — dismisses only the notice; it does not
+close the pane or stop its work. With more than one waiting, **Dismiss all** at
+the foot of the list clears every notice at once. <kbd>Esc</kbd> closes the list
+without clearing it.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> — **Jump to the newest waiting
 pane** — goes straight to the pane that went quiet most recently, the first entry
@@ -240,6 +260,18 @@ intervention — one line in a config, a typo in a prompt file — an
 [editor pane](/docs/editor/) opens the file right there in the grid, beside the
 agent that is waiting on it. A file an agent rewrites while you have it open
 reloads on its own, or asks first if you have unsaved edits of your own.
+
+The editor the `</>` button opens is the one chosen in **Settings → Agents →
+Open in IDE**, and the same choice serves every **Open in IDE** in the app. The
+picker lists the supported editors installed on this machine, each under its
+mark: Visual Studio Code, Visual Studio (on Windows), Cursor, Antigravity IDE,
+Windsurf, VSCodium, Zed, IntelliJ IDEA, PyCharm and WebStorm. **Automatic** uses
+the first one listed. An editor you pick stays picked, and if it goes missing it
+is marked *not found* rather than swapped for another. **Use IDE command…**, at
+the end, runs a command of your own, flags included; a configuration from before
+the picker starts there, so its command keeps working. With no supported editor
+found, the picker says so and there is no `</>` button: install one and press
+the refresh button under the picker, or give a command of your own.
 
 ## Dictating to an agent
 

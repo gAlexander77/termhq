@@ -38,30 +38,53 @@ stashed panes; temporary recovery controls do not split the two.
 (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> on macOS). Pressing it again
 closes it. You can also choose **Workspaces** from the command palette.
 
+The picker opens over your work, which dims and blurs behind it — **Backdrop
+blur** and **Backdrop darkness** in
+[Settings → Appearance](/docs/configuration/#appearance) set how much. The
+title bar still works meanwhile: minimize, maximize and close stay live,
+dragging the bar moves the window, and a double-click on it maximizes or
+restores the window, all without closing the picker.
+
+A search field at the top has the keyboard from the start. A few letters find a
+workspace by its name or by a folder in it: names that start with what you
+typed come first, then names that contain it, then folders that do, with the
+matching letters marked. When what you type matches no workspace, the list offers
+**New workspace named "…"** instead, and <kbd>Enter</kbd> makes a workspace
+with that name. **New workspace**, beside the field, starts an unnamed one.
+
 Each row shows the workspace's name, a badge when it is **open** in a window
 (**this window** for the one you are in) or **running** in the background, and a
-line such as *3 panes · created 2d ago · last used 5m ago*. The name is the
-title you gave it, or else the folders its panes are in, or else its slot, such
-as *Workspace 4*; a titled workspace shows its title alone. Workspaces are
-listed most recently used first. Two that share a name
-show their slot beside it — *Workspace 1*, *Workspace 3* — the one thing about
-them guaranteed to differ.
+line such as *3 panes · 5m ago*; hover that for when the workspace was created.
+The name is the title you gave it, or else the folders its panes are in, or
+else its slot, such as *Workspace 4*. A titled workspace also lists its folders
+on that line: two at most, then a count that names the rest when you hover it.
+Two that share a name show their slot beside it — *Workspace 1*, *Workspace 3*
+— the one thing about them guaranteed to differ.
 
-Past eight workspaces, a filter box appears above the list. It matches names
-and folders, and <kbd>Esc</kbd> clears it before it closes anything.
+With nothing typed, the list keeps one order: this window's workspace first,
+then the ones open in other windows, then the ones running in the background,
+then the rest — each group most recently used first. A search keeps that order
+among equally good matches.
 
-The keyboard starts on your most recently used *other* workspace, so the
-picker's shortcut and then <kbd>Enter</kbd> switches to it — the way back to
-where you just were. Choosing the workspace this window already shows simply
-closes the picker. Use
-the up/down arrow keys to focus another row, then <kbd>Enter</kbd> to open it.
-<kbd>Tab</kbd> moves among controls such as **New workspace** and **Rename**;
-<kbd>Enter</kbd> activates whichever control has keyboard focus.
-<kbd>Esc</kbd> closes the picker. Moving the mouse takes over the highlight,
-and moving the pointer off the list clears the hover highlight.
+The highlight starts on the first workspace below this window's own, so the
+picker's shortcut and then <kbd>Enter</kbd> switches to it — usually the way
+back to where you just were. Choosing the workspace this window already shows
+simply closes the picker.
 
-Every row has **Rename** and **Delete**. Where one cannot act on that
-workspace, it stays in place and says why when you hover it.
+The picker's own keys are listed along its foot. The up/down arrow keys move
+the highlight, wrapping at the ends; <kbd>Enter</kbd> opens the highlighted
+workspace; <kbd>F2</kbd> renames it; <kbd>Del</kbd> deletes it;
+<kbd>Ctrl</kbd>+<kbd>N</kbd> (<kbd>⌘</kbd>+<kbd>N</kbd> on macOS) starts a new
+one; and <kbd>Esc</kbd> clears the search, then closes the picker. In the
+search field, <kbd>Del</kbd> deletes text until the caret reaches the end of
+what you typed; from there it deletes the highlighted workspace.
+
+Moving the mouse takes over the highlight, and moving the pointer off the list
+clears the hover highlight. The row under the pointer shows a pencil to rename
+it and a **×** to delete it; a row the keys highlighted does not, since
+<kbd>F2</kbd> and <kbd>Del</kbd> do the same. A click anywhere in the picker
+leaves the keyboard in the search. Where a button cannot act on that workspace,
+it stays in place and says why when you hover it.
 
 ## Naming a workspace
 
@@ -70,12 +93,14 @@ identified by the directories its panes are in, which is usually the name you
 would have typed anyway. An [SSH](/docs/ssh/) pane counts by the host it
 connects to, so a workspace of only SSH panes is named after its hosts. That
 name appears in both the picker and the status bar. Give it a title from the
-picker and it keeps that instead.
+picker and it keeps that instead — or name it as you make it, with **New
+workspace named "…"**.
 
-You can rename the workspace you are in, and any that is closed. <kbd>Enter</kbd>
-or a click elsewhere saves the new name, and <kbd>Esc</kbd> cancels it. One that
-is open in *another* window cannot be renamed from here — that window is still
-saving over it, and would undo the change.
+You can rename the workspace you are in, and any that is closed: highlight it
+and press <kbd>F2</kbd>, or click its pencil. <kbd>Enter</kbd> or a click
+elsewhere saves the new name, and <kbd>Esc</kbd> cancels it. One that is open
+in *another* window cannot be renamed from here — that window is still saving
+over it, and would undo the change.
 
 ## Opening one
 
@@ -88,7 +113,7 @@ shows the reason, so a failed action does not disappear without explanation.
 
 The command palette lists your other workspaces too — **Switch to** one that is
 open in a window, **Open** one that is not — so you can go straight there
-without the picker.
+without the picker. Its **Workspaces** scope lists only those.
 
 However it opens — at launch, from the picker, or brand new — a workspace
 appears once it is ready: its panes and sidebar fade in together, already in
@@ -102,10 +127,12 @@ place.
 - **Show the workspace picker** — choose every time.
 - **Start a new workspace** — always begin fresh.
 
-With the picker chosen, it opens at startup in an otherwise empty window. The
-title bar stays out from under it, so you can still move, minimize or close the
-window, and a click outside the list chooses nothing. <kbd>Enter</kbd> opens the
-highlighted workspace, and <kbd>Esc</kbd> opens the most recent one.
+With the picker chosen, it opens at startup in an otherwise empty window, with
+the first row highlighted. The title bar stays out from under it, so you can
+still move, minimize or close the window, and a click outside the list chooses
+nothing. <kbd>Enter</kbd> opens the highlighted workspace, and <kbd>Esc</kbd>
+clears a search if you typed one, then opens the most recent workspace. A new
+workspace made here, named or not, opens in this window.
 
 ## From the taskbar
 
@@ -129,18 +156,33 @@ ones.
 
 ## Deleting one
 
-The picker offers deletion, and asks first: the row names the workspace,
-counts its panes, and says its shells will end if it is still running. Cancel
-has focus, so <kbd>Enter</kbd> answers the safe way, and <kbd>Esc</kbd> cancels
-the question rather than closing the picker. Deleting removes the workspace's
-saved state and ends any shells still parked for it.
+Press <kbd>Del</kbd> on the highlighted workspace, or click the **×** on its
+row. It leaves the list at once, and a chip at the foot of the picker names it,
+says how many of its shells will end if any are running, and offers **Undo**
+(<kbd>Ctrl</kbd>+<kbd>Z</kbd>, or <kbd>⌘</kbd>+<kbd>Z</kbd> on macOS) while its
+edge drains. Nothing is deleted and no shell ends until that runs out — after
+the seconds set as the **Undo window** in **Settings → General**, 5 by default
+— or until you close the picker. Deleting a second workspace finishes the first
+at once. Deleting removes the workspace's saved state and ends any shells still
+parked for it.
 
-A workspace open in another window can be deleted too: the question says that
-window will close, and on **Delete** it closes the way its own close button
-would, then the workspace is deleted. If that window has unsaved editor work,
-it comes to the front and asks about it; if it stays open, the workspace is
-kept and the picker says why. The workspace in the window you're using can't be
-deleted from its own picker.
+A workspace open in another window still asks first, since its window has to
+close: the row names the workspace, counts its panes, and says its shells will
+end if it is still running. Cancel has focus, so <kbd>Enter</kbd> answers the
+safe way, and <kbd>Esc</kbd> cancels the question rather than closing the
+picker. On **Delete**, that window closes the way its own close button would,
+then the workspace is deleted. If that window has unsaved editor work, it comes
+to the front and asks about it; if it stays open, the workspace is kept and the
+picker says why.
+
+The workspace in the window you're using can be deleted from its own picker
+too. <kbd>Del</kbd> or its **×** turns the whole picker into a warning, **Delete
+this workspace?**, which says in bold what goes: this window closes, and its
+panes, the shells running in them, its layout and its name are deleted for
+good, along with any unsaved editor files, which it counts. **Cancel** has the
+keyboard, so <kbd>Enter</kbd> or <kbd>Esc</kbd> backs out; only the red
+**Delete this workspace** button goes ahead. There is no Undo for this one: the
+window that would offer it is the one that closes.
 
 Deleting a workspace does not touch anything on disk in those directories. It
 only forgets the arrangement.

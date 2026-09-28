@@ -180,6 +180,11 @@ Three guards, at three scales:
 3. **Closing the window** with unsaved work anywhere stops and offers *Save all
    & quit*, *Quit without saving*, or *Cancel*.
 
+Deleting the workspace you are in, from the
+[workspace picker](/docs/workspaces/), is the exception: the window closes
+without that question, and nothing is saved. The picker's own warning counts
+the unsaved files that would be lost, with the keyboard on *Cancel*.
+
 ## If the app dies instead
 
 Those guards cover the endings you choose. Unsaved text is also mirrored to disk

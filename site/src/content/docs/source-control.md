@@ -103,6 +103,12 @@ loaded, such as "100+ commits" while there is more to scroll to. The arrow keys
 move between commits, and <kbd>Home</kbd> and <kbd>End</kbd> jump to the ends of
 what is loaded.
 
+History rises into place with the rest of the window dimmed and softened behind
+it, and fades as it closes; a diff does the same. **Settings → Appearance →
+Backdrop blur** and **Backdrop darkness** set how much the window behind
+changes. With **Settings → Appearance → Animate panes** off, or reduced motion
+in your system settings, they simply appear.
+
 Select a commit for its full message — selectable, so you can copy from it —
 and its changed files, then open any file to compare that version with its
 parent. The diff opens on its first change, and the arrows either side of the
@@ -118,6 +124,14 @@ Search accepts message text, `author:name`, or a commit ID. The graph is a
 snapshot, so new commits never shift the history you are reading; if HEAD moves
 while it is open, a banner says so. **Refresh** reads the graph again from the
 current tip.
+
+To read another branch's history without switching to it, click the branch
+beside History's title. It opens a searchable list of your **Local** and
+**Remote** branches, for looking only: nothing in it creates, renames or
+deletes a branch. Pick one and History lists that branch's commits, and search
+walks that branch too. Nothing is checked out: a **back to** link, such as
+**back to main**, returns to the branch you are on, and History always opens
+there. <kbd>Esc</kbd> closes the list before it closes History.
 
 From a selected commit you can **copy id**, **branch from here**, or — when
 TermHQ recognizes the remote's host, such as GitHub or GitLab — **open on** that
@@ -150,16 +164,21 @@ own, and each of them spins while it runs. The counts are only as fresh as the
 last fetch, so their tooltips say when that was — and **Pull** stays enabled even
 when the last count said there was nothing to pull. **Push** is disabled when
 there is nothing to push. A branch without
-an upstream offers **Publish**, which also spins while it works. TermHQ follows
+an upstream offers **Publish** in place of pull and push, and it spins while it
+works too. A brand-new repository shows no **Publish** until its first commit,
+since before then there is nothing to push. TermHQ follows
 your Git configuration when choosing a remote, and when several remotes leave
 no clear choice, it says so rather than guessing.
 
 Pull is fast-forward-only by default, so a diverged branch stops instead of
-creating a surprise merge. You can choose rebase or merge in **Settings → Git →
-Pull style**. After a rejected push, the panel can offer **Pull with rebase**. A
-force push is available only with a protective lease: if someone else updated
-the remote after the version you confirmed, the push stops rather than
-overwriting their work.
+creating a surprise merge. The message says that your branch and its upstream
+have both moved, and offers **Pull with rebase**, which replays your commits on
+top of theirs. To make rebase or merge what Pull always does, choose it in
+**Settings → Git → Pull style**. A rejected push offers **Pull with rebase**
+too, beside **Force push…**. A force push is available only with a protective
+lease: if someone else updated the remote after the version you confirmed, the
+push stops rather than overwriting their work, and the message says that
+nothing was overwritten.
 
 ## Resolve conflicts
 
@@ -185,7 +204,7 @@ committing — ready for whichever AI you trust.
 Stash your working changes with **stash…** on the **Changes** header — it
 appears only when there is something to stash — or with "Git: Stash Changes" in
 the command palette. The message is optional, and the **untracked** box starts
-ticked, so files Git is not tracking yet go into the stash too.
+checked, so files Git is not tracking yet go into the stash too.
 
 The **Stashes** section lists what you have. Expand a stash to review its files,
 untracked ones included, and open their diffs, then apply, pop, or drop it. Each
@@ -205,24 +224,43 @@ asks first — its folder is deleted, while the branch and its commits stay — 
 one with uncommitted changes asks a second time, with **Force remove**, because
 those changes would be lost.
 
-For a view across several repositories, add one or more folders under
-**Settings → Git → Worktree roots**. A **Worktrees** item then appears in the
-status bar, grouping every checkout it finds by repository and putting a
-terminal, agent, IDE, or file-manager action on each row. See the complete
+For a view across several repositories, press
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>
+(<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> on macOS) and choose the folders to
+track, or add them under **Settings → Git → Worktree roots**. A **Worktrees**
+item then appears in the status bar. Its view gives each repository a card,
+puts a terminal, agent, IDE, or file-manager action on every checkout, and
+makes new worktrees in place. See the complete
 [Worktrees guide](/docs/worktrees/).
 
 ## Command palette and errors
 
 The command palette has the panel's actions by name, each starting with "Git:"
-— open the Git panel or History, commit, stage or unstage everything, fetch,
-pull, push, switch branch, stash, and refresh. None has a keyboard shortcut by
-default, so they take no keys away from your shells.
+— open the Git panel or History, view a file's history, commit, stage or
+unstage everything, fetch, pull, push, switch branch, stash, and refresh. The
+palette's **Git** scope lists them, along with **Worktrees**. None has a
+keyboard shortcut by default, so they take no keys away from your shells.
+**Git: Commit**, **Git: Switch Branch** and **Git: Stash Changes** leave the
+keyboard in the panel — in the message box, the branch picker or the stash
+form — so you can type right away.
 
 When Git refuses an action, the message appears beneath the repository header
 with a plain-language summary and suggested next step, and its text can be
 selected and copied. Expand it when you need Git's complete response. Background
 fetch failures stay quiet while their ahead/behind counts are marked **stale**,
 so going offline does not produce a new warning every few minutes.
+
+Git's most common refusals are put in plain words. When a pull, or applying a
+stash, stops on conflicts, the message names the files and points you to
+**Merge Changes**. When a leftover `index.lock` file is in the way, it says
+another Git process is using the repository, and names the lock. When a remote
+can't be reached, it says why: the remote refused your SSH key, there is no
+repository at its address, or its host name doesn't resolve.
+
+A message stays with the repository its action ran in. If the panel has
+followed you to another repository by the time it arrives, the message names
+the repository it came from, and its buttons — **Pull with rebase**, **Force
+push…**, **Stash and switch** — act there, never in the repository on screen.
 
 TermHQ uses the `git` already on your `PATH`, along with your configuration and
 credential helpers. Repositories reached through WSL paths are not supported
@@ -238,6 +276,8 @@ yet; see [Troubleshooting](/docs/troubleshooting/).
   folder, and offers **Initialize repository…**, which runs `git init` there
   after asking. The question starts on **Cancel**, so a click by mistake
   followed by <kbd>Enter</kbd> changes nothing.
+- A bare repository is named as one: the panel says it has no working tree to
+  show.
 - A clean working tree says so, and offers **View history**.
 
 ## Elsewhere in the app

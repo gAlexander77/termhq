@@ -74,6 +74,15 @@ Focus movement is geometric — it steps to the nearest pane in that direction,
 preferring one that shares an edge, so focus follows what your eye sees rather
 than the order panes were opened. In Columns layout only left and right apply.
 
+While a pane is maximized, the focus shortcuts step the maximize instead: the
+next pane in that direction fills the grid, and a small map of the grid in the
+middle of it shows where you are, fading a moment after your last step. With no
+pane that way, the map still shows, its highlighted cell nudging toward that
+edge. **Focus the previous pane** steps back the same way. **Settings →
+Appearance → Move between panes in fullscreen** (on by default) turns the
+stepping off; then these shortcuts do nothing while a pane is maximized, and
+the key goes on to the pane.
+
 **Jump to the newest waiting pane** goes to the pane that most recently went
 quiet while you were looking elsewhere — the first entry in the status bar's
 waiting list — bringing it back from the shelf, or out from behind a maximized
@@ -83,7 +92,10 @@ pane, if it has to. See
 that had focus before this one.
 
 **Maximize focused pane** fills the grid with one pane, and the same chord
-restores the grid; a double-click on a pane's header does the same. **Switch
+restores the grid; a double-click on a pane's header does the same. While a
+pane is maximized, the grid behind it holds still: arrange mode, the **Push
+pane** actions, **Switch between Grid and Columns** and **Reset pane sizes**
+refuse until you restore it, and the command palette says why. **Switch
 between Grid and Columns** flips the layout and keeps the panes in the order you
 read them, **Reset pane sizes** puts every dragged row and column back to an even
 share, and **Restore all stashed panes** and **Close all stashed panes** act on
@@ -98,6 +110,7 @@ and closing always asks.
 | Settings (focus search) | <kbd>Ctrl</kbd>+<kbd>P</kbd> |
 | Workspaces | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> |
 | Toggle sidebar | <kbd>Ctrl</kbd>+<kbd>B</kbd> |
+| Files: Open the Files panel | *unassigned by default* |
 | Worktrees | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd> |
 | Run an agent by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
 | Open a favorite by number | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>, then <kbd>1</kbd>…<kbd>9</kbd>/<kbd>0</kbd> |
@@ -105,14 +118,16 @@ and closing always asks.
 The split between the two <kbd>P</kbd> chords follows VS Code's:
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> is the palette of every action by
 name, <kbd>Ctrl</kbd>+<kbd>P</kbd> is quick-open — here, Settings with the search
-box already focused, so you type the setting you want instead of hunting
-categories. Both toggle: the same chord again closes what it opened.
+box already focused, so you type the setting you want and <kbd>Enter</kbd> takes
+you to it, instead of hunting categories. Both toggle: the same chord again
+closes what it opened.
 
-The palette opens more than actions. Beside them it lists your favorites, your
-shells, the agents it found (**Run** and the agent's name), your other
-workspaces, themes and every Settings page — and your saved and recent SSH
+The palette opens more than actions. Beside them it lists your open panes, your
+favorites, your shells, the agents it found (**Run** and the agent's name), your
+other workspaces, themes and every Settings page — and your saved and recent SSH
 connections while SSH is on. With nothing typed they sit under headings, with
-what you ran last first.
+what you ran last first. Scopes under the search field narrow the list to one
+kind of thing; see [In the command palette](#in-the-command-palette).
 
 The two numbered pickers are deliberately two strokes rather than ten chords,
 which keeps the digits free the rest of the time. While one is armed, a card
@@ -123,7 +138,15 @@ including <kbd>0</kbd> for the tenth entry. <kbd>Esc</kbd> cancels, and any othe
 key cancels and then does what it normally does.
 
 The global [Worktrees](/docs/worktrees/) view is also available from the command
-palette and its status-bar item.
+palette and its status-bar item. With no folders tracked yet, its shortcut and
+the palette's **Worktrees** open **Find your worktrees**, which asks which ones
+to track — see [In the Worktrees view](#in-the-worktrees-view).
+
+**Files: Open the Files panel** is the twin of **Git: Open the Git panel**: it
+shows the sidebar if it is hidden and turns it to its Files tab, leaving the
+keyboard where it was. It has no shortcut by default, since
+<kbd>Ctrl</kbd>+<kbd>B</kbd> already shows and hides the sidebar; give it one
+under the **App** heading in **Settings → Shortcuts**.
 
 The Git actions have no default shortcut: Git: Open the Git panel, Git: Open
 History, Git: View File History, Git: Commit, Git: Stage All Changes, Git:
@@ -173,6 +196,83 @@ With a row focused (click one, or <kbd>Tab</kbd> into the tree):
 Inside a row's menu, a shell row ("Open in PowerShell" and the like) opens its
 agent flyout with <kbd>→</kbd>, a right-click or the chevron at its edge, and
 <kbd>←</kbd> or <kbd>Esc</kbd> closes it.
+
+## In the command palette
+
+| Action | Key |
+| --- | --- |
+| Move through the list | <kbd>↑</kbd> <kbd>↓</kbd> |
+| Run the highlighted row | <kbd>Enter</kbd>, or a click |
+| Next / previous scope | <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> |
+| Show or hide the details pane | <kbd>Ctrl</kbd>+<kbd>D</kbd> |
+| Open the row's menu (Run, View details) | Right-click, <kbd>Shift</kbd>+<kbd>F10</kbd> or the menu key |
+| Take back a scope you typed | <kbd>Backspace</kbd> in the empty field |
+| Close | <kbd>Esc</kbd> |
+
+The scopes — **All**, **Commands**, **Git**, **Panes**, **Themes** and
+**Workspaces** — sit under the search field, each counting its matches once you
+type. Start a search with a scope's name and a space — `git`, then a space —
+and the name turns into a chip that picks that scope. **Panes** lists every open
+pane by its name and place; running one brings it to the front — off the shelf,
+or out from under a maximized pane — and focuses it.
+
+The details pane opens beside the list and stays the way you left it. It shows
+what the highlighted row does, its shortcut — *unassigned* for a command with
+none, as its row says too — and why it cannot run right now; for a theme it
+draws a small window in that theme's colors. The **details** button in the
+footer does the same as the key, and the footer lists the palette's other keys.
+
+## In the workspace picker
+
+The search field has the keyboard as soon as the picker opens.
+
+| Action | Key |
+| --- | --- |
+| Find a workspace by name or folder | Type |
+| Move through the list | <kbd>↑</kbd> <kbd>↓</kbd> |
+| Open the highlighted workspace, or create the one you named | <kbd>Enter</kbd> |
+| Rename the highlighted workspace in place | <kbd>F2</kbd> |
+| Delete it | <kbd>Del</kbd> |
+| New workspace | <kbd>Ctrl</kbd>+<kbd>N</kbd> |
+| Take back a delete, while its chip shows | <kbd>Ctrl</kbd>+<kbd>Z</kbd> |
+| Clear the search, then close | <kbd>Esc</kbd> |
+
+The footer lists these keys. In the search field, <kbd>Del</kbd> edits what you
+typed until the caret reaches its end. A deleted workspace leaves the list at
+once and waits under an **Undo** chip for the seconds set in **Settings →
+General → Undo window**; closing the picker completes it. A workspace open in
+another window asks first, and deleting the one this window shows turns the
+picker into a warning, with **Cancel** holding the keyboard. At startup, when
+TermHQ opens on the picker, <kbd>Esc</kbd> opens the most recent workspace. See
+[Workspaces](/docs/workspaces/#the-picker).
+
+## In the Worktrees view
+
+With the list holding the keyboard:
+
+| Action | Key |
+| --- | --- |
+| Move through the list | <kbd>↑</kbd> <kbd>↓</kbd>, <kbd>Home</kbd> <kbd>End</kbd> |
+| Open a terminal in the checkout, or fold / unfold a repository | <kbd>Enter</kbd> |
+| Open the details pane, or unfold a folded repository | <kbd>→</kbd> |
+| Close the details pane, or fold the repository | <kbd>←</kbd> |
+| Open the row's menu | Right-click, <kbd>Shift</kbd>+<kbd>F10</kbd> or the menu key |
+| Scan again | <kbd>Ctrl</kbd>+<kbd>R</kbd> |
+| Close what is open, then the view | <kbd>Esc</kbd> |
+
+<kbd>Enter</kbd> on a checkout goes to the terminal TermHQ already opened there,
+if there is one. <kbd>Esc</kbd> works outward: the new-worktree form or a
+confirmation, then the details pane, then the filter, then the view itself.
+<kbd>Ctrl</kbd>+<kbd>R</kbd> presses the header's refresh button from anywhere
+in the view, and the footer lists the keys.
+
+With no folders tracked yet, the view opens as **Find your worktrees** instead.
+It suggests your favorite folders that hold checkouts, each with a count, and
+**Add a folder…** takes any other. Choose the ones to track, and **Track** saves
+them as **Settings → Git → Worktree roots**, scans them and opens the full
+list; **Not now** or <kbd>Esc</kbd> saves nothing. With nothing to suggest, the
+card is one large **Choose a folder**. See
+[Worktrees](/docs/worktrees/#reading-the-worktrees-view).
 
 ## In menus
 
@@ -242,7 +342,8 @@ one you can rebind. The plain-<kbd>Ctrl</kbd> rule is off on macOS, where
 **Settings → Shortcuts** lists every action with its current chord, under six
 headings — Open panes, Source Control, Terminals, Focus & layout, Arrange without
 the mode, App — so you find one by what it does rather than by scanning all of
-them. Search filters across every group.
+them. The search box at the top of Settings finds an action by its name, by what
+it does or by its chord, and takes you to its row.
 
 Click a row and press the combination you want. To leave an action with no shortcut at all, use
 the slashed-key button that appears beside the chord while you are recording —
@@ -270,7 +371,9 @@ The palette also says when an action **cannot do anything right now** and why �
 beside Voice dictation, *the focused pane is an editor, not a terminal* beside
 the ones that need a shell. Those rows are dimmed but still listed and still
 runnable, because the palette is how you find an action in the first place, and
-hiding one teaches you nothing about what it needs.
+hiding one teaches you nothing about what it needs. A row keeps to one line, so a
+long reason is cut short there; the details pane
+(<kbd>Ctrl</kbd>+<kbd>D</kbd>) gives it whole.
 
 A chord gets the same treatment. When its action has nothing to do right now,
 TermHQ does not swallow the key: it goes on to the focused pane, where it may
@@ -325,8 +428,9 @@ Clear and Find — and copying the selection, or pasting when there is none;
 Bare arrow keys cannot be keymap entries either — they would break every TUI — so
 TermHQ uses them only where you have gone on purpose: arrange mode, the stash
 shelf, a gutter between panes that you have tabbed to (the arrows move it,
-<kbd>Enter</kbd> evens it up), the status bar's lists of closed and waiting
-panes, and menus. None of them is a standing binding.
+<kbd>Enter</kbd> evens it up), the Files panel, the status bar's lists of closed
+and waiting panes, the command palette, the workspace picker, the Worktrees view,
+and menus. None of them is a standing binding.
 
 ## Four defaults that take a key from your shell
 
@@ -359,6 +463,12 @@ into the field you are in. Every other chord is left to the field or the dialog,
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> in the commit box does not maximize
 the pane behind it, and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> /
 <kbd>→</kbd> select by word as they do in any text box.
+
+There are two exceptions. In a browser pane's own fields — its address bar, its
+find bar, its name while you rename it — the pane-focus shortcuts still move the
+keyboard out of the pane, so it can always leave a browser pane. And in the
+stash shelf's filter every shortcut runs, putting the list away first; only the
+filter's editing keys stay with it.
 
 A terminal's input and an editor's are not text fields in this sense. They keep
 their keys by the rules on the rest of this page.
@@ -418,7 +528,7 @@ the address bar, <kbd>⌘</kbd>+<kbd>[</kbd> and <kbd>⌘</kbd>+<kbd>]</kbd> for
 and forward, <kbd>⌘</kbd>+<kbd>R</kbd> to reload.
 
 The address bar is one of TermHQ's own text fields, so while you type an address
-only the launchers run — see
+only the launchers and the pane-focus shortcuts run — see
 [When a text field or a dialog has focus](#when-a-text-field-or-a-dialog-has-focus).
 
 Ultra focus (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>) hands a browser pane

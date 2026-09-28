@@ -103,7 +103,7 @@ separate request, and each has a switch:
   **Settings → General → Updates** turns it off.
 - **A startup report.** Each time the app starts, it sends one request to
   `api.termhq.dev` saying it started, on which operating system (`windows`,
-  `macos` or `linux`), and which version of TermHQ it is, such as `0.2.9`.
+  `macos` or `linux`), and which version of TermHQ it is, such as `0.2.10`.
   That is the whole report. There is no account, device or
   installation ID, and no hardware details, performance numbers, terminal
   content or workspace data. It is sent once per start, never retried, and

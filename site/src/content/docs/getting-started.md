@@ -57,6 +57,17 @@ every pane but the one you are typing into toward the background. **Animate
 panes**, on by default, lets panes glide, fly and fade as they move; turn it
 off and they jump straight into place.
 
+**Backdrop blur** and **Backdrop darkness** set how the window dims and blurs
+behind the command palette, the workspace picker, Settings, the Worktrees view,
+and Git's History and diffs: blur from off to 12 px (2 px by default), darkness
+from off to 80% (40% by default; a light theme dims more gently). The title bar
+stays live above the backdrop: minimize, maximize and close still work, and the
+bar still drags the window.
+
+Once anything on the page differs from how TermHQ ships, it ends with **Reset
+Appearance**, which names what it will put back and asks first. Your themes,
+backgrounds and icon packs stay installed.
+
 Need a little more room for file names or Git changes? Drag the sidebar's inner
 edge to widen it. Its original width is the minimum, the maximum is bounded,
 and a double-click on that edge resets it. See
@@ -90,13 +101,22 @@ entirely from the keyboard. See [Panes and layout](/docs/panes-and-layout/).
 | Jump to the newest waiting pane | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> |
 
 If you only learn one, learn the command palette: it lists every action by name
-with its shortcut beside it, so the rest do not have to be memorized first. It
-also opens your favorite folders, shells, agents, other workspaces, saved and
-recent SSH targets (once SSH is on), themes and Settings pages, and with
-nothing typed it leads with what you ran recently.
+with its shortcut beside it, or *unassigned* where it has none, so the rest do
+not have to be memorized first. It also opens your favorite folders, shells,
+agents, other workspaces, saved and recent SSH targets (once SSH is on), themes
+and Settings pages, and it lists your open panes: choose one to focus it,
+bringing it back from the stash shelf or out from behind a maximized pane if it
+has to. With nothing typed it leads with what you ran recently.
+
+Scopes under its search field — **All**, **Commands**, **Git**, **Panes**,
+**Themes** and **Workspaces** — narrow the list to one kind of thing;
+<kbd>Tab</kbd> steps through them, or start your search with a scope's name and
+a space. <kbd>Ctrl</kbd>+<kbd>D</kbd> inside the palette, or its **details**
+button, opens a pane beside the list that says what the highlighted row does,
+its shortcut, and why it can't run right now, if it can't.
 
 On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> throughout — except dictation.
-Every one of these is rebindable; see
+Every shortcut in the table is rebindable; see
 [Keyboard shortcuts](/docs/keyboard-shortcuts/) for the full list and why the
 app-level chords are three keys rather than two.
 

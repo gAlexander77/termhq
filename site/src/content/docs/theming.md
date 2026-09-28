@@ -76,6 +76,15 @@ and a change reaches every open window at once. Files over 1 GB are refused.
 Blur, Fit and playback speed are covered under
 [Configuration](/docs/configuration/#appearance).
 
+## Backdrop
+
+When the command palette, the workspace picker, Settings, the worktrees view,
+History or a Git diff opens, the window behind it dims and softens.
+**Settings → Appearance → Backdrop blur** sets how soft, from off to 12 px
+(2 px by default), and **Backdrop darkness** sets how dark, from off to 80%
+(40% by default); a light theme dims more gently at the same setting. Both
+change the window behind Settings as you drag, so you can judge them in place.
+
 ## Writing your own
 
 Themes are JSON files in the `themes/` directory inside your configuration
@@ -144,6 +153,10 @@ A few things you do not have to theme:
 - **`terminal.background`** also paints the padding ring between the rows and the
   pane frame, so a theme whose terminal differs from `panel` still reads as one
   surface rather than a black frame.
+- **The terminal's scrollbar** is the same slim, rounded thumb as the rest of
+  the app, drawn in `terminal.foreground` — faint at rest, stronger under the
+  pointer — so it shows in any terminal palette, even one themed apart from the
+  app. It stays in view whenever there is scrollback to reach.
 
 `accent` marks the active parts of the interface. When a theme supplies more
 specific colors, focus rings, buttons, selected rows, links, and Git states use
@@ -252,3 +265,12 @@ you browse just like the theme list does.
 
 Manual installs work too: drop a VS Code-format icon theme folder into the
 `icons/` directory and reopen Settings. SVG only. Icon themes affect the file panel, not the terminals.
+
+## Resetting Appearance
+
+Once anything on **Settings → Appearance** differs from how TermHQ ships — the
+theme, the terminal theme, a background, the backdrop, the file icons or any
+other row there — the page ends with a row counting the changes and a
+**Reset Appearance** button. It names every setting it will put back and asks
+first. Your themes, background pictures and icon packs stay installed, and
+nothing outside Appearance is touched.
