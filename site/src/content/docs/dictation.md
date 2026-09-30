@@ -124,6 +124,8 @@ tooltip says what to do:
 | Dictation: Transcription failed | The tooltip carries Whisper's own error. |
 
 Beside the mic button, *Dictation failed* shows for a moment at the same time.
+The status bar message drains a bar along its bottom edge and disappears after 8
+seconds; hover it to hold it.
 
 ## Language and models
 

@@ -26,7 +26,21 @@ any other folder with the system dialog. Select the folders you want and choose
 **Track** — the button counts them, as in **Track 2 folders**. TermHQ saves them
 as your worktree roots, scans them, and **Find your worktrees** grows into the
 full list. **Not now** or <kbd>Esc</kbd> closes it without saving anything. With
-nothing to suggest, it offers one large **Choose a folder** button instead.
+nothing to suggest, it offers one large **Choose a folder** button instead. A
+long folder path keeps its start and its own name; hover or focus it to see it
+whole.
+
+The card works from the keyboard alone, and its footer shows how:
+
+- <kbd>↑</kbd> and <kbd>↓</kbd> walk the folders and carry on to the buttons;
+  <kbd>←</kbd> and <kbd>→</kbd> walk the buttons.
+- <kbd>Ctrl</kbd>+<kbd>↓</kbd> (<kbd>⌘</kbd>+<kbd>↓</kbd> on macOS) jumps from
+  the list to the buttons, and <kbd>Ctrl</kbd>+<kbd>↑</kbd> jumps back.
+  <kbd>Home</kbd> and <kbd>End</kbd> go to the first and last folder.
+- <kbd>Enter</kbd> or <kbd>Space</kbd> checks a folder.
+  <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (<kbd>⌘</kbd>+<kbd>Enter</kbd>) tracks the
+  checked ones.
+- <kbd>Esc</kbd> is **Not now**.
 
 You can also set the folders yourself: open **Settings → Git → Worktree roots**
 and add the folders that contain your repositories or worktrees. Type a path,
@@ -75,6 +89,13 @@ Each row shows:
 - tags at the end for what else is true: **detached**, **locked**,
   **folder missing**, or **outside roots**
 
+Long names stay inside the window, and the list never scrolls sideways. A
+branch that does not fit ends in an ellipsis. A path gives way from its start,
+keeping its drive and its own folder name. While the list has the keyboard, the
+selected row scrolls a cut branch or path to its end and back so you can read it
+(with reduced motion it stays cut). Hover a row to see the whole branch and
+path.
+
 After the view opens, TermHQ checks the worktrees one at a time. Each dot
 appears as its checkout is checked, so a long list can become useful
 immediately instead of making you wait for every folder.
@@ -84,7 +105,8 @@ created with `git worktree` are **linked worktrees**. “Primary” describes it
 role in Git; it does not assume the branch is named `main`.
 
 Click a checkout, or press <kbd>→</kbd> on it, to open its details beside the
-list: the full folder path, the branch it tracks and how far apart they are
+list: the full folder path (a long one wraps between folders, never inside a
+name), the branch it tracks and how far apart they are
 (such as "2 to push, 1 to pull"), its status — an operation in progress first,
 then conflicts, changed and staged files — the commit at HEAD with its author
 and age, and the last three commits. Every action is there as a button too,
@@ -164,7 +186,25 @@ The gear in the Worktrees header opens **Settings → Git → Worktree roots**
 directly. Removing a root there asks **Remove?** first, and only stops tracking
 it; nothing on disk is changed. A root that has moved or disappeared stays in
 the list: the status-bar item turns to a warning, and the Worktrees view names
-the root it could not read, so you can repair or remove it.
+the root it could not read, so you can repair it or choose **Stop tracking**,
+which takes it off the roots.
+
+## When git cannot read a checkout
+
+A checkout git refuses to read, because another user account owns it, its
+folder is gone, or there is no permission, does not fill the view with errors.
+The scan folds them into one tinted line above the list, with a count. Open the
+line with its chevron to see each folder with the reason in plain words, the
+fix for git's ownership refusal (`safe.directory`) stated once, and git's own
+messages below.
+
+The line's **×** dismisses it until the folders it lists change. The header's
+"N not read" brings it back.
+
+**Stop scanning these** leaves those checkouts out of every scan from then on.
+TermHQ skips them without running git, so they cost nothing and warn no more.
+**Settings → Git → Worktree roots** lists them under **Not scanned**, each with
+**Scan again**.
 
 Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>T</kbd>, or choose **Worktrees** from
 the command palette, to open the view without the pointer. On macOS, use

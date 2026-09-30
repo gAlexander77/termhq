@@ -301,10 +301,15 @@ When something fails that can be tried again, the bar says so beside the
 branch, with the reason on hover and a **Retry** button: **Settings weren't
 saved**, or a shell that did not start, such as *Git Bash didn't start*. Other
 short notices, such as why a dropped file was refused, appear in the same
-place and can be dismissed.
+place. A notice with nothing to retry, which includes every dictation error and
+a failed IDE launch, drains a bar along its bottom edge and disappears after 8
+seconds; hover it to hold it. A notice with **Retry** stays until you use it or
+dismiss it.
 
 The waiting item is a count — **N waiting** — that stays as long as anything
-is waiting. For a few seconds after a new pane goes quiet, a chip joined to
+is waiting. Only a pane out of sight counts: one behind another pane's
+maximize, or one parked on the shelf. A pane on screen, focused or not, never
+does. For a few seconds after a new pane goes quiet, a chip joined to
 its left names that pane under a draining bar; click the chip to jump straight
 there, the way **Undo close** restores. The count is hidden when empty unless
 you enable **Settings → Agents → Always show it, even when nothing is
@@ -318,7 +323,9 @@ kind, its name, its folder and the time it went quiet, and **stashed** beside
 the folder when the pane is parked on the shelf. Click a row, or press
 <kbd>Enter</kbd> on it, to go to that pane; its **×**, <kbd>Delete</kbd> or a
 middle click dismisses it, and with two or more waiting, **Dismiss all** sits at
-the foot of the list. A row that leaves fades out where it stood.
+the foot of the list. A row that leaves fades out where it stood. Leaving the
+maximize clears the notices of the panes in the grid, and opening the shelf
+clears those of the stashed panes.
 
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd>
 (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> on macOS) jumps to the newest

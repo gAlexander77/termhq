@@ -133,6 +133,18 @@ What a right-click does is up to **Settings → Terminal → Right-click in a
 terminal**. The default, **Automatic**, opens a menu on macOS — Copy, Paste,
 Select all, Clear and Find — and on Windows copies the selection if there is
 one and pastes if there is not. Either behavior can be chosen on any platform.
+A right-click never copies and pastes at once.
+
+A program that reads the mouse, such as full-screen Claude Code, Codex, vim or
+tmux, gets the right-click itself. Hold <kbd>Shift</kbd> (<kbd>Option</kbd> on
+macOS) to take it back for TermHQ. In such a program, <kbd>Shift</kbd>+drag
+makes TermHQ's own selection, and it stays up while you move the pointer.
+<kbd>Shift</kbd>+right-click, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> or
+<kbd>Ctrl</kbd>+<kbd>C</kbd> copies it.
+
+A paste goes straight in, with no confirmation card and no copy receipt, and a
+large one arrives whole. To be asked before a multi-line paste, turn on
+**Settings → Terminal → Confirm multi-line pastes**.
 
 Dropping a file onto a terminal types its path at the prompt, quoted the way
 that shell reads quotes. Files can come from your file manager or from the
@@ -147,6 +159,12 @@ A web address in a terminal's output opens with <kbd>Ctrl</kbd>+click
 open it in a [browser pane](/docs/browser-panes/) beside the terminal instead.
 A plain click only focuses the pane, so a link an agent printed never opens by
 accident.
+
+The file links a program prints, such as the paths Claude Code and Codex show,
+open the same way. <kbd>Ctrl</kbd>+click (<kbd>⌘</kbd>+click on macOS) opens a
+file in its default app and a folder in your file manager. Add
+<kbd>Shift</kbd> to show a file there instead. A program or script is never
+run, only shown. The hint beside the pointer says where the link really leads.
 
 ## What to read next
 

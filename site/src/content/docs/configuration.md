@@ -283,21 +283,25 @@ the pane grid. Waiting-pane visibility is configured under **Agents**, below.
   machine; **Custom…** takes any other family by name. A chosen family sits in
   front of the shipped stack, so a missing glyph still renders monospaced.
 - **Cursor style** — block, bar or underline — and **Cursor blink**, on by
-  default.
+  default. Output holds the cursor lit and restarts the blink, so it stays solid
+  while you type or a program prints and blinks only when the pane is quiet, as
+  in Windows Terminal. After five idle minutes it rests steady.
+- **Cursor in other panes** — default off. Off shows no cursor in a pane the
+  keyboard is not in, as Windows Terminal does. On draws an outline cursor there.
 - **Modern Unicode widths** — Unicode 11 width tables, so emoji and CJK measure
   two cells and the box art agent CLIs print stays aligned. Default on; turn it
   off only for an older program that assumes the legacy character widths.
-- **Confirm multi-line pastes** — **Only when the lines would run** (the
-  default) asks before pasting several lines only when the receiving program
-  would run them on arrival. Programs that take a paste as one block you still
-  submit yourself — every modern shell and agent CLI — do not trigger it.
-  **Every multi-line paste** always asks; **Never** never does. A single line
-  never asks. This applies to keyboard and right-click paste alike.
+- **Confirm multi-line pastes** — **Never** (the default) pastes straight in.
+  **Every multi-line paste** asks first, with the number of lines. A single line
+  never asks. This applies to keyboard and right-click paste alike. A settings
+  file from an older version that says `auto` behaves as **Never**.
 - **Right-click in a terminal** — **Automatic** (the default) opens a menu on
   macOS and copies or pastes elsewhere. **Open a menu** always shows Copy,
   Paste, Select all, Clear and Find. **Copy the selection, else paste** is the
   Windows console habit: with text selected a right-click copies it, with
-  nothing selected it pastes.
+  nothing selected it pastes. Either way, a program that reads the mouse
+  (full-screen Claude Code, Codex, vim, tmux) gets the right-click itself.
+  Hold <kbd>Shift</kbd> (<kbd>Option</kbd> on macOS) to have TermHQ take it.
 - **Zoom controls (Ctrl+scroll)** — whether <kbd>Ctrl</kbd>+scroll
   (<kbd>⌘</kbd>+scroll on macOS) over a pane resizes its text. Default on. The
   keyboard zoom keys work either way.
@@ -447,16 +451,17 @@ The launchers lead the category, in a card that is always open:
 
 The **Idle agents** card holds the rest:
 
-- **Agent idle badge** — badge a pane that was busy while you were looking
-  elsewhere and has since gone quiet. Default on.
+- **Agent idle badge** — badge a pane that was busy while out of sight and has
+  since gone quiet. Only a pane out of sight counts: one behind another pane's
+  maximize, or on the closed stash shelf. Default on.
 - **Quiet seconds before badge** — how long a busy pane must stay silent before
   it is marked for attention: 5 to 60 seconds, default 10; applies to both
   badges and waiting notices. Shown while **Agent idle badge** is on. Raise it
   for agents that pause to think; silence is not confirmation that a job
   succeeded.
 - **Show waiting panes in the status bar** — default on. While the window is
-  focused, an agent or command that goes quiet while you are looking elsewhere
-  appears in the waiting list. While the window is in the background, it sends
+  focused, an agent or command that goes quiet while out of sight appears in
+  the waiting list. While the window is in the background, it sends
   a native OS notification as well, and the entry is still there when you come
   back. Off disables both, without changing **Agent idle badge**.
 - **Always show it, even when nothing is waiting** — default off. Appears while
@@ -467,10 +472,11 @@ The **Idle agents** card holds the rest:
   blue) or **Custom…** pins it across all themes.
 
 The waiting list shows panes newest first, each with the time it has been
-*waiting since* — when it went quiet — and whether it is in the grid or in the
+*waiting since* — when it went quiet — marked as stashed when it is on the
 stash shelf. Select one to return to the pane, or dismiss a notice with its
 **×** (or all of them with **Dismiss all**) without interrupting its work.
-Notices have no auto-dismiss timer. Fresh terminals do not raise waiting notices
+Notices have no auto-dismiss timer. Leaving a maximize clears the notices for
+the grid, and opening the stash shelf clears the stashed ones. Fresh terminals do not raise waiting notices
 just for startup output. See
 [When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)
 for the full behavior.
@@ -487,6 +493,9 @@ and create worktrees. These settings tune its defaults:
   item stays hidden; the Worktrees shortcut then asks which folders to track
   and saves the ones you choose here. Removing a root only stops tracking it;
   nothing on disk changes.
+- **Not scanned** — checkouts the scan leaves out, listed under the roots. The
+  Worktrees warning's **Stop scanning these** adds them; **Scan again** on a
+  row puts one back.
 
 - **Branch order** — how the branch picker sorts: most recently committed
   first, or alphabetical.

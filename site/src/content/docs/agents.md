@@ -137,13 +137,16 @@ Code** and the like — to type into the focused terminal.
 The problem with running several agents is not starting them, it is noticing when
 one stops.
 
-A pane that was busy while you were looking elsewhere and has since gone quiet
-gets a pulsing header: the icon at its left that shows what kind of pane it is
+A pane that was busy while it was out of sight and has since gone quiet gets a
+pulsing header: the icon at its left that shows what kind of pane it is
 pulses in the theme's attention color, and an inset wash and the bottom hairline
 breathe with it. A stashed terminal moves to the top of the stash shelf under
 **Waiting on you**, with the time it went quiet, and its row glows the same
 way, so a parked job can still get your attention. This works for
 longer-running commands as well as coding agents.
+
+Only a pane out of sight can be waiting: one behind another pane's maximize, or
+one parked on the stash shelf. A pane you can see, focused or not, never counts.
 
 Waiting panes collect in the bottom status bar as a count — **N waiting** —
 that stays as long as anything is waiting. For a few seconds after a new pane
@@ -169,18 +172,21 @@ pane** — goes straight to the pane that went quiet most recently, the first en
 in the list, without opening it.
 
 Notices do not expire on a timer. Returning to the pane, dismissing its notice,
-or closing the pane clears its entry. The waiting item disappears when the list
+or closing the pane clears its entry. Leaving the maximize clears the notices of
+the panes in the grid, and opening the stash shelf clears those of the stashed
+panes. The waiting item disappears when the list
 is empty by default. To keep it visible, enable **Settings → Agents → Always
 show it, even when nothing is waiting**. It then reads **0 waiting**, and opening
 the empty list shows **Nothing waiting right now.**
 
-When TermHQ is in the background, the same trigger also sends a native OS
-notification, and the in-app entry is waiting for you when you return. **Show
+When TermHQ is in the background, a pane out of sight that goes quiet also sends
+a native OS notification, and the in-app entry is waiting for you when you
+return. **Show
 waiting panes in the status bar** in **Settings → Agents** controls both kinds
 of notification;
 **Agent idle badge** controls the pane and shelf highlights separately.
 
-TermHQ ignores the echo of your own typing, work you watched happen, and jobs
+TermHQ ignores the echo of your own typing, work that finished in view, and jobs
 over in under three seconds. A fresh terminal's startup output does not trigger
 a waiting notice before you run a command or launch an agent in it.
 

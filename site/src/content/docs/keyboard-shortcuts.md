@@ -161,6 +161,9 @@ Shortcuts**. See [Source Control](/docs/source-control/).
 | --- | --- |
 | Open a web link in a terminal's output, in your default browser | <kbd>Ctrl</kbd>+click |
 | Open it in a browser pane beside the terminal instead | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+click |
+| Open a file or folder link a program prints | <kbd>Ctrl</kbd>+click |
+| Show that file in the file manager instead | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+click |
+| Take a right-click, or a drag, from a program that reads the mouse | <kbd>Shift</kbd> (<kbd>Option</kbd> on macOS) |
 | Find bar: next / previous match | <kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd> |
 | Find bar: match case, whole word, regular expression | <kbd>Alt</kbd>+<kbd>C</kbd>, <kbd>Alt</kbd>+<kbd>W</kbd>, <kbd>Alt</kbd>+<kbd>R</kbd> |
 | Close the find bar | <kbd>Esc</kbd> |
@@ -271,7 +274,21 @@ It suggests your favorite folders that hold checkouts, each with a count, and
 **Add a folder…** takes any other. Choose the ones to track, and **Track** saves
 them as **Settings → Git → Worktree roots**, scans them and opens the full
 list; **Not now** or <kbd>Esc</kbd> saves nothing. With nothing to suggest, the
-card is one large **Choose a folder**. See
+card is one large **Choose a folder**.
+
+The card works from the keyboard alone, and its footer shows the keys:
+
+| Action | Key |
+| --- | --- |
+| Walk the folders, then on to the buttons | <kbd>↑</kbd> <kbd>↓</kbd> |
+| Walk the buttons | <kbd>←</kbd> <kbd>→</kbd> |
+| Jump down to the buttons, or back up | <kbd>Ctrl</kbd>+<kbd>↓</kbd>, <kbd>Ctrl</kbd>+<kbd>↑</kbd> |
+| Check a folder | <kbd>Enter</kbd> or <kbd>Space</kbd> |
+| Track the checked folders | <kbd>Ctrl</kbd>+<kbd>Enter</kbd> |
+| Not now | <kbd>Esc</kbd> |
+
+On macOS, <kbd>⌘</kbd> replaces <kbd>Ctrl</kbd> in the jump and track chords.
+With nothing to suggest, the keys start on **Choose a folder**. See
 [Worktrees](/docs/worktrees/#reading-the-worktrees-view).
 
 ## In menus
@@ -419,6 +436,11 @@ so they are not keymap entries: paste
 (<kbd>Ctrl</kbd>+<kbd>V</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> /
 <kbd>Shift</kbd>+<kbd>Insert</kbd>), right-click, and <kbd>Ctrl</kbd>+scroll zoom.
 
+In a program that reads the mouse — full-screen Claude Code, Codex, vim, tmux —
+the right-click belongs to the program. Hold <kbd>Shift</kbd> (<kbd>Option</kbd>
+on macOS) and TermHQ takes it, and <kbd>Shift</kbd>+drag makes TermHQ's own
+selection.
+
 The two mouse behaviors have settings of their own instead. **Settings → Terminal
 → Right-click in a terminal** chooses between a menu — Copy, Paste, Select all,
 Clear and Find — and copying the selection, or pasting when there is none;
@@ -469,6 +491,10 @@ find bar, its name while you rename it — the pane-focus shortcuts still move t
 keyboard out of the pane, so it can always leave a browser pane. And in the
 stash shelf's filter every shortcut runs, putting the list away first; only the
 filter's editing keys stay with it.
+
+A confirmation question, such as the update's "restart now?", is stricter: while
+it is open no shortcut runs, not even a launcher. <kbd>Esc</kbd> answers the
+question and leaves the view under it open.
 
 A terminal's input and an editor's are not text fields in this sense. They keep
 their keys by the rules on the rest of this page.

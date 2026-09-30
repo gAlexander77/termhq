@@ -67,12 +67,16 @@ the time — it then reads **0 waiting** while the list is empty. An empty list
 says **Nothing waiting right now.**
 
 Not every quiet terminal raises a notice: fresh startup output, short commands,
-and work you watched happen are ignored. If TermHQ was in the background when
+and work you watched happen are ignored. Only a pane out of sight counts — one
+behind another pane's maximize, or on the stash shelf. A pane on screen never
+does, focused or not. If TermHQ was in the background when
 the pane went quiet, it also sends a native OS notification, and the waiting
 entry is recorded either way. If those notifications are missing, check your
 operating system's notification permissions and Do Not Disturb settings as well.
 
-Waiting notices do not time out. Return to the pane, or use the notice's **×**
+Waiting notices do not time out. Leaving the maximize clears the ones for the
+grid, and opening the stash shelf clears the stashed ones. Otherwise, return to
+the pane, or use the notice's **×**
 — or **Dismiss all** — to clear them. Dismissing a notice does not stop the
 command. If an agent is flagged during a normal pause, increase **Quiet seconds
 before badge** under **Settings → Agents**. See
@@ -172,12 +176,24 @@ A plain click only focuses the pane. <kbd>Ctrl</kbd>+click a link
 link shows the same hint. Only `http` and `https` links open, and each is handed
 to the operating system as an address, never run as a command.
 
+A program can also print its own links (OSC 8), such as the file links Claude
+Code gives its edits. <kbd>Ctrl</kbd>+click opens a file with its default app and
+a folder in the file manager; <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+click shows a file
+there instead. Anything that would run, such as a program, a script or a
+shortcut, is only shown, never run. Tools print these links only where they
+expect the terminal to follow them, so TermHQ sets `FORCE_HYPERLINK=1` in every
+shell.
+
 ## Right-click shows a menu instead of pasting, or the reverse
 
 On macOS a right-click opens a menu — Copy, Paste, Select all, Clear and Find.
 Elsewhere it copies the selection if there is one and pastes otherwise, the
 Windows console habit. **Settings → Terminal → Right-click in a terminal** picks
 either behavior on any platform.
+
+In a program that reads the mouse — full-screen Claude Code, Codex, vim, tmux —
+the right-click belongs to the program, whatever that setting says. Hold
+<kbd>Shift</kbd> (<kbd>Option</kbd> on macOS) to have TermHQ take it.
 
 ## Dictation does nothing
 
@@ -425,6 +441,24 @@ deeply, then open the [Worktrees](/docs/worktrees/) view and choose **Refresh**.
 
 If a configured root moved or is no longer available, the Worktrees view keeps
 the item visible and shows the reason instead of silently dropping it.
+
+## Worktrees says it could not read some checkouts
+
+A tinted line above the list says how many checkouts a scan could not read. Git can
+refuse a checkout because another user account owns it, its folder is gone, or
+there is no permission. Open the line's chevron to see each folder's reason in
+plain words, the fix for git's ownership refusal (`safe.directory`) and git's own
+messages. If you do not want those folders, choose **Stop scanning these**. They
+are left out of every scan from then on and cost no git process. **Settings →
+Git → Worktree roots** lists them under **Not scanned**, each with **Scan again**.
+The × hides the line until the folders it lists change, and the header's
+**N not read** brings it back.
+
+## A status-bar message disappeared
+
+A notice with nothing to retry, such as a dictation error, leaves the status bar
+on its own after 8 seconds. Hover it to keep it up. One with **Retry** stays until
+you use it or dismiss it.
 
 ## An update cannot finish
 

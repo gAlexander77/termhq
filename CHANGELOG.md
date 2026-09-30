@@ -10,6 +10,75 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.11 — 2026-09-29
+
+### Added
+
+- **Links in the terminal open.** Ctrl+click (⌘+click on macOS) a link a
+  program prints, such as a file Claude Code just edited, and TermHQ opens it:
+  a file in its default app, a folder in the file manager. Add Shift to reveal
+  the file instead. A program or script is only ever revealed, and hovering a
+  link shows where it really leads.
+- **Cursor in other panes.** Panes the keyboard isn't in now show no cursor,
+  as in Windows Terminal. **Settings → Terminal → Cursor in other panes**
+  brings the outline back.
+- **Leave out checkouts git can't read.** The worktrees view's warning offers
+  **Stop scanning these**, and those folders are skipped from then on.
+  **Settings → Git → Worktree roots** lists them under **Not scanned**, each
+  with **Scan again**.
+- **The worktrees first run works from the keyboard.** The arrow keys walk
+  the suggested folders and the buttons, Enter or Space checks a folder,
+  Ctrl+Enter (⌘+Enter) tracks the checked ones, and Esc is **Not now**.
+
+### Changed
+
+- **"Waiting" is only for panes you can't see.** A pane counts as waiting
+  only while it's hidden behind a maximized pane or parked on the stash shelf.
+  A pane on screen never does, focused or not. Leaving the maximized pane
+  clears the grid's waiting notices, and opening the stash shelf clears the
+  stashed ones.
+- **Error notices leave on their own.** A notice in the status bar with
+  nothing to retry, such as a dictation error, drains a bar along its edge and
+  goes away after 8 seconds. Hover to keep it while you read. A notice with
+  **Retry** stays until you use or dismiss it.
+- **Paste goes straight in.** No confirmation card by default, and no receipt
+  after a copy. **Settings → Terminal → Confirm multi-line pastes** turns the
+  confirmation back on. Pastes of several megabytes arrive whole, and a big
+  paste into one pane no longer holds up typing in the others.
+- **Programs that use the mouse keep it.** In full-screen Claude Code, Codex,
+  vim or tmux, a right-click belongs to the program. Hold Shift (Option on
+  macOS) to use TermHQ's own selection instead: it stays up while the pointer
+  moves, and Shift+right-click, Ctrl+Shift+C or Ctrl+C copies it.
+- **The cursor holds steady while a program works,** and blinks again when the
+  pane goes quiet.
+- **The worktrees view's warnings fold into one line** saying how many
+  checkouts couldn't be read. Open it for each folder and a plain reason, with
+  the fix for git's ownership check stated once. × hides it until the list
+  changes.
+- **Long names fit.** In the worktrees view and the favorites picker, a long
+  path gives way from its start and keeps its folder's name, and the whole
+  path is in the tooltip. The selected worktree scrolls a cut branch or path
+  so you can read all of it.
+- The backdrop blur and darkness also sit under the worktrees view, History
+  and Git diffs, and their settings say so.
+- The bundled Windows console host is updated to Microsoft's 1.24 release.
+
+### Fixed
+
+- In full-screen Claude Code, one right-click copied and pasted at the same
+  time.
+- A Ctrl+click on a link in full-screen Claude Code opened it twice.
+- The cursor stopped blinking for good five minutes after you clicked into a
+  pane, until you clicked away and back.
+- With the update's "restart now?" question up, a shortcut could open the
+  worktrees view, Settings or the command palette over it, and then the
+  question took no clicks. Escape closed the view underneath instead of
+  answering it.
+- Opening the worktrees view from inside Settings could leave several copies
+  of it on screen that nothing would close.
+- The title bar's **Reset pane sizes** resized the grid behind a maximized
+  pane.
+
 ## 0.2.10 — 2026-09-28
 
 ### Added
