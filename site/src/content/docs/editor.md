@@ -11,7 +11,8 @@ workspace comes back.
 
 Its header works the way a terminal's does. A page mark stands where a terminal
 shows its prompt; double-click the header to maximize the pane, and right-click
-it or press <kbd>F2</kbd> on it to rename the pane. The focused pane keeps its
+for **Rename…** or **Move to workspace…**. <kbd>F2</kbd> on the header renames
+the pane. The focused pane keeps its
 header tools — **Stash**, **Maximize**, and the reading view for a markdown
 file — in view, while other panes show theirs when the pointer is over them. On
 a narrow pane they move into a **⋯** menu, so Close is always in reach.
@@ -19,6 +20,19 @@ a narrow pane they move into a **⋯** menu, so Close is always in reach.
 TermHQ is still a terminal, not an IDE. The editor exists for the edit you make
 *while* something else is running: the config line an agent asked about, the
 README you are reading, the fix that is faster to type than to explain.
+
+## Moving an editor to another workspace
+
+With another workspace window open, choose **Move to workspace…** from the
+editor's header menu. Select a destination and press <kbd>Enter</kbd>. The
+whole pane moves with its tabs in order and its unsaved text; moving does not
+save those files to disk.
+
+If a file is already open in the destination with different text, the move
+stops without replacing either copy. Matching copies can share the same
+buffer there. Undo history and cursor/scroll positions are rebuilt in the
+receiving window. See [Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace)
+for keyboard controls and destination requirements.
 
 ## Opening a file
 

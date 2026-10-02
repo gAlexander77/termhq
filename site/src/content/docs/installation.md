@@ -18,10 +18,11 @@ each file separately, so the warning can reappear when you install a new
 version — same two clicks. [Why the warnings →](#why-the-install-warnings)
 
 There is nothing to install alongside it — no runtime, no separate terminal
-components. TermHQ carries its own copy of the Windows console machinery, which
-is why terminals render identically on an old Windows 10 build and a current
-Windows 11 one. Some terminal apps do not, and the difference shows up as
-duplicated prompt lines in exactly the full-screen tools coding agents use.
+components. TermHQ bundles its Windows console host to reduce differences
+between Windows versions, including console bugs that can duplicate prompt
+lines in full-screen tools. The system WebView and graphics drivers still
+affect rendering, so identical behavior on every Windows build and hardware
+combination is not guaranteed.
 
 ## macOS
 

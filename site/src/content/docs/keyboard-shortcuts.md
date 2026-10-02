@@ -177,7 +177,9 @@ on a pane whose find bar is already open puts the keyboard back in it.
 
 On a terminal, a right-click on the header opens the pane's menu instead —
 Rename…, Copy path, Reveal in File Explorer (Finder on macOS), the header's
-buttons by name, and Close. <kbd>F2</kbd> never renames from inside the terminal
+buttons by name, Move to workspace… when another workspace is open, and Close.
+An editor header also has a menu for Rename… and Move to workspace….
+<kbd>F2</kbd> never renames from inside the terminal
 itself, where it belongs to the program.
 
 ## In the Files panel
@@ -201,6 +203,10 @@ agent flyout with <kbd>→</kbd>, a right-click or the chevron at its edge, and
 <kbd>←</kbd> or <kbd>Esc</kbd> closes it.
 
 ## In the command palette
+
+Open it with the **Command palette** button beside Settings, or
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+(<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on macOS).
 
 | Action | Key |
 | --- | --- |
@@ -236,6 +242,7 @@ The search field has the keyboard as soon as the picker opens.
 | Open the highlighted workspace, or create the one you named | <kbd>Enter</kbd> |
 | Rename the highlighted workspace in place | <kbd>F2</kbd> |
 | Delete it | <kbd>Del</kbd> |
+| Close its window, when open | <kbd>Ctrl</kbd>+<kbd>W</kbd> |
 | New workspace | <kbd>Ctrl</kbd>+<kbd>N</kbd> |
 | Take back a delete, while its chip shows | <kbd>Ctrl</kbd>+<kbd>Z</kbd> |
 | Clear the search, then close | <kbd>Esc</kbd> |
@@ -248,6 +255,45 @@ another window asks first, and deleting the one this window shows turns the
 picker into a warning, with **Cancel** holding the keyboard. At startup, when
 TermHQ opens on the picker, <kbd>Esc</kbd> opens the most recent workspace. See
 [Workspaces](/docs/workspaces/#the-picker).
+
+The close key is <kbd>⌘</kbd>+<kbd>W</kbd> on macOS. Closing this window
+asks first by default; <kbd>Enter</kbd> or the close key again confirms,
+and <kbd>Esc</kbd> cancels. <kbd>Tab</kbd> and <kbd>←</kbd>/<kbd>→</kbd>
+stay between the answers. The footer changes its hints to match the action.
+With **Keep shells running after close** on, closing a window keeps its
+terminals running. See [Closing a workspace window](/docs/workspaces/#closing-a-workspace-window).
+
+## In Move to workspace
+
+Right-click a terminal or editor header and choose **Move to workspace…**.
+It appears only when another workspace window is open.
+
+| Action | Key |
+| --- | --- |
+| Find a destination by name or folder | Type |
+| Select the next / previous destination | <kbd>↓</kbd> / <kbd>↑</kbd> |
+| Select the first / last destination | <kbd>Home</kbd> / <kbd>End</kbd> |
+| Step by a visible page of destinations | <kbd>Page Up</kbd> / <kbd>Page Down</kbd> |
+| Move the pane to the selected workspace | <kbd>Enter</kbd> |
+| Move between search and buttons | <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> |
+| Cancel before the move starts | <kbd>Esc</kbd> |
+
+The search field starts focused; typing from a button returns to search.
+Focus stays inside the picker until it closes. While the move runs, repeated
+keys do not start another move. See [Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace).
+
+## In favorite folders setup
+
+With no favorites saved, the star and the favorites shortcut open
+**Add favorite folders**. Use the arrow keys to move between suggestions,
+chosen folders and buttons. <kbd>Enter</kbd> does what the footer says:
+choose, add, remove, save or close. A longer suggestion list has a filter;
+typing goes there, and <kbd>Esc</kbd> clears it before closing the card.
+
+<kbd>Ctrl</kbd>+<kbd>Enter</kbd> (<kbd>⌘</kbd>+<kbd>Enter</kbd> on macOS)
+selects all the suggestions shown, or clears them if they are all selected.
+It does not save: activate **Add favorites** to keep the chosen folders.
+**Not now** closes without saving.
 
 ## In the Worktrees view
 

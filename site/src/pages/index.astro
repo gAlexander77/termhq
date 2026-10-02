@@ -11,7 +11,7 @@ const workflows = [
     id: "parallel-agents",
     label: "Run agents together",
     title: "Keep every task in view.",
-    body: "Launch your installed coding agents in separate panes. Arrange them around the work, and notice when an agent goes quiet and needs your attention.",
+    body: "Launch your installed coding agents in separate panes. Move a running terminal to another open workspace without restarting it, and notice when an agent goes quiet and needs your attention.",
     guide: "agents",
     link: "Running coding agents",
   },
@@ -19,15 +19,15 @@ const workflows = [
     id: "persistent-work",
     label: "Pick up where you left off",
     title: "Close the window. Keep working.",
-    body: "Your shells keep running when you quit TermHQ. Reopen it to reconnect with recent output intact, and organize each project in its own workspace.",
-    guide: "persistent-sessions",
-    link: "How persistent sessions work",
+    body: "Keep each project in its own workspace. Search for one, switch to it, or close its window from the keyboard while its shells keep running. Reopen it to pick up where you left off.",
+    guide: "workspaces",
+    link: "Organize your workspaces",
   },
   {
     id: "connected-tools",
     label: "Work in one place",
     title: "Code, preview, and review.",
-    body: "Keep an editor and a live browser beside your terminals. Make a change, check your local preview, and review your diff without leaving the workspace.",
+    body: "Keep an editor and a live browser beside your terminals. Move an editor's tabs and unsaved text to another open workspace, or stay put to check your preview and review a diff.",
     guide: "panes-and-layout",
     link: "Build your workspace",
   },
@@ -35,11 +35,14 @@ const workflows = [
 
 const features = [
   { title: "Source control & worktrees", guide: "source-control", body: "Review changes, stage hunks, commit, and keep parallel branches organized." },
-  { title: "Local voice dictation", guide: "configuration", body: "Dictate into a terminal with speech transcribed on your machine. Download a voice model when you need it." },
+  { title: "Local voice dictation", guide: "dictation", body: "Dictate into a terminal with speech transcribed on your machine. Use the mic button, a shortcut, or hold a key to talk." },
   { title: "Language assistance", guide: "language-servers", body: "Get completion, diagnostics, and navigation from the language servers you already use." },
   { title: "Recover your work", guide: "editor", body: "Restore unsaved editor text after a restart. Get a warning when a file changes outside TermHQ." },
-  { title: "Your themes and shortcuts", guide: "theming", body: "Choose a built-in theme, import a VS Code color theme, and rebind shortcuts to suit your workflow." },
+  { title: "Your themes and shortcuts", guide: "theming", body: "Choose a theme and rebind shortcuts to suit your workflow. Saved changes follow you across your open workspaces." },
   { title: "Your existing shells", guide: "getting-started", body: "Use PowerShell, cmd, Git Bash, or WSL on Windows, and the shells installed on your Mac." },
+  { title: "Favorite folders, ready to open", guide: "getting-started", body: "Choose folders, drop them in, or pick from suggestions. Open a favorite in your shell or coding agent from one place." },
+  { title: "Find any command", guide: "keyboard-shortcuts", body: "Open the command palette beside Settings or from its shortcut. Search actions, panes, themes, and workspaces by name." },
+  { title: "Familiar terminal input", guide: "getting-started", body: "Copy a selection, paste into your prompt, and keep typing across panes. Large pastes ask first, with a setting to turn that off." },
 ];
 ---
 
@@ -124,7 +127,7 @@ const features = [
       <div class="section-head section-head-compact" data-reveal>
         <span class="eyebrow">Keyboard-first</span>
         <h2 id="shortcuts-title">Start with four shortcuts.</h2>
-        <p>Open a pane or find a command. Rebind the keys whenever you want.</p>
+        <p>Open a pane or find a command. Pickers show their keys as you go, and app shortcuts can be rebound.</p>
       </div>
       <div data-reveal><HomepageShortcuts /></div>
       <p class="section-link"><a class="text-link" href="/docs/keyboard-shortcuts/">All shortcuts and platform details <span aria-hidden="true">→</span></a></p>

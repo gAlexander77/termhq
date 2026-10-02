@@ -100,8 +100,11 @@ running across a lost connection.
 
 ## Several workspaces at once
 
-Workspaces are independent. Closing one leaves the others alone, and one window
-does not adopt another's terminals. Installing an update is the exception to
+Workspaces are independent. Closing one leaves the others alone. You can
+deliberately [move a running terminal](/docs/workspaces/#moving-a-pane-to-another-workspace)
+to another open workspace from its header menu; the same process continues
+there, and closing its original workspace leaves it running. Installing an
+update is the exception to
 window independence: it asks other windows to close and restarts the shells
 across the app. A window with unsaved edits gets its own save prompt.
 
@@ -110,6 +113,12 @@ keep running in the background, and its agents keep working. Press
 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd> and the picker shows you which
 workspaces are running in the background, so nothing is invisible. Opening one
 picks its terminals back up mid-task. See [Workspaces](/docs/workspaces/).
+
+From that picker, <kbd>Ctrl</kbd>+<kbd>W</kbd> (<kbd>⌘</kbd>+<kbd>W</kbd>
+on macOS) closes the highlighted workspace's window. The same persistence
+setting applies as when you use the window's close button. Closing the
+window you are in asks first by default; an unsaved editor still asks about
+its files.
 
 ## Stashed terminals on resume
 

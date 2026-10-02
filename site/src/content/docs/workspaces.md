@@ -1,7 +1,7 @@
 ---
 title: "Workspaces"
 weight: 40
-description: "Group terminals by what you are working on, name them, resume them, and open several at once."
+description: "Group your work into windows, move running terminals and editor panes between them, and close a window while its shells keep running."
 ---
 
 A workspace is a window's worth of panes: their layout, the directories their
@@ -118,6 +118,54 @@ without the picker. Its **Workspaces** scope lists only those.
 However it opens — at launch, from the picker, or brand new — a workspace
 appears once it is ready: its panes and sidebar fade in together, already in
 place.
+
+## Moving a pane to another workspace
+
+Open the destination workspace first. Right-click the source terminal or
+editor's **header**, choose **Move to workspace…**, and select a destination.
+Only other workspaces with an open window appear; with no other window open,
+the menu has no move option. Browser panes cannot move between workspaces.
+
+A local terminal or SSH connection keeps the same running process and working
+directory. An editor brings its tabs, their order, and unsaved text. The
+destination window comes forward with the moved pane selected.
+
+The picker starts in its search field. Type to find a workspace by name or
+folder, use the arrow keys to select it, and press <kbd>Enter</kbd> to move.
+<kbd>Home</kbd> and <kbd>End</kbd> select the ends; <kbd>Page Up</kbd> and
+<kbd>Page Down</kbd> step through a long list. <kbd>Tab</kbd> and
+<kbd>Shift</kbd>+<kbd>Tab</kbd> stay inside the picker; <kbd>Esc</kbd> cancels
+before a move starts. While the handoff is in progress, wait for it to finish.
+The picker follows the app's animation setting and system reduced motion.
+
+A destination that is busy, closes, or cannot accept the pane leaves it in the
+source workspace. If the destination already has a different copy of an
+editor file open, the move stops and keeps both copies intact; resolve the
+difference before trying again.
+
+**What carries over:** terminals restore the most recent 256 KiB of output,
+so older scrollback does not transfer. Editors keep their text, but their undo
+history and scroll/cursor positions start fresh in the receiving window.
+
+## Closing a workspace window
+
+In the workspace picker, highlight a row marked **open** or **this window**
+and press <kbd>Ctrl</kbd>+<kbd>W</kbd> (<kbd>⌘</kbd>+<kbd>W</kbd> on macOS).
+The footer offers the key only when that workspace has a window to close.
+With **Settings → Workspaces → Keep shells running after close** on (the
+default), its shells continue in the background and its row becomes
+**running**. Opening it again reconnects to those shells.
+
+Closing the window you are using asks first in its row. <kbd>Enter</kbd>,
+or the close key again, confirms; <kbd>Esc</kbd> backs out. <kbd>Tab</kbd>
+and the left/right arrow keys move between the answers. **Settings →
+Workspaces → Ask before closing this window from the picker** turns this
+question off. Unsaved editor files still have their usual save/discard
+question, including when you close another workspace's window.
+
+If keeping shells running is off, closing ends them. An empty workspace
+cleans itself up when its window closes. To remove a saved workspace and end
+its shells deliberately, use [Delete](#deleting-one).
 
 ## On startup
 

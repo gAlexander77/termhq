@@ -1,13 +1,13 @@
 ---
 title: "Panes and layout"
 weight: 30
-description: "Tiling, the slot grid, resizing by the gutter, keyboard arranging, maximizing, pane motion, stashing, and undoing a close."
+description: "Tile and resize panes, move running terminals and editors between workspaces, arrange from the keyboard, maximize, stash, and undo a close."
 ---
 
 Everything TermHQ opens is a pane in a tiled grid. Nothing hides behind a tab.
 
-There are three kinds, and the grid treats them identically — every move below
-works on any of them:
+There are three kinds. All share the grid's resize, rearrange, maximize and
+stash controls:
 
 | Pane | Opens with | Holds |
 |---|---|---|
@@ -105,8 +105,9 @@ to read all of it, and click its text to copy it.
   a browser tab. It closes exactly the way the header's own close button does.
 - **Right-click a terminal's header** for **Rename…**, **Copy path**,
   **Reveal in File Explorer** (**Reveal in Finder** on macOS), the pane's own
-  actions, and **Close**. On a browser or editor pane, a right-click on the
-  header renames it.
+  actions, **Move to workspace…** when another workspace is open, and
+  **Close**. An editor's header menu offers **Rename…** and **Move to
+  workspace…**. A browser's header right-click renames it.
 - **<kbd>F2</kbd> renames** while the keyboard is on the header's buttons. In
   the terminal itself, <kbd>F2</kbd> stays with the program.
   **Rename the focused pane** does it from anywhere, once you give it a
@@ -114,7 +115,8 @@ to read all of it, and click its text to copy it.
 
 ## Rearranging with the mouse
 
-Drag a pane's **header**. A translucent copy of the header follows the pointer,
+Drag a pane's **header** when more than one pane is visible. A lone pane's
+header stays put. A translucent copy of the header follows the pointer,
 so it stays clear which pane you picked up, and names what letting go would
 do: **Swap**, **Move here** or **Grow**. A dashed destination preview shows
 where it will land. Press <kbd>Esc</kbd> at any point to cancel.
@@ -138,6 +140,20 @@ of a three-wide grid and what was the seventh is selected. If the grid loses a
 column or a row, the pane in the same corner takes it instead, so closing the
 top-right pane leaves you top right. When nothing moves in because the last
 pane went, the one before it does.
+
+## Moving between workspaces
+
+Right-click a terminal or editor header and choose **Move to workspace…**.
+Search the other open workspaces, select one with the arrows, and press
+<kbd>Enter</kbd>. A running terminal or SSH connection keeps running, and an
+editor carries its tabs and unsaved text. The destination window comes
+forward with the pane selected.
+
+The option is hidden unless another workspace window is open. Browser panes
+cannot move between workspaces. Only recent terminal output transfers, and
+an editor starts a new undo history; see
+[Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace) for the
+limits and what happens if the destination cannot accept it.
 
 ## Resizing panes
 

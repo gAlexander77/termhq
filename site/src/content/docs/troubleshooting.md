@@ -195,6 +195,31 @@ In a program that reads the mouse — full-screen Claude Code, Codex, vim, tmux 
 the right-click belongs to the program, whatever that setting says. Hold
 <kbd>Shift</kbd> (<kbd>Option</kbd> on macOS) to have TermHQ take it.
 
+## A large paste asks for confirmation or takes time to appear
+
+Pastes over **5 KiB** ask first by default. Choose **Paste anyway**, or use
+**Settings → Terminal → Warn before large pastes** to turn this warning off.
+The card's **Don't ask again** link asks you to confirm that change before
+turning it off and pasting. **Confirm multi-line pastes** is separate and can
+still ask if you enabled it.
+
+Once accepted, a paste can take time for the program inside the terminal to
+process. Turning the warning off skips the question; it does not change that
+program's processing speed. See [Copy and paste](/docs/getting-started/#copy-and-paste).
+
+## Move to workspace is missing or a move is refused
+
+Open a second workspace window, then right-click the terminal or editor's
+header. A saved workspace whose window is closed is not a destination.
+Browser panes do not offer this action.
+
+If the destination is busy or closes during the handoff, the source pane
+stays in place. Try again when the destination is ready. An editor move also
+stops when the destination has different text for one of the same files;
+resolve those copies before trying again. Recent terminal output transfers,
+but older scrollback and editor undo history do not. See
+[Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace).
+
 ## Dictation does nothing
 
 If there is **no mic button at all**, no speech model is installed yet — that
@@ -227,6 +252,9 @@ notice for the fix:
   **Settings → Voice**.
 - **Dictation: Transcription failed** — the hover text carries the
   transcriber's own reason.
+- **Dictation: No speech detected** — the recording completed but contained
+  no recognized words. Speak before releasing the hold key, or check the level
+  with **Settings → Voice → Test microphone**.
 - **Nothing to dictate into** — the words need somewhere to go. Focus a
   terminal, or click into a text field, then start dictation.
 

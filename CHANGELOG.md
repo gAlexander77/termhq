@@ -10,6 +10,70 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.12 — 2026-10-01
+
+### Added
+
+- **Move a running pane to another workspace.** Right-click a terminal or
+  editor header and choose **Move to workspace…**, then pick another open
+  workspace. Terminals and SSH connections keep running; editors carry their
+  tabs and unsaved text. Search, arrow keys and Enter work throughout the
+  picker, with the same opening, filtering and closing animations as the
+  workspace picker. The option appears only when another workspace is open.
+  Browser panes stay in their current workspace.
+- **Favorite folders have a first run.** The star in the title bar is always
+  there. With no favorites saved, it opens **Add favorite folders**: choose
+  folders, drop them in, or pick from this window's open terminal folders.
+  The empty start panel and the favorites shortcut open
+  it too. Navigate with the keyboard, filter a long suggestion list, and
+  save your selection with **Add favorites**.
+- **Close a workspace window from the picker.** Highlight an open workspace
+  and press Ctrl+W (⌘W on macOS). Its shells keep running when **Keep
+  shells running after close** is on. Closing this window asks first;
+  **Settings → Workspaces → Ask before closing this window from the picker**
+  turns that question off. Unsaved editor files still get their own question.
+- **A command palette button beside Settings** opens every action by name
+  without having to learn its shortcut first.
+
+### Changed
+
+- **Typing responds sooner.** Terminal output after a quiet spell reaches
+  the pane sooner. With Hold to talk enabled, a tapped character appears on
+  the press; holding the key takes that character back when recording starts.
+- **Large pastes ask first.** Pastes over 5 KiB show their size and offer
+  **Cancel** or **Paste anyway**. **Don't ask again** explains the change and
+  asks you to confirm it; **Settings → Terminal → Warn before large pastes**
+  controls the same option. Multi-line confirmation stays separate and off by
+  default. Dictation does not trigger either paste question.
+- **Pickers keep their place.** The favorites setup keeps a steady height
+  while folders are added or removed, preserves keyboard focus, and shows
+  what Enter and Escape will do. The workspace picker's key hints animate as
+  its available actions change. Both follow the app's motion preference and
+  system reduced motion.
+
+### Fixed
+
+- Changing a theme or another shared setting in one workspace now reaches
+  the other open workspaces immediately.
+- Dictating silence reports **No speech detected** instead of
+  **Transcription failed**.
+- Confirmation questions leave the title bar's window controls and dragging
+  available.
+- A lone pane's header no longer starts a drag with nowhere to move it.
+- A favorite's right-click menu opens above the favorites picker.
+- Short paths no longer show a gap after the drive in favorites and worktree
+  lists, and the favorites setup displays paths in their normal order.
+- Keyboard focus and selection stay inside the favorites setup after clicks
+  or removing a folder. Ctrl+Enter (⌘+Enter) selects or clears the suggested
+  folders shown; saving remains a separate action.
+
+### Notes
+
+- Moving a terminal restores its recent output; older scrollback is not
+  carried over. Moving an editor keeps its text and tabs but starts a new undo
+  history. A conflicting copy of a file in the destination, or a destination
+  that cannot accept the move, leaves the source pane in place.
+
 ## 0.2.11 — 2026-09-29
 
 ### Added

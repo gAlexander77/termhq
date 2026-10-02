@@ -184,6 +184,12 @@ in, and it is not synced to windows already open.
   session restore to do anything.
 - **Stashed panes stay stashed** — see
   [Persistent sessions](/docs/persistent-sessions/). Default **off**.
+- **Ask before closing this window from the picker** — default on. In the
+  workspace picker, <kbd>Ctrl</kbd>+<kbd>W</kbd> (<kbd>⌘</kbd>+<kbd>W</kbd>
+  on macOS) closes the highlighted workspace's window. This setting asks
+  first when that is the window you are using. The unsaved-editor question
+  still applies, and **Keep shells running after close** decides whether
+  its terminals continue. See [Closing a workspace window](/docs/workspaces/#closing-a-workspace-window).
 
 ### Appearance
 
@@ -245,8 +251,9 @@ in, and it is not synced to windows already open.
   back when restored; a new pane settles into its cell and a closed one fades
   from its place; a stashed pane flies into the shelf's count and back out. The
   sidebar slides in and out, and a workspace fades in once it has opened. The
-  command palette, the workspace picker, Settings, the Worktrees view, History
-  and the Git diff rise into place and fade as they close. Off, everything jumps
+  command palette, the workspace picker, the move-to-workspace picker,
+  favorites setup, Settings, the Worktrees view, History and the Git diff
+  rise into place and fade as they close. Off, everything jumps
   straight to where it goes, and those simply appear and go. Reduced motion in
   your system settings turns it off too.
 - **Move between panes in fullscreen** — default on. While a pane is
@@ -291,9 +298,15 @@ the pane grid. Waiting-pane visibility is configured under **Agents**, below.
 - **Modern Unicode widths** — Unicode 11 width tables, so emoji and CJK measure
   two cells and the box art agent CLIs print stays aligned. Default on; turn it
   off only for an older program that assumes the legacy character widths.
-- **Confirm multi-line pastes** — **Never** (the default) pastes straight in.
+- **Warn before large pastes** — default on. A paste over 5 KiB of UTF-8 text
+  shows its size and asks **Cancel** or **Paste anyway**. **Don't ask again**
+  opens a second step: **Keep warnings**, or **Turn off and paste**. This is
+  independent of multi-line confirmation and applies to keyboard and
+  right-click paste. Dictation bypasses both paste questions.
+- **Confirm multi-line pastes** — **Never** (the default) skips this question.
   **Every multi-line paste** asks first, with the number of lines. A single line
-  never asks. This applies to keyboard and right-click paste alike. A settings
+  never triggers this question; it can still trigger the large-paste warning.
+  This applies to keyboard and right-click paste alike. A settings
   file from an older version that says `auto` behaves as **Never**.
 - **Right-click in a terminal** — **Automatic** (the default) opens a menu on
   macOS and copies or pastes elsewhere. **Open a menu** always shows Copy,
@@ -545,8 +558,9 @@ and create worktrees. These settings tune its defaults:
   model records where it came from and when, and the panel links its sources
   so you can verify them yourself.
 - **Hold to talk** — default off. Hold the key below in a terminal for a moment
-  to start dictating; let go to transcribe. A tap still types what the key
-  normally types. Off by default because on Space it takes the hold away from
+  to start dictating; let go to transcribe. A character key types on the press;
+  holding it takes the character back when recording starts. Off by default
+  because on Space it takes the hold away from
   the programs in the terminal, Claude Code's own hold-to-dictate included.
 - **Hold key** — Space by default. Click it and press any single key, a
   modifier such as Right Ctrl included; <kbd>Esc</kbd> keeps the current one.

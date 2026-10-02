@@ -32,12 +32,35 @@ Not every pane has to be a shell. The **globe** in the title bar — or
 [browser pane](/docs/browser-panes/), a real web page tiled beside your
 terminals. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> opens an
 [editor pane](/docs/editor/), which holds files as tabs. Both take the same
-header and the same moves as a terminal.
+grid controls as a terminal. Terminals and editors can also
+[move to another open workspace](/docs/workspaces/#moving-a-pane-to-another-workspace)
+from their header menus, carrying the running process or unsaved text with them.
 
 With no panes open, the start panel offers **New terminal**, **Find a command**,
 **Workspaces**, and your favorite directories. If your panes are all stashed,
 it points you back to the shelf. Workspace selection also lives at the far
 right of the bottom status bar, beside Stash.
+
+## Favorite folders
+
+The **star** in the title bar is always available. With no favorites saved,
+it opens **Add favorite folders**. Choose one or more folders in the system
+folder picker, drop folders onto the card, or select suggestions from the
+terminals open in this window. The empty start panel's **Add favorite
+folders** button and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>
+(<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> on macOS) open it too.
+
+The card keeps a steady height while you choose. The arrow keys move between
+folders and controls; <kbd>Enter</kbd> performs the action named in the
+footer. A longer suggestion list offers a filter. <kbd>Ctrl</kbd>+<kbd>Enter</kbd>
+(<kbd>⌘</kbd>+<kbd>Enter</kbd>) selects all suggestions shown, or clears them
+when all are selected. **Add favorites** saves the chosen folders; **Not
+now** or <kbd>Esc</kbd> closes without saving. While filtering,
+<kbd>Esc</kbd> clears the filter first.
+
+Once saved, the star opens your favorites, and the shortcut opens the numbered
+picker. Right-click a favorite for other shells and agent launchers.
+**Settings → General → Favorites** manages the list and its order.
 
 ## Make the interface comfortable
 
@@ -108,6 +131,9 @@ and Settings pages, and it lists your open panes: choose one to focus it,
 bringing it back from the stash shelf or out from behind a maximized pane if it
 has to. With nothing typed it leads with what you ran recently.
 
+The **Command palette** button just left of **Settings** in the title bar
+opens the same list with a click.
+
 Scopes under its search field — **All**, **Commands**, **Git**, **Panes**,
 **Themes** and **Workspaces** — narrow the list to one kind of thing;
 <kbd>Tab</kbd> steps through them, or start your search with a scope's name and
@@ -142,9 +168,16 @@ makes TermHQ's own selection, and it stays up while you move the pointer.
 <kbd>Shift</kbd>+right-click, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> or
 <kbd>Ctrl</kbd>+<kbd>C</kbd> copies it.
 
-A paste goes straight in, with no confirmation card and no copy receipt, and a
-large one arrives whole. To be asked before a multi-line paste, turn on
-**Settings → Terminal → Confirm multi-line pastes**.
+Ordinary pastes go straight in, and copying shows no receipt. A paste over
+**5 KiB** asks first, showing its size with **Cancel** and **Paste anyway**:
+some terminal programs take time to process a large amount of text. **Don't
+ask again** explains the change before **Turn off and paste** disables this
+warning. You can also change **Settings → Terminal → Warn before large
+pastes** at any time.
+
+**Confirm multi-line pastes** is a separate setting, off by default. Turn it
+on to review multi-line text before it goes to the program. Neither paste
+question applies to dictation.
 
 Dropping a file onto a terminal types its path at the prompt, quoted the way
 that shell reads quotes. Files can come from your file manager or from the

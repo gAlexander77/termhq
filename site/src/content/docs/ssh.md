@@ -209,6 +209,14 @@ build.example.com… 5 s*, counting — with a **Cancel** button that closes it.
 On the stash shelf, a stashed SSH pane's row names the host, followed by the
 remote folder when the shell reports one.
 
+## Moving a connection to another workspace
+
+Right-click the SSH pane's header and choose **Move to workspace…** to move
+it to another open workspace window. The same OpenSSH process keeps running,
+so moving does not disconnect or ask you to log in again. The receiving pane
+restores recent output; older scrollback is not transferred. See
+[Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace).
+
 ## When a connection ends
 
 When `ssh` ends — the remote shell exited, the network dropped, a login

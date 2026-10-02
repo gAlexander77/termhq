@@ -42,8 +42,9 @@ Linux support is pending.
 - **Hold to talk**, off by default. Turn it on under **Settings → Voice** and
   holding the space bar in a terminal for a moment starts dictating; let go and
   it transcribes — the gesture Claude Code's own dictation uses, here for every
-  program. A tap still types a space, and a key pressed mid-hold flushes the
-  space ahead of it, so typing is unchanged.
+  program. Space is typed as soon as you press it; a hold takes that space
+  back with one Backspace when recording starts. A quick tap does not wait
+  for you to release the key before it appears.
 
 Stopping — a second click, the chord again, or letting go of the held key —
 sends the recording to the model. The button and the chord stop a recording even
@@ -51,6 +52,11 @@ if you have clicked into another terminal, an editor or a text field since. The
 exception is ultra focus, which hands the chord to the terminal — use the button
 there. A
 recording under 0.4 seconds is dropped rather than transcribed.
+
+If a longer recording contains no recognized speech, TermHQ says **No speech
+detected**, without treating it as a transcription failure. Speak before
+releasing the key, or check the level with **Settings → Voice → Test
+microphone**.
 
 ## The key you hold
 
@@ -95,6 +101,9 @@ like any shortcut with nothing to do.
 
 Nothing is submitted for you. The words appear at the prompt as if typed, and
 <kbd>Enter</kbd> is yours to press — read them first.
+
+Dictation goes directly to its destination. The large-paste and multi-line
+paste questions do not interrupt it.
 
 ## The cursor shows it
 

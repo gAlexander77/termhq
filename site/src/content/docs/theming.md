@@ -39,6 +39,11 @@ puts back where you were. Nothing is written to disk until you keep something, s
 looking at thirty themes costs zero saves. A theme you keep applies to every
 open window at once.
 
+The same applies to other saved shared settings, including your terminal
+theme, favorites and shortcuts. Previewing a theme stays in the window where
+you are choosing it; keeping it updates the other open workspaces without
+reopening them.
+
 ## The terminal palette can differ from the interface
 
 A theme has two halves, and they can be driven by different themes.
