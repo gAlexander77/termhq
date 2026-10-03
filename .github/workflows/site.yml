@@ -3,9 +3,10 @@ name: Deploy site to GitHub Pages
 # Website and documentation deploy. Completely independent of application
 # releases: a typo fix or a new docs page must never rebuild TermHQ, and
 # shipping TermHQ must never require editing this repository. The one
-# coupling runs the other way: a published release rebuilds the site, so the
-# download page's per-platform buttons (read from the latest release at build
-# time) follow each release on their own.
+# coupling runs the other way: site-release.yml dispatches this workflow on
+# main after publication, so the download buttons follow the latest release.
+# A release event itself runs under a tag and cannot deploy to our main-only
+# GitHub Pages environment.
 
 on:
   push:
@@ -14,8 +15,7 @@ on:
       - "site/**"
       - "CHANGELOG.md"          # the changelog page renders this file
       - ".github/workflows/site.yml"
-  release:
-    types: [published]
+      - ".github/workflows/site-release.yml"
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,10 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Finish active deployments and keep overlapping refreshes in the queue.
+  # The default single pending slot would still cancel an older queued run.
+  queue: max
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -42,10 +45,13 @@ jobs:
     # is still true is safe: the site deploys, but every page says noindex and
     # robots.txt disallows everything.
     # ---------------------------------------------------------------------
-    if: vars.SITE_DEPLOY_ENABLED == 'true'
+    if: vars.SITE_DEPLOY_ENABLED == 'true' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Queued refreshes always publish the current approved main tree.
+          ref: main
 
       - uses: actions/setup-node@v4
         with:

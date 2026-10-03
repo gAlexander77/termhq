@@ -1,0 +1,23 @@
+name: Refresh site after release
+
+# Release events run under a tag. Dispatch the actual deployment on main so
+# the existing GitHub Pages branch restriction remains enforced.
+on:
+  release:
+    types: [published]
+  # Also exercises the same dispatch path without publishing a test release.
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  refresh:
+    if: vars.SITE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Queue the site deployment on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run site.yml --ref main
