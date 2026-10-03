@@ -76,6 +76,20 @@ put the file back as `config.json`.
 If the file stops parsing while TermHQ is running, the next saved change keeps a
 copy the same way before it writes a fresh file.
 
+## Exporting and importing settings
+
+**Settings → General → Import and export** saves your preferences to one JSON
+file with **Export settings…**. Use **Import settings…** to restore that file
+or bring it to another installation. TermHQ checks the file before asking you
+to apply it. Cancel leaves your settings alone; confirming replaces only the
+settings included in the file, including any shortcuts and custom commands.
+Settings absent from the file stay as they are.
+
+This is a settings backup, not a workspace or asset backup. Theme files,
+backgrounds, icon packs, speech models and workspaces are not included. Folder
+paths, commands and installed assets may need adjusting on another computer.
+Only import files you trust.
+
 ## Editing by hand
 
 A change you make in Settings saves only the keys that changed. TermHQ re-reads
@@ -105,6 +119,12 @@ Keys are camelCase.
 
 - **Default shell** — used by the **+** button, <kbd>Ctrl</kbd>+<kbd>J</kbd> and
   favorites. Unset means the first shell detected.
+- **Default terminal folder** — choose the starting folder for new local
+  terminals across workspaces, including the first terminal in a fresh
+  workspace and alternate shells. **Use home folder** restores the existing
+  default. Favorites, restored terminals, clones that keep their directory
+  and open-here actions keep their specific folders. Existing terminals and
+  SSH destinations do not move.
 - **Undo closing a terminal** — which close paths park a terminal instead of
   ending it: **Shortcut and the pane's × button** (the default), **Keyboard
   shortcut only**, or **Off — close immediately**. A parked terminal keeps
@@ -118,7 +138,8 @@ Keys are camelCase.
   default so you can read and copy their output. Press Enter to close the ended
   pane. You can choose to always keep ended panes or always close them instead.
 - **Clone keeps directory** — whether duplicating a pane opens in the source
-  pane's directory or at home. Default on.
+  pane's directory. Default on. Off uses **Default terminal folder**, or home
+  when that setting is unset.
 - **Sidebar (files & git)** — whether the Files and Source Control sidebar is
   showing. This switch, the sidebar button beside Settings in the title bar and
   <kbd>Ctrl</kbd>+<kbd>B</kbd> (<kbd>⌘</kbd>+<kbd>B</kbd> on macOS) are the same
@@ -158,6 +179,9 @@ Keys are camelCase.
   version, which is how launches are counted. Off sends nothing, cancels a report still on its way, and stays
   off for every later start. See
   [What reaches the network](/docs/under-the-hood/#what-reaches-the-network).
+- **Import and export** — save or restore a settings file. See
+  [Exporting and importing settings](#exporting-and-importing-settings) for
+  what it includes and how confirmation works.
 
 Grid or Columns is not a row here. It is the switch in the title bar, or the
 **Switch between Grid and Columns** action — unassigned by default, so bind it
@@ -228,6 +252,10 @@ in, and it is not synced to windows already open.
   appear:
   - **Transparency** — how much of the background shows through the terminals,
     0–100%, default 25%. Text stays solid at any value.
+  - **Improve text contrast** — default on. Makes faint text easier to read
+    against the terminal theme while a background is showing. Off keeps the
+    exact colors chosen by the CLI. It updates open terminals immediately;
+    a bright picture may still need less transparency.
   - **Blur** — 0–20 px, default off.
   - **Fit** — **Fill** (the default) covers the grid and crops what does not
     fit; **Fit** shows all of it, on the terminal's background color.
@@ -425,8 +453,14 @@ Settings for [editor panes](/docs/editor/) and
 
 ### Agents
 
-The launchers lead the category, in a card that is always open:
+The first cards cover terminal icons, agent launchers and Open in IDE:
 
+- **Show active agent icons** — default on. Recognized running local agents
+  show their product mark in terminal headers, Stash, Waiting and Undo Close,
+  including agents started by typing their command. The mark clears after
+  exit. Off removes the marks and stops checking this window's terminals.
+  See [Recognizing a running agent](/docs/agents/#recognizing-a-running-agent)
+  for supported destinations and limits.
 - **Agent launchers** — the list behind every pane header's ✳ button and every
   “Open in &lt;shell&gt;” agent flyout. Each row shows the digit it answers to
   after <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, the mark the menu shows for

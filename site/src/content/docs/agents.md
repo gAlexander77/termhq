@@ -7,6 +7,27 @@ description: "The parts of TermHQ built specifically for running Claude Code, Co
 TermHQ is a terminal, so any agent that runs in a terminal runs in it. These are
 the parts that exist because of agents specifically.
 
+## Recognizing a running agent
+
+A recognized local agent replaces the terminal's generic mark with its product
+icon. This works whether you use a launcher or type the command yourself.
+The same live identity appears in Stash, Waiting and Undo Close, including
+the latest waiting and undo items in the status bar. Stashing or closing a
+terminal for Undo does not freeze its icon: it follows the agent that is
+actually running and clears after that agent exits.
+
+**Settings → Agents → Show active agent icons** is on by default. Turn it off
+to remove these marks and stop the window's agent checks. Detection uses local
+process ownership, rather than terminal titles or text printed by a command.
+It checks about once a second and does not send agent commands or prompts.
+GitHub Copilot's native WinGet and Homebrew packages are recognized alongside
+its npm installation.
+
+SSH and WSL panes, and installations TermHQ cannot identify, keep a generic
+mark. On custom or older Windows shells, a background agent can sometimes
+look active when the shell does not expose its prompt boundary. An icon
+identifies a running program; it does not indicate whether a task succeeded.
+
 ## Launching one in the focused terminal
 
 A terminal pane's header has an **✳** button listing your agent commands —

@@ -10,6 +10,31 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.14 — 2026-10-03
+
+### Added
+
+- **Choose where new terminals start.** Settings → General → Default terminal
+  folder applies across workspaces, including the first terminal at launch.
+  Leave it unset to keep the home-folder default. Favorites, restored terminals
+  and other actions that choose a specific folder keep that destination.
+- **Export and import settings.** Save your preferences to a JSON file from
+  Settings → General → Import and export. Imports are checked and ask before
+  applying; settings absent from the file stay as they are. Workspaces, theme
+  files, backgrounds, icon packs and speech models are not included.
+- **See which local agent is running.** Recognized agents show their product
+  icon in terminal headers, Stash, Waiting and Undo Close, including agents
+  started by typing their command. Icons follow the running agent and clear
+  after it exits. GitHub Copilot's native installations are recognized too.
+  Settings → Agents → Show active agent icons controls the feature.
+
+### Fixed
+
+- Background images no longer leave opaque patches behind dim or italic
+  terminal text. Deliberate terminal background colors and selections remain
+  visible. **Improve text contrast**, under Appearance → Background, helps
+  faint text stand out; turn it off to keep the exact colors chosen by a CLI.
+
 ## 0.2.13 — 2026-10-02
 
 ### Changed

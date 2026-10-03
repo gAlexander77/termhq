@@ -76,6 +76,13 @@ their own surfaces. Terminal text renders slightly softer while a background is
 set, because the terminal then draws on a see-through surface; pick **None** and
 full sharpness returns.
 
+Dim and italic text let the image show through their default background,
+while explicit background colors, inverse text and selections stay visible.
+**Improve text contrast** is on by default and helps faint text stand out
+against the terminal theme. Turn it off to preserve the CLI's exact colors.
+This adjusts contrast against the theme, not against each pixel of your
+picture; reduce **Transparency** if a bright image still makes text hard to read.
+
 A background belongs to the whole app, like the theme: one for every workspace,
 and a change reaches every open window at once. Files over 1 GB are refused.
 Blur, Fit and playback speed are covered under
