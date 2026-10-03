@@ -10,6 +10,28 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.13 — 2026-10-02
+
+### Changed
+
+- **Windows updates skip the setup window.** After you choose **Update and
+  restart** and finish any save or running-terminal prompts, TermHQ installs
+  the update silently and reopens. Initial downloads still show the normal
+  installer. This applies to updates started from v0.2.13 or later.
+
+### Fixed
+
+- Updates no longer mistake terminal connections for extra TermHQ windows.
+  This fixes the **other TermHQ windows still open** message appearing even
+  after every other window was closed. Real open windows still get their
+  save prompts before an update can proceed.
+- A quick update restart returns to the workspace you were using, even
+  when a last-moment save left it marked as open by the app that just quit.
+
+If an older version blocks this update with that message, finish your running
+work, save your files, close TermHQ and install the latest download over your
+existing copy. Your settings and saved workspaces are preserved.
+
 ## 0.2.12 — 2026-10-02
 
 ### Added

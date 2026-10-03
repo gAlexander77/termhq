@@ -134,6 +134,12 @@ TermHQ asks **Update and restart now?** and says how many will end; other
 TermHQ windows are asked to close and take the same card; then TermHQ closes,
 the installer runs, and TermHQ reopens in the workspace you were in.
 
+On Windows, updates started from **v0.2.13 or later** run the installer
+silently, without setup screens or a separate installer progress window.
+The download progress, save prompts and running-terminal confirmation still
+appear in TermHQ. Opening a downloaded installer directly still shows its
+normal setup screens. The macOS update flow is unchanged.
+
 The unsaved-work check happens **after the download**, so it includes edits you
 made while waiting. Choose **Save all & update**, **Update without saving**, or
 **Cancel**. If another window remains open, check it for a save prompt, close it
@@ -165,6 +171,19 @@ If TermHQ cannot save the workspace, installation stops before shutting down
 your shells. If the installer fails after the shells have stopped, the app
 reports the failure and restores the ability to open terminals for recovery.
 Previously running commands have still stopped; check your work before retrying.
+
+### An older version says another window is still open
+
+Versions before **v0.2.13** can mistake terminal connections for extra TermHQ
+windows and refuse an update even after the other windows are closed. The fix
+is included in v0.2.13, but the older installed copy still handles the update
+to that version.
+
+If no other window is waiting for you to save, finish any running commands or
+agents, save your files and close TermHQ. Download the latest installer from
+the [download page](/download/) and install it over your existing copy. Your
+settings and saved workspaces are preserved; previously running commands
+will need to be started again. Later updates use the corrected window count.
 
 ## Uninstalling
 

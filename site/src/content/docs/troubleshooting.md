@@ -125,8 +125,10 @@ only recent output is kept, and a chatty program pushes the rest out.
 
 ## Everything vanished right after a crash
 
-Relaunching within about fifteen seconds of a crash can open a fresh, empty
-workspace instead of the one you lost.
+In versions before v0.2.13, relaunching within about fifteen seconds of a crash
+can open a fresh, empty workspace instead of the one you lost. From v0.2.13,
+TermHQ can reclaim the workspace immediately when the previous app process
+has exited. If it cannot check that process, it still waits for the timeout.
 
 **Your work is not gone.** The terminals are still running. Quit and open TermHQ
 again, or open a second window, and they are adopted back.
