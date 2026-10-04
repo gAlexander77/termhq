@@ -10,6 +10,34 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.2.15 — 2026-10-03
+
+### Added
+
+- **Move a pane with the keyboard.** Ctrl+Shift+M (Cmd+Shift+M on macOS)
+  opens the workspace destination picker for the focused terminal or editor.
+  Reassign or disable the shortcut in Settings → Shortcuts.
+
+### Changed
+
+- **Move into a saved or new workspace.** The pane's **Move to workspace…**
+  menu is available even when only one workspace is open. Choose a saved
+  destination, or type a new name and choose **Create & move**. New destinations
+  start with the moved pane alone, and a failed launch can be retried without
+  creating duplicate workspaces.
+- The move picker identifies the source pane by its icon, type and current
+  title, including the icon of a running agent. Long titles truncate neatly,
+  with the full name on hover.
+
+### Fixed
+
+- Terminals retain their last complete frame while grid dividers are dragged,
+  preventing flashes when a CLI pauses its screen updates.
+- Codex icons are detected on Windows when Git Bash's npm launcher exits
+  before the agent does.
+- Editor header menus keep the chosen move action through a click, and the
+  move picker's close button remains visible.
+
 ## 0.2.14 — 2026-10-03
 
 ### Added

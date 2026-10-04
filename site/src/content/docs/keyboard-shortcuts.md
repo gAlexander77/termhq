@@ -29,6 +29,7 @@ screen — and no <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter is a distinct control 
 | Restore last closed terminal | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> |
 | Show recently closed panes | *unassigned by default* |
 | Rename the focused pane | *unassigned by default* |
+| Move the focused pane to another workspace | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> |
 | Find (terminal or files) | <kbd>Ctrl</kbd>+<kbd>F</kbd> |
 
 <kbd>Ctrl</kbd>+<kbd>J</kbd> and <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> pair
@@ -42,7 +43,11 @@ uses it to page backward in normal mode.
 SSH → SSH connections** — see [SSH connections](/docs/ssh/). **Show recently
 closed panes** opens the status bar's list of panes still inside their undo
 window, with the keyboard on its first row. **Rename the focused pane** opens the
-pane's name for editing; an empty name brings back the automatic one. **Find**
+pane's name for editing; an empty name brings back the automatic one. **Move
+the focused pane to another workspace** opens the destination picker for a
+terminal or editor. Choose an open or saved workspace, or type a new name to
+create one. See [Moving a pane](/docs/workspaces/#moving-a-pane-to-another-workspace).
+**Find**
 follows where you are: over a terminal it opens that pane's find bar, and when
 you were last in the Files panel it searches file and folder names.
 
@@ -266,15 +271,18 @@ terminals running. See [Closing a workspace window](/docs/workspaces/#closing-a-
 ## In Move to workspace
 
 Right-click a terminal or editor header and choose **Move to workspace…**.
-It appears only when another workspace window is open.
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>
+on macOS) opens the same picker for the focused pane. It is available even
+when only one workspace is open. Choose an open or saved destination, or type
+an unmatched name to create a workspace and move the pane into it.
 
 | Action | Key |
 | --- | --- |
-| Find a destination by name or folder | Type |
+| Find a destination or name a new workspace | Type |
 | Select the next / previous destination | <kbd>↓</kbd> / <kbd>↑</kbd> |
 | Select the first / last destination | <kbd>Home</kbd> / <kbd>End</kbd> |
 | Step by a visible page of destinations | <kbd>Page Up</kbd> / <kbd>Page Down</kbd> |
-| Move the pane to the selected workspace | <kbd>Enter</kbd> |
+| Move to the selected workspace, or create and move | <kbd>Enter</kbd> |
 | Move between search and buttons | <kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> |
 | Cancel before the move starts | <kbd>Esc</kbd> |
 

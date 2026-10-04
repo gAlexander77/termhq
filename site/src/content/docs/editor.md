@@ -23,8 +23,10 @@ README you are reading, the fix that is faster to type than to explain.
 
 ## Moving an editor to another workspace
 
-With another workspace window open, choose **Move to workspace…** from the
-editor's header menu. Select a destination and press <kbd>Enter</kbd>. The
+Choose **Move to workspace…** from the editor's header menu, or press
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> (<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>
+on macOS). Choose an open or saved workspace, or type a new name and choose
+**Create & move**. The
 whole pane moves with its tabs in order and its unsaved text; moving does not
 save those files to disk.
 

@@ -121,10 +121,22 @@ place.
 
 ## Moving a pane to another workspace
 
-Open the destination workspace first. Right-click the source terminal or
-editor's **header**, choose **Move to workspace…**, and select a destination.
-Only other workspaces with an open window appear; with no other window open,
-the menu has no move option. Browser panes cannot move between workspaces.
+Right-click the source terminal or editor's **header**, choose **Move to
+workspace…**, or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>
+(<kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> on macOS). The command palette offers
+the same action, and Settings → Shortcuts lets you reassign or disable the key.
+The action is available even when this is your only workspace. Browser panes
+cannot move between workspaces.
+
+Choose another open or saved workspace. A saved destination opens before the
+pane moves. To create a destination, type an unmatched workspace name and choose
+**Create & move**. The new window starts with the moved pane alone, even when
+new workspaces normally open a default terminal. A failed launch can be retried
+without creating another workspace with the same name.
+
+The picker header identifies the pane by its icon, type and current title,
+including the icon of a recognized running agent. A long title truncates;
+hover over it to see the full name.
 
 A local terminal or SSH connection keeps the same running process and working
 directory. An editor brings its tabs, their order, and unsaved text. The
@@ -200,7 +212,8 @@ If all your panes are stashed, the empty view points you back to the stash shelf
 instead of making the workspace look as though it has lost them.
 
 The same setting covers any workspace with nothing to restore, not just brand new
-ones.
+ones. A workspace created by **Create & move** starts with the incoming pane
+alone, without an extra terminal.
 
 ## Deleting one
 
