@@ -169,7 +169,7 @@ Shortcuts**. See [Source Control](/docs/source-control/).
 | Open a file or folder link a program prints | <kbd>Ctrl</kbd>+click |
 | Show that file in the file manager instead | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+click |
 | Take a right-click, or a drag, from a program that reads the mouse | <kbd>Shift</kbd> (<kbd>Option</kbd> on macOS) |
-| Find bar: next / previous match | <kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd> |
+| A terminal's find bar: older / newer match (it starts at the newest) | <kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd> |
 | Find bar: match case, whole word, regular expression | <kbd>Alt</kbd>+<kbd>C</kbd>, <kbd>Alt</kbd>+<kbd>W</kbd>, <kbd>Alt</kbd>+<kbd>R</kbd> |
 | Close the find bar | <kbd>Esc</kbd> |
 | Maximize the pane, or restore the grid | Double-click its header |

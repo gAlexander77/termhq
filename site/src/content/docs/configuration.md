@@ -90,6 +90,9 @@ backgrounds, icon packs, speech models and workspaces are not included. Folder
 paths, commands and installed assets may need adjusting on another computer.
 Only import files you trust.
 
+[Remote](#remote) settings are left out of exports, and an import that names one
+is refused, so a settings file can never turn sharing on.
+
 ## Editing by hand
 
 A change you make in Settings saves only the keys that changed. TermHQ re-reads
@@ -331,6 +334,11 @@ the pane grid. Waiting-pane visibility is configured under **Agents**, below.
   opens a second step: **Keep warnings**, or **Turn off and paste**. This is
   independent of multi-line confirmation and applies to keyboard and
   right-click paste. Dictation bypasses both paste questions.
+- **Ask before pasting a large paste twice** — default on. Pasting the same
+  text over 5 KiB into the same pane again within 10 seconds asks **Paste this
+  again?** first, with **Cancel** focused and **Paste again**. Smaller pastes
+  never ask. Off lets a duplicate queue behind a paste the program is still
+  taking in.
 - **Confirm multi-line pastes** — **Never** (the default) skips this question.
   **Every multi-line paste** asks first, with the number of lines. A single line
   never triggers this question; it can still trigger the large-paste warning.
@@ -412,6 +420,32 @@ Settings for [SSH connections](/docs/ssh/).
 Passwords, passphrases and host-key questions are the client's own, answered in
 the pane; TermHQ stores none of them. Saved profiles live in `ssh-profiles.json`
 beside `config.json`, with no secrets in them.
+
+### Remote
+
+Settings for [remote workspaces](/docs/remote-workspaces/), a preview.
+
+- **Let other computers connect (Preview)** — default off. On starts a sharing
+  process with no window that computers you pair can connect to. They open this
+  computer's workspaces in windows of their own, and the terminals, git and
+  files in them run here, as your user.
+- **This computer's name** — what other computers call this one in their
+  workspace picker. Empty uses the computer's own name.
+- **Start at sign-in, without a window** — default off, on Windows and macOS.
+  Starts sharing when you sign in, before any TermHQ window opens.
+- **Keep this computer awake while sharing** — default on. The display may
+  still turn off.
+- **Pair a computer** — shows a one-time code, good for 5 minutes, for the
+  other computer to type under **Add a computer**.
+- **Sharing port** *(advanced)* — the port sharing listens on, from 1024 to
+  65535. Empty uses 47120.
+- **Paired computers** and **Connected now** — the computers allowed to
+  connect, each with a remove button, and the ones connected at the moment.
+- **Connect to other computers** — the computers whose workspaces this one
+  opens, and **Add a computer** to pair with another.
+
+Paired computers and this computer's certificate are kept in their own files
+beside `config.json`, never in it.
 
 ### Editor
 
@@ -575,6 +609,9 @@ and create worktrees. These settings tune its defaults:
 - **Voice dictation** — show the mic button and honor the dictation chord.
   Default on — but the button only exists once a speech model is installed,
   so a fresh install shows no voice controls at all until you download one.
+- **Floating voice widget (Preview)** — default off. An experimental floating
+  window for dictating into other applications, opened from a button beside
+  the title bar's mic button. Requires Voice dictation and a speech model.
 - **Microphone** — which input to record from; **System default** unless you
   pick one, and the system default takes over if the chosen one is unplugged.
 - **Dictation language** — English by default, fifteen more (Arabic, Chinese,

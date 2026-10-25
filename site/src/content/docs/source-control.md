@@ -263,8 +263,12 @@ the repository it came from, and its buttons — **Pull with rebase**, **Force
 push…**, **Stash and switch** — act there, never in the repository on screen.
 
 TermHQ uses the `git` already on your `PATH`, along with your configuration and
-credential helpers. Repositories reached through WSL paths are not supported
-yet; see [Troubleshooting](/docs/troubleshooting/).
+credential helpers. A repository inside a WSL distribution — a WSL terminal in
+`/home/…`, which reports a `\\wsl.localhost\…` folder — runs that
+distribution's own git instead, so the distribution needs git installed; see
+[Troubleshooting](/docs/troubleshooting/#source-control-says-git-isnt-installed-in-a-wsl-distribution).
+A WSL terminal in `/mnt/c/…` reports a Windows drive path and keeps using
+Windows git.
 
 ## When there is no repository to show
 

@@ -12,7 +12,7 @@ interface Props {
 const { items, path } = Astro.props;
 const sections = [
   { title: "Getting started", slugs: ["", "getting-started", "installation"] },
-  { title: "Workspace", slugs: ["panes-and-layout", "workspaces", "persistent-sessions", "worktrees"] },
+  { title: "Workspace", slugs: ["panes-and-layout", "workspaces", "persistent-sessions", "remote-workspaces", "worktrees"] },
   { title: "Tools", slugs: ["agents", "dictation", "browser-panes", "ssh", "editor", "language-servers", "source-control"] },
 ];
 const docPath = (slug: string) => slug ? `/docs/${slug}/` : "/docs/";

@@ -23,8 +23,11 @@ It checks about once a second and does not send agent commands or prompts.
 GitHub Copilot's native WinGet and Homebrew packages are recognized alongside
 its npm installation.
 
-SSH and WSL panes, and installations TermHQ cannot identify, keep a generic
-mark. On custom or older Windows shells, a background agent can sometimes
+SSH panes, and installations TermHQ cannot identify, keep a generic mark. In a
+WSL pane running bash, agents are recognized too, read from the distribution's
+own processes while a command runs. A WSL pane running zsh or fish, a `.bashrc`
+that replaces `PROMPT_COMMAND`, or `wsl.exe` typed into another shell keeps the
+generic mark. On custom or older Windows shells, a background agent can sometimes
 look active when the shell does not expose its prompt boundary. An icon
 identifies a running program; it does not indicate whether a task succeeded.
 
@@ -278,8 +281,8 @@ If you use separate Git checkouts for parallel tasks, the global
 terminal or agent action directly on each one. It shows checkout state without
 guessing whether an agent is running there.
 
-Files follows WSL directories too. Source Control does not yet support
-repositories reached through WSL paths; use Git in the WSL terminal for those.
+Files follows WSL directories too, and Source Control opens repositories inside
+WSL with that distribution's own git.
 
 The `</>` button in the pane header opens that directory in your editor, for the
 moments when the right move is to take over by hand. For a smaller

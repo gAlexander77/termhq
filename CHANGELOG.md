@@ -10,6 +10,78 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.3.0 — 2026-10-25
+
+### Added
+
+- **Remote workspaces (preview).** Open another computer's workspaces in
+  windows on this one. The terminals, agents, Source Control, Files panel and
+  editor files in them stay on that computer, so they keep running when you
+  close the window or step away. On the computer to share, turn on
+  Settings → Remote → **Let other computers connect (Preview)** and choose
+  **Pair a computer**. On the other, enter its address and the one-time code
+  under **Add a computer**. Its workspaces then appear in your workspace picker
+  under its name. Works between Windows and macOS in either direction, on the
+  same network, with TermHQ 0.3.0 or later on both computers. See
+  [Remote workspaces](https://termhq.dev/docs/remote-workspaces/).
+- **Source Control for repositories inside WSL.** A WSL terminal in a Linux
+  folder such as `/home/…` now gets the full Source Control panel, run with
+  that distribution's own git. The Files panel's ignored-file names and the
+  Worktrees view work there too. A distribution without git says to install it
+  there.
+- **Agent icons in WSL panes.** Recognized agents running in a WSL bash pane
+  show their product icon, as they do in Windows shells. A pane sitting at its
+  prompt is not checked at all.
+- **Ask before pasting the same large paste twice.** Pasting the same text over
+  5 KiB into the same pane within 10 seconds asks **Paste this again?** first,
+  with **Cancel** focused, so a second paste does not queue behind one a
+  program is still taking in. Smaller pastes never ask. Turn it off in
+  Settings → Terminal → Ask before pasting a large paste twice.
+- **Dictate into other apps (opt-in preview).** Settings → Voice → **Floating
+  voice widget (Preview)**, off by default, adds a button beside the title
+  bar's mic that opens a small floating recorder. Focus a text field in
+  another application, choose **Record**, then **Stop & insert**. It uses your
+  local speech model, nothing is submitted for you, and **Copy** keeps the
+  transcript when a field cannot take it. On macOS, inserting text needs
+  Accessibility permission.
+
+### Changed
+
+- **Terminal find starts from the newest output.** Typing lands on the most
+  recent match, and Enter walks back to older ones, as in Windows Terminal;
+  Shift+Enter goes forward again.
+- **Find counts every match and lights the ones you can see.** The count stays
+  exact up to 20,000 matches, and the 1,000 matches nearest the view are
+  highlighted, so the newest output of a long scrollback is lit too.
+- **Find says when it can only see the screen.** In a full-screen program,
+  which has no scrollback, the count reads *on screen*, and *None on screen*
+  instead of *No results*.
+
+### Fixed
+
+- Find keeps its place while an agent streams output: the count and highlights
+  refresh as output arrives, the current match stays on its text instead of
+  jumping to the newest one, and the view no longer moves on its own.
+- Find no longer misses matches in lines a program redrew in place.
+- Find highlights blend the theme's selection color onto the terminal
+  background, so text on a highlight stays readable with either renderer,
+  instead of turning pale or solid white.
+- Highlight blocks no longer stay painted in a full-screen program after find
+  has cleared them.
+- Git Bash installed for your user only, in `%LOCALAPPDATA%\Programs\Git`
+  where Git for Windows' per-user installer and PortableGit put it, now
+  appears in the shell list. So does a Git for Windows found through `git` on
+  your `PATH`.
+- A new terminal opened beside a browser pane keeps the keyboard, instead of
+  losing it to the page while the grid rearranges.
+
+### Notes
+
+- Remote workspaces are a preview. They work on a local network only, Linux is
+  not supported yet, and editors in a server workspace have no language
+  servers. A workspace is open on one computer at a time: opening it on
+  another moves it there, and its shells keep running.
+
 ## 0.2.15 — 2026-10-03
 
 ### Added

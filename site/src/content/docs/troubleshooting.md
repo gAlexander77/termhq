@@ -456,11 +456,12 @@ double-click the boundary between them, or <kbd>Tab</kbd> to it and press
 SmartScreen warns on the first install of a build that is not code-signed. See
 [Installation](/docs/installation/).
 
-## Source Control says it cannot read a WSL repo
+## Source Control says git isn't installed in a WSL distribution
 
-Repositories on a `\\wsl.localhost` path are not supported by Source Control yet,
-and it says so rather than showing you something wrong. Git inside the WSL pane
-itself works normally.
+Source Control runs a WSL repository's git inside that distribution, not
+Windows git, so the distribution needs git of its own. When it has none, the
+panel names the distribution and says to install it there (for example,
+`sudo apt install git`). Source Control notices the new git without a restart.
 
 ## A checkout is missing from Worktrees
 
