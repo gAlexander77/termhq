@@ -67,12 +67,18 @@ Use a terminal at an idle shell prompt. Finish or clear any partially typed
 command first, and do not launch into a program that is already using the
 terminal. To keep that program running, launch the agent in a new pane instead.
 
-Where the shell reports each prompt to TermHQ — as PowerShell, Command Prompt,
-Git Bash and WSL's bash do on Windows — TermHQ catches the most common slip for
-you. If the agent it last launched in a pane is still running there, because the
-shell has not shown a prompt since, a second launch opens a new pane with the
-same shell and folder and starts the agent in that, instead of typing the command
-into the running agent.
+A pane that already has an agent running in it is left alone. Neither the
+pane's ✳ menu, nor the numbered picker below, nor the command palette's **Run**
+entries type anything into it, and the pane says so — **Claude Code is already
+running in this pane**, with that agent's name. The picker's shortcut shows the
+same note instead of its list.
+
+TermHQ knows the agent from the ones it recognizes in the pane, whether or not
+**Show active agent icons** is on. Where the shell reports each prompt to TermHQ
+— as PowerShell, Command Prompt, Git Bash and WSL's bash do on Windows — an
+agent a launcher started there also counts until the shell's next prompt, which
+covers agents TermHQ doesn't recognize. For a second agent, open it in a pane
+of its own; [Duplicate](#a-second-agent-beside-the-first) does that in one step.
 
 In any shell, a second launch into the same pane within three seconds is not sent
 at all, so a double click never types the command twice; the pane says **Sent a
@@ -153,6 +159,23 @@ the pane, and the command palette's **Run an agent by number** row says why.
 
 The command palette also lists each installed agent by name — **Run Claude
 Code** and the like — to type into the focused terminal.
+
+## A second agent beside the first
+
+Duplicating a terminal that has an agent running in it — the pane header's
+clone button, or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>J</kbd> — starts the same
+agent in the copy. It's a fresh session from that agent's launcher, in the same
+shell and, with **Clone keeps directory** on, the same folder. It isn't a copy of
+the running conversation. **Settings → General → Clone starts the agent too**
+turns this off, and the copy is then a plain shell. So is the copy of an agent
+that has no launcher in **Settings → Agents**.
+
+## Agents that work TermHQ themselves
+
+Agents can also use TermHQ for themselves: list and read the other panes, start
+another agent and hand it a task, open files, or ask you a question, each only as
+far as you allow in **Settings → MCP**. See
+[Letting agents use TermHQ](/docs/agent-tools/).
 
 <span id="knowing-when-one-has-finished"></span>
 

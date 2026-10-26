@@ -23,8 +23,9 @@ works on a local network only; see [What it can't do yet](#what-it-cant-do-yet).
 
 ## What you need
 
-- **TermHQ 0.3.0 or later on both computers.** If the two run versions that
-  cannot work together, the connection is refused with a message naming both
+- **TermHQ 0.3.0 or later on both computers, at versions that work
+  together.** 0.3.1 and 0.3.0 don't, so update both. When two versions can't
+  work together, the connection is refused with a message naming both
   versions; update the older one.
 - **Windows or macOS, in either direction.** A Mac can open a Windows
   desktop's workspaces, and a Windows computer can open a Mac's. Linux is not

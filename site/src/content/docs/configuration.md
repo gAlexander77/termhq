@@ -24,7 +24,8 @@ found too, and a shortcut can be found by its chord as well as its name. If
 nothing matches, the list says so.
 
 The categories run General, Workspaces, Appearance, Terminal, Browser, SSH,
-Editor, Agents, Git, Voice, Files and Shortcuts — the order this page follows.
+Remote, Editor, Agents, MCP, Git, Voice, Files and Shortcuts — the order this
+page follows.
 Each one groups its settings into cards, and on/off settings are switches.
 
 Settings are written to a JSON file you can also edit by hand.
@@ -143,6 +144,11 @@ Keys are camelCase.
 - **Clone keeps directory** — whether duplicating a pane opens in the source
   pane's directory. Default on. Off uses **Default terminal folder**, or home
   when that setting is unset.
+- **Clone starts the agent too** — default on. Duplicating a terminal with an
+  agent running in it starts the same agent in the copy, as a fresh session
+  from its launcher in **Settings → Agents**. Off, or for an agent with no
+  launcher, the copy is a plain shell. See
+  [A second agent beside the first](/docs/agents/#a-second-agent-beside-the-first).
 - **Sidebar (files & git)** — whether the Files and Source Control sidebar is
   showing. This switch, the sidebar button beside Settings in the title bar and
   <kbd>Ctrl</kbd>+<kbd>B</kbd> (<kbd>⌘</kbd>+<kbd>B</kbd> on macOS) are the same
@@ -561,6 +567,40 @@ the grid, and opening the stash shelf clears the stashed ones. Fresh terminals d
 just for startup output. See
 [When a pane needs your attention](/docs/agents/#when-a-pane-needs-your-attention)
 for the full behavior.
+
+The first row on the page, **What agents may do in TermHQ**, opens the MCP
+category below.
+
+### MCP
+
+What agents and scripts may do in TermHQ, through the `termhq` command in every
+terminal and its MCP server. See
+[Letting agents use TermHQ](/docs/agent-tools/) for the whole picture.
+
+- **Let agents use TermHQ** — default on. The master switch: off refuses every
+  request, and the tools below dim until it is back on.
+- **Connect agents** — a row each for Claude Code and Codex, saying whether
+  TermHQ is **Added**, **Not added** or the agent is **Not installed**:
+  - **Add** runs the agent's own command, shown under it, so its sessions
+    started after that have TermHQ's tools in all your projects. For Codex it
+    also writes a longer tool timeout and the pane's TermHQ variables into
+    TermHQ's entry. **Remove** undoes it.
+  - **Other agents** shows the configuration snippet for any other agent that
+    speaks MCP, with a copy button.
+- **Tools for agents:**
+  - **Preset** sets every tool at once: **Defaults**, **Ask before anything
+    changes** or **Read only**. It reads **Custom** once you change a tool
+    yourself.
+  - Every tool is **Allowed**, **Ask first** or **Off**, grouped by what it
+    does: Reading; Showing you things; Talking to other agents; Typing,
+    starting and closing panes; and Workspaces.
+  - By default the first three groups are allowed, and the last two ask first.
+- **Recent activity** — the last 20 requests from agents and scripts: what was
+  asked for, when, which pane asked, and how it ended. **Activity log** opens
+  the full record in an editor tab.
+
+The tools' settings are kept in `config.json` as `agentAccess` and
+`agentTools`, read fresh on every request.
 
 ### Git
 

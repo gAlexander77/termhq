@@ -10,6 +10,55 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.3.1 — 2026-10-26
+
+### Added
+
+- **Let agents use TermHQ.** Coding agents such as Claude Code and Codex can
+  now see and work your panes: list them, read what a terminal shows, type
+  into one, open files and web pages, start new terminals and agents, and ask
+  you a question. Connect them in Settings → MCP → **Connect agents**, one
+  click each; sessions started after that have the tools. Other agents that
+  speak MCP take the snippet on the same page. See
+  [Letting agents use TermHQ](https://termhq.dev/docs/agent-tools/).
+- **You decide what agents may do.** Settings → MCP sets every tool to
+  **Allowed**, **Ask first** or **Off**, with three presets and a switch that
+  turns agents' access off entirely. Out of the box, agents may look around,
+  show you things and message each other, and ask first before they type into
+  a pane, start or close anything, or change a workspace.
+- **Agents ask on a card.** A tool set to Ask first shows a card in TermHQ
+  saying which agent asks, what it wants to do and where, with the full text
+  of anything it would type. The card never takes your keyboard, Enter never
+  approves, and unanswered it denies at the time it shows. **Always allow**
+  sets that tool to Allowed.
+- **Agents working together.** Agents in different panes can leave each other
+  messages without typing into each other's panes, keep notes the whole
+  workspace shares, and mark the files they are editing so others leave them
+  alone.
+- **The `termhq` command.** Every terminal TermHQ opens has it, for scripts and
+  for you: `termhq panes`, `termhq read 3`, `termhq send 3 "npm test" --enter`,
+  `termhq open src/app.ts:12`. With `git config core.editor "termhq open
+  --wait"`, a commit message opens as an editor tab.
+- **Recent activity.** Settings → MCP lists the latest requests from agents and
+  how each ended, and opens the full activity log.
+- **Duplicate starts the agent too.** Duplicating a terminal with an agent
+  running in it starts the same agent in the copy, as a fresh session from its
+  launcher. Turn it off in Settings → General → **Clone starts the agent too**.
+
+### Changed
+
+- **One agent to a pane.** The agent menu in a terminal's header, the
+  run-an-agent-by-number shortcut and the command palette's **Run** entries no
+  longer type into a pane an agent is already running in; the pane says
+  *Claude Code is already running in this pane* instead. A second launch used
+  to open a new pane.
+
+### Notes
+
+- Remote workspaces: TermHQ 0.3.0 and 0.3.1 can't connect to each other, and
+  the connection is refused with a message naming both versions. Update both
+  computers.
+
 ## 0.3.0 — 2026-10-25
 
 ### Added
