@@ -180,5 +180,11 @@ const orgId = `${SITE.url}/#organization`;
     <Footer />
     <Search />
     <AnalyticsConsent />
+    <script>
+      import { initClips } from "../lib/clips";
+
+      const dispose = initClips();
+      if (import.meta.hot) import.meta.hot.dispose(dispose);
+    </script>
   </body>
 </html>

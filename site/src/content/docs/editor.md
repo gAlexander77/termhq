@@ -119,6 +119,8 @@ back in one never scrolls another you were not looking at.
 
 ## Editing
 
+<figure class="clip"><video class="clip-video" src="/media/clips/14-edit-and-save.mp4" poster="/media/clips/14-edit-and-save.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Editing a file and saving it."></video><figcaption>Editing a file and saving it.</figcaption></figure>
+
 The editing surface is Monaco — the engine behind VS Code — so multi-cursor,
 column selection, find and
 replace, bracket matching and the rest of the usual moves are already there. It

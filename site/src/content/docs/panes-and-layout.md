@@ -115,6 +115,8 @@ to read all of it, and click its text to copy it.
 
 ## Rearranging with the mouse
 
+<figure class="clip"><video class="clip-video" src="/media/clips/04-drag-a-pane-to-swap.mp4" poster="/media/clips/04-drag-a-pane-to-swap.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Dragging a pane's header onto another pane swaps them."></video><figcaption>Dragging a pane's header onto another pane swaps them.</figcaption></figure>
+
 Drag a pane's **header** when more than one pane is visible. A lone pane's
 header stays put. A translucent copy of the header follows the pointer,
 so it stays clear which pane you picked up, and names what letting go would
@@ -156,6 +158,8 @@ an editor starts a new undo history; see
 limits and what happens if the destination cannot accept it.
 
 ## Resizing panes
+
+<figure class="clip"><video class="clip-video" src="/media/clips/19-grid-columns-resize-maximize.mp4" poster="/media/clips/19-grid-columns-resize-maximize.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Switching between Grid and Columns, dragging a gutter, and double-clicking a header to maximize."></video><figcaption>Switching between Grid and Columns, dragging a gutter, and double-clicking a header to maximize.</figcaption></figure>
 
 The space between two panes is a handle. Put the pointer on it, the cursor
 turns into a resize arrow, and dragging moves that boundary wherever you want
@@ -354,6 +358,8 @@ In a narrow window the branch and workspace items drop their names and the
 Undo chip drops the pane's; marks and counts stay.
 
 ## Stashing
+
+<figure class="clip"><video class="clip-video" src="/media/clips/05-stash-agents-while-they-work.mp4" poster="/media/clips/05-stash-agents-while-they-work.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Stashing running agents from their headers. They keep working on the shelf."></video><figcaption>Stashing running agents from their headers. They keep working on the shelf.</figcaption></figure>
 
 A pane can be stashed with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> or the
 header's ↓ button: hidden from the grid while its shell keeps running and its

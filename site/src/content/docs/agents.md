@@ -181,6 +181,8 @@ far as you allow in **Settings → MCP**. See
 
 ## When a pane needs your attention
 
+<figure class="clip"><video class="clip-video" src="/media/clips/06-waiting-notice-and-shelf-restore.mp4" poster="/media/clips/06-waiting-notice-and-shelf-restore.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="A stashed agent waiting for input shows in the status bar; one click brings it back."></video><figcaption>A stashed agent waiting for input shows in the status bar; one click brings it back.</figcaption></figure>
+
 The problem with running several agents is not starting them, it is noticing when
 one stops.
 
@@ -262,6 +264,8 @@ output — and an agent's first banner — is composed for the width you will re
 it at rather than reflowed afterwards.
 
 ## Watching several at once
+
+<figure class="clip"><video class="clip-video" src="/media/clips/03-four-agents-fill-the-grid.mp4" poster="/media/clips/03-four-agents-fill-the-grid.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Claude Code and Codex started from pane headers, filling a four-pane grid."></video><figcaption>Claude Code and Codex started from pane headers, filling a four-pane grid.</figcaption></figure>
 
 Tiling is the point. Agents working means panes visible, not tabs where all but
 one are hidden. There is no cap on how many — the grid keeps growing, and when

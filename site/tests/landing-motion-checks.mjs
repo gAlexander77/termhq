@@ -18,17 +18,17 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
     const timing = animation.effect.getTiming();
     return timing.iterations === 1 && timing.delay + Number(timing.duration) < 5000;
   })), "Opening animations settle within five seconds without looping");
-  assert(await page.locator(".hero-art img").evaluate((el) => getComputedStyle(el).animationName === "glass-settle"), "Existing glass artwork has its entrance animation");
+  assert(await page.locator(".hero-video").evaluate((el) => getComputedStyle(el).animationName === "video-settle"), "Hero recording has its entrance animation");
 
-  await page.locator('.hero-art img').evaluate(async (el) => {
+  await page.locator('.hero-video').evaluate(async (el) => {
     await Promise.all(el.getAnimations().map((animation) => animation.finished));
   });
-  const artworkBounds = await page.locator('.hero-art img').boundingBox();
+  const artworkBounds = await page.locator('.hero-video').boundingBox();
   for (const [x, y] of [[1100, 400], [200, 200], [10, 10]]) {
     await page.mouse.move(x, y);
     await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-    assert(JSON.stringify(await page.locator('.hero-art img').boundingBox()) === JSON.stringify(artworkBounds),
-      `Mouse movement to ${x},${y} leaves the artwork stationary`);
+    assert(JSON.stringify(await page.locator('.hero-video').boundingBox()) === JSON.stringify(artworkBounds),
+      `Mouse movement to ${x},${y} leaves the hero recording stationary`);
   }
 
   await page.locator('#parallel-agents').scrollIntoViewIfNeeded();
@@ -48,18 +48,13 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
   assert(await page.locator('.feature-grid .cell').first().evaluate((el) => el === document.activeElement), "Reveal does not steal keyboard focus");
 
   await page.goto(baseURL + '/#screenshots');
-  assert(await page.locator('.app-gallery').evaluate(visible), "Direct screenshot links bypass pending reveals");
-  const height = await page.locator('.app-gallery').evaluate((el) => el.offsetHeight);
-  await page.locator('.gallery-options label').filter({ hasText: 'Dracula' }).click();
-  assert(await page.locator('#screenshot-dracula').isVisible(), "Theme selection still shows the real screenshot");
-  assert(await page.locator('#screenshot-dracula figure').evaluate((el) => getComputedStyle(el).animationName === 'screenshot-enter'), "Theme changes have a short transition");
-  assert(await page.locator('.app-gallery').evaluate((el) => el.offsetHeight) === height, "Theme changes do not move the layout");
+  assert(await page.locator('.app-showcase').evaluate(visible), "Direct screenshot links bypass pending reveals");
 
   // Changing the OS preference also clears pending elements, without a reload.
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => !document.querySelector('[data-reveal-state]'));
   assert(await page.locator('[data-reveal]').evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === '1')), "Reduced motion immediately exposes all content");
-  assert(await page.locator('.hero-art img, .hero-copy h1, .gallery-preview figure').evaluateAll((els) =>
+  assert(await page.locator('.hero-video, .hero-copy h1').evaluateAll((els) =>
     els.every((el) => getComputedStyle(el).animationName === 'none' && getComputedStyle(el).transform === 'none')), "Reduced motion disables entrances");
   assert(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior === 'auto'), "Reduced motion keeps anchor scrolling instant");
 
@@ -91,17 +86,16 @@ export default async function checkLandingMotion(page, baseURL = "http://127.0.0
       const local = await context.newPage();
       await local.goto(baseURL);
       if (mode === 'touch') {
-        await local.locator('.hero-art img').evaluate(async (el) => {
+        await local.locator('.hero-video').evaluate(async (el) => {
           await Promise.all(el.getAnimations().map((animation) => animation.finished));
         });
-        const beforeTouch = await local.locator('.hero-art img').boundingBox();
+        const beforeTouch = await local.locator('.hero-video').boundingBox();
         await local.locator('.landing-hero').dispatchEvent('pointermove', { pointerType: 'touch', clientX: 300, clientY: 400 });
-        assert(JSON.stringify(await local.locator('.hero-art img').boundingBox()) === JSON.stringify(beforeTouch), "Touch movement leaves the artwork stationary");
+        assert(JSON.stringify(await local.locator('.hero-video').boundingBox()) === JSON.stringify(beforeTouch), "Touch movement leaves the hero recording stationary");
       } else {
         assert(await local.locator('[data-reveal]').evaluateAll((els) => els.every((el) => getComputedStyle(el).opacity === '1')), `${mode}: all content remains visible`);
       }
-      await local.locator('.gallery-options label').filter({ hasText: 'Monokai' }).click();
-      assert(await local.locator('#screenshot-monokai').isVisible(), `${mode}: theme selection remains usable`);
+      assert(await local.locator('#screenshots video').isVisible(), `${mode}: the product recording remains visible`);
     } finally {
       await context.close();
     }

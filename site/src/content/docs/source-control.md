@@ -29,6 +29,8 @@ instead of waiting for the next check.
 
 ## Review and stage changes
 
+<figure class="clip"><video class="clip-video" src="/media/clips/16-review-the-diff.mp4" poster="/media/clips/16-review-the-diff.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Reviewing an agent's changes in the diff view."></video><figcaption>Reviewing an agent's changes in the diff view.</figcaption></figure>
+
 Files are grouped as **Merge Changes**, **Staged Changes**, and **Changes**;
 click a group's header to fold it. A partly staged file appears in both staged
 and unstaged groups, so the panel never hides the part you have not committed

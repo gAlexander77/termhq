@@ -16,6 +16,8 @@ the browser you already use.
 
 ## Opening one
 
+<figure class="clip"><video class="clip-video" src="/media/clips/13-browser-pane-preview.mp4" poster="/media/clips/13-browser-pane-preview.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="A browser pane previewing a local app beside the terminals."></video><figcaption>A browser pane previewing a local app beside the terminals.</figcaption></figure>
+
 Three ways, all equivalent:
 
 - The **globe** in the title bar, just right of the favorites star

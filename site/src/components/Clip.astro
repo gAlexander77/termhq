@@ -1,0 +1,15 @@
+---
+/** A short silent recording from public/media/clips/, looped while on screen by lib/clips.ts. */
+interface Props {
+  name: string;
+  label: string;
+  class?: string;
+}
+const { name, label, class: className } = Astro.props;
+---
+
+<figure class:list={["clip", className]}>
+  {/* controls stay for no-JS and reduced motion; clips.ts removes them when it autoplays */}
+  <video class="clip-video" src={`/media/clips/${name}.mp4`} poster={`/media/clips/${name}.jpg`} width="1280" height="720" muted loop playsinline preload="none" controls aria-label={label}></video>
+  {Astro.slots.has("default") && <figcaption><slot /></figcaption>}
+</figure>

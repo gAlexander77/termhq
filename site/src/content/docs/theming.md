@@ -31,6 +31,8 @@ is not rewritten; the stand-in lasts only while that theme is applied.
 
 ## Choosing one
 
+<figure class="clip"><video class="clip-video" src="/media/clips/17-command-palette-themes.mp4" poster="/media/clips/17-command-palette-themes.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Switching themes by name from the command palette."></video><figcaption>Switching themes by name from the command palette.</figcaption></figure>
+
 **Settings → Appearance → Theme**. Type to filter the list, then arrow or hover
 through it to preview. The app repaints behind the dropdown — chrome, terminal
 palette, editor and all — with the option you started on badged `current`.

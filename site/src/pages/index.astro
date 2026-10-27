@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import HomepageShortcuts from "../components/HomepageShortcuts.astro";
 import AppScreenshots from "../components/AppScreenshots.astro";
+import Clip from "../components/Clip.astro";
 import "../styles/landing-motion.css";
 // import AppMock from "../components/AppMock.astro";
 import { PRE_RELEASE } from "../config";
@@ -14,6 +15,7 @@ const workflows = [
     body: "Launch your installed coding agents in separate panes. Move a running terminal to another open workspace without restarting it, and notice when an agent goes quiet and needs your attention.",
     guide: "agents",
     link: "Running coding agents",
+    clip: { name: "01-hero-four-agents", label: "Claude Code and Codex working in four TermHQ panes at once." },
   },
   {
     id: "persistent-work",
@@ -30,7 +32,17 @@ const workflows = [
     body: "Keep an editor and a live browser beside your terminals. Move an editor's tabs and unsaved text to another open workspace, or stay put to check your preview and review a diff.",
     guide: "panes-and-layout",
     link: "Build your workspace",
+    clip: { name: "12-code-preview-and-review", label: "An agent edits code while a browser pane previews the result and the diff is reviewed." },
   },
+];
+
+const motion = [
+  { name: "02-start-an-agent-with-a-click", title: "Start an agent with a click.", body: "Pick Claude Code or Codex from a pane's header." },
+  { name: "04-drag-a-pane-to-swap", title: "Drag a pane to swap it.", body: "Grab a header and drop it on another pane." },
+  { name: "05-stash-agents-while-they-work", title: "Stash agents while they work.", body: "Clear the screen. Stashed agents keep running." },
+  { name: "06-waiting-notice-and-shelf-restore", title: "See who needs you.", body: "The status bar shows when a stashed agent is waiting. Bring it back in one click." },
+  { name: "20-open-a-worktree-with-the-mouse", title: "Open any worktree.", body: "Every worktree in one list, ready to open in a shell." },
+  { name: "19-grid-columns-resize-maximize", title: "Arrange it your way.", body: "Grid or columns, drag a gutter, or double-click a header to fill the window." },
 ];
 
 const features = [
@@ -48,9 +60,6 @@ const features = [
 
 <Base>
   <section class="landing-hero" aria-labelledby="hero-title">
-    <div class="hero-art" aria-hidden="true">
-      <img src="/hero-glass.webp" width="1536" height="1024" alt="" fetchpriority="high" decoding="async" />
-    </div>
     <div class="wrap landing-hero-inner">
       <div class="hero-copy">
         <span class="eyebrow">Your agents. One workspace.</span>
@@ -73,6 +82,7 @@ const features = [
         </ul>
         {PRE_RELEASE && <p class="hero-note">Not publicly available yet. This site is a preview.</p>}
       </div>
+      <Clip class="hero-video" name="00-hero-open-start-stash" label="TermHQ opening four panes, starting Codex and Claude Code in them, then stashing two running agents and bringing them back." />
     </div>
     {/* Keep the inaccurate application mock disabled. Use real captures below. */}
     {/* <AppMock /> */}
@@ -98,8 +108,26 @@ const features = [
             <h3>{workflow.title}</h3>
             <p>{workflow.body}</p>
             {/* Add this workflow's real recording here when it is available. */}
+            {workflow.clip && <Clip name={workflow.clip.name} label={workflow.clip.label} />}
             <a class="text-link" href={`/docs/${workflow.guide}/`}>{workflow.link} <span aria-hidden="true">→</span></a>
           </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="in-motion" aria-labelledby="motion-title">
+    <div class="wrap">
+      <div class="section-head section-head-compact" data-reveal>
+        <span class="eyebrow">See it in motion</span>
+        <h2 id="motion-title">Point, click, keep going.</h2>
+        <p>Real recordings of TermHQ. No setup beyond the agents you already use.</p>
+      </div>
+      <div class="grid grid-3 clip-grid">
+        {motion.map((clip, index) => (
+          <div data-reveal style={`--reveal-delay: ${(index % 3) * 70}ms`}>
+            <Clip name={clip.name} label={clip.title}><strong>{clip.title}</strong> {clip.body}</Clip>
+          </div>
         ))}
       </div>
     </div>
@@ -129,7 +157,10 @@ const features = [
         <h2 id="shortcuts-title">Start with four shortcuts.</h2>
         <p>Open a pane or find a command. Pickers show their keys as you go, and app shortcuts can be rebound.</p>
       </div>
-      <div data-reveal><HomepageShortcuts /></div>
+      <div data-reveal>
+        <Clip class="shortcuts-clip" name="21-four-shortcuts" label="The four shortcuts opening a terminal, a browser pane, an editor, and the command palette, with TermHQ's on-screen key display." />
+        <HomepageShortcuts />
+      </div>
       <p class="section-link"><a class="text-link" href="/docs/keyboard-shortcuts/">All shortcuts and platform details <span aria-hidden="true">→</span></a></p>
     </div>
   </section>

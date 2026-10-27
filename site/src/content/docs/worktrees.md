@@ -116,6 +116,8 @@ list and the details follow it. The arrow at the pane's top right,
 
 ## Open the right terminal or agent
 
+<figure class="clip"><video class="clip-video" src="/media/clips/20-open-a-worktree-with-the-mouse.mp4" poster="/media/clips/20-open-a-worktree-with-the-mouse.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Opening a worktree in PowerShell from the Worktrees view."></video><figcaption>Opening a worktree in PowerShell from the Worktrees view.</figcaption></figure>
+
 Double-click a checkout, select it and press <kbd>Enter</kbd>, or choose **Open
 terminal here** in its details to open your default shell there. If TermHQ
 already opened a terminal for that checkout, the same action focuses it instead

@@ -15,6 +15,8 @@ the shells inside them are not owned by the window.
 
 ## Your first panes
 
+<figure class="clip"><video class="clip-video" src="/media/clips/18-shell-picker-and-favorites.mp4" poster="/media/clips/18-shell-picker-and-favorites.jpg" width="1280" height="720" muted loop playsinline preload="none" controls aria-label="Opening Command Prompt from the shell picker, then a favorite folder."></video><figcaption>Opening Command Prompt from the shell picker, then a favorite folder.</figcaption></figure>
+
 The **+** button in the title bar opens another pane running your default shell.
 Its caret opens a list of every shell TermHQ found on your machine: PowerShell 7,
 Windows PowerShell, Command Prompt, Git Bash and each WSL distribution on
