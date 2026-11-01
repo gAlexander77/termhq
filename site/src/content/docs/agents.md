@@ -177,6 +177,11 @@ another agent and hand it a task, open files, or ask you a question, each only a
 far as you allow in **Settings → MCP**. See
 [Letting agents use TermHQ](/docs/agent-tools/).
 
+You can follow that work from the panes themselves. A pane an agent started says
+**from pane 3** in its header, and the pane that started it counts its helpers
+in a chip of its own. When one agent leaves another a message, the sender and
+its first line show for a moment under the receiving pane's header.
+
 <span id="knowing-when-one-has-finished"></span>
 
 ## When a pane needs your attention

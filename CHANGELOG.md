@@ -10,6 +10,98 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.3.2 — 2026-11-01
+
+### Added
+
+- **Download a file from a server workspace.** In a server workspace, a file's
+  menu in the Files panel has **Download…**. Choose where it goes on this
+  computer, follow its progress or **Cancel** it, then **Show** it once it says
+  **Saved**. Several downloads wait their turn in a transfers list. A canceled
+  or failed download leaves nothing behind, a file it would have replaced stays
+  as it was, and a file that changes while it downloads stops the download
+  rather than arriving half old and half new.
+- **Copies reach this computer.** When a program copies text through the
+  terminal (the OSC 52 sequence, which Claude Code and many editors use), the
+  text lands on this computer's clipboard. That includes programs in a server
+  workspace or an SSH session, whose copies used to stay on the other computer.
+  Programs can't read your clipboard this way.
+- **A server keeps its own settings.** In a server workspace, the default
+  folder, default shell, favorite folders and worktree roots are that
+  computer's own and are saved there. Every computer that connects sees the
+  same ones, and a favorite starred from one is there on the next.
+- **Manage another computer's workspaces.** From the workspace picker, rename a
+  paired computer's workspaces, close them in the background, or delete them.
+  Deleting one that is open asks first, then closes its window. Opening one
+  that is open somewhere else asks on its row: **Move it here?**
+- **See who is connected.** Settings → Remote → **Paired computers** shows
+  which computer has windows open on this one, and **Disconnect** closes them
+  while keeping the pairing. You can also give a paired computer a name of your
+  own.
+- **The server chip.** A server workspace's title bar is tinted and names its
+  computer. Click the name for that computer's system, address and TermHQ
+  version, and since when you've been connected.
+- **Messages show up where they land.** When one agent messages another, the
+  first line appears for a moment under the receiving pane's header, with the
+  pane it came from. Not yet in server workspaces.
+- **Read receipts for agents.** `termhq message` says how many messages are
+  waiting unread in that pane, and `termhq panes` shows each terminal's unread
+  count, so an agent can tell whether the other one has picked up its message.
+
+### Changed
+
+- **Settings → Remote has two tabs,** **Share this computer** and **Connect to
+  others**. Pairing opens a sheet that ends on a receipt naming the computer
+  you paired.
+- **When a server workspace's computer goes away,** the window turns gray and
+  stops taking input, and a line at its foot says what happened and since
+  when. TermHQ keeps reconnecting, and the window is back the moment the
+  computer is.
+- **Remote errors say what happened.** The workspace picker tells a computer
+  that **Turned away** this one (it was removed there, or runs another
+  version) from one that is **Not sharing**, **Not found** on the network, or
+  out of reach, each with what to do about it. An expired pairing code says it
+  expired, and a computer whose identity changed since pairing says so instead
+  of blaming this one.
+- **Agent approval cards** show the pane a request is for. A request that
+  types, starts, closes or changes something says so in a label and gets a
+  warning edge. Several requests stack into
+  one card with a count. Starting an agent shows the exact command, flags
+  included, and the new pane says which pane started it. **Don't ask again**
+  lets one pane keep typing into, messaging or reading another until either
+  closes.
+- **Settings → MCP** says in one sentence what agents may do. An agent shows
+  as connected only once it has actually called. Tools fold into groups, each
+  tool's setting is a chip with a menu, and recent activity updates live,
+  names who asked and how it went, and filters to what asked you or what was
+  refused, by agent.
+- **`termhq wait` running out isn't a failure.** It exits with code 4, and an
+  agent gets it as an answer ending on the pane's last lines, not as an
+  error. `termhq new --agent` says which command it started.
+
+### Fixed
+
+- **Long prompts to Codex arrived unsent.** `termhq send --enter`, and the
+  agents' `send` tool, now wait until the program has taken the pasted text in
+  before pressing Enter. Before, the Enter could land inside a long paste and
+  the prompt sat in Codex's composer.
+- **A server workspace started terminals in this computer's folders,** which
+  the other computer doesn't have. It uses that computer's own now.
+- **A server workspace opened while its computer didn't answer** stayed blank
+  and couldn't be closed. It opens and waits for the computer instead.
+- **A computer that turned this one away** read as unreachable, and its window
+  kept reconnecting with no reason given.
+- **Last connected** in Settings → Remote never moved after pairing.
+- Settings → MCP's recent activity named agents by their command ("codex")
+  rather than by name, broke an agent's setup command across lines, and wrote
+  Git Bash folders with forward slashes.
+
+### Notes
+
+- Remote workspaces: 0.3.1 and 0.3.2 connect to each other. Downloads, a
+  server's own settings and managing its workspaces need 0.3.2 on the computer
+  you connect to, and are off until it has it.
+
 ## 0.3.1 — 2026-10-26
 
 ### Added

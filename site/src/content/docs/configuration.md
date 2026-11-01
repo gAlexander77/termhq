@@ -429,7 +429,11 @@ beside `config.json`, with no secrets in them.
 
 ### Remote
 
-Settings for [remote workspaces](/docs/remote-workspaces/), a preview.
+Settings for [remote workspaces](/docs/remote-workspaces/), a preview, on two
+tabs: **Share this computer** and **Connect to others**. Settings search finds
+rows on either one.
+
+On **Share this computer**:
 
 - **Let other computers connect (Preview)** — default off. On starts a sharing
   process with no window that computers you pair can connect to. They open this
@@ -441,17 +445,35 @@ Settings for [remote workspaces](/docs/remote-workspaces/), a preview.
   Starts sharing when you sign in, before any TermHQ window opens.
 - **Keep this computer awake while sharing** — default on. The display may
   still turn off.
-- **Pair a computer** — shows a one-time code, good for 5 minutes, for the
-  other computer to type under **Add a computer**.
+- **Pair a computer** — opens a sheet with this computer's address and a
+  one-time code, good for 5 minutes, for the other computer to type under
+  **Add a computer**. Once the code is used, the sheet names the computer that
+  paired.
 - **Sharing port** *(advanced)* — the port sharing listens on, from 1024 to
   65535. Empty uses 47120.
-- **Paired computers** and **Connected now** — the computers allowed to
-  connect, each with a remove button, and the ones connected at the moment.
-- **Connect to other computers** — the computers whose workspaces this one
-  opens, and **Add a computer** to pair with another.
+- **Paired computers** — the computers allowed to connect. One with a window
+  open here shows a green dot, since when, from where and which workspaces,
+  with **Disconnect**, which closes those windows and keeps the pairing; the
+  others say when they last connected. Each has a remove button, which also
+  forgets it.
+
+On **Connect to others**:
+
+- **Computers you connect to** — the computers whose workspaces this one
+  opens. Each row's menu has **Rename on this computer…** for a name of your
+  own, **Copy address**, **Copy fingerprint** and **Remove…**.
+- **Add a computer** — pairs with another computer, by its name or address,
+  its port when it isn't the default, and the code it shows.
 
 Paired computers and this computer's certificate are kept in their own files
 beside `config.json`, never in it.
+
+In a server workspace, Settings changes the settings of the computer you are
+sitting at, with one exception: **Default shell**, **Default terminal folder**,
+**Favorite directories**, **Worktree roots** and **Not scanned** are the other
+computer's own, saved on it, so every computer that opens its workspaces gets
+the same ones. Each of those rows says so. When the other computer runs an
+older TermHQ that can't keep them, the rows say that instead.
 
 ### Editor
 
@@ -577,27 +599,42 @@ What agents and scripts may do in TermHQ, through the `termhq` command in every
 terminal and its MCP server. See
 [Letting agents use TermHQ](/docs/agent-tools/) for the whole picture.
 
-- **Let agents use TermHQ** — default on. The master switch: off refuses every
-  request, and the tools below dim until it is back on.
-- **Connect agents** — a row each for Claude Code and Codex, saying whether
-  TermHQ is **Added**, **Not added** or the agent is **Not installed**:
-  - **Add** runs the agent's own command, shown under it, so its sessions
-    started after that have TermHQ's tools in all your projects. For Codex it
-    also writes a longer tool timeout and the pane's TermHQ variables into
-    TermHQ's entry. **Remove** undoes it.
-  - **Other agents** shows the configuration snippet for any other agent that
-    speaks MCP, with a copy button.
+- **Let agents use TermHQ** — default on. The master switch, at the top of
+  the page beside one sentence that says where things stand: which agents
+  TermHQ is added to, how many tools run on their own, ask first or are off,
+  and when the last request came. Off, it reads *Agents can't use TermHQ.
+  Every request is refused.*, and the tools below can't be changed until it is
+  back on.
+- **Connect agents** — a tile each for Claude Code and Codex, with its mark
+  and its state: **Not installed**, **Not added**, **Waiting for its first
+  call** once TermHQ is added, and **Connected** only once that agent has
+  actually called TermHQ.
+  - **Add** runs the agent's own command, shown on the tile in one line (hover
+    it for all of it), so its sessions started after that have TermHQ's tools
+    in all your projects. For Codex it also writes a longer tool timeout and
+    the pane's TermHQ variables into TermHQ's entry. **Remove** undoes it.
+  - **Other agents** — **Show configuration** shows the setup for any other
+    agent that speaks MCP, as **JSON** or as a **Command** line, with **Copy**.
 - **Tools for agents:**
   - **Preset** sets every tool at once: **Defaults**, **Ask before anything
     changes** or **Read only**. It reads **Custom** once you change a tool
     yourself.
-  - Every tool is **Allowed**, **Ask first** or **Off**, grouped by what it
-    does: Reading; Showing you things; Talking to other agents; Typing,
-    starting and closing panes; and Workspaces.
+  - The tools sit in five groups that fold, by what they do: Reading; Showing
+    you things; Talking to other agents; Typing, starting and closing panes;
+    and Workspaces. Each group has one setting for all its tools; a group whose
+    tools are set differently reads **Mixed** and opens by itself.
+  - Every tool's setting is a chip, tinted by its state, whose menu offers
+    **Allowed** (runs without asking you), **Ask first** (a card in TermHQ
+    asks you each time) or **Off** (refused, and hidden from agents).
   - By default the first three groups are allowed, and the last two ask first.
-- **Recent activity** — the last 20 requests from agents and scripts: what was
-  asked for, when, which pane asked, and how it ended. **Activity log** opens
-  the full record in an editor tab.
+- **Recent activity** — requests from agents and scripts, live while the page
+  is open, newest first: the time, the agent's mark and which pane asked, what
+  it asked for, and how it went (ran, you allowed it, denied, no answer, or
+  refused and why). **All**, **Asked you** and **Refused** filter it, each
+  with today's count, and once agents have asked, a chip per agent narrows it
+  to one; a filter reads the whole day rather than the last 20. **Activity
+  log** names the file that keeps the full record, and **Open** beside it opens
+  it in an editor tab.
 
 The tools' settings are kept in `config.json` as `agentAccess` and
 `agentTools`, read fresh on every request.

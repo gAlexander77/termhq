@@ -86,6 +86,10 @@ it and a **×** to delete it; a row the keys highlighted does not, since
 leaves the keyboard in the search. Where a button cannot act on that workspace,
 it stays in place and says why when you hover it.
 
+With [remote workspaces](/docs/remote-workspaces/), each paired computer's
+workspaces follow yours under a header with its name, and the same keys and
+buttons open, rename, delete and close them there.
+
 ## Naming a workspace
 
 Naming one is optional. An untitled workspace is not "Untitled" — it is

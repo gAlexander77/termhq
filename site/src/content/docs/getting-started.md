@@ -170,6 +170,10 @@ makes TermHQ's own selection, and it stays up while you move the pointer.
 <kbd>Shift</kbd>+right-click, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd> or
 <kbd>Ctrl</kbd>+<kbd>C</kbd> copies it.
 
+A program can also put text on the clipboard itself, as Claude Code does
+beside its own copy (the terminal sequence called OSC 52); TermHQ takes it, and
+never lets a program read the clipboard.
+
 Ordinary pastes go straight in, and copying shows no receipt. A paste over
 **5 KiB** asks first, showing its size with **Cancel** and **Paste anyway**:
 some terminal programs take time to process a large amount of text. **Don't

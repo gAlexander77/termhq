@@ -16,17 +16,22 @@ default.
 
 ## Connecting an agent
 
-**Settings → MCP → Connect agents** has a row for Claude Code and one for
-Codex:
+**Settings → MCP → Connect agents** has a tile for Claude Code and one for
+Codex, each saying where that agent stands: **Not installed**, **Not added**,
+**Waiting for its first call** or **Connected**.
 
 - **Add** registers TermHQ's tools with that agent, for all your projects. It
-  runs the agent's own command for it, shown under the button, so the change is
-  the agent's usual configuration and nothing hidden.
+  runs the agent's own command for it, shown on the tile, so the change is the
+  agent's usual configuration and nothing hidden. The command fits on one line;
+  hover over it to read the whole of it.
 - **Agent sessions you start after that have the tools.** A session that was
   already running picks them up when you restart it.
+- **Connected** shows only once the agent has actually called TermHQ, and the
+  tile says when its last call came and from which pane. Until then it reads
+  **Waiting for its first call**.
 - **Remove** takes them away again.
 - **An agent that isn't installed** says so. Install it, then add TermHQ from
-  the same row.
+  the same tile.
 
 **Codex.** Add also writes two lines Codex's own command can't:
 
@@ -37,17 +42,25 @@ Codex:
 
 A line you already set in that entry is left as it is.
 
-**Other agents** that speak MCP take the snippet under the rows. Copy it into
-that agent's MCP settings or its `mcp.json` file. It runs the same server as
-the two rows above.
+**Other agents** that speak MCP have a third tile. **Show configuration** lays
+out TermHQ's server as **JSON**, for that agent's MCP settings or its
+`mcp.json` file, or as a **Command** line, for an agent that asks for one.
+**Copy** it from there. It runs the same server as Claude Code's and Codex's.
 
 ## Deciding what agents may do
 
-**Let agents use TermHQ**, at the top of the page, is the master switch. Off,
-every request from an agent or a script is refused, and the tools' settings
-dim until you turn it back on.
+The top of the page says where things stand in one sentence: which agents have
+TermHQ, how many tools run on their own or ask first, and when the last request
+came. The switch beside it, **Let agents use TermHQ**, is the master switch.
+Off, every request from an agent or a script is refused, the page says
+**Agents can't use TermHQ**, and the tools' settings dim until you turn it back
+on.
 
-Below it, every tool has its own setting:
+Below it, under **Tools for agents**, the tools sit in five groups that fold,
+each with one setting for all its tools. Open a group to set its tools one by
+one. A group whose tools are set differently reads **Mixed**, and opens on its
+own so the odd one out never hides. Each setting is a chip tinted by its state,
+and its menu says what each choice means:
 
 - **Allowed** — the tool runs when an agent calls it.
 - **Ask first** — TermHQ asks you each time, on a card in the window.
@@ -78,12 +91,30 @@ workspace:
   another one.
 - **What it wants to do,** in one sentence. Text it wants to type is shown in
   full, with any control character spelled out so nothing hides in it.
+- **The pane it will act on,** as a row: what kind of pane it is, its name and
+  its full folder, and whether it has since closed, been stashed or gone behind
+  a maximized pane. That pane keeps an outline in the grid until you answer.
+  For a new terminal, the row is the folder it will open in.
 - **Where,** when it acts on a workspace other than this window's.
+
+**Heavy requests stand out.** A request that types, presses keys, starts or
+closes a pane, or changes a workspace wears a warning edge and names what it
+does, such as **Closes a pane**, and, for a pane, what runs in it now.
+Starting an agent shows the exact command its launcher will type, flags
+included, so allowing "start Claude Code" never quietly allows flags you
+forgot it was set up with.
 
 Then **Deny**, **Allow**, or **Always allow** with the tool's name. Always allow
 sets that tool to **Allowed** for every agent from then on, and allows the
 cards already waiting for it. A server workspace's window doesn't offer it,
 since those agents follow the other computer's settings.
+
+**Narrower than Always allow:** a request that acts on one other pane offers a
+checkbox such as **Don't ask again when pane 3 types into pane 5**. It is never
+checked when the card arrives. Check it, and **Allow and remember** lets that
+tool, from that pane to that pane, run without asking until either pane
+closes. It holds in this window only and changes nothing in Settings. A second
+target still asks.
 
 **It never interrupts your typing:**
 - The card doesn't take the keyboard, so you keep typing where you were.
@@ -92,9 +123,10 @@ since those agents follow the other computer's settings.
 - For its first moment on screen the card ignores clicks, so a double click on
   one card can't answer the card behind it.
 
-**Waiting cards:** several requests queue up, one card at a time. Each card says
-when it gives up, **Denied at** a time, two minutes after the agent asked. If no
-TermHQ window is open to ask in, the request is refused.
+**Waiting cards:** several requests queue up, one card at a time. The ones
+waiting peek out behind the card, and its title counts them, **1 of 3**. Each
+card says when it gives up, **Denied at** a time, two minutes after the agent
+asked. If no TermHQ window is open to ask in, the request is refused.
 
 **Questions:** an agent's own question uses the same card, with up to four
 answers to click and **Dismiss**.
@@ -140,11 +172,17 @@ An agent can hand another a task without reading its screen:
 
 - **`message`** leaves a message in another pane's inbox, or in every other
   pane's in the workspace. Nothing is typed into those panes, so the agent
-  there sees it only when it checks.
+  there sees it only when it checks. The answer says how many messages now
+  wait unread there, and **`panes`** shows each terminal's unread count, so a
+  sender can tell when the agent there has taken them.
 - **`inbox`** collects this pane's messages, and can wait for one.
 
 Each message says which pane, and which workspace, it came from. An agent can
 answer one that came from another workspace by naming that workspace.
+
+You see a message land too: its sender and first line slide down under the
+receiving pane's header for five seconds. Hover over it to hold it and read the
+whole line, or click it to put it away.
 
 - **Notes** are a workspace's shared memory: a key and a value that every agent
   there can read and change. Each note says which pane set it last, and when.
@@ -154,6 +192,33 @@ answer one that came from another workspace by naming that workspace.
 
 A pane's messages and claims go when its shell ends, and all of them go when
 TermHQ's terminal host restarts, as it does for an update.
+
+### Handing off a task
+
+TermHQ tells a connected agent how to hand work to another: start it with
+`new`, wait for its pane to go quiet, send the task with Enter along with its
+own pane id and a request to answer with `termhq message`, then wait on
+`inbox`. Watching the other pane instead doesn't work, since it stays busy the
+whole time it works.
+
+- **`new` with an agent** answers with the new pane's id and the command its
+  launcher typed, flags included, so the agent that asked knows which model it
+  started. For another model or effort it gives a command of its own instead,
+  which the approval card shows in full.
+- **`send` with Enter** presses Enter only once the program there has taken
+  the pasted text in. An agent can take a few seconds over a long prompt, and
+  an Enter that came sooner would join the prompt as a line break and leave it
+  unsent.
+- **A wait that runs out isn't a failure.** When `wait`, or a `send` told to
+  wait for the reply, runs out of time, the answer says the pane may still be
+  working and ends on its last few lines. Over MCP that is an ordinary answer,
+  not an error, so an agent doesn't take a busy agent for a broken one.
+
+A pane an agent started says **from pane 3** in its header. Hover over it to
+see which agent started it and when, or click it to bring pane 3 into view. The
+pane that started it gets a chip in its header with its helpers' marks and a
+count, such as **2 helpers**. Its menu lists each one, running, waiting on you
+or exited, and brings them into view.
 
 ## The `termhq` command
 
@@ -180,13 +245,26 @@ git config core.editor "termhq open --wait"
 action. It follows the same settings and asks the same questions as MCP, so an
 agent can't get around a setting by typing the command instead.
 
+For scripts, it exits with 0 when the action ran, 1 when it couldn't (with one
+sentence saying why), 2 for a mistake in how it was called, 3 when TermHQ isn't
+running or is a different version, and 4 when a wait ran out.
+
 ## What was asked, and what happened
 
 **Settings → MCP → Recent activity** lists the last 20 requests from agents and
-scripts. Each says what was asked for, when, which pane asked, and how it ended:
-ran, denied, no answer, or the reason it was refused. **Activity log** opens the
-whole record, one line per request, in an editor tab. It is kept beside your
-settings file and starts over once it passes a megabyte.
+scripts, live while the page is open. Each shows when it came, the mark and
+name of the agent that asked and its pane, what it asked for in the approval
+card's words, and how it went: **Ran**, **You allowed**, **Denied**,
+**Dismissed**, **No answer**, or **Refused** with the reason.
+
+Filters narrow the list to the requests that **Asked you**, the ones
+**Refused**, or the ones from one agent, with **Scripts** for the `termhq`
+command. Each filter shows today's count, and a filtered list reads the whole
+day.
+
+**Open**, beside **Activity log**, shows the whole record, one line per
+request, in an editor tab. It is kept beside your settings file and starts over
+once it passes a megabyte.
 
 ## What agents can't do
 
@@ -213,4 +291,6 @@ your instructions.
 In a [server workspace](/docs/remote-workspaces/), the terminals and the agents
 in them run on the other computer. They connect to TermHQ there and follow that
 computer's **Settings → MCP**, not this window's. **Connect agents** in such a
-window still lists this computer's agents.
+window still lists this computer's agents. A message landing in one of its
+panes doesn't slide down under the pane's header yet; the agent there still
+gets it in its inbox.

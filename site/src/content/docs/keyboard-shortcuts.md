@@ -258,8 +258,10 @@ once and waits under an **Undo** chip for the seconds set in **Settings →
 General → Undo window**; closing the picker completes it. A workspace open in
 another window asks first, and deleting the one this window shows turns the
 picker into a warning, with **Cancel** holding the keyboard. At startup, when
-TermHQ opens on the picker, <kbd>Esc</kbd> opens the most recent workspace. See
-[Workspaces](/docs/workspaces/#the-picker).
+TermHQ opens on the picker, <kbd>Esc</kbd> opens the most recent workspace. The
+same keys work on a paired computer's workspaces. See
+[Workspaces](/docs/workspaces/#the-picker) and
+[Remote workspaces](/docs/remote-workspaces/#managing-the-other-computers-workspaces).
 
 The close key is <kbd>⌘</kbd>+<kbd>W</kbd> on macOS. Closing this window
 asks first by default; <kbd>Enter</kbd> or the close key again confirms,

@@ -429,6 +429,30 @@ The whole feature is on the [SSH connections](/docs/ssh/) page.
 Passwords, passphrases and host-key questions are OpenSSH's own and appear in
 the pane; you answer them there.
 
+## Remote workspaces
+
+The whole feature is on the [Remote workspaces](/docs/remote-workspaces/) page.
+
+- **A server workspace window turned gray.** The other computer can't be
+  reached right now. The panel at the foot of the window says why; your shells
+  keep running there, and the window comes back by itself once it can reach
+  it. Typing is held off meanwhile so nothing goes to a terminal that can't
+  receive it. See
+  [Leaving and coming back](/docs/remote-workspaces/#leaving-and-coming-back).
+- **The picker says Not sharing, Didn't answer, Not found or Turned away.**
+  Each names a different problem, with the fix beside it; see
+  [When the other computer can't be reached](/docs/remote-workspaces/#when-the-other-computer-cant-be-reached).
+- **Download…, deleting or closing a workspace there is faded.** The other
+  computer runs an older TermHQ. Its tip says so; update TermHQ there.
+- **A download stopped with "The file changed while it downloaded".** A
+  program was still writing the file. Try again once it is done; nothing was
+  saved, and a file it would have replaced is as it was.
+- **Something copied in a server workspace isn't on this computer's
+  clipboard.** A program's own copy lands on the computer it runs on. Claude
+  Code's reaches this one; Codex's stays on the other computer. Select with
+  TermHQ's own selection and copy that instead; see
+  [Copy and paste](/docs/getting-started/#copy-and-paste).
+
 ## There is nothing to grab between my panes
 
 Check **Settings → Appearance → Resize panes by dragging**. Off is a supported
