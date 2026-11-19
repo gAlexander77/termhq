@@ -79,7 +79,10 @@ pane, or change a workspace ask first.
 - **Read only** — agents can only read.
 
 A settings file TermHQ can't read refuses every request until it can, rather
-than falling back to settings you didn't choose.
+than falling back to settings you didn't choose. The same goes for a hand edit
+that misses: a tool set to anything but `on`, `ask` or `off`, such as `"OFF"`,
+counts as Off and shows as Off here, and a setting that isn't text at all,
+such as `false`, refuses every request until it is fixed.
 
 ## The approval card
 
@@ -90,7 +93,11 @@ workspace:
 - **Who is asking:** the agent and its pane, and its workspace when that is
   another one.
 - **What it wants to do,** in one sentence. Text it wants to type is shown in
-  full, with any control character spelled out so nothing hides in it.
+  full, with any control character spelled out so nothing hides in it. A
+  character that draws nothing or turns text around, such as a zero-width
+  space or a right-to-left override, shows as its code, like `<U+202E>`, so a
+  command or a web address can't read as a different one. The sentence and
+  the names of panes and workspaces on the card are shown the same way.
 - **The pane it will act on,** as a row: what kind of pane it is, its name and
   its full folder, and whether it has since closed, been stashed or gone behind
   a maximized pane. That pane keeps an outline in the grid until you answer.
@@ -128,8 +135,14 @@ waiting peek out behind the card, and its title counts them, **1 of 3**. Each
 card says when it gives up, **Denied at** a time, two minutes after the agent
 asked. If no TermHQ window is open to ask in, the request is refused.
 
+**A request the agent gave up on** doesn't run. If an agent cancels a request
+while its card is up, allowing the card later does nothing, and the activity
+log says it was canceled. The card itself stays until you answer it or it
+gives up.
+
 **Questions:** an agent's own question uses the same card, with up to four
-answers to click and **Dismiss**.
+answers to click and **Dismiss**. An answer can't hold the invisible or
+text-reversing characters above.
 
 ## What agents can do
 
@@ -211,8 +224,9 @@ whole time it works.
   unsent.
 - **A wait that runs out isn't a failure.** When `wait`, or a `send` told to
   wait for the reply, runs out of time, the answer says the pane may still be
-  working and ends on its last few lines. Over MCP that is an ordinary answer,
-  not an error, so an agent doesn't take a busy agent for a broken one.
+  working and, when **read** is Allowed, ends on its last few lines. Over MCP
+  that is an ordinary answer, not an error, so an agent doesn't take a busy
+  agent for a broken one.
 
 A pane an agent started says **from pane 3** in its header. Hover over it to
 see which agent started it and when, or click it to bring pane 3 into view. The
@@ -244,6 +258,14 @@ git config core.editor "termhq open --wait"
 `termhq help` lists everything it does, and `termhq help send` describes one
 action. It follows the same settings and asks the same questions as MCP, so an
 agent can't get around a setting by typing the command instead.
+
+Once the text of a `message` or a `send` has begun, `--help` and `--json` in it
+are refused rather than taken as options. To send them as text, put the text
+after `--`:
+
+```sh
+termhq message 3 -- "done, see --help for the flag"
+```
 
 For scripts, it exits with 0 when the action ran, 1 when it couldn't (with one
 sentence saying why), 2 for a mistake in how it was called, 3 when TermHQ isn't
@@ -292,5 +314,6 @@ In a [server workspace](/docs/remote-workspaces/), the terminals and the agents
 in them run on the other computer. They connect to TermHQ there and follow that
 computer's **Settings → MCP**, not this window's. **Connect agents** in such a
 window still lists this computer's agents. A message landing in one of its
-panes doesn't slide down under the pane's header yet; the agent there still
-gets it in its inbox.
+panes slides down under the pane's header as it does locally, when the other
+computer runs TermHQ 0.3.3 or later; with an older one the agent there still
+gets it in its inbox, and nothing shows.

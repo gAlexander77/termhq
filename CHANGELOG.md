@@ -10,6 +10,98 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Nothing yet.
 
+## 0.3.3 — 2026-11-19
+
+### Added
+
+- **Clone with the agent, or without.** Right-click a terminal's **Clone**
+  button to choose: **Clone with** the agent running in it, or **Clone as a
+  plain terminal**. The one a click would make is marked **default**. A click
+  still follows **Settings → General → Clone starts the agent too**.
+- **Agent messages show up in server workspaces too.** When an agent messages
+  a pane of a server workspace, its first line slides down under the pane's
+  header, as it does locally.
+
+### Changed
+
+- **While a server workspace's computer is away,** shortcuts wait with the
+  rest of the window. Only the command palette, Settings and the workspace
+  picker open, and from the palette only workspaces, themes and Settings pages
+  run. Before, a shortcut could open a terminal, close a pane or start a pull
+  on a computer that wasn't answering.
+- **Restore default servers asks first.** In Settings → Editor → Language
+  server setup, it replaces the whole list, servers you added included, so it
+  now asks before doing it.
+
+### Fixed
+
+- **Opening a server workspace could end its shells.** With **Restore session
+  on startup** off on the computer you opened it from, every shell running in
+  that workspace on the other computer was ended. A server workspace now always
+  picks up its shells where they are.
+- **A server workspace's window froze while its computer was away.** Every
+  resize and every check of a terminal's folder waited on the network. The
+  window stays responsive now, and closing it doesn't wait for the computer
+  either.
+- **A server workspace opened while its computer was away** could still stay
+  blank. It shows that the computer is away, and opens once it answers.
+- **Coming back from away could duplicate or end terminals.** A reconnect
+  that couldn't list the other computer's shells took that for no shells at
+  all: it started new terminals beside the running ones, or reopened the
+  workspace and ended them.
+- **A server workspace could stay grayed out after its computer came back,**
+  when Settings had been opened while it was away.
+- **Large files in a server workspace** showed as missing: images over about
+  3 MB and text files near 4 MB. Files open up to the editor's own limits now.
+- **The first actions after waking a laptop** failed in a server workspace,
+  each with a connection error, while the other computer was up.
+- **A server workspace opened somewhere else** kept reconnecting in the
+  window it left, for as long as that window stayed open.
+- **Closing a server workspace mid-download** left a temporary file beside the
+  file it was downloading to.
+- **A thin line on the right edge of a terminal** came back after a program
+  that takes over the whole terminal, such as Copilot, exited.
+- **`termhq message 3 "see --help"`** printed the help and sent nothing, and
+  `termhq send 4 npm ls --json` typed `npm ls`. Once a message's text has
+  begun, those flags are refused with a pointer to `--`.
+- **A symlinked Codex `config.toml`** was replaced by a plain file when you
+  connected Codex in Settings → MCP. It stays a link now, and the write is
+  retried when Windows still holds the file Codex just wrote.
+- **Recent activity** in Settings → MCP called a wait that ran out **Refused**.
+- **Open in IDE** named an editor that has since gone missing by its internal
+  id, such as "vscode (not found)", rather than by its name.
+- **A pane's helpers menu** could hang off the right edge of the window.
+
+### Security
+
+- **The approval card shows every character.** Characters that draw nothing
+  or reverse text, such as a right-to-left override or a zero-width space,
+  appear by their code, like `<U+202E>`, in the text an agent wants to type,
+  in its one-sentence request, and in pane and workspace names. A command or a
+  web address can no longer read as a different one. An agent's question can't
+  put them on its answer buttons.
+- **A tool setting edited by hand now fails closed.** A setting that isn't one
+  of the three, like `"read": "OFF"`, used to leave the tool at its default,
+  which for reading is allowed. It is now off, and Settings → MCP shows it as
+  Off. A setting of the wrong type refuses every tool until it is fixed.
+- **A request the agent canceled no longer runs.** When an agent gives up on a
+  request while its approval card is up, allowing the card later does nothing.
+  Before, it ran then, sometimes after the agent had done the job another way.
+- **`wait` no longer reads past a `read` set to Off or Ask first.** A wait that
+  ran out answered with the pane's last lines whatever **read** was set to.
+  Now it includes them only where **read** is Allowed.
+- **A computer sharing its workspaces** gives a connection five seconds in all
+  to say who it is, rather than five seconds per piece of data.
+- **The document reader's sanitizer** (DOMPurify) is updated past a published
+  advisory, for the editor's copy too.
+
+### Notes
+
+- Remote workspaces: 0.3.3 connects to 0.3.1 and 0.3.2. The fixes above take
+  effect when the computer you connect from runs 0.3.3. Agent messages in
+  server workspaces, and saving files over about 4 MB there, also need 0.3.3
+  on the computer you connect to.
+
 ## 0.3.2 — 2026-11-01
 
 ### Added

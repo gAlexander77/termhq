@@ -170,6 +170,11 @@ the running conversation. **Settings → General → Clone starts the agent too*
 turns this off, and the copy is then a plain shell. So is the copy of an agent
 that has no launcher in **Settings → Agents**.
 
+To choose for one copy, right-click the clone button: **Clone with** the agent,
+by its launcher's name, or **Clone as a plain terminal**. The one a click would
+make is marked **default**. With no agent running in the pane, or one without a
+launcher, the menu holds **Clone** alone.
+
 ## Agents that work TermHQ themselves
 
 Agents can also use TermHQ for themselves: list and read the other panes, start

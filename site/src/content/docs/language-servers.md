@@ -69,8 +69,8 @@ To delete an entry, press its **×**; it turns into **Remove?**, and only a seco
 click removes the entry.
 
 **Restore default servers** replaces the entire list with the five above, exactly
-as a fresh install has them. It does not ask first, and any server you added
-yourself is deleted along with your changes to the five.
+as a fresh install has them. Any server you added yourself is deleted along with
+your changes to the five, so it asks first; **Cancel** has the keyboard.
 
 ## How servers start and stop
 

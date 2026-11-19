@@ -147,7 +147,8 @@ Keys are camelCase.
 - **Clone starts the agent too** — default on. Duplicating a terminal with an
   agent running in it starts the same agent in the copy, as a fresh session
   from its launcher in **Settings → Agents**. Off, or for an agent with no
-  launcher, the copy is a plain shell. See
+  launcher, the copy is a plain shell. A right-click on the clone button
+  chooses for one copy, whatever this says. See
   [A second agent beside the first](/docs/agents/#a-second-agent-beside-the-first).
 - **Sidebar (files & git)** — whether the Files and Source Control sidebar is
   showing. This switch, the sidebar button beside Settings in the title bar and

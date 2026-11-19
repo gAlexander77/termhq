@@ -252,8 +252,8 @@ waiting downloads hold, and start once it is back.
 
 A download arrives whole or not at all. The copy is written beside its
 destination under a temporary name and renamed only at the end, so a cancel, a
-failure or a dropped connection leaves nothing behind, and a file you chose to
-replace stays as it was. A file that changes while it downloads, such as a log
+failure, a dropped connection or closing the window leaves nothing behind, and
+a file you chose to replace stays as it was. A file that changes while it downloads, such as a log
 or a build output still being written, stops the download rather than saving a
 mix of two versions; try again once it is done changing. On the other computer
 the download only reads the file, and never blocks a program using it.
@@ -273,8 +273,11 @@ connection to* the computer, that your shells keep running there, since when,
 and why in a few words, such as *TermHQ there isn't sharing right now* or *no
 answer: it may be asleep or on another network*; hover it for the network's
 own words. The window takes no typing meanwhile, so nothing you type is lost to
-a terminal that can't receive it. TermHQ reconnects by itself, so there is
-nothing to press. A drop is noticed at once when TermHQ on the other computer
+a terminal that can't receive it. Shortcuts wait too: only the command
+palette, Settings and the workspace picker open, and from the palette only
+workspaces, themes and Settings pages run. The window itself stays responsive,
+and closing it doesn't wait for the other computer. TermHQ reconnects by
+itself, so there is nothing to press. A drop is noticed at once when TermHQ on the other computer
 quits, and within 45 seconds when the computer or the network just vanishes.
 
 When the connection is back, the gray and the panel leave at once, the keyboard
@@ -294,7 +297,9 @@ itself.
 Closing a server workspace window never ends its shells, whatever **Keep shells
 running after close** says on this computer: they belong to the other computer
 and keep running there. Closing it does not delete the workspace either, even
-an empty one.
+an empty one. And opening one never ends its shells: a server workspace picks
+up its shells where they are, whatever **Restore session on startup** says on
+this computer.
 
 If the other computer's sessions restart (an update, a reboot or a crash
 there), running programs end, as they would locally. The workspace then reopens
